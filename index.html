@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Pharma Closeout</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-light: #0f1d30;
+    --navy-mid: #142236;
+    --cyan: #00d4c8;
+    --cyan-bright: #00efe0;
+    --white: #eef2f6;
+    --gray: #7a8da0;
+    --gray-light: #b0bfcf;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(10, 22, 40, 0.6);
+    backdrop-filter: blur(30px);
+    border-bottom: 1px solid rgba(0, 212, 200, 0.05);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px; padding: 0 2rem;
+  }
+  .logo { font-weight: 800; font-size: 0.9rem; letter-spacing: 0.08em; color: var(--gray-light); }
+  .logo span { color: var(--cyan); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--gray); text-decoration: none; font-size: 0.75rem;
+    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  /* ── HERO ── */
+  .hero {
+    height: 100vh; min-height: 700px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  #signalCanvas {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 250px;
+    background: linear-gradient(to top, var(--navy), transparent);
+    pointer-events: none; z-index: 1;
+  }
+
+  .hero-text {
+    position: relative; z-index: 2;
+    padding: 0 2rem;
+  }
+  .hero-label {
+    font-size: 0.65rem; font-weight: 600;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 1.5rem; opacity: 0.8;
+  }
+  .hero h1 {
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    margin-bottom: 0.3em;
+  }
+  .hero h1 .accent { color: var(--cyan); display: block; }
+  .hero-tagline {
+    font-size: clamp(0.9rem, 1.5vw, 1.15rem);
+    color: var(--gray); font-weight: 300;
+    letter-spacing: 0.15em;
+    margin-bottom: 2.5rem;
+  }
+  .hero-tagline em { font-style: normal; color: var(--white); font-weight: 500; }
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    justify-content: center; position: relative; z-index: 2;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.85rem 2rem; border-radius: 6px; font-size: 0.9rem;
+    font-weight: 600; text-decoration: none; transition: all 0.3s ease;
+    cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--cyan); color: var(--navy); }
+  .btn-primary:hover {
+    background: var(--cyan-bright);
+    box-shadow: 0 0 30px rgba(0, 212, 200, 0.3);
+    transform: translateY(-1px);
+  }
+  .btn-outline {
+    background: transparent; color: var(--cyan);
+    border: 1px solid rgba(0, 212, 200, 0.3);
+  }
+  .btn-outline:hover {
+    border-color: var(--cyan);
+    background: rgba(0, 212, 200, 0.05);
+    transform: translateY(-1px);
+  }
+
+  /* ── WAVEFORM DIVIDER ── */
+  .waveform-section { width: 100%; height: 100px; position: relative; }
+  #waveformCanvas { width: 100%; height: 100%; display: block; }
+
+  /* ── SHARED ── */
+  .content-section { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem; }
+  .section-header { margin-bottom: 3rem; }
+  .section-label {
+    font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--cyan); margin-bottom: 0.5rem;
+  }
+  .section-title { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+  .section-subtitle { color: var(--gray); font-size: 0.9rem; margin-top: 0.4rem; font-weight: 300; }
+  .divider { border: none; border-top: 1px solid rgba(0, 212, 200, 0.06); margin: 0; }
+
+  /* ── PODCAST ── */
+  .featured-ep {
+    background: var(--navy-light); border: 1px solid rgba(0, 212, 200, 0.06);
+    border-radius: 14px; padding: 2rem; margin-bottom: 1.5rem;
+    position: relative; overflow: hidden;
+    display: flex; gap: 2rem; align-items: flex-start;
+  }
+  .featured-ep-img {
+    flex-shrink: 0; width: 180px; height: 180px; border-radius: 10px;
+    overflow: hidden; border: 1px solid rgba(0, 212, 200, 0.08);
+  }
+  .featured-ep-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .featured-ep-content { flex: 1; min-width: 0; }
+  @media (max-width: 800px) {
+    .featured-ep { flex-direction: column; }
+    .featured-ep-img { width: 120px; height: 120px; }
+  }
+  .featured-ep::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: linear-gradient(90deg, var(--cyan), transparent 60%);
+  }
+  .ep-badge {
+    display: inline-block; font-size: 0.6rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--navy); background: var(--cyan);
+    padding: 0.25rem 0.65rem; border-radius: 3px; margin-bottom: 1rem;
+  }
+  .featured-ep h3 { font-size: 1.35rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .featured-ep-content > p { color: var(--gray); font-size: 0.88rem; line-height: 1.65; max-width: 650px; margin-bottom: 1.25rem; }
+  .ep-meta { display: flex; gap: 1.25rem; color: var(--gray); font-size: 0.75rem; margin-bottom: 1.25rem; }
+  .spotify-placeholder {
+    width: 100%; height: 80px; border-radius: 8px;
+    background: rgba(0, 212, 200, 0.02); border: 1px solid rgba(0, 212, 200, 0.06);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gray); font-size: 0.78rem; gap: 0.5rem;
+  }
+  .ep-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .ep-card {
+    background: var(--navy-light); border: 1px solid rgba(0, 212, 200, 0.04);
+    border-radius: 10px; padding: 1.5rem; transition: all 0.3s; cursor: pointer;
+  }
+  .ep-card:hover { border-color: rgba(0, 212, 200, 0.15); transform: translateY(-2px); }
+  .ep-card .num {
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--cyan); margin-bottom: 0.5rem;
+  }
+  .ep-card h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; line-height: 1.3; }
+  .ep-card p { color: var(--gray); font-size: 0.8rem; line-height: 1.55; }
+  .ep-card .card-foot {
+    margin-top: 0.75rem; display: flex; justify-content: space-between;
+    align-items: center; color: var(--gray); font-size: 0.7rem;
+  }
+  .play-btn {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(0, 212, 200, 0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem; transition: all 0.3s;
+  }
+  .ep-card:hover .play-btn { background: var(--cyan); color: var(--navy); }
+  .more-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    margin-top: 1.5rem; color: var(--cyan); font-size: 0.8rem;
+    font-weight: 500; text-decoration: none; transition: gap 0.3s;
+  }
+  .more-link:hover { gap: 0.65rem; }
+
+  /* ── ARTICLES ── */
+  .article-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .a-card {
+    background: var(--navy-light); border: 1px solid rgba(0, 212, 200, 0.04);
+    border-radius: 10px; padding: 1.75rem; transition: all 0.3s;
+    cursor: pointer; display: flex; flex-direction: column;
+  }
+  .a-card:hover { border-color: rgba(0, 212, 200, 0.15); transform: translateY(-2px); }
+  .a-card .date {
+    font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--gray); margin-bottom: 0.6rem;
+  }
+  .a-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.3; }
+  .a-card p { color: var(--gray); font-size: 0.82rem; line-height: 1.6; flex-grow: 1; }
+  .a-card .a-foot { margin-top: 1rem; color: var(--cyan); font-size: 0.75rem; font-weight: 600; }
+
+  /* ── REPORTS ── */
+  .report-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+  .r-card {
+    background: var(--navy-light); border: 1px solid rgba(0, 212, 200, 0.06);
+    border-radius: 14px; overflow: hidden; transition: all 0.3s;
+  }
+  .r-card:hover { border-color: rgba(0, 212, 200, 0.2); transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,0.25); }
+  .r-cover {
+    height: 160px; background: linear-gradient(135deg, var(--navy-mid), rgba(0, 212, 200, 0.06));
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .r-cover .ring {
+    position: absolute; border-radius: 50%;
+    border: 1px solid rgba(0, 212, 200, 0.07);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+  }
+  .r-cover .ring:nth-child(1) { width: 120px; height: 120px; }
+  .r-cover .ring:nth-child(2) { width: 200px; height: 200px; }
+  .r-cover .ring:nth-child(3) { width: 280px; height: 280px; }
+  .r-cover .icon { font-size: 2rem; position: relative; z-index: 1; }
+  .r-body { padding: 1.75rem; }
+  .r-tag {
+    display: inline-block; font-size: 0.55rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan);
+    border: 1px solid rgba(0, 212, 200, 0.15); padding: 0.2rem 0.5rem;
+    border-radius: 3px; margin-bottom: 0.75rem;
+  }
+  .r-card h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.25; }
+  .r-card > .r-body > p { color: var(--gray); font-size: 0.82rem; line-height: 1.6; margin-bottom: 1rem; }
+  .r-findings h5 {
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--cyan); margin-bottom: 0.5rem;
+  }
+  .r-findings ul { list-style: none; margin-bottom: 1.25rem; }
+  .r-findings li {
+    font-size: 0.78rem; color: var(--gray-light);
+    padding: 0.2rem 0 0.2rem 0.9rem; position: relative;
+  }
+  .r-findings li::before { content: '\2192'; position: absolute; left: 0; color: var(--cyan); font-size: 0.7rem; }
+  .r-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 1rem; border-top: 1px solid rgba(0, 212, 200, 0.05);
+  }
+  .r-price { font-size: 1.2rem; font-weight: 800; }
+  .r-price span { font-size: 0.7rem; font-weight: 400; color: var(--gray); }
+  .r-buy {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.55rem 1.2rem; border-radius: 5px;
+    font-size: 0.78rem; font-weight: 600; text-decoration: none;
+    color: var(--navy); background: var(--cyan); border: none;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .r-buy:hover { background: var(--cyan-bright); }
+
+  /* ── CONNECT ── */
+  .connect-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .c-card {
+    background: var(--navy-light); border: 1px solid rgba(0, 212, 200, 0.04);
+    border-radius: 10px; padding: 2rem; text-align: center; transition: all 0.3s;
+  }
+  .c-card:hover { border-color: rgba(0, 212, 200, 0.15); transform: translateY(-2px); }
+  .c-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: rgba(0, 212, 200, 0.06);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem; font-size: 1.2rem;
+  }
+  .c-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.35rem; }
+  .c-card p { color: var(--gray); font-size: 0.78rem; line-height: 1.55; margin-bottom: 1rem; }
+  .c-card a {
+    color: var(--cyan); font-size: 0.78rem; font-weight: 600;
+    text-decoration: none; transition: opacity 0.3s;
+  }
+  .c-card a:hover { opacity: 0.8; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(0, 212, 200, 0.04);
+    padding: 2.5rem 2rem; text-align: center;
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-brand { font-weight: 800; font-size: 0.85rem; margin-bottom: 0.3rem; letter-spacing: 0.05em; }
+  .footer-brand span { color: var(--cyan); }
+  .footer-tagline { color: var(--gray); font-size: 0.72rem; font-weight: 300; letter-spacing: 0.08em; margin-bottom: 1.25rem; }
+  .footer-links { display: flex; gap: 2rem; justify-content: center; list-style: none; margin-bottom: 1.5rem; }
+  .footer-links a { color: var(--gray); text-decoration: none; font-size: 0.72rem; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--white); }
+  .copyright { color: rgba(122, 141, 160, 0.4); font-size: 0.65rem; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 800px) {
+    .ep-grid, .article-grid, .connect-row { grid-template-columns: 1fr; }
+    .report-grid { grid-template-columns: 1fr; }
+    nav .nav-links { display: none; }
+    .content-section { padding: 3.5rem 1.25rem; }
+    .hero { min-height: 600px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">THE PHARMA <span>CLOSEOUT</span></div>
+    <ul class="nav-links">
+      <li><a href="#podcast">Podcast</a></li>
+      <li><a href="#articles">Articles</a></li>
+      <li><a href="#reports">Reports</a></li>
+      <li><a href="#connect">Connect</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <canvas id="signalCanvas"></canvas>
+  <div class="hero-text">
+    <div class="hero-label">Daily Pharma Intelligence &middot; Under 15 Minutes</div>
+    <h1>THE PHARMA<span class="accent">CLOSEOUT</span></h1>
+    <p class="hero-tagline"><em>The signal.</em> &ensp; <em>The synthesis.</em> &ensp; <em>The closeout.</em></p>
+    <div class="hero-ctas">
+      <a href="#podcast" class="btn btn-primary">&#9654;&ensp;Listen Now</a>
+      <a href="#reports" class="btn btn-outline">Explore Reports &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── WAVEFORM ── -->
+<div class="waveform-section"><canvas id="waveformCanvas"></canvas></div>
+
+<!-- ── PODCAST ── -->
+<section id="podcast" class="content-section">
+  <div class="section-header">
+    <div class="section-label">Podcast</div>
+    <h2 class="section-title">Latest Episodes</h2>
+    <p class="section-subtitle">FDA decisions, clinical trial results, biotech M&amp;A, and drug pipeline updates in under 15 minutes.</p>
+  </div>
+  <div class="featured-ep">
+    <div class="featured-ep-img">
+      <img src="https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1f97994a4eb8f440f2d6b18fb8" alt="The Pharma Closeout podcast cover">
+    </div>
+    <div class="featured-ep-content">
+      <div class="ep-badge">Latest Episode &middot; Mar 13</div>
+      <h3>GSK Arexvy RSV Vaccine Expansion &amp; Novartis Cosentyx Pediatric Approval</h3>
+      <p>GSK's Arexvy RSV vaccine wins expansion to ages 18-49 and Novartis gets pediatric approval for Cosentyx — what these moves signal for the competitive landscape.</p>
+      <div class="ep-meta"><span>Mar 13, 2026</span><span>10 min</span><span>Daily Briefing</span></div>
+      <iframe style="border-radius:8px" src="https://open.spotify.com/embed/show/6bib0887ucySx51e49M3tp?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="ep-grid">
+    <div class="ep-card" onclick="window.open('https://open.spotify.com/show/6bib0887ucySx51e49M3tp','_blank')">
+      <div class="num">Mar 12</div>
+      <h4>Ultragenyx Gene Therapy Phase 3 &amp; Lilly's $3B China Investment</h4>
+      <p>Gene therapy milestones, Eli Lilly doubles down on China, and a LAG-3 setback shakes immunology.</p>
+      <div class="card-foot"><span>10 min</span><div class="play-btn">&#9654;</div></div>
+    </div>
+    <div class="ep-card" onclick="window.open('https://open.spotify.com/show/6bib0887ucySx51e49M3tp','_blank')">
+      <div class="num">Mar 11</div>
+      <h4>Vertex Kidney Drug Phase 3 &amp; UCB Bimzelx vs Skyrizi Data</h4>
+      <p>Vertex moves into renal, and head-to-head data reshuffles the IL-17 competitive landscape.</p>
+      <div class="card-foot"><span>6 min</span><div class="play-btn">&#9654;</div></div>
+    </div>
+    <div class="ep-card" onclick="window.open('https://open.spotify.com/show/6bib0887ucySx51e49M3tp','_blank')">
+      <div class="num">Mar 10</div>
+      <h4>BioNTech Co-Founders Departure &amp; FDA Approval Without Clinical Trial</h4>
+      <p>Leadership shakeup at BioNTech and an unprecedented FDA approval path — what it means.</p>
+      <div class="card-foot"><span>7 min</span><div class="play-btn">&#9654;</div></div>
+    </div>
+  </div>
+  <a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" class="more-link">All episodes on Spotify &rarr;</a>
+</section>
+
+<hr class="divider">
+
+<!-- ── ARTICLES ── -->
+<section id="articles" class="content-section">
+  <div class="section-header">
+    <div class="section-label">Articles</div>
+    <h2 class="section-title">From the Substack</h2>
+    <p class="section-subtitle">Deep-dive analysis on pharma commercial strategy, pipeline shifts, and market dynamics.</p>
+  </div>
+  <div style="background: var(--navy-light); border: 1px solid rgba(0, 212, 200, 0.06); border-radius: 14px; padding: 3rem 2rem; text-align: center; position: relative; overflow: hidden;">
+    <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent 20%, var(--cyan), transparent 80%);"></div>
+    <div style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.7;">&#9993;</div>
+    <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">Newsletter Launching Soon</h3>
+    <p style="color: var(--gray); font-size: 0.9rem; max-width: 480px; margin: 0 auto 1.5rem; line-height: 1.65;">Long-form analysis on FDA decisions, competitive positioning, and the deals reshaping pharma — written for the people making the calls.</p>
+    <a href="https://thepharmacloseout.substack.com/" target="_blank" class="btn btn-primary" style="display: inline-flex;">Subscribe on Substack &rarr;</a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── REPORTS ── -->
+<section id="reports" class="content-section">
+  <div class="section-header">
+    <div class="section-label">Reports</div>
+    <h2 class="section-title">Deep-Dive Reports</h2>
+    <p class="section-subtitle">Gated analysis for pharma professionals who need the full picture.</p>
+  </div>
+  <div class="report-grid">
+    <div class="r-card">
+      <div class="r-cover">
+        <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+        <div class="icon">&#128202;</div>
+      </div>
+      <div class="r-body">
+        <div class="r-tag">Research Report</div>
+        <h4>Report Title Goes Here</h4>
+        <p>Overview of what this report covers and the strategic value it delivers.</p>
+        <div class="r-findings">
+          <h5>Key Findings</h5>
+          <ul>
+            <li>First key insight or finding teaser</li>
+            <li>Second key insight or finding teaser</li>
+            <li>Third key insight or finding teaser</li>
+          </ul>
+        </div>
+        <div class="r-foot">
+          <div class="r-price">$XX <span>/ report</span></div>
+          <a href="#" class="r-buy">Get Report &rarr;</a>
+        </div>
+      </div>
+    </div>
+    <div class="r-card">
+      <div class="r-cover">
+        <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+        <div class="icon">&#128200;</div>
+      </div>
+      <div class="r-body">
+        <div class="r-tag">Market Analysis</div>
+        <h4>Report Title Goes Here</h4>
+        <p>Overview of what this report covers and the strategic value it delivers.</p>
+        <div class="r-findings">
+          <h5>Key Findings</h5>
+          <ul>
+            <li>First key insight or finding teaser</li>
+            <li>Second key insight or finding teaser</li>
+            <li>Third key insight or finding teaser</li>
+          </ul>
+        </div>
+        <div class="r-foot">
+          <div class="r-price">$XX <span>/ report</span></div>
+          <a href="#" class="r-buy">Get Report &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── CONNECT ── -->
+<section id="connect" class="content-section">
+  <div class="section-header">
+    <div class="section-label">Connect</div>
+    <h2 class="section-title">Stay in the Loop</h2>
+  </div>
+  <div class="connect-row">
+    <div class="c-card">
+      <div class="c-icon">&#128279;</div>
+      <h4>LinkedIn</h4>
+      <p>Real-time takes on pharma commercial ops and industry shifts.</p>
+      <a href="https://www.linkedin.com/in/the-pharma-closeout/" target="_blank">Follow &rarr;</a>
+    </div>
+    <div class="c-card">
+      <div class="c-icon">&#9993;</div>
+      <h4>Newsletter</h4>
+      <p>Long-form analysis delivered to your inbox — launching soon.</p>
+      <a href="https://thepharmacloseout.substack.com/" target="_blank">Subscribe &rarr;</a>
+    </div>
+    <div class="c-card">
+      <div class="c-icon">&#128172;</div>
+      <h4>Contact</h4>
+      <p>Reports, speaking, or collaborations.</p>
+      <a href="mailto:">Reach out &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">THE PHARMA <span>CLOSEOUT</span></div>
+    <p class="footer-tagline">The signal. The synthesis. The closeout.</p>
+    <ul class="footer-links">
+      <li><a href="#podcast">Podcast</a></li>
+      <li><a href="#articles">Articles</a></li>
+      <li><a href="#reports">Reports</a></li>
+      <li><a href="#connect">Connect</a></li>
+    </ul>
+    <p class="copyright">&copy; 2026 The Pharma Closeout. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+/* ── SIGNAL RINGS CANVAS ── */
+(function() {
+  const c = document.getElementById('signalCanvas');
+  const ctx = c.getContext('2d');
+  let w, h, t = 0, particles = [];
+
+  function resize() { w = c.width = c.offsetWidth; h = c.height = c.offsetHeight; }
+  resize(); window.addEventListener('resize', resize);
+
+  for (let i = 0; i < 80; i++) {
+    particles.push({
+      x: Math.random(), y: Math.random(),
+      s: Math.random() * 1.3 + 0.3,
+      o: Math.random() * 0.35 + 0.05,
+      phase: Math.random() * Math.PI * 2
+    });
+  }
+
+  function draw() {
+    t += 0.003; ctx.clearRect(0, 0, w, h);
+    const cx = w * 0.5, cy = h * 0.43;
+    const maxR = Math.max(w, h) * 0.45;
+
+    // Static concentric rings
+    for (let i = 0; i < 16; i++) {
+      const r = (i / 16) * maxR + 20;
+      const wobble = Math.sin(t * 1.5 + i * 0.5) * 0.012;
+      const o = 0.025 + Math.pow(1 - i / 16, 1.6) * 0.07;
+      ctx.beginPath(); ctx.arc(cx, cy, r * (1 + wobble), 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(0, 212, 200, ${o})`; ctx.lineWidth = 0.6; ctx.stroke();
+    }
+
+    // Inner pulsing rings
+    for (let i = 0; i < 6; i++) {
+      const prog = (i / 6 + t * 0.12) % 1;
+      const r = prog * maxR * 0.35;
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(0, 212, 200, ${Math.pow(1 - prog, 2) * 0.15})`;
+      ctx.lineWidth = 0.7; ctx.stroke();
+    }
+
+    // Center glow
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, 50);
+    g.addColorStop(0, 'rgba(255, 248, 220, 0.1)');
+    g.addColorStop(0.4, 'rgba(0, 212, 200, 0.04)');
+    g.addColorStop(1, 'transparent');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, 50, 0, Math.PI * 2); ctx.fill();
+
+    // Crosshair
+    ctx.strokeStyle = 'rgba(0, 212, 200, 0.03)'; ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(w, cy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx, h); ctx.stroke();
+
+    // Particles
+    particles.forEach(p => {
+      const f = Math.sin(t * 2.5 + p.phase) * 0.4 + 0.6;
+      ctx.fillStyle = `rgba(0, 212, 200, ${p.o * f})`;
+      ctx.beginPath(); ctx.arc(p.x * w, p.y * h, p.s, 0, Math.PI * 2); ctx.fill();
+    });
+
+    // Bottom reflection
+    const rg = ctx.createLinearGradient(0, h * 0.8, 0, h);
+    rg.addColorStop(0, 'transparent'); rg.addColorStop(1, 'rgba(0, 212, 200, 0.01)');
+    ctx.fillStyle = rg; ctx.fillRect(0, h * 0.8, w, h * 0.2);
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── WAVEFORM CANVAS ── */
+(function() {
+  const c = document.getElementById('waveformCanvas');
+  const ctx = c.getContext('2d');
+  let w, h, t = 0;
+
+  function resize() { w = c.width = c.offsetWidth; h = c.height = c.offsetHeight; }
+  resize(); window.addEventListener('resize', resize);
+
+  function draw() {
+    t += 0.015; ctx.clearRect(0, 0, w, h);
+    const bars = Math.floor(w / 2.5);
+    for (let i = 0; i < bars; i++) {
+      const x = (i / bars) * w;
+      const nx = i / bars;
+      const env = Math.pow(Math.sin(nx * Math.PI), 0.5);
+      const w1 = Math.sin(nx * 35 + t) * 0.35;
+      const w2 = Math.sin(nx * 55 + t * 1.4) * 0.2;
+      const amp = Math.max(0.02, env * (0.4 + w1 + w2));
+      const bh = amp * h * 0.85;
+      ctx.fillStyle = `rgba(0, 212, 200, ${0.2 + env * 0.45})`;
+      ctx.fillRect(x, h - bh, 1.2, bh);
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+
+</body>
+</html>
