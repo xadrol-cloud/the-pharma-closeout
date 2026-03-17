@@ -363,37 +363,15 @@
     <h2 class="section-title">Latest Episodes</h2>
     <p class="section-subtitle">FDA decisions, clinical trial results, biotech M&amp;A, and drug pipeline updates in under 15 minutes.</p>
   </div>
-  <div class="featured-ep">
-    <div class="featured-ep-img">
-      <img src="https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1f97994a4eb8f440f2d6b18fb8" alt="The Pharma Closeout podcast cover">
-    </div>
-    <div class="featured-ep-content">
-      <div class="ep-badge">Latest Episode &middot; Mar 13</div>
-      <h3>GSK Arexvy RSV Vaccine Expansion &amp; Novartis Cosentyx Pediatric Approval</h3>
-      <p>GSK's Arexvy RSV vaccine wins expansion to ages 18-49 and Novartis gets pediatric approval for Cosentyx — what these moves signal for the competitive landscape.</p>
-      <div class="ep-meta"><span>Mar 13, 2026</span><span>10 min</span><span>Daily Briefing</span></div>
-      <iframe style="border-radius:8px" src="https://open.spotify.com/embed/show/6bib0887ucySx51e49M3tp?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-    </div>
+  <div id="podcast-featured" class="featured-ep">
+    <!-- Featured episode loaded dynamically from Spotify RSS -->
   </div>
-  <div class="ep-grid">
-    <div class="ep-card" onclick="window.open('https://open.spotify.com/show/6bib0887ucySx51e49M3tp','_blank')">
-      <div class="num">Mar 12</div>
-      <h4>Ultragenyx Gene Therapy Phase 3 &amp; Lilly's $3B China Investment</h4>
-      <p>Gene therapy milestones, Eli Lilly doubles down on China, and a LAG-3 setback shakes immunology.</p>
-      <div class="card-foot"><span>10 min</span><div class="play-btn">&#9654;</div></div>
-    </div>
-    <div class="ep-card" onclick="window.open('https://open.spotify.com/show/6bib0887ucySx51e49M3tp','_blank')">
-      <div class="num">Mar 11</div>
-      <h4>Vertex Kidney Drug Phase 3 &amp; UCB Bimzelx vs Skyrizi Data</h4>
-      <p>Vertex moves into renal, and head-to-head data reshuffles the IL-17 competitive landscape.</p>
-      <div class="card-foot"><span>6 min</span><div class="play-btn">&#9654;</div></div>
-    </div>
-    <div class="ep-card" onclick="window.open('https://open.spotify.com/show/6bib0887ucySx51e49M3tp','_blank')">
-      <div class="num">Mar 10</div>
-      <h4>BioNTech Co-Founders Departure &amp; FDA Approval Without Clinical Trial</h4>
-      <p>Leadership shakeup at BioNTech and an unprecedented FDA approval path — what it means.</p>
-      <div class="card-foot"><span>7 min</span><div class="play-btn">&#9654;</div></div>
-    </div>
+  <div id="podcast-grid" class="ep-grid">
+    <!-- Episode cards loaded dynamically from Spotify RSS -->
+  </div>
+  <div id="podcast-fallback" style="display:none; background: var(--navy-light); border: 1px solid rgba(0, 212, 200, 0.06); border-radius: 14px; padding: 3rem 2rem; text-align: center;">
+    <p style="color: var(--text-secondary); margin: 0;">Episodes loading from Spotify&hellip;</p>
+    <a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" style="color: var(--cyan); margin-top: 1rem; display: inline-block;">Listen on Spotify &rarr;</a>
   </div>
   <a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" class="more-link">All episodes on Spotify &rarr;</a>
 </section>
@@ -560,6 +538,75 @@
     requestAnimationFrame(draw);
   }
   draw();
+})();
+
+/* ── SPOTIFY PODCAST RSS FEED ── */
+(function() {
+  const SPOTIFY_SHOW = 'https://open.spotify.com/show/6bib0887ucySx51e49M3tp';
+  const PODCAST_RSS = 'https://spotifeed.timdorr.com/6bib0887ucySx51e49M3tp';
+  const RSS_API = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(PODCAST_RSS);
+  const featuredEl = document.getElementById('podcast-featured');
+  const gridEl = document.getElementById('podcast-grid');
+  const fallbackEl = document.getElementById('podcast-fallback');
+  const COVER_IMG = 'https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1f97994a4eb8f440f2d6b18fb8';
+
+  fetch(RSS_API)
+    .then(r => r.json())
+    .then(data => {
+      if (data.status !== 'ok' || !data.items || data.items.length === 0) {
+        featuredEl.style.display = 'none';
+        gridEl.style.display = 'none';
+        fallbackEl.style.display = 'block';
+        return;
+      }
+      var eps = data.items;
+      var latest = eps[0];
+      var d = new Date(latest.pubDate);
+      var dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      var fullDate = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      var desc = latest.description ? latest.description.replace(/<[^>]*>/g, '').slice(0, 220) : '';
+      if (latest.description && latest.description.replace(/<[^>]*>/g, '').length > 220) desc += '...';
+
+      // Calculate duration from enclosure or itunes:duration
+      var duration = latest.enclosure && latest.enclosure.duration
+        ? Math.round(latest.enclosure.duration / 60) + ' min'
+        : '';
+
+      featuredEl.innerHTML =
+        '<div class="featured-ep-img">' +
+          '<img src="' + (latest.thumbnail || COVER_IMG) + '" alt="The Pharma Closeout podcast cover">' +
+        '</div>' +
+        '<div class="featured-ep-content">' +
+          '<div class="ep-badge">Latest Episode &middot; ' + dateStr + '</div>' +
+          '<h3>' + latest.title + '</h3>' +
+          '<p>' + desc + '</p>' +
+          '<div class="ep-meta"><span>' + fullDate + '</span>' + (duration ? '<span>' + duration + '</span>' : '') + '<span>Daily Briefing</span></div>' +
+          '<iframe style="border-radius:8px" src="https://open.spotify.com/embed/show/6bib0887ucySx51e49M3tp?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>' +
+        '</div>';
+
+      // Build episode grid from next 3 episodes
+      var gridEps = eps.slice(1, 4);
+      gridEl.innerHTML = gridEps.map(function(ep) {
+        var ed = new Date(ep.pubDate);
+        var edStr = ed.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        var epDesc = ep.description ? ep.description.replace(/<[^>]*>/g, '').slice(0, 140) : '';
+        if (ep.description && ep.description.replace(/<[^>]*>/g, '').length > 140) epDesc += '...';
+        var epDur = ep.enclosure && ep.enclosure.duration
+          ? Math.round(ep.enclosure.duration / 60) + ' min'
+          : '';
+        return '<div class="ep-card" onclick="window.open(\'' + (ep.link || SPOTIFY_SHOW) + '\',\'_blank\')">' +
+          '<div class="num">' + edStr + '</div>' +
+          '<h4>' + ep.title + '</h4>' +
+          '<p>' + epDesc + '</p>' +
+          '<div class="card-foot">' + (epDur ? '<span>' + epDur + '</span>' : '') + '<div class="play-btn">&#9654;</div></div>' +
+        '</div>';
+      }).join('');
+    })
+    .catch(function() {
+      featuredEl.style.display = 'none';
+      gridEl.style.display = 'none';
+      fallbackEl.style.display = 'block';
+    });
 })();
 
 /* ── SUBSTACK RSS FEED ── */
