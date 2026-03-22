@@ -22,7 +22,9 @@ A standalone `about.html` page for The Pharma Closeout. Mission-forward, editori
 - Same fixed header as homepage
 - Links: Podcast | Articles | About | LinkedIn ↗
 - "About" link added to both `index.html` and `about.html`
-- Active state on About: gold underline
+- On `about.html`: Podcast links to `index.html#podcast`, Articles links to `index.html#articles`
+- On `index.html`: Podcast and Articles remain as anchor links (`#podcast`, `#articles`), About links to `about.html`
+- Active state on About page: gold underline on About link
 - Logo links back to `index.html`
 - Mobile: same hamburger toggle at 800px breakpoint
 
@@ -35,7 +37,7 @@ A standalone `about.html` page for The Pharma Closeout. Mission-forward, editori
   - Section label: "About" (gold, uppercase, small)
   - Headline: "The signal. / The synthesis. / The closeout." (large serif, light weight)
 - Dark gradient overlay on video for text readability
-- Fallback: CSS-animated waveform if video fails to load
+- Fallback: if video fails to load, display a dark gradient background with a subtle radial gold glow (same as the mockup's `radial-gradient(ellipse, rgba(196,147,50,0.06), transparent)`) — simple, no animation needed since the reduced-motion path already covers the static image case
 - `prefers-reduced-motion`: static Midjourney still (`assets/about-hero.jpg`) replaces video
 
 ### 3. Mission Copy
@@ -58,7 +60,7 @@ Three distribution links in a horizontal row:
 | Read | Substack | New tab |
 | Connect | LinkedIn | New tab |
 
-Each link has a small uppercase category label above it (gray) and the platform name below (white, with →).
+Each link has a small uppercase category label above it (gray) and the platform name below (white, with →). Styled as text links following the wire-feed interaction pattern: hover opacity 0.65, arrow translates right on hover, no background or border containers.
 
 ### 5. Consulting Teaser
 
@@ -66,11 +68,11 @@ Single line below a gold rule divider:
 
 > For advisory and consulting inquiries → LinkedIn
 
-Links to Bin's LinkedIn profile. No further detail.
+Links to Bin's LinkedIn profile (URL to be provided during implementation). No further detail.
 
 ### 6. Footer
 
-Same footer as homepage: brand name + copyright, gold rule divider above.
+Exact same footer as homepage: brand name + tagline on left, connect links (Spotify, Substack, LinkedIn) + copyright on right. Gold rule divider above. Duplicated HTML from `index.html`.
 
 ## Visual Design
 
@@ -87,8 +89,8 @@ Same footer as homepage: brand name + copyright, gold rule divider above.
 
 ### Typography (existing design system)
 
-- Headline: Newsreader, weight 300, `clamp(2.2rem, 5vw, 4.5rem)`, negative letter-spacing
-- Section labels: DM Sans, 0.65rem, uppercase, wide letter-spacing, gold
+- Headline: Newsreader, weight 300, `clamp(2.2rem, 5vw, 4.5rem)`, negative letter-spacing (lighter weight than homepage hero to differentiate the About page as editorial vs. the homepage's bold brand statement)
+- Section labels: DM Sans, 0.7rem, uppercase, wide letter-spacing, gold
 - Body copy: 0.95rem, line-height 1.75
 - Distribution links: DM Sans, 0.85rem
 - Category labels: DM Sans, 0.7rem, uppercase
@@ -140,6 +142,15 @@ the-pharma-closeout/
 │   ├── about-hero.mp4  (new: Midjourney animated video)
 │   └── about-hero.jpg  (new: static fallback)
 ```
+
+### `<head>` metadata
+
+- `<title>`: "About — The Pharma Closeout"
+- `<meta name="description">`: Brief mission summary
+- Open Graph tags: `og:title`, `og:description`, `og:url` (thepharmacloseout.com/about)
+- Same Google Analytics tracking snippet as `index.html`
+- Same favicon as `index.html`
+- Same Google Fonts import (Newsreader + DM Sans)
 
 ### Architecture notes
 
