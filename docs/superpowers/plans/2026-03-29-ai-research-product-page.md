@@ -514,33 +514,252 @@ git commit -m "feat: add OG meta tags and verify full integration"
 
 ---
 
-## Post-Implementation: External Service Setup (User Manual Steps)
+### Task 11: Stripe Setup — Guided walkthrough with user
 
-These are not code tasks — they require the user to set up accounts and configure services.
+**Files:**
+- Modify: `ai-research.html` (CONFIG block only)
 
-### Stripe Setup
-1. Log in to [Stripe Dashboard](https://dashboard.stripe.com)
-2. Create Product: "AI in Pharma: The Definitive Compendium"
-3. Set price: $149.00 USD (one-time)
-4. Under Product > Digital delivery: upload `AI_in_Pharma_Compendium_v11.pdf`
-5. Create a Payment Link for this product
-6. Copy the Payment Link URL
-7. Update `ai-research.html` CONFIG: set `stripePaymentLink` to the copied URL
-8. Test: complete a test purchase using Stripe test mode
+This task requires the user to perform actions in their browser while Claude guides them through each step. Claude cannot access Stripe directly.
 
-### Kit (ConvertKit) Setup
-1. Create free account at [kit.com](https://kit.com)
-2. Create a new Form (embed type)
-3. Upload `AI_in_Pharma_Strategic_Briefing_v3.pdf` to Kit
-4. Create a Visual Automation: Form submitted → Add tag "briefing-download" → Send email with Briefing PDF
-5. Copy the form action URL from Kit's embed code
-6. Update `ai-research.html` CONFIG: set `kitFormAction` to the copied URL
-7. Test: submit the form, verify PDF arrives in email
+- [ ] **Step 1: Create Stripe account**
 
-### Spotify Episode IDs
-1. Find the 4 "AI Reckoning" episodes in Spotify for Creators
-2. Get each episode's Spotify URI (e.g., `spotify:episode:XXXXXX`) — the ID is the part after `episode:`
-3. Update `ai-research.html` CONFIG: set each episode's `embedId` and `linkId`
-4. Update the iframe src pattern from `/embed/show/` to `/embed/episode/`
-5. Update the link href pattern from `/show/` to `/episode/`
-6. Test: each accordion player loads the correct episode
+Ask the user to go to https://dashboard.stripe.com/register and create an account (or log in if they already have one). Wait for confirmation before proceeding.
+
+- [ ] **Step 2: Verify identity and connect bank**
+
+Stripe requires identity verification and a connected bank account before payouts work. Guide the user through:
+- Settings → Business details → Verify identity
+- Settings → Payouts → Add bank account
+
+Note: This can be completed later — it doesn't block product creation. But payouts won't process until it's done.
+
+- [ ] **Step 3: Create the product**
+
+Guide the user step by step:
+1. Go to Products → Add product
+2. Name: "AI in Pharma: The Definitive Compendium"
+3. Description: "198 pages of original research on AI in pharma. Includes the Cascade Framework, 63 GenAI use cases, 3 deep case studies, 60-item self-assessment scorecard, and 90-day action framework."
+4. Pricing: One-time → $149.00 USD
+5. Save product
+
+- [ ] **Step 4: Set up digital delivery**
+
+Guide the user:
+1. On the product page, find "Digital delivery" or go to Payment Links settings
+2. Upload `AI_in_Pharma_Compendium_v11.pdf` (located at `C:\Users\xadro\OneDrive\Documents\documents\AI Projects\BZG\Consulting\Pharma_Closeout\AI_in_Pharma_Compendium_v11.pdf`)
+3. Stripe will automatically email the download link to buyers after payment
+
+Note: If Stripe's built-in digital delivery is limited, an alternative is to use the "After payment → redirect to URL" option and host the PDF on a private URL. But try built-in delivery first — it's simpler.
+
+- [ ] **Step 5: Create Payment Link**
+
+Guide the user:
+1. Go to Payment Links → Create payment link
+2. Select the Compendium product
+3. Customize the checkout page: add your logo, set brand color (#c49332)
+4. Enable "Collect email address" (should be default)
+5. After payment: confirm "Send digital delivery" is enabled
+6. Create the link
+7. Copy the Payment Link URL (format: `https://buy.stripe.com/XXXXX`)
+
+- [ ] **Step 6: Wire Stripe URL into CONFIG**
+
+Once the user provides the Payment Link URL, update `ai-research.html`:
+
+```javascript
+stripePaymentLink: 'https://buy.stripe.com/XXXXX', // User's actual Stripe Payment Link
+```
+
+- [ ] **Step 7: Test purchase**
+
+Guide the user:
+1. In Stripe Dashboard, toggle to "Test mode" (top-right switch)
+2. Create a test Payment Link (or use the live one in test mode)
+3. Complete a test purchase using Stripe's test card: `4242 4242 4242 4242`, any future expiry, any CVC
+4. Verify: confirmation page shows, email with PDF download link arrives
+5. Switch back to live mode when ready to launch
+
+- [ ] **Step 8: Commit**
+
+```bash
+git add ai-research.html
+git commit -m "feat: wire Stripe Payment Link into CONFIG"
+```
+
+---
+
+### Task 12: Kit (ConvertKit) Setup — Guided walkthrough with user
+
+**Files:**
+- Modify: `ai-research.html` (CONFIG block + form action)
+
+This task requires the user to perform actions in their browser while Claude guides them through each step.
+
+- [ ] **Step 1: Create Kit account**
+
+Ask the user to go to https://kit.com and create a free account (free tier supports up to 10,000 subscribers). Wait for confirmation.
+
+- [ ] **Step 2: Create a Form**
+
+Guide the user:
+1. Go to Grow → Landing pages & forms → Create new → Form
+2. Choose "Inline" form type (not modal or slide-in)
+3. Customize minimally — we're using our own styled form, we just need Kit's backend
+4. Set the form to collect email only (no name field needed)
+5. Save the form
+
+- [ ] **Step 3: Upload the Briefing PDF**
+
+Guide the user:
+1. Go to Send → Broadcasts or Automations
+2. We need to attach the PDF to an automated email, so proceed to Step 4 first
+3. The PDF to upload is: `C:\Users\xadro\OneDrive\Documents\documents\AI Projects\BZG\Consulting\Pharma_Closeout\AI_in_Pharma_Strategic_Briefing_v3.pdf`
+
+- [ ] **Step 4: Create the automation**
+
+Guide the user:
+1. Go to Automate → Visual Automations → New automation
+2. Trigger: "Joins a form" → select the form created in Step 2
+3. Add action: "Add tag" → create tag "briefing-download"
+4. Add action: "Send email"
+5. Compose the delivery email:
+   - Subject: "Your Strategic Briefing: AI in Pharma"
+   - Body: Brief intro (2-3 sentences) + PDF attached or download link
+   - Attach `AI_in_Pharma_Strategic_Briefing_v3.pdf`
+   - Include a soft mention: "For the full 198-page research, visit thepharmacloseout.com/ai-research"
+6. Activate the automation
+
+- [ ] **Step 5: Get the form action URL**
+
+Guide the user:
+1. Go back to the form created in Step 2
+2. Click "Embed" or "Share"
+3. Choose "HTML" embed option
+4. Find the `<form action="https://app.kit.com/forms/XXXXXXX/subscriptions">` URL
+5. Copy just the action URL
+
+- [ ] **Step 6: Wire Kit form into the page**
+
+Once the user provides the form action URL, update `ai-research.html`:
+
+1. Update CONFIG:
+```javascript
+kitFormAction: 'https://app.kit.com/forms/XXXXXXX/subscriptions', // User's actual Kit form URL
+```
+
+2. Update the briefing form HTML to properly submit to Kit. The form needs:
+```html
+<form action="CONFIG.kitFormAction" method="POST">
+  <input type="email" name="email_address" class="form-field" placeholder="name@company.com" aria-label="Email address" required>
+  <button type="submit" class="form-submit">Get the Free Briefing &rarr;</button>
+</form>
+```
+
+Key: the email input `name` attribute must be `email_address` (Kit's expected field name).
+
+- [ ] **Step 7: Test the form**
+
+Guide the user:
+1. Open ai-research.html in browser
+2. Enter a test email address in the briefing form
+3. Submit
+4. Check: email arrives with Briefing PDF attached
+5. Check Kit dashboard: subscriber appears with "briefing-download" tag
+
+- [ ] **Step 8: Commit**
+
+```bash
+git add ai-research.html
+git commit -m "feat: wire Kit email capture form into CONFIG"
+```
+
+---
+
+### Task 13: Spotify Episode IDs — Wire real episode URLs
+
+**Files:**
+- Modify: `ai-research.html` (CONFIG block + iframe src pattern)
+
+- [ ] **Step 1: Get episode IDs from user**
+
+Ask the user to find the 4 "AI Reckoning" episodes in Spotify for Creators (or by searching Spotify). For each episode:
+1. Open the episode on Spotify (web or app)
+2. Click share → Copy link to episode
+3. The URL format is: `https://open.spotify.com/episode/XXXXXXXXXXXXXX`
+4. The episode ID is the string after `/episode/`
+
+Collect all 4 IDs.
+
+- [ ] **Step 2: Update CONFIG with real episode IDs**
+
+```javascript
+spotifyEpisodes: {
+  ep1: { embedId: 'REAL_EP1_ID', linkId: 'REAL_EP1_ID' },
+  ep2: { embedId: 'REAL_EP2_ID', linkId: 'REAL_EP2_ID' },
+  ep3: { embedId: 'REAL_EP3_ID', linkId: 'REAL_EP3_ID' },
+  ep4: { embedId: 'REAL_EP4_ID', linkId: 'REAL_EP4_ID' }
+}
+```
+
+- [ ] **Step 3: Update embed URL pattern**
+
+In the JS that wires Spotify embeds (Task 4 Step 3), change the pattern from `/embed/show/` to `/embed/episode/`:
+
+```javascript
+if (iframe) iframe.src = 'https://open.spotify.com/embed/episode/' + ep.embedId + '?utm_source=generator&theme=0';
+if (link) link.href = 'https://open.spotify.com/episode/' + ep.linkId;
+```
+
+- [ ] **Step 4: Verify each player loads**
+
+Open ai-research.html, expand each accordion. Confirm:
+- Each embedded player loads the correct episode (not the general show)
+- "Open in Spotify →" links go to the specific episode page
+- Players play audio correctly
+
+- [ ] **Step 5: Commit**
+
+```bash
+git add ai-research.html
+git commit -m "feat: wire real Spotify episode IDs for AI Reckoning series"
+```
+
+---
+
+### Task 14: Final end-to-end test + Push to GitHub Pages
+
+**Files:**
+- No modifications (verification only)
+
+- [ ] **Step 1: Full purchase flow test**
+
+1. Open ai-research.html
+2. Click "Get the Compendium →" — confirm Stripe Checkout loads with correct product/price
+3. Complete test purchase (test mode) — confirm PDF delivery email arrives
+4. Verify GA4 is tracking the page (check GA4 realtime dashboard)
+
+- [ ] **Step 2: Full briefing flow test**
+
+1. Enter email in briefing form
+2. Submit — confirm Kit receives the subscriber with "briefing-download" tag
+3. Confirm automation email arrives with Briefing PDF attached
+
+- [ ] **Step 3: Full podcast flow test**
+
+1. Expand each episode accordion — confirm correct episode loads
+2. Play each briefly — confirm audio works
+3. Click "Open in Spotify →" — confirm it goes to the specific episode
+
+- [ ] **Step 4: Cross-browser spot check**
+
+Test in at least 2 browsers (e.g., Chrome + Firefox or Chrome + Safari). Check: layout, animations, form submission, Stripe button.
+
+- [ ] **Step 5: Push to GitHub Pages**
+
+Ask the user for confirmation, then:
+
+```bash
+git push origin main
+```
+
+Site will be live at thepharmacloseout.com/ai-research within ~1 minute of push.
