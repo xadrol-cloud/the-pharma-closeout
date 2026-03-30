@@ -409,6 +409,27 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* ── WHO THIS IS FOR ── */
+  .persona-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .persona-card {
+    border: 1px solid var(--rule); padding: 2rem;
+    background: rgba(196, 147, 50, 0.03);
+  }
+  .persona-title {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: 1.1rem; color: var(--gold); margin-bottom: 0.75rem;
+  }
+  .persona-desc {
+    font-size: 0.9rem; color: var(--gray-light); line-height: 1.6;
+  }
+  @media (max-width: 800px) {
+    .persona-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .persona-card { padding: 1.5rem; }
+  }
+
   /* ── PODCAST SERIES ── */
   .podcast-series {
     padding-top: 5rem; padding-bottom: 5rem;
@@ -1098,6 +1119,28 @@
       <div class="offering-title">The Definitive Compendium</div>
       <div class="offering-desc">The operational intelligence your AI strategy is missing. Case studies, diagnostic scorecard, and proprietary frameworks built for pharma leadership teams.</div>
     </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 1b: WHO THIS IS FOR
+     ══════════════════════════════════════════════ -->
+<section class="section reveal" aria-label="Who this is for" style="padding-top: 5rem; padding-bottom: 5rem;">
+  <div class="section-label">Who This Is For</div>
+  <h2 style="font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 300; margin-bottom: 0.5rem;">Built for pharma leaders who are done with AI hype.</h2>
+  <div class="persona-grid">
+    <div class="persona-card">
+      <div class="persona-title">Commercial Leaders</div>
+      <div class="persona-desc">Translate AI capabilities into franchise strategy and competitive advantage.</div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-title">Strategy &amp; Operations</div>
+      <div class="persona-desc">63 use cases mapped to real pharma workflows, not vendor demos.</div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-title">C-Suite &amp; Board</div>
+      <div class="persona-desc">The evidence base for your next AI investment decision.</div>
+    </div>
   </div>
 </section>
 
