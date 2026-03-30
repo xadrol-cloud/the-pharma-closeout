@@ -741,6 +741,17 @@
   }
   .btn-primary:hover::after { transform: translateX(100%); }
   .btn-primary:hover { box-shadow: 0 0 30px rgba(196, 147, 50, 0.2); }
+  .btn-secondary {
+    display: inline-block; padding: 0.9rem 2rem;
+    font-family: var(--font-body); font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    font-size: 0.7rem; color: var(--gold);
+    border: 1px solid var(--gold); background: transparent;
+    transition: background 0.3s, color 0.3s; cursor: pointer;
+  }
+  .btn-secondary:hover {
+    background: var(--gold); color: var(--black);
+  }
   .price-meta {
     font-size: 0.68rem; color: var(--gray);
     letter-spacing: 0.03em;
@@ -962,6 +973,7 @@
   @media (max-width: 500px) {
     .value-grid { grid-template-columns: 1fr; }
     .ep-subtitle { display: none; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; }
   }
 </style>
 </head>
@@ -991,7 +1003,12 @@
 <section class="section hero-compact" id="content" aria-label="The AI Reckoning">
   <div class="section-label">The Pharma Closeout Research</div>
   <h1>The AI<br>Reckoning</h1>
-  <p class="hero-tagline" style="max-width: 620px; margin-bottom: 3.5rem;">Original research on who's actually capturing AI value in pharma. Listen, read the briefing, or go deep with the full Compendium.</p>
+  <p class="hero-tagline" style="max-width: 620px; margin-bottom: 1rem;">The operational intelligence your AI strategy is missing.</p>
+  <p style="color: var(--gray-light); font-size: 0.82rem; letter-spacing: 0.03em; margin-bottom: 2rem;">169 pages. 63 use cases. Built by pharma operators, not consultants.</p>
+  <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3.5rem;">
+    <a href="https://thepharmacloseout.gumroad.com/l/briefing" target="_blank" class="btn-primary" onclick="trackEvent('hero_cta_click', {cta: 'briefing'})">Get the Free Briefing &rarr;</a>
+    <a href="#compendium" class="btn-secondary" onclick="trackEvent('hero_cta_click', {cta: 'compendium'})">Get the Full Compendium &mdash; $149</a>
+  </div>
 
   <div class="hero-offerings">
     <a href="#series" class="offering">
@@ -1023,7 +1040,6 @@
       </div>
       <div class="offering-title">The Podcast Series</div>
       <div class="offering-desc">Alex Mercer and Maya Patel unpack who's actually capturing AI value in pharma — and who's still running pilots that go nowhere. Four episodes.</div>
-      <div class="offering-cta">Listen now &rarr;</div>
     </a>
     <a href="#briefing" class="offering">
       <div class="offering-img offering-img-briefing">
@@ -1037,7 +1053,6 @@
       </div>
       <div class="offering-title">The Strategic Briefing</div>
       <div class="offering-desc">The 28-page executive summary. Crisis, opportunity, and a 180-day action roadmap for your leadership team — delivered to your inbox.</div>
-      <div class="offering-cta">Get the briefing &rarr;</div>
     </a>
     <a href="#compendium" class="offering offering-featured">
       <div class="offering-img offering-img-compendium">
@@ -1082,10 +1097,6 @@
       </div>
       <div class="offering-title">The Definitive Compendium</div>
       <div class="offering-desc">The operational intelligence your AI strategy is missing. Case studies, diagnostic scorecard, and proprietary frameworks built for pharma leadership teams.</div>
-      <div class="offering-cta-price">
-        <span class="offering-cta">Get the research &rarr;</span>
-        <span class="offering-price-line"><span class="offering-price-old">$197</span> $149 <span class="price-badge">Launch Price</span></span>
-      </div>
     </a>
   </div>
 </section>
