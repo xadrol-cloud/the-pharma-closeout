@@ -1182,7 +1182,7 @@
     <div class="briefing-form">
       <div class="briefing-form-title">Download the Briefing</div>
       <div class="briefing-form-sub">Free PDF. Enter your email at checkout and download instantly.</div>
-      <a href="https://thepharmacloseout.gumroad.com/l/briefing" target="_blank" rel="noopener" class="form-submit" style="display: block; text-align: center; text-decoration: none;">Get the Free Briefing &rarr;</a>
+      <a href="https://thepharmacloseout.gumroad.com/l/briefing" target="_blank" rel="noopener" class="form-submit" style="display: block; text-align: center; text-decoration: none;" onclick="trackEvent('briefing_click', {location: 'briefing_section'})">Get the Free Briefing &rarr;</a>
       <p class="form-note">Powered by Gumroad. Your email is collected for delivery only.</p>
     </div>
   </div>
@@ -1252,7 +1252,7 @@
       <span class="price-badge">Launch Price</span>
     </div>
     <div class="price-cta">
-      <a href="#" data-stripe class="btn-primary">Get the Compendium &rarr;</a>
+      <a href="#" data-stripe class="btn-primary" onclick="trackEvent('compendium_click_main')">Get the Compendium &rarr;</a>
       <span class="price-meta">PDF · 169 pages · Instant delivery · Secure checkout via Gumroad</span>
     </div>
   </div>
@@ -1311,7 +1311,7 @@
     <span class="price-current">$149</span>
     <span class="price-badge">Launch Price</span>
   </div>
-  <a href="#" data-stripe class="btn-primary">Get the Compendium &rarr;</a>
+  <a href="#" data-stripe class="btn-primary" onclick="trackEvent('compendium_click_close')">Get the Compendium &rarr;</a>
   <p class="closing-meta">Secure checkout via Stripe · PDF download · Instant delivery</p>
 </section>
 
@@ -1407,6 +1407,10 @@ function toggleEpisode(headerEl) {
   // Toggle clicked
   if (!wasOpen) {
     card.classList.add('open');
+    var epTitleEl = card.querySelector('.ep-title');
+    if (epTitleEl) {
+      trackEvent('podcast_play', { episode: epTitleEl.textContent });
+    }
   }
 }
 
@@ -1423,6 +1427,49 @@ function toggleEpisode(headerEl) {
     });
   }, { threshold: 0.08 });
   els.forEach(function(el) { observer.observe(el); });
+})();
+
+/* ── UTM PARSING + CONVERSION EVENT TRACKING ── */
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var utmData = {
+    utm_source: params.get('utm_source') || '',
+    utm_medium: params.get('utm_medium') || '',
+    utm_campaign: params.get('utm_campaign') || ''
+  };
+
+  window.trackEvent = function(eventName, extraParams) {
+    var payload = {};
+    var key;
+    for (key in utmData) {
+      if (utmData[key]) payload[key] = utmData[key];
+    }
+    if (extraParams) {
+      for (key in extraParams) {
+        payload[key] = extraParams[key];
+      }
+    }
+    if (typeof gtag === 'function') {
+      gtag('event', eventName, payload);
+    }
+  };
+
+  /* Scroll depth tracking */
+  var thresholds = [25, 50, 75, 90];
+  var fired = {};
+  window.addEventListener('scroll', function() {
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (docHeight <= 0) return;
+    var pct = Math.round((scrollTop / docHeight) * 100);
+    for (var i = 0; i < thresholds.length; i++) {
+      var t = thresholds[i];
+      if (pct >= t && !fired[t]) {
+        fired[t] = true;
+        trackEvent('scroll_depth', { depth: t + '%' });
+      }
+    }
+  });
 })();
 </script>
 
