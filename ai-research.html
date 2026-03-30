@@ -916,6 +916,26 @@
   .footer-connect a:hover { color: var(--gold); }
   .copyright { color: rgba(255,255,255,0.2); font-size: 0.7rem; }
 
+  /* ── SOCIAL PROOF ── */
+  .proof-strip {
+    display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
+    padding: 1.5rem 0; margin: 2rem 0;
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  }
+  .proof-stat {
+    font-family: var(--font-display); font-size: 0.95rem;
+    color: var(--gold); letter-spacing: 0.04em;
+  }
+  .proof-credibility {
+    text-align: center; font-size: 0.9rem; color: var(--gray-light);
+    font-style: italic; margin-bottom: 1.5rem;
+  }
+  .proof-downloads {
+    text-align: center; margin-top: 1.5rem;
+    font-size: 0.8rem; color: var(--gray-light);
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
   /* ── SCROLL REVEAL ── */
   .reveal {
     opacity: 0; transform: translateY(20px);
@@ -1240,6 +1260,20 @@
       <p class="form-note">Powered by Gumroad. Your email is collected for delivery only.</p>
     </div>
   </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 3b: SOCIAL PROOF
+     ══════════════════════════════════════════════ -->
+<section class="section reveal" aria-label="Credibility" style="padding-top: 4rem; padding-bottom: 4rem;">
+  <p class="proof-credibility">Built by The Pharma Closeout's research team — pharma operators, not consultants.</p>
+  <div class="proof-strip">
+    <span class="proof-stat">169 Pages</span>
+    <span class="proof-stat">63 Use Cases</span>
+    <span class="proof-stat">60+ Primary Sources</span>
+    <span class="proof-stat">30-Question Diagnostic</span>
+  </div>
+  <p class="proof-downloads">500+ briefings downloaded</p>
 </section>
 
 <!-- ══════════════════════════════════════════════
