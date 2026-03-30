@@ -1339,10 +1339,10 @@ var CONFIG = {
   stripePaymentLink: 'https://thepharmacloseout.gumroad.com/l/compendium',
   kitFormAction: 'https://thepharmacloseout.gumroad.com/l/briefing',
   spotifyEpisodes: {
-    ep1: { embedId: '6bib0887ucySx51e49M3tp', linkId: '6bib0887ucySx51e49M3tp' },
-    ep2: { embedId: '6bib0887ucySx51e49M3tp', linkId: '6bib0887ucySx51e49M3tp' },
-    ep3: { embedId: '6bib0887ucySx51e49M3tp', linkId: '6bib0887ucySx51e49M3tp' },
-    ep4: { embedId: '6bib0887ucySx51e49M3tp', linkId: '6bib0887ucySx51e49M3tp' }
+    ep1: { embedId: '5kI8vnn78a6nphT9J3UYW7', linkId: '5kI8vnn78a6nphT9J3UYW7' },
+    ep2: { embedId: '11LXVfjMXAVct1eaykEbfr', linkId: '11LXVfjMXAVct1eaykEbfr' },
+    ep3: { embedId: '3tZALyPW77pQJYPZ9hz9bW', linkId: '3tZALyPW77pQJYPZ9hz9bW' },
+    ep4: { embedId: '59HyYYgtyARWaqENU1EfXk', linkId: '59HyYYgtyARWaqENU1EfXk' }
   }
 };
 
@@ -1370,8 +1370,8 @@ var CONFIG = {
     if (!ep) return;
     var iframe = card.querySelector('iframe');
     var link = card.querySelector('.ep-player-link');
-    if (iframe) iframe.src = 'https://open.spotify.com/embed/show/' + ep.embedId + '?utm_source=generator&theme=0';
-    if (link) link.href = 'https://open.spotify.com/show/' + ep.linkId;
+    if (iframe) iframe.src = 'https://open.spotify.com/embed/episode/' + ep.embedId + '?utm_source=generator&theme=0';
+    if (link) link.href = 'https://open.spotify.com/episode/' + ep.linkId;
   });
 })();
 
