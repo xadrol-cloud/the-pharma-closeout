@@ -1611,7 +1611,7 @@ function toggleEpisode(headerEl) {
 })();
 
 /* ── STICKY CTA BAR ── */
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
   var bar = document.getElementById('stickyCta');
   if (!bar) return;
   var shown = false;
@@ -1633,7 +1633,7 @@ function toggleEpisode(headerEl) {
       }
     }
   }, { passive: true });
-})();
+});
 
 /* ── EVERGREEN URGENCY DEADLINE ── */
 (function() {
