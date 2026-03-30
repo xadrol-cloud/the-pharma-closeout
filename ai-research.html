@@ -1016,6 +1016,39 @@
     .ep-subtitle { display: none; }
     .btn-primary, .btn-secondary { width: 100%; text-align: center; }
   }
+
+  /* ── STICKY CTA BAR ── */
+  .sticky-cta {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 99;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--gold);
+    padding: 0.75rem 1.5rem;
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    transform: translateY(100%); transition: transform 0.4s ease;
+  }
+  .sticky-cta.visible { transform: translateY(0); }
+  .sticky-cta.dismissed { display: none; }
+  .sticky-cta-text {
+    font-family: var(--font-body); font-size: 0.85rem; color: var(--white);
+  }
+  .sticky-cta-btn {
+    display: inline-block; padding: 0.5rem 1.5rem;
+    background: var(--gold); color: var(--black);
+    font-family: var(--font-body); font-weight: 600;
+    font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none; white-space: nowrap;
+  }
+  .sticky-cta-close {
+    background: none; border: none; color: var(--gray-light);
+    cursor: pointer; font-size: 1.2rem; padding: 0.25rem;
+    line-height: 1;
+  }
+  .sticky-cta-close:hover { color: var(--white); }
+  @media (max-width: 500px) {
+    .sticky-cta { flex-wrap: wrap; padding: 0.6rem 1rem; padding-bottom: calc(0.6rem + env(safe-area-inset-bottom, 0px)); }
+    .sticky-cta-text { font-size: 0.75rem; flex: 1; }
+  }
 </style>
 </head>
 <body>
@@ -1559,7 +1592,39 @@ function toggleEpisode(headerEl) {
     }
   });
 })();
+
+/* ── STICKY CTA BAR ── */
+(function() {
+  var bar = document.getElementById('stickyCta');
+  if (!bar) return;
+  var shown = false;
+  window.addEventListener('scroll', function() {
+    if (bar.classList.contains('dismissed')) return;
+    var scrollPct = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    if (scrollPct > 30 && !shown) {
+      bar.classList.add('visible');
+      shown = true;
+    }
+    // Hide when user reaches the briefing section (they can see the real CTA)
+    var briefing = document.getElementById('briefing');
+    if (briefing) {
+      var rect = briefing.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        bar.classList.remove('visible');
+      } else if (shown) {
+        bar.classList.add('visible');
+      }
+    }
+  }, { passive: true });
+})();
 </script>
+
+<!-- ── STICKY CTA BAR ── -->
+<div class="sticky-cta" id="stickyCta">
+  <span class="sticky-cta-text">Get the free 28-page AI in Pharma briefing</span>
+  <a href="https://thepharmacloseout.gumroad.com/l/briefing" target="_blank" rel="noopener" class="sticky-cta-btn" onclick="trackEvent('sticky_cta_click')">Download Free &rarr;</a>
+  <button class="sticky-cta-close" onclick="document.getElementById('stickyCta').classList.add('dismissed')" aria-label="Dismiss">&times;</button>
+</div>
 
 </body>
 </html>
