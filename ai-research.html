@@ -1365,6 +1365,21 @@
     </div>
   </div>
 
+  <!-- Comparison strip -->
+  <div style="display: flex; justify-content: center; gap: 3rem; margin: 3rem 0 2rem; flex-wrap: wrap; text-align: center;">
+    <div>
+      <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-light); margin-bottom: 0.25rem;">Free Briefing</div>
+      <div style="font-family: var(--font-display); font-size: 1.3rem;">28 pages</div>
+      <div style="font-size: 0.8rem; color: var(--gray-light);">The overview</div>
+    </div>
+    <div style="display: flex; align-items: center; color: var(--gold); font-size: 1.5rem;">&rarr;</div>
+    <div>
+      <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.25rem;">Full Compendium</div>
+      <div style="font-family: var(--font-display); font-size: 1.3rem; color: var(--gold);">169 pages</div>
+      <div style="font-size: 0.8rem; color: var(--gray-light);">The playbook</div>
+    </div>
+  </div>
+
   <!-- Pricing -->
   <div class="price-block">
     <div class="price-display">
@@ -1372,6 +1387,7 @@
       <span class="price-current">$149</span>
       <span class="price-badge">Launch Price</span>
     </div>
+    <div style="font-size: 0.8rem; color: var(--gray-light); margin-top: 0.5rem;">Launch pricing ends <span class="urgency-date"></span></div>
     <div class="price-cta">
       <a href="#" data-stripe class="btn-primary" onclick="trackEvent('compendium_click_main')">Get the Compendium &rarr;</a>
       <span class="price-meta">PDF · 169 pages · Instant delivery · Secure checkout via Gumroad</span>
@@ -1432,8 +1448,9 @@
     <span class="price-current">$149</span>
     <span class="price-badge">Launch Price</span>
   </div>
+  <div style="font-size: 0.8rem; color: var(--gray-light); margin-top: 0.5rem;">Launch pricing ends <span class="urgency-date"></span></div>
   <a href="#" data-stripe class="btn-primary" onclick="trackEvent('compendium_click_close')">Get the Compendium &rarr;</a>
-  <p class="closing-meta">Secure checkout via Stripe · PDF download · Instant delivery</p>
+  <p class="closing-meta">Secure checkout · PDF instant delivery · 60+ cited sources</p>
 </section>
 
 <!-- ── FOOTER ── -->
@@ -1616,6 +1633,16 @@ function toggleEpisode(headerEl) {
       }
     }
   }, { passive: true });
+})();
+
+/* ── EVERGREEN URGENCY DEADLINE ── */
+(function() {
+  var now = new Date();
+  var endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var dateStr = months[endOfMonth.getMonth()] + ' ' + endOfMonth.getDate() + ', ' + endOfMonth.getFullYear();
+  var els = document.querySelectorAll('.urgency-date');
+  els.forEach(function(el) { el.textContent = dateStr; });
 })();
 </script>
 
