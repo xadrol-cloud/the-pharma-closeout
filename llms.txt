@@ -1,0 +1,23 @@
+# The Pharma Closeout
+> Daily pharma intelligence and original research on AI in pharmaceutical and biotechnology industries.
+
+## Primary Content
+- AI in Pharma Strategic Briefing: Free 28-page executive summary on AI adoption in pharma
+- AI in Pharma Compendium: 169-page research report with 63 use cases, case studies, and the Cascade Framework
+- Daily Podcast: 15-minute pharma intelligence episodes on Spotify and Apple Podcasts
+
+## Key Topics
+- AI adoption in pharmaceutical companies
+- GenAI use cases in pharma commercial operations
+- Drug discovery and clinical development AI
+- Pharma AI maturity assessment (Cascade Framework)
+- Pharmaceutical industry competitive intelligence
+
+## URLs
+- Homepage: https://thepharmacloseout.com/
+- AI Research: https://thepharmacloseout.com/ai-research
+- About: https://thepharmacloseout.com/about
+- Free Briefing: https://thepharmacloseout.gumroad.com/l/briefing
+- Compendium: https://thepharmacloseout.gumroad.com/l/compendium
+- Podcast: https://open.spotify.com/show/6bib0887ucySx51e49M3tp
+- Newsletter: https://thepharmacloseout.substack.com/
