@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K6XEWCK7W4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K6XEWCK7W4');
+</script>
+<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "521570287";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script>
+<script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=521570287&fmt=gif" />
+</noscript>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deal Intelligence | The Pharma Closeout</title>
+<meta name="description" content="Pharma deal intelligence — scored, analyzed, and ranked. Explore M&A, licensing, and collaboration deals across biopharma.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Newsreader:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/deals.css">
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav class="nav" aria-label="Main navigation">
+  <span class="nav-brand">The Pharma <em>Closeout</em></span>
+  <div class="nav-sep"></div>
+  <div class="nav-links">
+    <a href="index.html">Podcast</a>
+    <a href="ai-research.html">Research</a>
+    <a href="deals.html" class="active">Deal Intelligence</a>
+    <a href="about.html">About</a>
+  </div>
+  <div class="nav-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" placeholder="Search deals..." aria-label="Search deals">
+  </div>
+</nav>
+
+
+<!-- ========== HERO: Featured Deal ========== -->
+<div class="hero">
+  <div class="hero-top">
+    <div class="hero-label">
+      <div class="hero-label-dot"></div>
+      Featured Deal
+    </div>
+    <span style="font-family:var(--serif);font-style:italic;font-size:22px;color:var(--gold);font-weight:400;letter-spacing:-0.3px;">Deal Intelligence</span>
+  </div>
+  <div class="featured">
+    <div id="featured-poster"></div>
+    <div id="featured-info"></div>
+  </div>
+</div>
+
+
+<!-- ========== SEARCH SECTION ========== -->
+<div class="search-section">
+  <div class="search-inner">
+    <div class="search-label">Search the Deal Database</div>
+    <div class="search-bar-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="search-input" class="search-bar" type="text" placeholder="Company, molecule, therapeutic area, indication...">
+    </div>
+    <div id="filters" class="search-filters">
+      <select name="deal_type" class="f-chip" aria-label="Deal Type">
+        <option value="">All Deal Types</option>
+        <option value="Acquisition">Acquisition / M&A</option>
+        <option value="Licensing / Option">Licensing / Option</option>
+        <option value="Co-Development / Collaboration">Co-Dev / Collaboration</option>
+        <option value="Asset Acquisition">Asset Acquisition</option>
+        <option value="Take-Private">Take-Private</option>
+      </select>
+      <select name="era" class="f-chip" aria-label="Era">
+        <option value="">All Eras</option>
+        <option value="Pre-2010">Pre-2010</option>
+        <option value="2010-2015">2010-2015</option>
+        <option value="2016-2020">2016-2020</option>
+        <option value="2021-Present">2021-Present</option>
+      </select>
+      <select name="min_value" class="f-chip" aria-label="Min Value">
+        <option value="">Any Value</option>
+        <option value="500">$500M+</option>
+        <option value="1000">$1B+</option>
+        <option value="5000">$5B+</option>
+        <option value="10000">$10B+</option>
+        <option value="50000">$50B+</option>
+      </select>
+    </div>
+  </div>
+  <div id="search-results" style="margin-top:24px"></div>
+</div>
+
+
+<!-- ========== DEAL TYPE LEGEND ========== -->
+<div class="section" style="margin-top:24px">
+  <div style="display:flex;gap:20px;align-items:center;font-size:11px;color:var(--ink-muted);flex-wrap:wrap;">
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:2px;background:linear-gradient(172deg,#070d1e,#162758);display:inline-block;"></span> Acquisition / M&A</span>
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:2px;background:linear-gradient(172deg,#100800,#382210);display:inline-block;"></span> Licensing / Option</span>
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:2px;background:linear-gradient(172deg,#000f08,#003522);display:inline-block;"></span> Co-Dev / Collaboration</span>
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:2px;background:linear-gradient(172deg,#0a0015,#28004f);display:inline-block;"></span> Asset Acquisition</span>
+  </div>
+</div>
+
+
+<!-- ========== LATEST DEALS CAROUSEL ========== -->
+<div class="section" id="latest-section">
+  <div class="section-header">
+    <div>
+      <span class="section-title">Latest Deals</span>
+      <span class="section-desc">Most recently announced</span>
+    </div>
+    <div class="section-arrows">
+      <button class="arrow-btn" aria-label="Scroll left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="arrow-btn" aria-label="Scroll right">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="carousel-wrap">
+    <div id="latest-carousel" class="carousel"></div>
+  </div>
+</div>
+
+
+<!-- ========== TRENDING CAROUSEL ========== -->
+<div class="section" id="trending-section">
+  <div class="section-header">
+    <div>
+      <span class="section-title">Trending</span>
+      <span class="section-desc">Highest-value and most-discussed</span>
+    </div>
+    <div class="section-arrows">
+      <button class="arrow-btn" aria-label="Scroll left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="arrow-btn" aria-label="Scroll right">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="carousel-wrap">
+    <div id="trending-carousel" class="carousel"></div>
+  </div>
+</div>
+
+
+<!-- ========== TOP OUTCOME SCORES CAROUSEL ========== -->
+<div class="section" id="top-section">
+  <div class="section-header">
+    <div>
+      <span class="section-title">Highest Outcome Scores</span>
+      <span class="section-desc">Best post-close performance</span>
+    </div>
+    <div class="section-arrows">
+      <button class="arrow-btn" aria-label="Scroll left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="arrow-btn" aria-label="Scroll right">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="carousel-wrap">
+    <div id="top-carousel" class="carousel"></div>
+  </div>
+</div>
+
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+  <span class="footer-brand">The Pharma <em>Closeout</em></span>
+  <div class="footer-links">
+    <a href="index.html">Podcast</a>
+    <a href="ai-research.html">Research</a>
+    <a href="deals.html">Deal Intelligence</a>
+    <a href="about.html">About</a>
+    <span>&copy; 2026 The Pharma Closeout</span>
+  </div>
+</footer>
+
+
+<!-- ========== JS WIRING ========== -->
+<script type="module">
+import {
+  fetchFeaturedDeal, fetchLatestDeals, fetchTrendingDeals, fetchTopOutcomeDeals,
+  renderPoster, renderFeaturedInfo, initCarousel, initSearch, searchDeals
+} from './assets/deals.js'
+
+// Featured deal
+const featured = await fetchFeaturedDeal()
+if (featured) {
+  document.getElementById('featured-poster').innerHTML = renderPoster(featured, 'featured')
+  document.getElementById('featured-info').innerHTML = renderFeaturedInfo(featured)
+}
+
+// Latest Deals carousel
+const latest = await fetchLatestDeals(20)
+const latestEl = document.getElementById('latest-carousel')
+latestEl.innerHTML = latest.map(d => renderPoster(d, 'carousel')).join('')
+initCarousel(document.getElementById('latest-section'), { autoScroll: true, interval: 4000 })
+
+// Trending carousel
+const trending = await fetchTrendingDeals(20)
+const trendingEl = document.getElementById('trending-carousel')
+trendingEl.innerHTML = trending.map(d => renderPoster(d, 'carousel')).join('')
+initCarousel(document.getElementById('trending-section'), {})
+
+// Highest Outcome Scores carousel
+const topOS = await fetchTopOutcomeDeals(20)
+const topEl = document.getElementById('top-carousel')
+topEl.innerHTML = topOS.map(d => renderPoster(d, 'carousel')).join('')
+initCarousel(document.getElementById('top-section'), {})
+
+// Search
+initSearch(
+  document.getElementById('search-input'),
+  document.getElementById('filters'),
+  document.getElementById('search-results')
+)
+</script>
+
+</body>
+</html>

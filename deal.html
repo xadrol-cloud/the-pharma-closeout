@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K6XEWCK7W4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K6XEWCK7W4');
+</script>
+<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "521570287";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script>
+<script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=521570287&fmt=gif" />
+</noscript>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deal Intelligence | The Pharma Closeout</title>
+<meta name="description" content="In-depth deal analysis with critic scores, outcome tracking, and financial breakdowns.">
+<meta property="og:title" content="Deal Intelligence | The Pharma Closeout">
+<meta property="og:description" content="In-depth deal analysis with critic scores, outcome tracking, and financial breakdowns.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/deals.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     NAV
+     ═══════════════════════════════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-brand">The Pharma <em>Closeout</em></div>
+  <div class="nav-sep"></div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="deals.html" class="active">Deal Intelligence</a>
+    <a href="ai-research.html">Research</a>
+    <a href="about.html">About</a>
+  </div>
+  <div class="nav-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    <input type="text" placeholder="Search deals..." id="nav-search-input">
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     LOADING STATE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div id="loading" style="text-align:center;padding:120px 40px;color:var(--ink-faint);font-size:14px;">Loading deal...</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════════════════════════ -->
+<div id="deal-hero" class="hero-inner" style="display:none;">
+  <div id="hero-poster"></div>
+  <div class="hero-content">
+    <div class="title-row">
+      <h1 class="deal-title" id="hero-title"></h1>
+    </div>
+    <div id="hero-scores" class="feat-scores" style="margin-top:16px;"></div>
+    <div class="hero-meta" id="hero-meta"></div>
+    <div class="tags" id="hero-tags"></div>
+    <div class="hero-lede" id="hero-summary"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     MAIN TWO-COLUMN LAYOUT
+     ═══════════════════════════════════════════════════════════════════ -->
+<div id="deal-body" class="main" style="display:none;">
+
+  <!-- ─── Main Content Column ─── -->
+  <div>
+
+    <!-- Outcome Timeline -->
+    <div id="timeline-section" class="card" style="display:none;">
+      <div class="card-head">
+        <span class="card-title">Outcome Timeline</span>
+      </div>
+      <div id="timeline"></div>
+    </div>
+
+    <!-- Revenue Arc -->
+    <div id="revenue-section" style="display:none;">
+      <div id="revenue-arc"></div>
+    </div>
+
+    <!-- Disease & Market Context -->
+    <div id="disease-section" class="card" style="display:none;">
+      <div id="disease-context"></div>
+    </div>
+
+    <!-- Deal Financials -->
+    <div id="financials-section" class="card" style="display:none;">
+      <div class="card-head">
+        <span class="card-title">Deal Financials</span>
+      </div>
+      <div id="financials"></div>
+    </div>
+
+    <!-- Critic Reviews -->
+    <div id="reviews-section" class="card" style="display:none;">
+      <div id="critic-reviews"></div>
+    </div>
+
+    <!-- Key Assets -->
+    <div id="assets-section" class="card" style="display:none;">
+      <div id="key-assets"></div>
+    </div>
+
+  </div>
+
+  <!-- ─── Sidebar Column (360px) ─── -->
+  <div>
+
+    <!-- Score Breakdown -->
+    <div id="score-section" class="sidebar-card" style="display:none;">
+      <div class="sb-title">Score Breakdown</div>
+      <div id="score-breakdown"></div>
+    </div>
+
+    <!-- Comparable Deals -->
+    <div id="comparables-section" class="sidebar-card" style="display:none;">
+      <div class="sb-title">Comparable Deals</div>
+      <div id="comparables"></div>
+    </div>
+
+    <!-- Sources -->
+    <div id="sources-section" class="sidebar-card" style="display:none;">
+      <div class="sb-title">Sources</div>
+      <div id="sources"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     FLOATING ACTION BAR
+     ═══════════════════════════════════════════════════════════════════ -->
+<div id="deal-fab" class="fab" style="display:none;">
+  <button class="fab-btn" title="Export to Excel (coming soon)" disabled>
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+    Excel
+  </button>
+  <div class="fab-div"></div>
+  <button class="fab-btn" title="Export to PowerPoint (coming soon)" disabled>
+    <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg>
+    PowerPoint
+  </button>
+  <div class="fab-div"></div>
+  <button class="fab-btn primary" title="Generate Deal Sheet (coming soon)" disabled>
+    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    Deal Sheet
+  </button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════════════════════════ -->
+<footer id="deal-footer" class="footer" style="display:none;">
+  <div class="footer-brand">The Pharma <em>Closeout</em></div>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="deals.html">Deals</a>
+    <a href="ai-research.html">Research</a>
+    <a href="about.html">About</a>
+    <span>&copy; 2026</span>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PAGE SCRIPT
+     ═══════════════════════════════════════════════════════════════════ -->
+<script type="module">
+import {
+  fetchDeal, fetchDealSources, fetchDealOutcomes, fetchComparables,
+  renderPoster, renderScorePill, renderTimeline, renderRevenueArc,
+  renderDiseaseContext, renderFinancials, renderCriticReviews,
+  renderKeyAssets, renderScoreBreakdown, renderComparables as renderComps,
+  renderSources, formatValue, formatDate, parseTAs
+} from './assets/deals.js'
+
+const dealId = new URLSearchParams(window.location.search).get('id')
+
+if (!dealId) {
+  document.getElementById('loading').innerHTML =
+    '<div style="text-align:center;padding:100px;font-family:var(--sans);color:var(--ink-muted);">Deal not found. <a href="deals.html" style="color:var(--gold);text-decoration:none;font-weight:600;">Browse deals &rarr;</a></div>'
+} else {
+  try {
+    const [deal, sources, outcomes] = await Promise.all([
+      fetchDeal(dealId),
+      fetchDealSources(dealId),
+      fetchDealOutcomes(dealId),
+    ])
+
+    document.getElementById('loading').style.display = 'none'
+
+    if (!deal) {
+      document.getElementById('loading').style.display = ''
+      document.getElementById('loading').innerHTML =
+        '<div style="text-align:center;padding:100px;font-family:var(--sans);color:var(--ink-muted);">Deal not found. <a href="deals.html" style="color:var(--gold);text-decoration:none;font-weight:600;">Browse deals &rarr;</a></div>'
+    } else {
+      // ── Page title ──
+      document.title = `${deal.buyer_name} / ${deal.target_name} | Deal Intelligence`
+
+      // ── Hero ──
+      document.getElementById('deal-hero').style.display = ''
+      document.getElementById('hero-poster').innerHTML = renderPoster(deal, 'featured')
+      document.getElementById('hero-title').textContent = `${deal.buyer_name} / ${deal.target_name}`
+
+      // Score pills
+      document.getElementById('hero-scores').innerHTML =
+        renderScorePill('critic', deal.critic_score != null ? Math.round(deal.critic_score) : null, 'Market consensus') +
+        renderScorePill('outcome', deal.outcome_score != null ? Math.round(deal.outcome_score) : null,
+          deal.outcome_score != null ? 'Outcome results' : `Unlocks ${parseInt(deal.close_date?.substring(0,4) || deal.announcement_date?.substring(0,4) || '2025') + 5}`)
+
+      // Meta line
+      const val = formatValue(deal.deal_value_usd_mm)
+      document.getElementById('hero-meta').innerHTML =
+        `${deal.deal_type || 'Acquisition'} &middot; <strong>${val}</strong> &middot; ${formatDate(deal.announcement_date)}`
+
+      // Tags
+      const tas = parseTAs(deal.therapeutic_areas)
+      const tagHtml = tas.slice(0, 3).map(t => `<span class="tag t-blue">${t}</span>`).join('') +
+        (deal.era_tag ? `<span class="tag t-amber">${deal.era_tag}</span>` : '') +
+        (deal.deal_type ? `<span class="tag t-muted">${deal.deal_type}</span>` : '')
+      document.getElementById('hero-tags').innerHTML = tagHtml
+
+      // Summary / editorial lede
+      if (deal.editorial_summary) {
+        document.getElementById('hero-summary').textContent = deal.editorial_summary
+        document.getElementById('hero-summary').style.display = ''
+      }
+
+      // ── Show body and footer ──
+      document.getElementById('deal-body').style.display = ''
+      document.getElementById('deal-footer').style.display = ''
+      document.getElementById('deal-fab').style.display = ''
+
+      // ── Outcome Timeline ──
+      const timelineHtml = renderTimeline(outcomes)
+      if (outcomes && outcomes.length) {
+        document.getElementById('timeline').innerHTML = timelineHtml
+        document.getElementById('timeline-section').style.display = ''
+      }
+
+      // ── Revenue Arc ──
+      const revenueHtml = renderRevenueArc(outcomes)
+      document.getElementById('revenue-arc').innerHTML = revenueHtml
+      document.getElementById('revenue-section').style.display = ''
+
+      // ── Disease & Market Context ──
+      const diseaseHtml = renderDiseaseContext(deal)
+      if (diseaseHtml) {
+        document.getElementById('disease-context').innerHTML = diseaseHtml
+        document.getElementById('disease-section').style.display = ''
+      }
+
+      // ── Deal Financials ──
+      document.getElementById('financials').innerHTML = renderFinancials(deal)
+      document.getElementById('financials-section').style.display = ''
+
+      // ── Critic Reviews ──
+      const reviewsHtml = renderCriticReviews(sources)
+      document.getElementById('critic-reviews').innerHTML = reviewsHtml
+      document.getElementById('reviews-section').style.display = ''
+
+      // ── Key Assets ──
+      const assetsHtml = renderKeyAssets(deal)
+      document.getElementById('key-assets').innerHTML = assetsHtml
+      document.getElementById('assets-section').style.display = ''
+
+      // ── Sidebar: Score Breakdown ──
+      const scoreHtml = renderScoreBreakdown(outcomes)
+      if (scoreHtml) {
+        document.getElementById('score-breakdown').innerHTML = scoreHtml
+        document.getElementById('score-section').style.display = ''
+      }
+
+      // ── Sidebar: Comparables ──
+      const comparables = await fetchComparables(deal)
+      const compsHtml = renderComps(comparables)
+      if (compsHtml) {
+        document.getElementById('comparables').innerHTML = compsHtml
+        document.getElementById('comparables-section').style.display = ''
+      }
+
+      // ── Sidebar: Sources ──
+      const sourcesHtml = renderSources(sources)
+      document.getElementById('sources').innerHTML = sourcesHtml
+      document.getElementById('sources-section').style.display = ''
+    }
+  } catch (err) {
+    console.error('Deal load error:', err)
+    document.getElementById('loading').innerHTML =
+      '<div style="text-align:center;padding:100px;font-family:var(--sans);color:var(--ink-muted);">Error loading deal. <a href="deals.html" style="color:var(--gold);text-decoration:none;font-weight:600;">Browse deals &rarr;</a></div>'
+  }
+}
+
+// ── Nav search: redirect to deals.html with query ──
+const navInput = document.getElementById('nav-search-input')
+if (navInput) {
+  navInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && navInput.value.trim()) {
+      window.location.href = `deals.html?q=${encodeURIComponent(navInput.value.trim())}`
+    }
+  })
+}
+</script>
+
+</body>
+</html>

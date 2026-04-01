@@ -1,0 +1,62 @@
+# Daily Deal Intelligence Update
+#
+# Runs the BD deal automation pipeline on a schedule:
+#   1. daily_new_deals.py - scans for new pharma/biotech deals
+#   2. daily_sweep.py - tiered update sweep for existing deals
+#
+# SETUP REQUIRED:
+#   1. Add these GitHub Actions secrets (Settings > Secrets and variables > Actions):
+#      - SUPABASE_URL: Your Supabase project URL
+#      - SUPABASE_SERVICE_KEY: Supabase service_role key (NOT anon key)
+#      - ANTHROPIC_API_KEY: For Claude API enrichment in daily_new_deals.py
+#      - SEARCH_API_KEY: Brave Search API key for news scanning
+#
+#   2. Copy automation scripts into this repo at scripts/deals/:
+#      From: BD Data Base/scripts/
+#      Files needed:
+#        - daily_new_deals.py
+#        - daily_sweep.py
+#        - supabase_import.py
+#        - models.py
+#        - deal_research_prompt.txt (from BD Data Base/config/)
+#      Then update the 'run' paths below to point to scripts/deals/
+#
+#   3. Alternatively, keep scripts external and use a checkout step
+#      to pull them from a private repo or artifact store.
+
+name: Daily Deal Intelligence Update
+
+on:
+  schedule:
+    - cron: '0 11 * * *'  # 6 AM ET (11 AM UTC)
+  workflow_dispatch:        # Manual trigger from GitHub UI
+
+jobs:
+  deal-intelligence:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install supabase httpx anthropic
+
+      - name: Run daily new deal scan
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SEARCH_API_KEY: ${{ secrets.SEARCH_API_KEY }}
+        run: python scripts/deals/daily_new_deals.py
+
+      - name: Run tiered sweep
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SEARCH_API_KEY: ${{ secrets.SEARCH_API_KEY }}
+        run: python scripts/deals/daily_sweep.py
