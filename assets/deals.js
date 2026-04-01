@@ -741,42 +741,47 @@ export function renderKeyAssets(deal) {
 export function renderScoreBreakdown(outcomes) {
   if (!outcomes || !outcomes.length) return ''
 
-  // Derive dimension scores from outcomes if available
+  // Derive dimension scores from outcomes — use actual DB column names
   const dimensions = [
-    { label: 'Revenue Synergy', key: 'revenue_synergy_score', icon: '📈' },
-    { label: 'Pipeline Retention', key: 'pipeline_retention_score', icon: '🧬' },
-    { label: 'Integration Execution', key: 'integration_execution_score', icon: '⚙️' },
-    { label: 'Strategic Fit', key: 'strategic_fit_score', icon: '🎯' },
+    { label: 'Strategic Fit', key: 'strategic_fit_score', icon: '🎯', weight: '25%' },
+    { label: 'Financial Return', key: 'financial_return_score', icon: '📈', weight: '35%' },
+    { label: 'Pipeline Outcome', key: 'pipeline_outcome_score', icon: '🧬', weight: '25%' },
+    { label: 'Integration', key: 'integration_score', icon: '⚙️', weight: '15%' },
   ]
 
-  // Look for dimension scores in the first outcome or deal-level data
-  const latest = outcomes[outcomes.length - 1] || {}
+  // Use the latest completed outcome (prefer 15yr > 10yr > 5yr)
+  const sorted = [...outcomes].sort((a, b) => {
+    const order = { '15yr': 0, '10yr': 1, '5yr': 2 }
+    return (order[a.window] ?? 3) - (order[b.window] ?? 3)
+  })
+  const latest = sorted.find(o => o.strategic_fit_score != null) || sorted[0] || {}
 
   const rows = dimensions.map(dim => {
     const score = latest[dim.key] != null ? latest[dim.key] : null
-    const pct = score != null ? (score / 10) * 100 : 50
-    const tier = scoreTier(score)
-    const display = score != null ? score.toFixed(1) : '—'
+    const pct = score != null ? score : 50  // 0-100 scale maps directly to %
+    const tier = score != null ? (score >= 75 ? 'high' : score >= 50 ? 'mid' : 'low') : ''
+    const display = score != null ? score : '—'
 
     return `<div class="sc-row">
       <div class="sc-header" aria-expanded="false" onclick="this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true');this.closest('.sc-row').querySelector('.sc-detail').classList.toggle('open')">
-        <span class="sc-label">${dim.icon} ${dim.label}</span>
+        <span class="sc-label">${dim.icon} ${dim.label} <span style="font-size:11px;color:var(--ink-faint)">(${dim.weight})</span></span>
         <span class="sc-num">${display}</span>
         <div class="sc-chev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
       </div>
       <div class="sc-bar"><div class="sc-fill ${tier}" style="width:${pct}%"></div></div>
       <div class="sc-detail">
         <div class="sc-detail-inner ${tier}">
-          ${score != null ? `Score: <strong>${display}/10</strong>` : 'Score not yet calculated for this dimension.'}
+          ${score != null ? `Score: <strong>${display}/100</strong>` : 'Score not yet calculated for this dimension.'}
         </div>
       </div>
     </div>`
   })
 
-  // Difficulty modifier
-  const difficulty = latest.difficulty_modifier != null ? latest.difficulty_modifier : null
+  // Deal difficulty modifier
+  const difficulty = latest.deal_difficulty_score != null ? latest.deal_difficulty_score : null
+  const multiplier = difficulty != null ? (0.8 + difficulty * 0.004).toFixed(2) : null
   if (difficulty != null) {
-    rows.push(`<div class="sc-method">Difficulty modifier: <strong>${difficulty > 0 ? '+' : ''}${difficulty.toFixed(1)}</strong> — adjusts for deal complexity</div>`)
+    rows.push(`<div class="sc-method">Deal Difficulty: <strong>${difficulty}/100</strong> — multiplier ×${multiplier}</div>`)
   }
 
   return rows.join('')
