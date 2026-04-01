@@ -555,19 +555,41 @@ export function renderRevenueArc(outcomes) {
 export function renderDiseaseContext(deal) {
   const indications = parseTAs(deal.indications)
   const tas = parseTAs(deal.therapeutic_areas)
+  const molecules = parseTAs(deal.lead_molecules)
+  const moas = parseTAs(deal.mechanisms_of_action)
 
   if (!indications.length && !tas.length) return ''
 
-  // Build one card per indication, or per TA if no indications
   const items = indications.length ? indications : tas
+
+  // Map TAs to icons
+  const taIcons = {
+    'oncology': { icon: '🎗️', bg: 'var(--green-bg)', color: 'var(--green)' },
+    'hematology': { icon: '🩸', bg: '#fef2f2', color: 'var(--red)' },
+    'immunology': { icon: '🧴', bg: 'var(--amber-bg)', color: 'var(--amber)' },
+    'infectious disease': { icon: '🧬', bg: '#e8f4f8', color: 'var(--blue)' },
+    'neurology': { icon: '🧠', bg: 'var(--purple-bg)', color: 'var(--purple)' },
+    'cns': { icon: '🧠', bg: 'var(--purple-bg)', color: 'var(--purple)' },
+    'cardiovascular': { icon: '❤️', bg: '#fef2f2', color: 'var(--red)' },
+    'rare disease': { icon: '🔬', bg: 'var(--blue-bg)', color: 'var(--blue)' },
+    'dermatology': { icon: '🧴', bg: 'var(--amber-bg)', color: 'var(--amber)' },
+    'respiratory': { icon: '🫁', bg: 'var(--blue-bg)', color: 'var(--blue)' },
+  }
+  const defaultIcon = { icon: '💊', bg: '#f3f4f6', color: 'var(--ink-muted)' }
 
   const cards = items.map((item, i) => {
     const id = `disease-${i}`
+    const taMatch = tas.find(t => t.toLowerCase() in taIcons)
+    const iconSet = taMatch ? taIcons[taMatch.toLowerCase()] : defaultIcon
+    const regStatus = deal.regulatory_status_at_deal || '—'
+    const statusColor = regStatus === 'Approved' ? 't-green' : regStatus.startsWith('Phase') ? 't-amber' : 't-muted'
+
     return `<div class="disease-card">
       <div class="disease-header" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded')==='true'?'false':'true'); this.nextElementSibling.classList.toggle('open')">
-        <div class="disease-icon" style="background:var(--purple-bg);color:var(--purple)">⬡</div>
+        <div class="disease-icon" style="background:${iconSet.bg}">${iconSet.icon}</div>
         <div class="disease-name-block">
           <div class="disease-name">${esc(item)}</div>
+          <div style="font-size:12px;color:var(--ink-muted)">${esc(tas.join(' · '))}</div>
         </div>
         <div class="dchev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
       </div>
@@ -579,10 +601,20 @@ export function renderDiseaseContext(deal) {
               <p>${esc(tas.join(', ') || item)}</p>
             </div>
             <div class="dp-block">
-              <h4>Indication</h4>
-              <p>${esc(item)}</p>
+              <h4>Stage at Deal</h4>
+              <p><span class="tag ${statusColor}">${esc(regStatus)}</span></p>
             </div>
           </div>
+          ${molecules.length ? `<div class="dp-grid" style="margin-top:12px">
+            <div class="dp-block">
+              <h4>Key Molecules</h4>
+              <p>${molecules.map(m => esc(m)).join(', ')}</p>
+            </div>
+            <div class="dp-block">
+              <h4>Mechanism of Action</h4>
+              <p>${moas.length ? moas.map(m => esc(m)).join(', ') : '—'}</p>
+            </div>
+          </div>` : ''}
         </div>
       </div>
     </div>`
@@ -595,22 +627,32 @@ export function renderDiseaseContext(deal) {
 /* ---------- 3g. Financials Grid ---------- */
 
 export function renderFinancials(deal) {
+  const evRev = deal.deal_ev_revenue_x != null ? `${deal.deal_ev_revenue_x.toFixed(1)}x` : '—'
+  const evEbitda = deal.deal_ev_ebitda_x != null ? `${deal.deal_ev_ebitda_x.toFixed(1)}x` : '—'
+  const ttc = deal.time_to_close_days != null ? `${deal.time_to_close_days} days` : '—'
+  const equity = deal.equity_sought_pct != null ? `${deal.equity_sought_pct}%` : '—'
+  const cashPct = deal.cash_portion_usd_mm != null ? formatValue(deal.cash_portion_usd_mm) : null
+  const stockPct = deal.stock_portion_usd_mm != null ? formatValue(deal.stock_portion_usd_mm) : null
+  let structure = deal.closing_structure || '—'
+  if (cashPct && stockPct) structure = `${cashPct} cash + ${stockPct} stock`
+  else if (cashPct) structure = `${cashPct} cash`
+
   const metrics = [
-    { label: 'Deal Value', value: formatValue(deal.deal_value_usd_mm), color: '' },
-    { label: 'Premium Paid', value: deal.premium_pct != null ? `${Math.round(deal.premium_pct)}%` : '—', color: deal.premium_pct > 50 ? 'amber' : '' },
-    { label: 'Revenue Multiple', value: deal.revenue_multiple != null ? `${deal.revenue_multiple.toFixed(1)}x` : '—', color: '' },
-    { label: 'Upfront', value: deal.upfront_usd_mm != null ? formatValue(deal.upfront_usd_mm) : '—', color: '' },
-    { label: 'Milestones', value: deal.milestones_usd_mm != null ? formatValue(deal.milestones_usd_mm) : '—', color: '' },
-    { label: 'Buyer Market Cap', value: deal.buyer_market_cap_mm != null ? formatValue(deal.buyer_market_cap_mm) : '—', color: '' },
-    { label: 'Target Revenue', value: deal.target_revenue_mm != null ? formatValue(deal.target_revenue_mm) : '—', color: '' },
-    { label: 'Synergy Target', value: deal.synergy_target_mm != null ? formatValue(deal.synergy_target_mm) : '—', color: 'green' },
-    { label: 'EPS Accretion', value: deal.eps_accretion_year || '—', color: '' },
+    { label: 'Deal Value', value: formatValue(deal.deal_value_usd_mm) },
+    { label: 'Financing', value: deal.financing_type || '—' },
+    { label: 'Close Date', value: deal.close_date ? formatDate(deal.close_date) : '—' },
+    { label: 'EV / Revenue', value: evRev },
+    { label: 'EV / EBITDA', value: evEbitda },
+    { label: 'Time to Close', value: ttc },
+    { label: 'Target LTM Revenue', value: deal.target_revenue_ltm_usd_mm != null ? formatValue(deal.target_revenue_ltm_usd_mm) : '—' },
+    { label: 'Structure', value: structure },
+    { label: 'Equity Sought', value: equity },
   ]
 
   const cells = metrics.map(m =>
     `<div class="fin-cell">
       <div class="fin-label">${esc(m.label)}</div>
-      <div class="fin-val${m.color ? ' ' + m.color : ''}">${esc(m.value)}</div>
+      <div class="fin-val">${esc(m.value)}</div>
     </div>`
   )
 
