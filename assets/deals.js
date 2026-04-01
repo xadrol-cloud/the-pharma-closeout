@@ -577,6 +577,12 @@ export function renderDiseaseContext(deal) {
   }
   const defaultIcon = { icon: '💊', bg: '#f3f4f6', color: 'var(--ink-muted)' }
 
+  // Parse disease_context JSON if available
+  let diseaseData = []
+  try { diseaseData = JSON.parse(deal.disease_context || '[]') } catch {}
+  const dcMap = {}
+  for (const dc of diseaseData) { if (dc.indication) dcMap[dc.indication.toLowerCase()] = dc }
+
   const cards = items.map((item, i) => {
     const id = `disease-${i}`
     const taMatch = tas.find(t => t.toLowerCase() in taIcons)
@@ -584,27 +590,40 @@ export function renderDiseaseContext(deal) {
     const regStatus = deal.regulatory_status_at_deal || '—'
     const statusColor = regStatus === 'Approved' ? 't-green' : regStatus.startsWith('Phase') ? 't-amber' : 't-muted'
 
+    // Look up disease context data for this indication
+    const dc = dcMap[item.toLowerCase()] || {}
+
+    const marketStats = []
+    if (dc.us_patients) marketStats.push({ label: 'US Patients', value: dc.us_patients })
+    if (dc.prevalence) marketStats.push({ label: 'Prevalence', value: dc.prevalence })
+    if (dc.market_size_usd) marketStats.push({ label: 'Market Size', value: dc.market_size_usd })
+    if (dc.survival_rate) marketStats.push({ label: 'Survival Rate', value: dc.survival_rate })
+
     return `<div class="disease-card">
       <div class="disease-header" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded')==='true'?'false':'true'); this.nextElementSibling.classList.toggle('open')">
         <div class="disease-icon" style="background:${iconSet.bg}">${iconSet.icon}</div>
         <div class="disease-name-block">
           <div class="disease-name">${esc(item)}</div>
-          <div style="font-size:12px;color:var(--ink-muted)">${esc(tas.join(' · '))}</div>
+          <div style="font-size:12px;color:var(--ink-muted)">${esc(tas.join(' · '))}${dc.us_patients ? ' · ' + esc(dc.us_patients) + ' US patients' : ''}</div>
         </div>
         <div class="dchev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
       </div>
       <div class="dpanel" id="${id}">
         <div class="dpanel-inner">
-          <div class="dp-grid">
-            <div class="dp-block">
-              <h4>Therapeutic Area</h4>
-              <p>${esc(tas.join(', ') || item)}</p>
-            </div>
+          ${dc.overview ? `<p style="margin-bottom:16px;color:var(--ink-light);font-size:14px;line-height:1.6">${esc(dc.overview)}</p>` : ''}
+          ${marketStats.length ? `<div class="dp-grid">${marketStats.map(s => `<div class="dp-block"><h4>${esc(s.label)}</h4><p style="font-size:18px;font-weight:600;font-family:var(--serif)">${esc(s.value)}</p></div>`).join('')}</div>` : ''}
+          <div class="dp-grid" style="margin-top:12px">
             <div class="dp-block">
               <h4>Stage at Deal</h4>
               <p><span class="tag ${statusColor}">${esc(regStatus)}</span></p>
             </div>
+            <div class="dp-block">
+              <h4>Therapeutic Area</h4>
+              <p>${esc(tas.join(', ') || item)}</p>
+            </div>
           </div>
+          ${dc.standard_of_care ? `<div class="dp-grid" style="margin-top:12px"><div class="dp-block"><h4>Standard of Care</h4><p style="font-size:13px;color:var(--ink-light)">${esc(dc.standard_of_care)}</p></div></div>` : ''}
+          ${dc.competitive_landscape ? `<div class="dp-grid" style="margin-top:12px"><div class="dp-block"><h4>Competitive Landscape at Deal</h4><p style="font-size:13px;color:var(--ink-light)">${esc(dc.competitive_landscape)}</p></div></div>` : ''}
           ${molecules.length ? `<div class="dp-grid" style="margin-top:12px">
             <div class="dp-block">
               <h4>Key Molecules</h4>
