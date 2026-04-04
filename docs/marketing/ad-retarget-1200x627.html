@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ad — AI in Pharma Compendium Retarget 1200×627</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;0,6..72,700;0,6..72,800;1,6..72,300;1,6..72,400;1,6..72,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  @page { size: 1200px 627px; margin: 0; }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0a0a;
+    --gold: #c49332;
+    --white: #e8e4de;
+    --gray: #6b6b6b;
+    --font-display: 'Newsreader', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+  }
+
+  body {
+    background: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .ad {
+    width: 1200px;
+    height: 627px;
+    background: var(--black);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  /* Noise texture */
+  .noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Outer border */
+  .ad-border {
+    position: absolute;
+    inset: 20px;
+    border: 1px solid rgba(196, 147, 50, 0.12);
+    pointer-events: none;
+    z-index: 4;
+  }
+
+  /* Corner marks */
+  .corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: var(--gold);
+    border-style: solid;
+    opacity: 0.5;
+    z-index: 5;
+  }
+  .corner.tl { top: 20px; left: 20px; border-width: 1px 0 0 1px; }
+  .corner.tr { top: 20px; right: 20px; border-width: 1px 1px 0 0; }
+  .corner.bl { bottom: 20px; left: 20px; border-width: 0 0 1px 1px; }
+  .corner.br { bottom: 20px; right: 20px; border-width: 0 1px 1px 0; }
+
+  /* Column divider */
+  .divider {
+    position: absolute;
+    left: 672px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom,
+      transparent 5%,
+      rgba(196, 147, 50, 0.1) 25%,
+      rgba(196, 147, 50, 0.1) 75%,
+      transparent 95%);
+    z-index: 2;
+  }
+
+  /* Diagonal accent */
+  .diagonal {
+    position: absolute;
+    left: 648px;
+    top: 0;
+    width: 1px;
+    height: 180px;
+    background: linear-gradient(to bottom, rgba(196, 147, 50, 0.22), transparent);
+    transform: rotate(12deg);
+    transform-origin: top center;
+    z-index: 2;
+  }
+
+  /* ══ LEFT COLUMN ══ */
+  .ad-left {
+    position: absolute;
+    left: 0; top: 0;
+    width: 672px;
+    height: 100%;
+    padding: 52px 52px 52px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 3;
+  }
+
+  .ad-label {
+    font-family: var(--font-body);
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.75;
+    margin-bottom: 18px;
+  }
+
+  .ad-rule {
+    width: 44px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+    margin-bottom: 22px;
+  }
+
+  .ad-headline {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 26px;
+  }
+
+  .ad-headline .em {
+    display: block;
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .ad-stats {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .ad-stat {
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(196, 147, 50, 0.7);
+    padding: 5px 11px;
+    border: 1px solid rgba(196, 147, 50, 0.2);
+  }
+
+  .ad-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .ad-price {
+    font-family: var(--font-display);
+    font-size: 66px;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .ad-price-label {
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gray);
+    padding-bottom: 8px;
+  }
+
+  /* ══ RIGHT COLUMN ══ */
+  .ad-right {
+    position: absolute;
+    right: 0; top: 0;
+    width: 528px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+  }
+
+  .doc-glow {
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196, 147, 50, 0.055) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .doc-wrap {
+    position: relative;
+  }
+
+  /* Shadow doc behind (depth) */
+  .mock-doc-bg {
+    position: absolute;
+    width: 188px;
+    height: 258px;
+    background: #0d0d0d;
+    border: 1px solid rgba(196, 147, 50, 0.07);
+    top: 50%;
+    left: 50%;
+    transform: translate(-58%, -48%) rotate(-5deg);
+  }
+
+  /* Main mock document */
+  .mock-doc {
+    width: 196px;
+    height: 268px;
+    background: #0f0f0f;
+    border: 1px solid rgba(196, 147, 50, 0.15);
+    position: relative;
+    z-index: 1;
+  }
+
+  .mock-top-bar {
+    height: 4px;
+    background: var(--gold);
+  }
+
+  .mock-inner {
+    padding: 13px 13px;
+  }
+
+  /* Mock lines */
+  .ml {
+    height: 2px;
+    background: rgba(196, 147, 50, 0.1);
+    margin-bottom: 5px;
+    border-radius: 1px;
+  }
+  .ml.w90 { width: 90%; }
+  .ml.w75 { width: 75%; }
+  .ml.w55 { width: 55%; }
+  .ml.w80 { width: 80%; }
+  .ml.w65 { width: 65%; }
+  .ml.w45 { width: 45%; }
+  .ml.w70 { width: 70%; }
+  .ml.w85 { width: 85%; }
+  .ml.w40 { width: 40%; }
+
+  .mg { height: 10px; }
+  .mgs { height: 6px; }
+
+  /* Mini bar chart */
+  .mock-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 32px;
+    margin-bottom: 9px;
+  }
+  .mock-bar { flex: 1; background: rgba(196, 147, 50, 0.1); }
+  .mock-bar.h1 { height: 38%; }
+  .mock-bar.h2 { height: 62%; }
+  .mock-bar.h3 { height: 44%; }
+  .mock-bar.h4 { height: 88%; background: rgba(196, 147, 50, 0.32); }
+  .mock-bar.h5 { height: 56%; }
+  .mock-bar.h6 { height: 72%; background: rgba(196, 147, 50, 0.22); }
+
+  /* Grid */
+  .mock-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3px;
+    margin-bottom: 9px;
+  }
+  .mock-cell { height: 13px; background: rgba(196, 147, 50, 0.05); }
+  .mock-cell.lit { background: rgba(196, 147, 50, 0.14); }
+
+  /* Rotated side label */
+  .rotated-label {
+    position: absolute;
+    right: 58px;
+    bottom: 90px;
+    font-family: var(--font-body);
+    font-size: 8px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(196, 147, 50, 0.28);
+    transform: rotate(90deg);
+    transform-origin: right bottom;
+    white-space: nowrap;
+    z-index: 3;
+  }
+
+  /* Brand */
+  .ad-brand {
+    position: absolute;
+    bottom: 28px;
+    right: 36px;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: rgba(196, 147, 50, 0.4);
+    z-index: 5;
+  }
+</style>
+</head>
+<body>
+<div class="ad">
+  <div class="noise"></div>
+  <div class="ad-border"></div>
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+  <div class="divider"></div>
+  <div class="diagonal"></div>
+
+  <!-- Left column -->
+  <div class="ad-left">
+    <div class="ad-label">The Pharma Closeout Research</div>
+    <div class="ad-rule"></div>
+    <h1 class="ad-headline">
+      AI in Pharma:
+      <span class="em">The Definitive Compendium</span>
+    </h1>
+    <div class="ad-stats">
+      <span class="ad-stat">169 Pages</span>
+      <span class="ad-stat">63 Use Cases</span>
+      <span class="ad-stat">30-Q Diagnostic</span>
+    </div>
+    <div class="ad-price-row">
+      <div class="ad-price">$149</div>
+      <div class="ad-price-label">Launch Price</div>
+    </div>
+  </div>
+
+  <!-- Right column -->
+  <div class="ad-right">
+    <div class="doc-glow"></div>
+    <div class="doc-wrap">
+      <div class="mock-doc-bg"></div>
+      <div class="mock-doc">
+        <div class="mock-top-bar"></div>
+        <div class="mock-inner">
+          <div class="ml w75"></div>
+          <div class="ml w90"></div>
+          <div class="mgs"></div>
+          <div class="mock-bars">
+            <div class="mock-bar h1"></div>
+            <div class="mock-bar h2"></div>
+            <div class="mock-bar h3"></div>
+            <div class="mock-bar h4"></div>
+            <div class="mock-bar h5"></div>
+            <div class="mock-bar h6"></div>
+          </div>
+          <div class="ml w55"></div>
+          <div class="ml w80"></div>
+          <div class="mg"></div>
+          <div class="mock-grid">
+            <div class="mock-cell lit"></div>
+            <div class="mock-cell"></div>
+            <div class="mock-cell lit"></div>
+            <div class="mock-cell"></div>
+            <div class="mock-cell lit"></div>
+            <div class="mock-cell"></div>
+          </div>
+          <div class="ml w65"></div>
+          <div class="ml w45"></div>
+          <div class="mg"></div>
+          <div class="ml w90"></div>
+          <div class="ml w70"></div>
+          <div class="ml w85"></div>
+          <div class="mgs"></div>
+          <div class="ml w40"></div>
+          <div class="ml w75"></div>
+          <div class="mg"></div>
+          <div class="mock-grid">
+            <div class="mock-cell"></div>
+            <div class="mock-cell lit"></div>
+            <div class="mock-cell"></div>
+          </div>
+          <div class="ml w80"></div>
+          <div class="ml w55"></div>
+        </div>
+      </div>
+    </div>
+    <div class="rotated-label">169 pages · edition 1</div>
+  </div>
+
+  <div class="ad-brand">The Pharma Closeout</div>
+</div>
+</body>
+</html>
