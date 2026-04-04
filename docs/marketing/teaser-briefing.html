@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI in Pharma — Teaser Briefing</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;0,6..72,700;0,6..72,800;1,6..72,300;1,6..72,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  @page {
+    size: 1080px 1350px;
+    margin: 0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0a0a;
+    --gold: #c49332;
+    --gold-dim: rgba(196, 147, 50, 0.15);
+    --gold-glow: rgba(196, 147, 50, 0.06);
+    --white: #e8e4de;
+    --gray: #6b6b6b;
+    --font-display: 'Newsreader', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+  }
+
+  body {
+    background: #333;
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    width: 1080px;
+    height: 1350px;
+    background: var(--black);
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    margin: 0 auto 20px;
+  }
+
+  @media print {
+    body { background: none; }
+    .page { margin: 0; page-break-after: always; }
+  }
+
+  /* ── Shared elements ── */
+  .page-border {
+    position: absolute;
+    inset: 32px;
+    border: 1px solid var(--gold-dim);
+    pointer-events: none;
+  }
+
+  .corner-mark {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: var(--gold);
+    border-style: solid;
+  }
+  .corner-mark.tl { top: 28px; left: 28px; border-width: 1px 0 0 1px; }
+  .corner-mark.tr { top: 28px; right: 28px; border-width: 1px 1px 0 0; }
+  .corner-mark.bl { bottom: 28px; left: 28px; border-width: 0 0 1px 1px; }
+  .corner-mark.br { bottom: 28px; right: 28px; border-width: 0 1px 1px 0; }
+
+  .page-num {
+    position: absolute;
+    bottom: 48px;
+    right: 56px;
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--gray);
+    text-transform: uppercase;
+  }
+
+  .gold-line {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .brand-footer {
+    position: absolute;
+    bottom: 56px;
+    left: 56px;
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  /* ── Noise texture overlay ── */
+  .noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+    pointer-events: none;
+  }
+
+  /* ══════════════════════════════════════
+     PAGE 1: TITLE
+     ══════════════════════════════════════ */
+  .p1-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px;
+  }
+
+  .p1-label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 40px;
+  }
+
+  .p1-title {
+    font-family: var(--font-display);
+    font-size: 96px;
+    font-weight: 300;
+    color: var(--white);
+    text-align: center;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+
+  .p1-title em {
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  .p1-subtitle {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gray);
+    text-align: center;
+    max-width: 600px;
+    line-height: 1.5;
+    margin-top: 16px;
+  }
+
+  .p1-divider {
+    width: 80px;
+    height: 1px;
+    background: var(--gold);
+    margin: 48px 0;
+  }
+
+  .p1-brand {
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* ── Vertical gold accent bar ── */
+  .p1-accent-left {
+    position: absolute;
+    left: 56px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 200px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  }
+
+  .p1-accent-right {
+    position: absolute;
+    right: 56px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 200px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  }
+
+  /* ══════════════════════════════════════
+     PAGE 2: $275B STAT
+     ══════════════════════════════════════ */
+  .p2-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px;
+  }
+
+  .p2-number {
+    font-family: var(--font-display);
+    font-size: 200px;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 0.85;
+    letter-spacing: -0.02em;
+  }
+
+  .p2-text {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--white);
+    text-align: center;
+    margin-top: 24px;
+    line-height: 1.4;
+  }
+
+  .p2-subtext {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gray);
+    text-align: center;
+    margin-top: 24px;
+    max-width: 500px;
+    line-height: 1.5;
+  }
+
+  .p2-source {
+    position: absolute;
+    bottom: 56px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: rgba(196, 147, 50, 0.4);
+    text-transform: uppercase;
+  }
+
+  /* ── Background glow ── */
+  .stat-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196, 147, 50, 0.06) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  /* ══════════════════════════════════════
+     PAGE 3: COMMERCIAL BUDGET GAP
+     ══════════════════════════════════════ */
+  .p3-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px;
+    gap: 0;
+  }
+
+  .p3-stat1 {
+    font-family: var(--font-display);
+    font-size: 120px;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    opacity: 0.55;
+  }
+
+  .p3-label1 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 300;
+    color: rgba(232, 228, 222, 0.6);
+    text-align: center;
+    margin-top: 14px;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+  }
+
+  .p3-sep {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 52px 0;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .p3-sep-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(196, 147, 50, 0.3);
+  }
+
+  .p3-sep-word {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .p3-stat2 {
+    font-family: var(--font-display);
+    font-size: 190px;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+    position: relative;
+    z-index: 1;
+  }
+
+  .p3-label2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--white);
+    text-align: center;
+    margin-top: 18px;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+  }
+
+  /* ══════════════════════════════════════
+     PAGE 4: ASPIRATIONAL HOOK
+     ══════════════════════════════════════ */
+  .p4-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 100px;
+  }
+
+  .p4-quote {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--white);
+    text-align: center;
+    line-height: 1.5;
+    max-width: 780px;
+  }
+
+  .p4-quote strong {
+    color: var(--gold);
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  .p4-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 48px 0;
+  }
+
+  .p4-attribution {
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  /* ══════════════════════════════════════
+     PAGE 5: CTA
+     ══════════════════════════════════════ */
+  .p5-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px;
+  }
+
+  .p5-label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+  }
+
+  .p5-title {
+    font-family: var(--font-display);
+    font-size: 56px;
+    font-weight: 300;
+    color: var(--white);
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .p5-title em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .p5-subtitle {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--gray);
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .p5-cta {
+    display: inline-block;
+    padding: 20px 56px;
+    background: var(--gold);
+    color: var(--black);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .p5-url {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--gray);
+    margin-top: 24px;
+    letter-spacing: 0.05em;
+  }
+
+  .p5-brand {
+    position: absolute;
+    bottom: 80px;
+    font-family: var(--font-display);
+    font-size: 16px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .p5-brand-sub {
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 6px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ PAGE 1: TITLE ═══ -->
+<div class="page">
+  <div class="noise"></div>
+  <div class="page-border"></div>
+  <div class="corner-mark tl"></div>
+  <div class="corner-mark tr"></div>
+  <div class="corner-mark bl"></div>
+  <div class="corner-mark br"></div>
+  <div class="p1-accent-left"></div>
+  <div class="p1-accent-right"></div>
+  <div class="p1-content">
+    <div class="p1-label">The Pharma Closeout Research</div>
+    <div class="gold-line" style="margin-bottom: 40px;"></div>
+    <h1 class="p1-title"><em>AI</em> in Pharma</h1>
+    <p class="p1-subtitle">What Your Leadership Team<br>Isn't Telling You</p>
+    <div class="p1-divider"></div>
+    <div class="p1-brand">The Pharma Closeout</div>
+  </div>
+  <div class="page-num">01 / 05</div>
+</div>
+
+<!-- ═══ PAGE 2: $275B ═══ -->
+<div class="page">
+  <div class="noise"></div>
+  <div class="page-border"></div>
+  <div class="corner-mark tl"></div>
+  <div class="corner-mark tr"></div>
+  <div class="corner-mark bl"></div>
+  <div class="corner-mark br"></div>
+  <div class="stat-glow"></div>
+  <div class="p2-content">
+    <div class="p2-number">$275B</div>
+    <div class="p2-text">in pharma revenue is at risk.</div>
+    <div class="p2-subtext">AI is the only lever at scale.</div>
+  </div>
+  <div class="p2-source">Source: The Pharma Closeout Research, 2026</div>
+  <div class="brand-footer">The Pharma Closeout</div>
+  <div class="page-num">02 / 05</div>
+</div>
+
+<!-- ═══ PAGE 3: COMMERCIAL BUDGET GAP ═══ -->
+<div class="page">
+  <div class="noise"></div>
+  <div class="page-border"></div>
+  <div class="corner-mark tl"></div>
+  <div class="corner-mark tr"></div>
+  <div class="corner-mark bl"></div>
+  <div class="corner-mark br"></div>
+  <div class="stat-glow" style="top: 70%; transform: translate(-50%, -50%);"></div>
+  <div class="p3-content">
+    <div class="p3-stat1">5–15%</div>
+    <div class="p3-label1">of pharma's AI budget<br>goes to commercial</div>
+    <div class="p3-sep">
+      <div class="p3-sep-line"></div>
+      <div class="p3-sep-word">the gap</div>
+      <div class="p3-sep-line"></div>
+    </div>
+    <div class="p3-stat2">$18–30B</div>
+    <div class="p3-label2">is the actual opportunity</div>
+  </div>
+  <div class="brand-footer">The Pharma Closeout</div>
+  <div class="page-num">03 / 05</div>
+</div>
+
+<!-- ═══ PAGE 4: ASPIRATIONAL ═══ -->
+<div class="page">
+  <div class="noise"></div>
+  <div class="page-border"></div>
+  <div class="corner-mark tl"></div>
+  <div class="corner-mark tr"></div>
+  <div class="corner-mark bl"></div>
+  <div class="corner-mark br"></div>
+  <div class="p4-content">
+    <div class="p4-quote">
+      The people who read this briefing will walk into the room <strong>prepared</strong>.
+    </div>
+    <div class="p4-divider"></div>
+    <div class="p4-quote" style="font-size: 32px; color: var(--gray); margin-top: 0;">
+      The rest will be catching up.
+    </div>
+  </div>
+  <div class="brand-footer">The Pharma Closeout</div>
+  <div class="page-num">04 / 05</div>
+</div>
+
+<!-- ═══ PAGE 5: CTA ═══ -->
+<div class="page">
+  <div class="noise"></div>
+  <div class="page-border"></div>
+  <div class="corner-mark tl"></div>
+  <div class="corner-mark tr"></div>
+  <div class="corner-mark bl"></div>
+  <div class="corner-mark br"></div>
+  <div class="stat-glow"></div>
+  <div class="p5-content">
+    <div class="p5-label">Free Download</div>
+    <h2 class="p5-title">The <em>Strategic Briefing</em></h2>
+    <p class="p5-subtitle">The Cascade Framework &middot; 180-Day Roadmap &middot; 3 Case Studies</p>
+    <div class="p5-cta">Download Free &rarr;</div>
+    <div class="p5-url">thepharmacloseout.com/ai-research</div>
+    <div class="p5-brand">
+      The Pharma Closeout
+      <div class="p5-brand-sub">Daily Pharma Intelligence</div>
+    </div>
+  </div>
+  <div class="page-num">05 / 05</div>
+</div>
+
+</body>
+</html>
