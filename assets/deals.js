@@ -209,6 +209,27 @@ export async function searchDeals(query, filters = {}) {
   return data || []
 }
 
+/** Fetch disease indications for a deal (ordered by US patients desc) */
+export async function fetchDiseaseIndications(dealId) {
+  const { data } = await supabase
+    .from('disease_indications')
+    .select('*')
+    .eq('deal_id', dealId)
+    .order('us_patients_annual', { ascending: false, nullsLast: true });
+  return data || [];
+}
+
+/** Fetch disease assets for a set of indication IDs */
+export async function fetchDiseaseAssets(indicationIds) {
+  if (!indicationIds.length) return [];
+  const { data } = await supabase
+    .from('disease_assets')
+    .select('*')
+    .in('indication_id', indicationIds)
+    .order('created_at', { ascending: true });
+  return data || [];
+}
+
 /** Fetch sources for a deal */
 export async function fetchDealSources(dealId) {
   const { data } = await supabase
@@ -552,91 +573,73 @@ export function renderRevenueArc(outcomes) {
 
 /* ---------- 3f. Disease Context (collapsible cards) ---------- */
 
-export function renderDiseaseContext(deal) {
-  const indications = parseTAs(deal.indications)
-  const tas = parseTAs(deal.therapeutic_areas)
-  const molecules = parseTAs(deal.lead_molecules)
-  const moas = parseTAs(deal.mechanisms_of_action)
+/** Format patient/case count: 35730 → "35K", 176000 → "176K", 7500000 → "7.5M" */
+function fmtPatients(n) {
+  if (n == null || isNaN(n)) return '—'
+  if (n >= 1000000) return `${(n / 1000000).toFixed(n % 1000000 === 0 ? 0 : 1)}M`
+  if (n >= 1000) return `${Math.round(n / 1000)}K`
+  return String(n)
+}
 
-  if (!indications.length && !tas.length) return ''
+/** Format market size in $M: 20100 → "$20.1B", 3200 → "$3.2B", 500 → "$500M" */
+function fmtMarket(mm) {
+  if (mm == null || isNaN(mm)) return '—'
+  if (mm >= 1000) return `$${(mm / 1000).toFixed(1)}B`
+  return `$${Math.round(mm)}M`
+}
 
-  const items = indications.length ? indications : tas
-
-  // Map TAs to icons
-  const taIcons = {
-    'oncology': { icon: '🎗️', bg: 'var(--green-bg)', color: 'var(--green)' },
-    'hematology': { icon: '🩸', bg: '#fef2f2', color: 'var(--red)' },
-    'immunology': { icon: '🧴', bg: 'var(--amber-bg)', color: 'var(--amber)' },
-    'infectious disease': { icon: '🧬', bg: '#e8f4f8', color: 'var(--blue)' },
-    'neurology': { icon: '🧠', bg: 'var(--purple-bg)', color: 'var(--purple)' },
-    'cns': { icon: '🧠', bg: 'var(--purple-bg)', color: 'var(--purple)' },
-    'cardiovascular': { icon: '❤️', bg: '#fef2f2', color: 'var(--red)' },
-    'rare disease': { icon: '🔬', bg: 'var(--blue-bg)', color: 'var(--blue)' },
-    'dermatology': { icon: '🧴', bg: 'var(--amber-bg)', color: 'var(--amber)' },
-    'respiratory': { icon: '🫁', bg: 'var(--blue-bg)', color: 'var(--blue)' },
+export function renderDiseaseContext(indications, assets) {
+  if (!indications || !indications.length) {
+    return '<p style="color:var(--ink-muted);font-size:14px;padding:16px 0;">Disease context data not yet available for this deal.</p>'
   }
-  const defaultIcon = { icon: '💊', bg: '#f3f4f6', color: 'var(--ink-muted)' }
 
-  // Parse disease_context JSON if available
-  let diseaseData = []
-  try { diseaseData = JSON.parse(deal.disease_context || '[]') } catch {}
-  const dcMap = {}
-  for (const dc of diseaseData) { if (dc.indication) dcMap[dc.indication.toLowerCase()] = dc }
+  // Group assets by indication_id
+  const assetMap = {}
+  for (const a of (assets || [])) {
+    if (!assetMap[a.indication_id]) assetMap[a.indication_id] = []
+    assetMap[a.indication_id].push(a)
+  }
 
-  const cards = items.map((item, i) => {
-    const id = `disease-${i}`
-    const taMatch = tas.find(t => t.toLowerCase() in taIcons)
-    const iconSet = taMatch ? taIcons[taMatch.toLowerCase()] : defaultIcon
-    const regStatus = deal.regulatory_status_at_deal || '—'
-    const statusColor = regStatus === 'Approved' ? 't-green' : regStatus.startsWith('Phase') ? 't-amber' : 't-muted'
+  const cards = indications.map((ind, i) => {
+    const expanded = i === 0
+    const indAssets = assetMap[ind.indication_id] || []
 
-    // Look up disease context data for this indication
-    const dc = dcMap[item.toLowerCase()] || {}
+    // Header asset tags
+    const assetTags = indAssets.map(a =>
+      `<span class="at-tag ${esc(a.asset_status_class || '')}">${esc(a.asset_header_tag || a.asset_name || '')}</span>`
+    ).join('')
 
-    const marketStats = []
-    if (dc.us_patients) marketStats.push({ label: 'US Patients', value: dc.us_patients })
-    if (dc.prevalence) marketStats.push({ label: 'Prevalence', value: dc.prevalence })
-    if (dc.market_size_usd) marketStats.push({ label: 'Market Size', value: dc.market_size_usd })
-    if (dc.survival_rate) marketStats.push({ label: 'Survival Rate', value: dc.survival_rate })
+    // Stats in header
+    const patientsFormatted = fmtPatients(ind.us_patients_annual)
+    const marketFormatted = fmtMarket(ind.market_size_usd_mm)
+    const marketLabel = ind.market_size_label || 'US Market'
 
-    return `<div class="disease-card">
-      <div class="disease-header" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded')==='true'?'false':'true'); this.nextElementSibling.classList.toggle('open')">
-        <div class="disease-icon" style="background:${iconSet.bg}">${iconSet.icon}</div>
-        <div class="disease-name-block">
-          <div class="disease-name">${esc(item)}</div>
-          <div style="font-size:12px;color:var(--ink-muted)">${esc(tas.join(' · '))}${dc.us_patients ? ' · ' + esc(dc.us_patients) + ' US patients' : ''}</div>
-        </div>
-        <div class="dchev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
-      </div>
-      <div class="dpanel" id="${id}">
-        <div class="dpanel-inner">
-          ${dc.overview ? `<p style="margin-bottom:16px;color:var(--ink-light);font-size:14px;line-height:1.6">${esc(dc.overview)}</p>` : ''}
-          ${marketStats.length ? `<div class="dp-grid">${marketStats.map(s => `<div class="dp-block"><h4>${esc(s.label)}</h4><p style="font-size:18px;font-weight:600;font-family:var(--serif)">${esc(s.value)}</p></div>`).join('')}</div>` : ''}
-          <div class="dp-grid" style="margin-top:12px">
-            <div class="dp-block">
-              <h4>Stage at Deal</h4>
-              <p><span class="tag ${statusColor}">${esc(regStatus)}</span></p>
-            </div>
-            <div class="dp-block">
-              <h4>Therapeutic Area</h4>
-              <p>${esc(tas.join(', ') || item)}</p>
-            </div>
-          </div>
-          ${dc.standard_of_care ? `<div class="dp-grid" style="margin-top:12px"><div class="dp-block"><h4>Standard of Care</h4><p style="font-size:13px;color:var(--ink-light)">${esc(dc.standard_of_care)}</p></div></div>` : ''}
-          ${dc.competitive_landscape ? `<div class="dp-grid" style="margin-top:12px"><div class="dp-block"><h4>Competitive Landscape at Deal</h4><p style="font-size:13px;color:var(--ink-light)">${esc(dc.competitive_landscape)}</p></div></div>` : ''}
-          ${molecules.length ? `<div class="dp-grid" style="margin-top:12px">
-            <div class="dp-block">
-              <h4>Key Molecules</h4>
-              <p>${molecules.map(m => esc(m)).join(', ')}</p>
-            </div>
-            <div class="dp-block">
-              <h4>Mechanism of Action</h4>
-              <p>${moas.length ? moas.map(m => esc(m)).join(', ') : '—'}</p>
-            </div>
-          </div>` : ''}
-        </div>
-      </div>
-    </div>`
+    // Market row cells
+    const mktCells = []
+    if (ind.us_patients_annual != null) {
+      mktCells.push(`<div class="mkt-cell"><div class="mc-val">${esc(fmtPatients(ind.us_patients_annual))}</div><div class="mc-label">New Cases/yr</div><div class="mc-src">${esc(ind.us_patients_source || '')}</div></div>`)
+    }
+    if (ind.prevalence_or_living_with) {
+      mktCells.push(`<div class="mkt-cell"><div class="mc-val">${esc(ind.prevalence_or_living_with)}</div><div class="mc-label">Prevalence</div><div class="mc-src">${esc(ind.prevalence_source || '')}</div></div>`)
+    }
+    if (ind.market_size_usd_mm != null) {
+      mktCells.push(`<div class="mkt-cell"><div class="mc-val">${esc(fmtMarket(ind.market_size_usd_mm))}</div><div class="mc-label">${esc(ind.market_size_label || 'US Market')}</div><div class="mc-src">${esc(ind.market_size_source || '')}</div></div>`)
+    }
+    if (ind.fourth_metric_value) {
+      mktCells.push(`<div class="mkt-cell"><div class="mc-val">${esc(ind.fourth_metric_value)}</div><div class="mc-label">${esc(ind.fourth_metric_label || '')}</div><div class="mc-src">${esc(ind.fourth_metric_source || '')}</div></div>`)
+    }
+
+    // Asset mini rows
+    const assetRows = indAssets.map(a =>
+      `<div class="am-row"><div class="am-name">${esc(a.asset_name || '')}</div><div class="am-moa">${esc(a.asset_moa || '')}</div><div class="am-status ${esc(a.asset_status_class || '')}">${esc(a.asset_status || '')}</div><div class="am-rev">${esc(a.asset_revenue_label || '')}</div></div>`
+    ).join('')
+
+    return `<div class="disease-card"><div class="disease-header" aria-expanded="${expanded ? 'true' : 'false'}" onclick="this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true');this.nextElementSibling.classList.toggle('open')"><div class="disease-icon" style="background:#f3f4f6">${ind.indication_emoji || '💊'}</div><div class="disease-name-block"><div class="disease-name">${esc(ind.indication)}</div><div class="disease-assets">${assetTags}</div></div><div class="disease-stats"><div class="ds"><div class="ds-val">${patientsFormatted}</div><div class="ds-label">US Cases/yr</div></div><div class="ds"><div class="ds-val">${marketFormatted}</div><div class="ds-label">${esc(marketLabel)}</div></div></div><div class="dchev"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div></div>
+    <div class="dpanel${expanded ? ' open' : ''}"><div class="dpanel-inner">
+      <div class="dp-grid"><div class="dp-block"><h4>Disease Overview</h4><p>${esc(ind.disease_overview || '')}</p></div><div class="dp-block"><h4>${esc(ind.second_column_label || 'Competitive Landscape')}</h4><p>${esc(ind.second_column_text || '')}</p></div></div>
+      ${mktCells.length ? `<div class="mkt-row">${mktCells.join('')}</div>` : ''}
+      ${indAssets.length ? `<div class="asset-mini"><div class="am-title">Assets in this indication</div>${assetRows}</div>` : ''}
+    </div></div></div>`
   })
 
   return `<div class="section-heading">Disease & Market Context</div>${cards.join('')}`
