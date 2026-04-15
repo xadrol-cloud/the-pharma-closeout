@@ -988,6 +988,46 @@ body {
 .tl-src a { color: var(--blue); text-decoration: none; }
 .tl-src a:hover { text-decoration: underline; }
 
+/* Verdict timeline items */
+.tl-dot-verdict { width: 12px; height: 12px; left: -21px; }
+.tl-verdict .tl-title { font-size: 16px; }
+.tl-verdict .tl-body { font-size: 14px; }
+.tl-scores { display: flex; gap: 8px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
+.tl-score-pill { background: var(--surface); padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; color: var(--ink); }
+.tl-score-dim { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); }
+
+/* Pipeline tracker */
+.pip-track { margin: 16px 0; }
+.pip-name { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+.pip-stages { display: flex; align-items: center; gap: 0; }
+.pip-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--ink-faint); position: relative; flex-shrink: 0; }
+.pip-filled { border-color: var(--green); background: var(--green); }
+.pip-current { border-color: var(--green); background: var(--green); box-shadow: 0 0 0 3px rgba(34,197,94,0.2); }
+.pip-fail { border-color: var(--red); background: var(--red); }
+.pip-line { width: 24px; height: 2px; background: var(--rule-light); flex-shrink: 0; }
+.pip-label { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); font-size: 9px; white-space: nowrap; color: var(--ink-faint); }
+
+/* Milestone bar */
+.mst-bar { display: flex; height: 32px; border-radius: 4px; overflow: hidden; margin: 16px 0; }
+.mst-seg { background: var(--green); display: flex; flex-direction: column; justify-content: center; padding: 0 8px; border-right: 1px solid var(--paper); min-width: 40px; }
+.mst-seg:last-child { background: rgba(245,158,11,0.3); }
+.mst-label { font-size: 9px; color: var(--paper); font-weight: 600; }
+.mst-val { font-size: 11px; color: var(--paper); }
+
+/* Snapshot card */
+.snap-card { border-left: 3px solid var(--amber); }
+.snap-green { border-color: var(--green); }
+.snap-red { border-color: var(--red); }
+.snap-grid { display: flex; align-items: center; gap: 16px; margin-top: 12px; }
+.snap-panel { flex: 1; padding: 12px; background: var(--surface); border-radius: 6px; }
+.snap-panel-label { font-size: 11px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+.snap-val { font-size: 18px; font-weight: 700; }
+.snap-status { font-size: 12px; color: var(--ink-muted); margin-top: 4px; }
+.snap-asset { font-size: 11px; color: var(--ink-faint); margin-top: 2px; }
+.snap-arrow { font-size: 24px; color: var(--ink-faint); }
+.snap-single { padding: 16px; text-align: center; }
+.snap-single .snap-val { font-size: 24px; }
+
 
 /* ==========================================================================
    11. REVIEW CARDS — Bearish (red), Neutral (amber/gray), Bullish (green)

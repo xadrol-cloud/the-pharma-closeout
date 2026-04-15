@@ -256,6 +256,26 @@ export async function fetchDealOutcomes(dealId) {
   return outcomes
 }
 
+/** Timeline events for deal detail page */
+export async function fetchDealTimeline(dealId) {
+  const { data } = await supabase
+    .from('deal_timeline')
+    .select('*')
+    .eq('deal_id', dealId)
+    .order('sort_order', { ascending: true })
+  return data || []
+}
+
+/** Value arc data for adaptive visualization */
+export async function fetchDealValueArc(dealId) {
+  const { data } = await supabase
+    .from('deal_value_arc')
+    .select('*')
+    .eq('deal_id', dealId)
+    .order('sort_order', { ascending: true })
+  return data || []
+}
+
 /** Featured deal: check site_config, fallback to highest outcome_score, then most recent */
 export async function fetchFeaturedDeal() {
   const { data: config } = await supabase
@@ -464,24 +484,59 @@ export function renderScorePill(type, score, subtitle = '') {
 }
 
 
-/* ---------- 3d. Timeline ---------- */
+/* ---------- 3d. Outcome Timeline ---------- */
 
 /**
- * Vertical timeline from deal outcomes array.
- * Colored dots: green/amber/red based on verdict.
+ * Event-driven timeline from deal_timeline table.
+ * Falls back to deal_summary if no timeline events exist.
+ * Verdict events can link to score breakdown via outcome_id.
  */
-export function renderTimeline(outcomes) {
-  if (!outcomes || !outcomes.length) return '<p style="color:var(--ink-faint);font-size:13px">No outcome data available yet.</p>'
+export function renderTimeline(events, outcomes, dealSummary) {
+  if (!events || !events.length) {
+    if (dealSummary) {
+      return `<div class="tl"><div class="tl-item">
+        <div class="tl-dot amber"></div>
+        <div class="tl-date"></div>
+        <div class="tl-title">Deal Overview</div>
+        <div class="tl-body">${esc(dealSummary)}</div>
+      </div></div>
+      <p style="color:var(--ink-faint);font-size:12px;margin-top:8px;">Detailed timeline coming soon.</p>`
+    }
+    return '<p style="color:var(--ink-faint);font-size:13px">No outcome data available yet.</p>'
+  }
 
-  const items = outcomes.map(o => {
-    const color = verdictColor(o.strategic_verdict)
-    const facts = (o.facts || []).slice(0, 3)
-    return `<div class="tl-item">
-      <div class="tl-dot ${color}"></div>
-      <div class="tl-date">${esc(o.window || '')}</div>
-      <div class="tl-title">${esc(o.headline || o.window || 'Update')}</div>
-      <div class="tl-body">${esc(o.summary || '')}${facts.length ? '<br>' + facts.map(f => `• ${esc(f.fact || '')}`).join('<br>') : ''}</div>
-      ${o.source_url ? `<div class="tl-src"><a href="${esc(o.source_url)}" target="_blank">Source →</a></div>` : ''}
+  const items = events.map(e => {
+    const color = e.verdict || 'amber'
+    const isVerdict = e.event_type === 'verdict'
+    const dotClass = isVerdict ? 'tl-dot tl-dot-verdict' : 'tl-dot'
+
+    let scoreInline = ''
+    if (isVerdict && e.outcome_id && outcomes) {
+      const linkedOutcome = outcomes.find(o => o.outcome_id === e.outcome_id)
+      if (linkedOutcome && linkedOutcome.strategic_fit_score != null) {
+        const o = linkedOutcome
+        const overall = Math.min(100, Math.round(
+          (o.strategic_fit_score * 0.25 + o.financial_return_score * 0.35 +
+           o.pipeline_outcome_score * 0.25 + o.integration_score * 0.15) *
+          (0.8 + (o.deal_difficulty_score || 50) * 0.004)
+        ))
+        scoreInline = `<div class="tl-scores">
+          <span class="tl-score-pill">Overall: <strong>${overall}</strong></span>
+          <span class="tl-score-dim">SF ${o.strategic_fit_score}</span>
+          <span class="tl-score-dim">FR ${o.financial_return_score}</span>
+          <span class="tl-score-dim">PO ${o.pipeline_outcome_score}</span>
+          <span class="tl-score-dim">INT ${o.integration_score}</span>
+        </div>`
+      }
+    }
+
+    return `<div class="tl-item${isVerdict ? ' tl-verdict' : ''}">
+      <div class="${dotClass} ${color}"></div>
+      <div class="tl-date">${esc(e.event_date || '')}</div>
+      <div class="tl-title">${esc(e.headline)}</div>
+      <div class="tl-body">${esc(e.summary)}</div>
+      ${scoreInline}
+      ${e.source_url ? `<div class="tl-src"><a href="${esc(e.source_url)}" target="_blank">${esc(e.source_name || 'Source')} &rarr;</a></div>` : ''}
     </div>`
   })
 
@@ -489,46 +544,40 @@ export function renderTimeline(outcomes) {
 }
 
 
-/* ---------- 3e. Revenue Arc (SVG area chart) ---------- */
+/* ---------- 3e. Value Arc (adaptive visualization) ---------- */
 
 /**
- * SVG area chart from outcome_facts revenue data.
- * Parses "$X.XB revenue" from fact_text. Min 3 data points to render.
+ * Adaptive value arc from deal_value_arc table.
+ * Switches rendering by arc_type: revenue, pipeline, milestone, snapshot.
  */
-export function renderRevenueArc(outcomes) {
-  // Extract revenue data points from facts
-  const dataPoints = []
-  for (const o of (outcomes || [])) {
-    for (const f of (o.facts || [])) {
-      const text = f.fact || ''
-      const match = text.match(/\$([\d.]+)([BM])\s*(?:revenue|rev|sales)/i)
-      if (match) {
-        let val = parseFloat(match[1])
-        if (match[2].toUpperCase() === 'M') val = val / 1000
-        dataPoints.push({ date: f.date || o.window || '', value: val, label: `$${match[1]}${match[2]}` })
-      }
-    }
-  }
+export function renderValueArc(arcRows) {
+  if (!arcRows || !arcRows.length) return ''
+  const arcType = arcRows[0].arc_type
+  if (arcType === 'revenue') return renderRevenueChart(arcRows)
+  if (arcType === 'pipeline') return renderPipelineTracker(arcRows)
+  if (arcType === 'milestone') return renderMilestoneBar(arcRows)
+  if (arcType === 'snapshot') return renderSnapshotCard(arcRows)
+  return ''
+}
 
-  if (dataPoints.length < 3) {
-    return `<div class="rev-card">
-      <div class="rev-headline">Revenue Arc</div>
-      <div class="rev-subtitle">Insufficient data — requires 3+ revenue data points</div>
-    </div>`
-  }
+function renderRevenueChart(rows) {
+  const dataPoints = rows
+    .filter(r => r.value_usd_mm != null && (r.year != null || r.period_label))
+    .map(r => ({
+      date: String(r.year || r.period_label),
+      value: r.value_usd_mm / 1000,
+      label: r.value_label || `$${(r.value_usd_mm / 1000).toFixed(1)}B`,
+      asset: r.asset_name || ''
+    }))
+    .sort((a, b) => (a.date > b.date ? 1 : -1))
 
-  // Sort by date
-  dataPoints.sort((a, b) => (a.date > b.date ? 1 : -1))
+  if (dataPoints.length < 3) return renderSnapshotCard(rows)
 
   const maxVal = Math.max(...dataPoints.map(d => d.value))
   const minVal = Math.min(...dataPoints.map(d => d.value))
-  const padding = 20
-  const w = 600
-  const h = 200
-  const chartW = w - padding * 2
-  const chartH = h - padding * 2
+  const padding = 20, w = 600, h = 200
+  const chartW = w - padding * 2, chartH = h - padding * 2
 
-  // Build path
   const points = dataPoints.map((d, i) => {
     const x = padding + (i / (dataPoints.length - 1)) * chartW
     const y = padding + chartH - ((d.value - minVal) / (maxVal - minVal || 1)) * chartH
@@ -538,24 +587,19 @@ export function renderRevenueArc(outcomes) {
   const linePath = points.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ')
   const areaPath = linePath + ` L${points[points.length - 1].x},${h - padding} L${points[0].x},${h - padding} Z`
 
-  // Stats
-  const first = dataPoints[0].value
-  const last = dataPoints[dataPoints.length - 1].value
-  const peak = maxVal
-  const growth = first > 0 ? (((last - first) / first) * 100).toFixed(0) : '—'
-  const growthColor = growth !== '—' && parseFloat(growth) >= 0 ? 'green' : 'red'
+  const first = dataPoints[0].value, last = dataPoints[dataPoints.length - 1].value
+  const growth = first > 0 ? (((last - first) / first) * 100).toFixed(0) : '\u2014'
+  const growthColor = growth !== '\u2014' && parseFloat(growth) >= 0 ? 'green' : 'red'
 
   return `<div class="rev-card">
   <div class="rev-headline">Revenue Arc</div>
-  <div class="rev-subtitle">Post-acquisition revenue trajectory</div>
+  <div class="rev-subtitle">Post-acquisition revenue trajectory${dataPoints[0].asset ? ` \u2014 ${esc(dataPoints[0].asset)}` : ''}</div>
   <div class="rev-chart-area">
     <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="var(--green)" stop-opacity="0.2"/>
-          <stop offset="100%" stop-color="var(--green)" stop-opacity="0.02"/>
-        </linearGradient>
-      </defs>
+      <defs><linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--green)" stop-opacity="0.2"/>
+        <stop offset="100%" stop-color="var(--green)" stop-opacity="0.02"/>
+      </linearGradient></defs>
       <path d="${areaPath}" fill="url(#revGrad)"/>
       <path d="${linePath}" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linejoin="round"/>
       ${points.map(p => `<circle cx="${p.x}" cy="${p.y}" r="4" fill="var(--paper)" stroke="var(--green)" stroke-width="2"/>`).join('')}
@@ -563,11 +607,117 @@ export function renderRevenueArc(outcomes) {
     </svg>
   </div>
   <div class="rev-stats">
-    <div class="rev-stat"><div class="rev-stat-val green">$${peak.toFixed(1)}B</div><div class="rev-stat-label">Peak Revenue</div></div>
+    <div class="rev-stat"><div class="rev-stat-val green">$${maxVal.toFixed(1)}B</div><div class="rev-stat-label">Peak Revenue</div></div>
     <div class="rev-stat"><div class="rev-stat-val ${growthColor}">${growth}%</div><div class="rev-stat-label">Total Growth</div></div>
     <div class="rev-stat"><div class="rev-stat-val">${dataPoints.length}</div><div class="rev-stat-label">Data Points</div></div>
-  </div>
-</div>`
+  </div></div>`
+}
+
+function renderPipelineTracker(rows) {
+  const assets = {}
+  for (const r of rows) {
+    const name = r.asset_name || 'Lead Asset'
+    if (!assets[name]) assets[name] = []
+    assets[name].push(r)
+  }
+
+  const stages = ['Phase I', 'Phase II', 'Phase III', 'Pivotal', 'Approved']
+  const stageIndex = s => {
+    const idx = stages.indexOf(s)
+    return idx >= 0 ? idx : -1
+  }
+
+  const tracks = Object.entries(assets).map(([name, dataRows]) => {
+    const maxStage = dataRows.reduce((best, r) => {
+      const idx = stageIndex(r.status)
+      return idx > best ? idx : best
+    }, -1)
+    const failed = dataRows.some(r => r.status === 'Failed' || r.status === 'Discontinued')
+
+    const dots = stages.map((stage, i) => {
+      const isFilled = i <= maxStage && !failed
+      const isCurrent = i === maxStage
+      const isFail = failed && i === maxStage
+      let dotClass = 'pip-dot'
+      if (isFail) dotClass += ' pip-fail'
+      else if (isFilled) dotClass += ' pip-filled'
+      if (isCurrent && !isFail) dotClass += ' pip-current'
+      return `<div class="${dotClass}"><span class="pip-label">${stage}</span></div>`
+    }).join('<div class="pip-line"></div>')
+
+    return `<div class="pip-track">
+      <div class="pip-name">${esc(name)}</div>
+      <div class="pip-stages">${dots}</div>
+    </div>`
+  })
+
+  return `<div class="rev-card">
+    <div class="rev-headline">Pipeline Progression</div>
+    <div class="rev-subtitle">Post-deal development status</div>
+    ${tracks.join('')}
+  </div>`
+}
+
+function renderMilestoneBar(rows) {
+  const total = rows.reduce((sum, r) => sum + (r.value_usd_mm || 0), 0)
+
+  const segments = rows.map(r => {
+    const pct = total > 0 ? ((r.value_usd_mm || 0) / total * 100).toFixed(1) : 0
+    return `<div class="mst-seg" style="width:${pct}%">
+      <div class="mst-label">${esc(r.period_label || '')}</div>
+      <div class="mst-val">${esc(r.value_label || '')}</div>
+    </div>`
+  })
+
+  return `<div class="rev-card">
+    <div class="rev-headline">Deal Value Breakdown</div>
+    <div class="rev-subtitle">Milestone payments and commitments</div>
+    <div class="mst-bar">${segments.join('')}</div>
+    <div class="rev-stats">
+      <div class="rev-stat"><div class="rev-stat-val">${formatValue(total)}</div><div class="rev-stat-label">Total Value</div></div>
+      <div class="rev-stat"><div class="rev-stat-val">${rows.length}</div><div class="rev-stat-label">Components</div></div>
+    </div>
+  </div>`
+}
+
+function renderSnapshotCard(rows) {
+  if (rows.length < 2) {
+    const r = rows[0]
+    return `<div class="rev-card">
+      <div class="rev-headline">Deal Value Context</div>
+      <div class="rev-subtitle">${esc(r.period_label || '')}</div>
+      <div class="snap-single">
+        <div class="snap-val">${esc(r.value_label || formatValue(r.value_usd_mm))}</div>
+        ${r.status ? `<div class="snap-status">${esc(r.status)}</div>` : ''}
+      </div>
+    </div>`
+  }
+
+  const before = rows.find(r => (r.period_label || '').toLowerCase().includes('deal') || r.sort_order === 1) || rows[0]
+  const after = rows.find(r => (r.period_label || '').toLowerCase().includes('current') || r.sort_order === rows.length) || rows[rows.length - 1]
+
+  const improved = (after.value_usd_mm || 0) > (before.value_usd_mm || 0)
+  const borderColor = after.status === 'Failed' || after.status === 'Discontinued' ? 'red'
+    : improved ? 'green' : 'amber'
+
+  return `<div class="rev-card snap-card snap-${borderColor}">
+    <div class="rev-headline">Deal Value Arc</div>
+    <div class="snap-grid">
+      <div class="snap-panel">
+        <div class="snap-panel-label">${esc(before.period_label || 'At Deal Time')}</div>
+        <div class="snap-val">${esc(before.value_label || formatValue(before.value_usd_mm))}</div>
+        ${before.status ? `<div class="snap-status">${esc(before.status)}</div>` : ''}
+        ${before.asset_name ? `<div class="snap-asset">${esc(before.asset_name)}</div>` : ''}
+      </div>
+      <div class="snap-arrow">&rarr;</div>
+      <div class="snap-panel">
+        <div class="snap-panel-label">${esc(after.period_label || 'Current Status')}</div>
+        <div class="snap-val">${esc(after.value_label || formatValue(after.value_usd_mm))}</div>
+        ${after.status ? `<div class="snap-status">${esc(after.status)}</div>` : ''}
+        ${after.asset_name ? `<div class="snap-asset">${esc(after.asset_name)}</div>` : ''}
+      </div>
+    </div>
+  </div>`
 }
 
 

@@ -102,7 +102,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     </div>
 
     <!-- Disease & Market Context -->
-    <div id="disease-section" class="card" style="display:none;">
+    <div id="disease-section" class="card" style="display:none;border:none;background:transparent;padding:0;">
       <div id="disease-context"></div>
     </div>
 
@@ -191,7 +191,9 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <script type="module">
 import {
   fetchDeal, fetchDealSources, fetchDealOutcomes, fetchComparables,
-  renderPoster, renderScorePill, renderTimeline, renderRevenueArc,
+  fetchDiseaseIndications, fetchDiseaseAssets,
+  fetchDealTimeline, fetchDealValueArc,
+  renderPoster, renderScorePill, renderTimeline, renderValueArc,
   renderDiseaseContext, renderFinancials, renderCriticReviews,
   renderKeyAssets, renderScoreBreakdown, renderComparables as renderComps,
   renderSources, formatValue, formatDate, parseTAs
@@ -249,29 +251,40 @@ if (!dealId) {
         document.getElementById('hero-summary').style.display = ''
       }
 
+      // Editorial lede
+      if (deal.editorial_lede) {
+        const ledeEl = document.createElement('div')
+        ledeEl.className = 'feat-lede'
+        ledeEl.textContent = deal.editorial_lede
+        document.getElementById('hero-summary').after(ledeEl)
+      }
+
       // ── Show body and footer ──
       document.getElementById('deal-body').style.display = ''
       document.getElementById('deal-footer').style.display = ''
       document.getElementById('deal-fab').style.display = ''
 
-      // ── Outcome Timeline ──
-      const timelineHtml = renderTimeline(outcomes)
-      if (outcomes && outcomes.length) {
-        document.getElementById('timeline').innerHTML = timelineHtml
-        document.getElementById('timeline-section').style.display = ''
-      }
+      // ── Outcome Timeline (from deal_timeline table) ──
+      const timeline = await fetchDealTimeline(dealId)
+      const timelineHtml = renderTimeline(timeline, outcomes, deal.deal_summary)
+      document.getElementById('timeline').innerHTML = timelineHtml
+      document.getElementById('timeline-section').style.display = ''
 
-      // ── Revenue Arc ──
-      const revenueHtml = renderRevenueArc(outcomes)
-      document.getElementById('revenue-arc').innerHTML = revenueHtml
-      document.getElementById('revenue-section').style.display = ''
+      // ── Value Arc (from deal_value_arc table) ──
+      const valueArc = await fetchDealValueArc(dealId)
+      const arcHtml = renderValueArc(valueArc)
+      if (arcHtml) {
+        document.getElementById('revenue-arc').innerHTML = arcHtml
+        document.getElementById('revenue-section').style.display = ''
+      }
 
       // ── Disease & Market Context ──
-      const diseaseHtml = renderDiseaseContext(deal)
-      if (diseaseHtml) {
-        document.getElementById('disease-context').innerHTML = diseaseHtml
-        document.getElementById('disease-section').style.display = ''
-      }
+      const diseaseIndications = await fetchDiseaseIndications(dealId)
+      const indicationIds = diseaseIndications.map(ind => ind.indication_id)
+      const diseaseAssets = await fetchDiseaseAssets(indicationIds)
+      const diseaseHtml = renderDiseaseContext(diseaseIndications, diseaseAssets)
+      document.getElementById('disease-context').innerHTML = diseaseHtml
+      document.getElementById('disease-section').style.display = ''
 
       // ── Deal Financials ──
       document.getElementById('financials').innerHTML = renderFinancials(deal)
