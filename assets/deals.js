@@ -474,13 +474,13 @@ export function renderTimeline(outcomes) {
   if (!outcomes || !outcomes.length) return '<p style="color:var(--ink-faint);font-size:13px">No outcome data available yet.</p>'
 
   const items = outcomes.map(o => {
-    const color = verdictColor(o.verdict)
+    const color = verdictColor(o.strategic_verdict)
     const facts = (o.facts || []).slice(0, 3)
     return `<div class="tl-item">
       <div class="tl-dot ${color}"></div>
       <div class="tl-date">${esc(o.window || '')}</div>
       <div class="tl-title">${esc(o.headline || o.window || 'Update')}</div>
-      <div class="tl-body">${esc(o.summary || '')}${facts.length ? '<br>' + facts.map(f => `• ${esc(f.fact_text || '')}`).join('<br>') : ''}</div>
+      <div class="tl-body">${esc(o.summary || '')}${facts.length ? '<br>' + facts.map(f => `• ${esc(f.fact || '')}`).join('<br>') : ''}</div>
       ${o.source_url ? `<div class="tl-src"><a href="${esc(o.source_url)}" target="_blank">Source →</a></div>` : ''}
     </div>`
   })
@@ -500,7 +500,7 @@ export function renderRevenueArc(outcomes) {
   const dataPoints = []
   for (const o of (outcomes || [])) {
     for (const f of (o.facts || [])) {
-      const text = f.fact_text || ''
+      const text = f.fact || ''
       const match = text.match(/\$([\d.]+)([BM])\s*(?:revenue|rev|sales)/i)
       if (match) {
         let val = parseFloat(match[1])
