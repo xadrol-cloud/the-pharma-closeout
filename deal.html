@@ -301,7 +301,7 @@ if (!dealId) {
       document.getElementById('assets-section').style.display = ''
 
       // ── Sidebar: Score Breakdown ──
-      const scoreHtml = renderScoreBreakdown(outcomes)
+      const scoreHtml = renderScoreBreakdown(outcomes, deal)
       if (scoreHtml) {
         document.getElementById('score-breakdown').innerHTML = scoreHtml
         document.getElementById('score-section').style.display = ''

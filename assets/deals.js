@@ -891,18 +891,32 @@ export function renderKeyAssets(deal) {
  * Expandable bars for 4 dimensions + difficulty modifier.
  * Uses outcome data to derive dimension scores.
  */
-export function renderScoreBreakdown(outcomes) {
+export function renderScoreBreakdown(outcomes, deal) {
   if (!outcomes || !outcomes.length) return ''
 
-  // Derive dimension scores from outcomes — use actual DB column names
-  const dimensions = [
-    { label: 'Strategic Fit', key: 'strategic_fit_score', icon: '🎯', weight: '25%' },
-    { label: 'Financial Return', key: 'financial_return_score', icon: '📈', weight: '35%' },
-    { label: 'Pipeline Outcome', key: 'pipeline_outcome_score', icon: '🧬', weight: '25%' },
-    { label: 'Integration', key: 'integration_score', icon: '⚙️', weight: '15%' },
+  const baseDimensions = [
+    { label: 'Strategic Fit', key: 'strategic_fit_score', icon: '🎯', baseWeight: 25 },
+    { label: 'Financial Return', key: 'financial_return_score', icon: '📈', baseWeight: 35 },
+    { label: 'Asset Performance', key: 'pipeline_outcome_score', icon: '🧬', baseWeight: 25 },
+    { label: 'Value Realization', key: 'integration_score', icon: '⚙️', baseWeight: 15 },
   ]
 
-  // Use the latest completed outcome (prefer 15yr > 10yr > 5yr)
+  const weightProfiles = {
+    preclinical: [30, 15, 40, 15],
+    phase2_3:    [25, 25, 35, 15],
+    launched:    [20, 40, 20, 20],
+    platform:    [25, 35, 25, 15],
+    licensing:   [25, 30, 30, 15],
+  }
+  const stage = deal?.lifecycle_stage || 'platform'
+  const weights = weightProfiles[stage] || weightProfiles.platform
+
+  const dimensions = baseDimensions.map((d, i) => ({
+    ...d,
+    weight: `${weights[i]}%`,
+    weightNum: weights[i],
+  }))
+
   const sorted = [...outcomes].sort((a, b) => {
     const order = { '15yr': 0, '10yr': 1, '5yr': 2 }
     return (order[a.window] ?? 3) - (order[b.window] ?? 3)
@@ -911,9 +925,11 @@ export function renderScoreBreakdown(outcomes) {
 
   const rows = dimensions.map(dim => {
     const score = latest[dim.key] != null ? latest[dim.key] : null
-    const pct = score != null ? score : 50  // 0-100 scale maps directly to %
+    const pct = score != null ? score : 50
     const tier = score != null ? (score >= 75 ? 'high' : score >= 50 ? 'mid' : 'low') : ''
-    const display = score != null ? score : '—'
+    const display = score != null ? score : '\u2014'
+    const expKey = dim.key.replace('_score', '_explanation')
+    const explanation = latest[expKey] || ''
 
     return `<div class="sc-row">
       <div class="sc-header" aria-expanded="false" onclick="this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true');this.closest('.sc-row').querySelector('.sc-detail').classList.toggle('open')">
@@ -924,17 +940,21 @@ export function renderScoreBreakdown(outcomes) {
       <div class="sc-bar"><div class="sc-fill ${tier}" style="width:${pct}%"></div></div>
       <div class="sc-detail">
         <div class="sc-detail-inner ${tier}">
-          ${score != null ? `Score: <strong>${display}/100</strong>` : 'Score not yet calculated for this dimension.'}
+          ${explanation ? esc(explanation) : (score != null ? `Score: <strong>${display}/100</strong>` : 'Score not yet calculated for this dimension.')}
         </div>
       </div>
     </div>`
   })
 
-  // Deal difficulty modifier
   const difficulty = latest.deal_difficulty_score != null ? latest.deal_difficulty_score : null
   const multiplier = difficulty != null ? (0.8 + difficulty * 0.004).toFixed(2) : null
   if (difficulty != null) {
-    rows.push(`<div class="sc-method">Deal Difficulty: <strong>${difficulty}/100</strong> — multiplier ×${multiplier}</div>`)
+    rows.push(`<div class="sc-method">Deal Difficulty: <strong>${difficulty}/100</strong> \u2014 multiplier \u00d7${multiplier}</div>`)
+  }
+
+  const stageLabels = { preclinical: 'Pre-clinical', phase2_3: 'Phase II/III', launched: 'Launched Product', platform: 'Platform', licensing: 'Licensing/Co-Dev' }
+  if (stage && stageLabels[stage]) {
+    rows.push(`<div class="sc-method" style="margin-top:4px;font-size:11px;color:var(--ink-faint)">Weights adjusted for: ${stageLabels[stage]}</div>`)
   }
 
   return rows.join('')
