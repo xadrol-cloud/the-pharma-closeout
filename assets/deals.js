@@ -862,21 +862,34 @@ export function renderCriticReviews(sources) {
 }
 
 
-/* ---------- 3i. Key Assets (molecule table) ---------- */
+/* ---------- 3i. Key Assets (from disease_assets table) ---------- */
 
-export function renderKeyAssets(deal) {
-  const molecules = parseTAs(deal.lead_molecules)
-  const moas = parseTAs(deal.mechanisms_of_action)
+export function renderKeyAssets(allAssets) {
+  if (!allAssets || !allAssets.length) return '<p style="color:var(--ink-faint);font-size:13px">No asset data available.</p>'
 
-  if (!molecules.length) return '<p style="color:var(--ink-faint);font-size:13px">No molecule data available.</p>'
+  const groups = { ok: [], pip: [], div: [] }
+  for (const a of allAssets) {
+    const cls = a.asset_status_class || 'pip'
+    if (!groups[cls]) groups[cls] = []
+    groups[cls].push(a)
+  }
 
-  const rows = molecules.map((mol, i) => {
-    const moa = moas[i] || moas[0] || '—'
-    return `<div class="am-row">
-      <span class="am-name">${esc(mol)}</span>
-      <span class="am-moa">${esc(moa)}</span>
-    </div>`
-  })
+  const groupLabels = { ok: 'Approved', pip: 'Pipeline', div: 'Divested / Failed' }
+  const rows = []
+
+  for (const cls of ['ok', 'pip', 'div']) {
+    const assets = groups[cls]
+    if (!assets || !assets.length) continue
+    rows.push(`<div class="am-group-label ${cls}">${groupLabels[cls]}</div>`)
+    for (const a of assets) {
+      rows.push(`<div class="am-row">
+        <span class="am-name">${esc(a.asset_name || '')}</span>
+        <span class="am-moa">${esc(a.asset_moa || '')}</span>
+        <span class="am-status ${esc(a.asset_status_class || '')}">${esc(a.asset_status || '')}</span>
+        <span class="am-rev">${esc(a.asset_revenue_label || '')}</span>
+      </div>`)
+    }
+  }
 
   return `<div class="asset-mini">
     <div class="am-title">Key Assets</div>
