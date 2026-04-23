@@ -870,6 +870,37 @@ body {
   border: none; background: none;
 }
 
+/* Search results — count + status + load more */
+.search-count {
+  color: var(--ink-faint);
+  font-size: 13px;
+  margin: 0 0 12px 0;
+}
+.search-status {
+  color: var(--ink-faint);
+  font-size: 13px;
+  text-align: center;
+  padding: 40px 0;
+}
+.search-status.error { color: #c13; }
+
+.load-more-btn {
+  display: block;
+  margin: 24px auto 0;
+  padding: 10px 28px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: opacity 0.15s;
+}
+.load-more-btn:hover { opacity: 0.85; }
+
 
 /* ==========================================================================
    8. TAGS
