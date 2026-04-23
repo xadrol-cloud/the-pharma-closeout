@@ -24,6 +24,21 @@ Phase 0 discovery revealed that the DB splits what users call one TA across mult
 - **TA list:** Oncology, Immunology, Neurology, Cardiovascular, Rare Disease, Infectious Disease, Hematology, Ophthalmology, Respiratory, Diagnostics, Vaccines, Metabolic, Gastroenterology, Dermatology, Other (15 options total including "Other").
 - **Alias collapse in searchDeals:** when filter sends `therapeutic_area=Neurology`, query must OR-match `Neuroscience|Neurology|CNS|Central Nervous System`. Same for `Metabolic` → `Metabolic Disease|Metabolic|Metabolic/Endocrine`. See updated Task 3.3.
 
+**Deviation 3 — Task 1.2 scope narrowed after Phase 1 DB re-audit.**
+Between the 2026-04-22 16:46 ET audit that motivated this plan and Phase 1 execution, the DB was partially corrected (source unclear — possibly a scheduled enrichment run). Outlier count above $400B is now 0. Of the original 7 targets: 3 are still wrong and need fixes (Novo/Vivtex $2.1B → ~$175M; AbbVie/Genentech null → ~$595M; Sanofi/Lexicon $2.82B → ~$260M); 3 already carry correct values but no source citation (Novartis/Regulus 1700; Merck/Harpoon 680; Amgen/Immunex 16000); 1 is plausible pending verification (Lilly/BI 444, expected ~500). Task 1.2 now fixes the 3 wrong values and attaches `primary_source_url` + `deal_sources` row for all 7 to satisfy the provenance rule.
+
+**Deviation 4 — Source tracking uses `primary_source_url` column + `deal_sources` table, not a nonexistent `sources` JSONB column.**
+`deals_enriched` does not have a `sources` column. Actual provenance surface:
+- `deals_enriched.primary_source_url` (text) — the canonical citation URL for the deal row
+- `deals_enriched.source_tier` (int) — 1-7 per Research Standards spec
+- `deals_enriched.value_confidence` (text) — low / medium / high
+- `deal_sources` table — per-source rows keyed by `deal_id`, columns: `source_id`, `url`, `source_type`, `source_name`, `excerpt`, `date_accessed`, `link_status`, `link_checked_at`, `link_final_url`, `sentiment`, `created_at`
+
+Task 1.2 correction pattern: `UPDATE deals_enriched SET deal_value_usd_mm=?, primary_source_url=?, source_tier=1, value_confidence='high' WHERE deal_id=?` + `INSERT INTO deal_sources (deal_id, url, source_type, source_name, excerpt, date_accessed) VALUES (...)`.
+
+**Side findings (out of scope, tracked separately):**
+- Sanofi/Lexicon and Lilly/BI each have 2 near-duplicate rows in `deals_enriched` — queued as a follow-up dedup task.
+
 **Deviation 2 — Python Supabase access uses direct PostgREST, not supabase-py.**
 `supabase-py 2.10.0` rejects the new 2026 `sb_secret_` key format. All Python scripts in this plan (Tasks 1.1, 1.2, 2.1, 2.2, 4.1-4.4) use `requests` with PostgREST endpoints, matching the pattern already established in `scripts/migrate_to_supabase.py`. Helper snippet:
 
