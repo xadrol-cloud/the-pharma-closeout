@@ -53,7 +53,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   </div>
   <div class="nav-search">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" placeholder="Search deals..." aria-label="Search deals">
+    <input id="nav-search-input" type="text" placeholder="Search deals..." aria-label="Search deals">
   </div>
 </nav>
 
@@ -83,6 +83,25 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       <input id="search-input" class="search-bar" type="text" placeholder="Company, molecule, therapeutic area, indication...">
     </div>
     <div id="filters" class="search-filters">
+      <select name="therapeutic_area" class="f-chip" aria-label="Therapeutic Area">
+        <option value="">All Therapeutic Areas</option>
+        <option value="Oncology">Oncology</option>
+        <option value="Hematology">Hematology</option>
+        <option value="Neurology">Neurology</option>
+        <option value="Cardiovascular">Cardiovascular</option>
+        <option value="Metabolic">Metabolic</option>
+        <option value="Immunology">Immunology</option>
+        <option value="Rare Disease">Rare Disease</option>
+        <option value="Infectious Disease">Infectious Disease</option>
+        <option value="Vaccines">Vaccines</option>
+        <option value="Respiratory">Respiratory</option>
+        <option value="Gastroenterology">Gastroenterology</option>
+        <option value="Nephrology">Nephrology</option>
+        <option value="Ophthalmology">Ophthalmology</option>
+        <option value="Dermatology">Dermatology</option>
+        <option value="Women's Health">Women's Health</option>
+        <option value="Gene Therapy">Gene Therapy</option>
+      </select>
       <select name="deal_type" class="f-chip" aria-label="Deal Type">
         <option value="">All Deal Types</option>
         <option value="Acquisition">Acquisition / M&A</option>
@@ -235,11 +254,36 @@ topEl.innerHTML = topOS.map(d => renderPoster(d, 'carousel')).join('')
 initCarousel(document.getElementById('top-section'), {})
 
 // Search
-initSearch(
-  document.getElementById('search-input'),
-  document.getElementById('filters'),
-  document.getElementById('search-results')
-)
+const searchInput = document.getElementById('search-input')
+const filtersEl = document.getElementById('filters')
+const resultsEl = document.getElementById('search-results')
+
+// Prefill from ?q= query string (allows nav search from other pages to land here)
+const params = new URLSearchParams(window.location.search)
+const qPrefill = params.get('q')
+if (qPrefill) {
+  searchInput.value = qPrefill
+}
+
+initSearch(searchInput, filtersEl, resultsEl)
+
+// Trigger initial search if prefill was set
+if (qPrefill) {
+  searchInput.dispatchEvent(new Event('input'))
+}
+
+// Wire nav search input: Enter focuses the main search
+const navInput = document.getElementById('nav-search-input')
+if (navInput) {
+  navInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && navInput.value.trim()) {
+      searchInput.value = navInput.value.trim()
+      searchInput.dispatchEvent(new Event('input'))
+      searchInput.focus()
+      searchInput.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  })
+}
 </script>
 
 </body>

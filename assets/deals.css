@@ -1580,6 +1580,21 @@ body {
 .src-headline a:hover { color: var(--blue); }
 .src-date { font-size: 10px; color: var(--ink-faint); margin-top: 1px; }
 
+/* Source link-health badges */
+.src-health {
+  font-family: var(--mono);
+  font-size: 9px; font-weight: 600;
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.3px;
+  vertical-align: middle;
+  display: inline-block;
+}
+.src-health.src-dead { color: #b4232c; background: rgba(180, 35, 44, 0.08); }
+.src-health.src-blocked { color: #996515; background: rgba(153, 101, 21, 0.08); }
+.src-health.src-error { color: #6b6b6b; background: rgba(107, 107, 107, 0.08); }
+
 
 /* ==========================================================================
    22. FOOTER

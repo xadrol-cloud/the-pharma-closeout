@@ -200,6 +200,7 @@ export async function searchDeals(query, filters = {}) {
   if (query) {
     q = q.or(`buyer_name.ilike.%${query}%,target_name.ilike.%${query}%,therapeutic_areas.ilike.%${query}%,lead_molecules.ilike.%${query}%,indications.ilike.%${query}%`)
   }
+  if (filters.therapeutic_area) q = q.ilike('therapeutic_areas', `%${filters.therapeutic_area}%`)
   if (filters.deal_type) q = q.eq('deal_type', filters.deal_type)
   if (filters.era) q = q.eq('era_tag', filters.era)
   if (filters.min_value) q = q.gte('deal_value_usd_mm', filters.min_value)
@@ -1008,15 +1009,39 @@ export function renderComparables(comparables) {
 
 /* ---------- 3l. Sources List ---------- */
 
+/** Link health badge: green for 2xx, orange for 403/401 (still accessible to humans), red for 404/410 (dead). */
+function linkHealthBadge(status) {
+  if (status == null) return '' // never probed
+  if (status >= 200 && status < 300) return '' // OK, no badge needed (keep UI clean)
+  if (status === 404 || status === 410) return '<span class="src-health src-dead" title="Dead link (404)">⚠ Dead</span>'
+  if (status === 403 || status === 401) return '<span class="src-health src-blocked" title="Source exists but blocks automated access">🔒</span>'
+  if (status === -1) return '<span class="src-health src-error" title="Connection error">⚠</span>'
+  if (status >= 500) return '<span class="src-health src-error" title="Server error">⚠</span>'
+  return ''
+}
+
 export function renderSources(sources) {
   if (!sources || !sources.length) return '<p style="color:var(--ink-faint);font-size:13px">No sources indexed.</p>'
 
   const SHOW_LIMIT = 5
-  const items = sources.map((s, i) => {
+  // Prefer listing healthy sources first so dead links don't dominate the visible fold
+  const sorted = [...sources].sort((a, b) => {
+    const sa = a.link_status
+    const sb = b.link_status
+    const ok = (s) => s != null && s >= 200 && s < 400
+    if (ok(sa) && !ok(sb)) return -1
+    if (!ok(sa) && ok(sb)) return 1
+    return 0
+  })
+  const items = sorted.map((s, i) => {
     const hidden = i >= SHOW_LIMIT ? ' style="display:none" data-extra-source' : ''
+    const badge = linkHealthBadge(s.link_status)
+    const href = (s.link_status === 404 || s.link_status === 410) && s.url
+      ? `https://web.archive.org/web/*/${encodeURIComponent(s.url)}` // offer Wayback fallback for dead links
+      : (s.url || '#')
     return `<div class="src-item"${hidden}>
-      <div class="src-type">${esc(s.source_type || 'Article')}</div>
-      <div class="src-headline"><a href="${esc(s.url || '#')}" target="_blank">${esc(s.headline || s.source_name || 'Source')}</a></div>
+      <div class="src-type">${esc(s.source_type || 'Article')}${badge}</div>
+      <div class="src-headline"><a href="${esc(href)}" target="_blank">${esc(s.headline || s.source_name || 'Source')}</a></div>
       <div class="src-date">${esc(s.source_name || '')} · ${esc(formatDate(s.date_accessed || s.published_date))}</div>
     </div>`
   })
