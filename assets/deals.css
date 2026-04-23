@@ -1685,6 +1685,81 @@ body {
 }
 .comp-compare-btn:hover { background: rgba(196, 147, 50, 0.08); }
 
+/* Poster selection checkbox overlay */
+.poster-select {
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 22px; height: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.poster-select:hover {
+  border-color: var(--gold);
+  background: rgba(196, 147, 50, 0.4);
+}
+.poster-select svg {
+  width: 14px; height: 14px;
+  color: var(--gold);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.poster-select.checked {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+.poster-select.checked svg {
+  color: #000;
+  opacity: 1;
+}
+.feat-poster, .c-poster { position: relative; }
+
+/* Floating Compare button */
+.compare-fab {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  z-index: 1000;
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 20px;
+  background: var(--gold);
+  color: #000;
+  border: none;
+  border-radius: 40px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+  animation: fabSlide 0.3s ease-out;
+}
+.compare-fab:hover {
+  background: #d4a03a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+.compare-fab .cf-count {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  color: #000;
+  min-width: 24px; height: 24px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 12px;
+  padding: 0 6px;
+}
+.compare-fab .cf-arrow { font-size: 16px; }
+@keyframes fabSlide {
+  from { transform: translateY(80px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
 
 /* ==========================================================================
    22. FOOTER

@@ -35,7 +35,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260422b">
+<link rel="stylesheet" href="assets/deals.css?v=20260422c">
 </head>
 <body>
 
@@ -82,7 +82,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </footer>
 
 <script type="module">
-import { fetchDeal, renderComparison } from './assets/deals.js?v=20260422b'
+import { fetchDeal, fetchDealOutcomes, renderComparison } from './assets/deals.js?v=20260422c'
 
 const params = new URLSearchParams(window.location.search)
 const idsRaw = params.get('ids') || ''
@@ -97,8 +97,25 @@ if (ids.length < 2) {
   emptyEl.style.display = ''
 } else {
   try {
-    const deals = await Promise.all(ids.slice(0, 5).map(id => fetchDeal(id)))
-    const valid = deals.filter(Boolean)
+    // Fetch each deal + its outcomes in parallel; merge latest-window outcome scores into the deal
+    const keep = ids.slice(0, 5)
+    const results = await Promise.all(keep.map(async (id) => {
+      const [deal, outcomes] = await Promise.all([fetchDeal(id), fetchDealOutcomes(id)])
+      if (!deal) return null
+      // Pick latest-window outcome with populated dimension scores (same logic as deal.html score breakdown)
+      const sorted = (outcomes || []).slice().sort((a, b) => {
+        const order = { '15yr': 0, '10yr': 1, '5yr': 2 }
+        return (order[a.window] ?? 3) - (order[b.window] ?? 3)
+      })
+      const latest = sorted.find(o => o.strategic_fit_score != null) || sorted[0] || {}
+      // Merge dimension scores into the deal object so renderComparison reads them
+      for (const k of ['strategic_fit_score', 'financial_return_score', 'pipeline_outcome_score',
+                       'integration_score', 'deal_difficulty_score']) {
+        if (latest[k] != null) deal[k] = latest[k]
+      }
+      return deal
+    }))
+    const valid = results.filter(Boolean)
     loadingEl.style.display = 'none'
     if (valid.length < 2) {
       emptyEl.style.display = ''

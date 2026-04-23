@@ -1032,6 +1032,92 @@ export function renderComparables(comparables, currentDealId) {
 }
 
 
+/* ==========================================================================
+   4c. Multi-select comparison flow
+   ========================================================================== */
+
+const _selectedDealIds = new Set()
+
+/** Initialize multi-select: injects checkbox overlays on all posters + floating Compare button. */
+export function initMultiSelect() {
+  // Inject a single floating compare button if not already present
+  if (!document.getElementById('compare-fab')) {
+    const fab = document.createElement('button')
+    fab.id = 'compare-fab'
+    fab.className = 'compare-fab'
+    fab.style.display = 'none'
+    fab.innerHTML = '<span class="cf-count">0</span><span class="cf-label">Compare</span><span class="cf-arrow">&rarr;</span>'
+    fab.addEventListener('click', () => {
+      if (_selectedDealIds.size >= 2) {
+        const ids = Array.from(_selectedDealIds).slice(0, 5).join(',')
+        window.location.href = `compare.html?ids=${ids}`
+      }
+    })
+    document.body.appendChild(fab)
+  }
+
+  // Delegated click handler for poster select checkboxes
+  document.addEventListener('click', (e) => {
+    const cb = e.target.closest('.poster-select')
+    if (!cb) return
+    e.preventDefault()
+    e.stopPropagation()
+    const dealId = cb.dataset.dealId
+    if (!dealId) return
+    const checked = cb.classList.toggle('checked')
+    if (checked) {
+      if (_selectedDealIds.size >= 5) {
+        cb.classList.remove('checked')
+        updateFab()
+        return
+      }
+      _selectedDealIds.add(dealId)
+    } else {
+      _selectedDealIds.delete(dealId)
+    }
+    updateFab()
+  }, true) // capture phase so it fires before anchor navigation
+
+  // Run once to inject checkboxes on already-rendered posters
+  injectSelectorOnPosters()
+
+  // Re-scan when the DOM changes (carousels, search results re-render)
+  const mo = new MutationObserver(() => injectSelectorOnPosters())
+  mo.observe(document.body, { childList: true, subtree: true })
+}
+
+function injectSelectorOnPosters() {
+  document.querySelectorAll('a[href^="deal.html?id="]').forEach(anchor => {
+    // Match feat-poster or c-poster (not mini / featured-info CTAs)
+    const poster = anchor.querySelector('.feat-poster, .c-poster')
+    if (!poster) return
+    if (poster.querySelector('.poster-select')) return // already injected
+    const dealId = new URL(anchor.href).searchParams.get('id')
+    if (!dealId) return
+    const cb = document.createElement('div')
+    cb.className = 'poster-select' + (_selectedDealIds.has(dealId) ? ' checked' : '')
+    cb.dataset.dealId = dealId
+    cb.title = 'Select for comparison'
+    cb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>'
+    poster.appendChild(cb)
+  })
+}
+
+function updateFab() {
+  const fab = document.getElementById('compare-fab')
+  if (!fab) return
+  const n = _selectedDealIds.size
+  fab.querySelector('.cf-count').textContent = n
+  if (n >= 2) {
+    fab.style.display = ''
+    fab.classList.add('active')
+  } else {
+    fab.style.display = 'none'
+    fab.classList.remove('active')
+  }
+}
+
+
 /* ---------- 3k2. Comparison Table (side-by-side multi-deal view) ---------- */
 
 /**
