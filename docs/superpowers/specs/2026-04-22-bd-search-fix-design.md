@@ -138,6 +138,10 @@ function applySortClause(q, sortKey) {
 - Adds `sort`, `therapeutic_area` filters; honors `offset`.
 - Throws on Supabase error instead of silently returning empty array.
 
+**Caller enumeration (as of 2026-04-22):** only `initSearch()` in `assets/deals.js` calls `searchDeals`. The homepage carousels use `fetchLatestDeals`, `fetchTrendingDeals`, `fetchTopOutcomeDeals`, and `fetchFeaturedDeal` — all separate functions with raw-array returns, untouched by this change.
+
+**Column-type note for `therapeutic_areas` / `lead_molecules`:** the existing `.ilike('%query%')` search matches against JSON-stringified representations of these columns. Before implementation, confirm whether the columns are stored as `text` (JSON string) or true `jsonb` — if `jsonb`, switch the TA filter to `.cs()` (contains) for precise matching. Current code treats them as `text`, which works but can match substrings inside unrelated values.
+
 ### A.3 — `initSearch()` rewrite (line 1097)
 
 New state + render responsibilities:
@@ -203,8 +207,8 @@ export function initSearch(inputEl, filtersEl, resultsEl) {
       btn.onclick = () => runSearch({ append: true })
       resultsEl.appendChild(btn)
     }
-    resultsEl.querySelector('.search-count').textContent =
-      `Showing ${loadedCount} of ${totalCount} results`
+    const countEl = resultsEl.querySelector('.search-count')
+    if (countEl) countEl.textContent = `Showing ${loadedCount} of ${totalCount} results`
   }
 
   inputEl.addEventListener('input', () => {
@@ -246,12 +250,14 @@ Script: `scripts/fix_corrupt_values.py`
 | Deal | Current (mm) | Target (mm) | Source approach |
 |---|---|---|---|
 | Novo Nordisk / Vivtex (2025-02-03) | 25,947,200,000 | ~175 | WebFetch Novo Nordisk press release; verify with company site |
-| Novartis / Regulus (2025) | 96,914,000 | 1700 | Already established in prior research |
+| Novartis / Regulus (2025) | 96,914,000 | 1700 | WebFetch Novartis 2025 Q-report; cross-check with deal DB prior-research memory |
 | AbbVie / Genentech (2015) | 541,069,000 | ~595 | WebFetch AbbVie/Roche press release |
-| Merck / Harpoon (2024) | 9,806,000 | 680 | Established figure |
-| Sanofi / Lexicon (2015) | 940,000 | ~260 | WebFetch; value in prior notes |
-| Amgen / Immunex (2001) | 240,120 | 16000 | Established $16B |
-| Lilly / Boehringer (2011) | 340,000 | ~500 upfront | WebFetch — multi-product collab |
+| Merck / Harpoon (2024) | 9,806,000 | 680 | WebFetch Merck press release (Jan 2024) |
+| Sanofi / Lexicon (2015) | 940,000 | ~260 | WebFetch Sanofi press release; cross-check with prior-research memory |
+| Amgen / Immunex (2001) | 240,120 | 16000 | WebFetch Amgen 2001 10-K or press release |
+| Lilly / Boehringer (2011) | 340,000 | ~500 upfront | WebFetch Lilly/BI Jan 2011 press release — multi-product collab |
+
+**Provenance rule:** every correction must attach a citation URL (company press release or SEC filing) to the `sources` JSONB column. Rows listed above with "prior research" / "established" figures are research anchors — the implementing script MUST still fetch a primary source URL before writing. Do not write a correction with an un-sourced value.
 
 For each corrupt row, the script:
 1. Fetches the source via WebFetch (company press release or SEC filing preferred).
