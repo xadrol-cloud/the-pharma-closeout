@@ -11,8 +11,37 @@
 **Environment assumptions:**
 - Node **≥18** required for `tests/deals_search.spec.mjs` (uses native fetch + native `node:test`).
 - Windows + Git Bash (commands use Unix syntax: `grep`, `export`, `wc -l`, forward slashes in paths).
-- Env vars pre-set: `SUPABASE_URL`, `SUPABASE_ANON_KEY` (readonly client), `SUPABASE_SERVICE_KEY` (write client for data-repo scripts).
-- Python 3.10+ with `supabase`, `requests`, `pytest` installed in BD Data Base repo.
+- Env vars pre-set by `source ~/.claude/bd-env.sh`: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_KEY`.
+- Python 3.10+ with `requests`, `pytest` installed in BD Data Base repo.
+
+---
+
+## Plan deviations (recorded after Phase 0 discovery, 2026-04-22)
+
+**Deviation 1 — TA filter list expanded from 12 to 14 options + alias collapse.**
+Phase 0 discovery revealed that the DB splits what users call one TA across multiple tags (Neurology bucket = `Neuroscience` / `Neurology` / `CNS` / `Central Nervous System` = 42 deals; Metabolic bucket = `Metabolic Disease` / `Metabolic` / `Metabolic/Endocrine` = 21 deals). Also surfaced: Diagnostics (14), Vaccines (13), Gastroenterology (10) are higher-volume than Dermatology (7) which was on the original list. Approved revision:
+
+- **TA list:** Oncology, Immunology, Neurology, Cardiovascular, Rare Disease, Infectious Disease, Hematology, Ophthalmology, Respiratory, Diagnostics, Vaccines, Metabolic, Gastroenterology, Dermatology, Other (15 options total including "Other").
+- **Alias collapse in searchDeals:** when filter sends `therapeutic_area=Neurology`, query must OR-match `Neuroscience|Neurology|CNS|Central Nervous System`. Same for `Metabolic` → `Metabolic Disease|Metabolic|Metabolic/Endocrine`. See updated Task 3.3.
+
+**Deviation 2 — Python Supabase access uses direct PostgREST, not supabase-py.**
+`supabase-py 2.10.0` rejects the new 2026 `sb_secret_` key format. All Python scripts in this plan (Tasks 1.1, 1.2, 2.1, 2.2, 4.1-4.4) use `requests` with PostgREST endpoints, matching the pattern already established in `scripts/migrate_to_supabase.py`. Helper snippet:
+
+```python
+import requests
+import json
+with open("config/supabase_config.json") as f:
+    cfg = json.load(f)
+URL = cfg["url"].rstrip("/")
+KEY = cfg["secret_key"]  # write key; use publishable_key for read-only
+HEADERS = {"apikey": KEY, "Authorization": f"Bearer {KEY}", "Content-Type": "application/json"}
+
+def table(name):
+    return f"{URL}/rest/v1/{name}"
+# Query: requests.get(table("deals_enriched"), headers=HEADERS, params={"select": "*"})
+# Upsert: requests.post(table("deals_enriched"), headers={**HEADERS, "Prefer": "resolution=merge-duplicates,return=representation"}, json=[row])
+# Update: requests.patch(table("deals_enriched"), headers=HEADERS, params={"deal_id": f"eq.{deal_id}"}, json=updates)
+```
 
 ---
 
@@ -681,14 +710,17 @@ Replace the `<div id="filters">...</div>` block with:
     <option value="Oncology">Oncology</option>
     <option value="Immunology">Immunology</option>
     <option value="Neurology">Neurology</option>
-    <option value="Metabolic">Metabolic</option>
-    <option value="Rare Disease">Rare Disease</option>
     <option value="Cardiovascular">Cardiovascular</option>
+    <option value="Rare Disease">Rare Disease</option>
     <option value="Infectious Disease">Infectious Disease</option>
-    <option value="Respiratory">Respiratory</option>
     <option value="Hematology">Hematology</option>
-    <option value="Dermatology">Dermatology</option>
     <option value="Ophthalmology">Ophthalmology</option>
+    <option value="Respiratory">Respiratory</option>
+    <option value="Diagnostics">Diagnostics</option>
+    <option value="Vaccines">Vaccines</option>
+    <option value="Metabolic">Metabolic</option>
+    <option value="Gastroenterology">Gastroenterology</option>
+    <option value="Dermatology">Dermatology</option>
     <option value="Other">Other</option>
   </select>
   <select name="min_value" class="f-chip" aria-label="Min Value">
@@ -735,13 +767,25 @@ export async function searchDeals(query, filters = {}, { limit = 25, offset = 0 
   }
   if (filters.deal_type) q = q.eq('deal_type', filters.deal_type)
   if (filters.era) q = q.eq('era_tag', filters.era)
-  if (filters.therapeutic_area) q = q.ilike('therapeutic_areas', `%${filters.therapeutic_area}%`)
+  if (filters.therapeutic_area) {
+    const aliases = TA_ALIASES[filters.therapeutic_area] || [filters.therapeutic_area]
+    const taClause = aliases.map(a => `therapeutic_areas.ilike.%${a}%`).join(',')
+    q = q.or(taClause)
+  }
   if (filters.min_value) q = q.gte('deal_value_usd_mm', filters.min_value)
   q = applySortClause(q, filters.sort || 'date_desc')
   q = q.range(offset, offset + limit - 1)
   const { data, error, count } = await q
   if (error) throw error
   return { deals: data || [], total: count || 0 }
+}
+
+// Alias collapse: DB has fragmented tags that users perceive as one TA.
+// When a user selects "Neurology", match any variant. Single source of truth.
+const TA_ALIASES = {
+  'Neurology': ['Neuroscience', 'Neurology', 'CNS', 'Central Nervous System'],
+  'Metabolic': ['Metabolic Disease', 'Metabolic', 'Metabolic/Endocrine'],
+  // Other TAs are single-variant — the default passes them through unchanged
 }
 
 function applySortClause(q, sortKey) {
@@ -754,10 +798,7 @@ function applySortClause(q, sortKey) {
 }
 ```
 
-*If Phase 0.1 discovery showed `therapeutic_areas` is `jsonb` (not `text`), replace the `.ilike` line for TA with:*
-```javascript
-if (filters.therapeutic_area) q = q.cs('therapeutic_areas', [filters.therapeutic_area])
-```
+*Phase 0 confirmed `therapeutic_areas` is `text` (JSON-stringified) — `.ilike` with percent wildcards is the correct matcher, not `.cs()`.*
 
 - [ ] **Step 2: Manual verification — no other callers**
 
