@@ -1618,6 +1618,73 @@ body {
   letter-spacing: 0.5px;
 }
 
+/* Comparison table */
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink);
+  margin-top: 24px;
+}
+.cmp-table thead th.cmp-head {
+  padding: 12px 8px;
+  vertical-align: bottom;
+  text-align: center;
+  border-bottom: 2px solid var(--ink);
+  width: auto;
+}
+.cmp-head-link { display: block; text-decoration: none; }
+.cmp-table th.cmp-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ink-muted);
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--rule-light);
+  white-space: nowrap;
+  width: 180px;
+}
+.cmp-row td.cmp-val {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--rule-light);
+  text-align: center;
+  vertical-align: middle;
+}
+.cmp-row.cmp-strong td.cmp-val { font-weight: 600; font-size: 14px; }
+.cmp-row:hover { background: rgba(196, 147, 50, 0.04); }
+
+.cmp-score {
+  display: inline-block;
+  min-width: 34px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 13px;
+  background: var(--rule-light);
+  color: var(--ink);
+}
+.cmp-score.high { background: rgba(64, 145, 88, 0.15); color: #1c5f34; }
+.cmp-score.mid  { background: rgba(196, 147, 50, 0.15); color: #6b4e15; }
+.cmp-score.low  { background: rgba(180, 35, 44, 0.12); color: #8a1a22; }
+
+/* Comparables sidebar — add compare button */
+.comp-compare-btn {
+  display: block; text-align: center;
+  font-family: var(--mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.6px; text-transform: uppercase;
+  color: var(--gold);
+  padding: 4px 8px; margin-top: 4px;
+  border: 1px solid rgba(196, 147, 50, 0.3);
+  border-radius: 3px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.comp-compare-btn:hover { background: rgba(196, 147, 50, 0.08); }
+
 
 /* ==========================================================================
    22. FOOTER

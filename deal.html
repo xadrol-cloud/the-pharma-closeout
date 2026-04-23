@@ -309,7 +309,7 @@ if (!dealId) {
 
       // ── Sidebar: Comparables ──
       const comparables = await fetchComparables(deal)
-      const compsHtml = renderComps(comparables)
+      const compsHtml = renderComps(comparables, dealId)
       if (compsHtml) {
         document.getElementById('comparables').innerHTML = compsHtml
         document.getElementById('comparables-section').style.display = ''

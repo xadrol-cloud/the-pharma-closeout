@@ -998,7 +998,7 @@ export function renderScoreBreakdown(outcomes, deal) {
 
 /* ---------- 3k. Comparables Sidebar ---------- */
 
-export function renderComparables(comparables) {
+export function renderComparables(comparables, currentDealId) {
   if (!comparables || !comparables.length) return ''
 
   const items = comparables.map(deal => {
@@ -1006,25 +1006,108 @@ export function renderComparables(comparables) {
     const criticScore = deal.critic_score != null ? Math.round(deal.critic_score) : null
     const outcomeScore = deal.outcome_score != null ? Math.round(deal.outcome_score) : null
     const val = formatValue(deal.deal_value_usd_mm)
+    const cmpHref = currentDealId ? `compare.html?ids=${currentDealId},${deal.deal_id}` : null
 
-    return `<a class="comp" href="deal.html?id=${deal.deal_id}">
-      <div class="comp-poster ${bg}"><span>${esc(deal.target_name || '')}</span></div>
-      <div class="comp-body">
-        <div class="comp-name">${esc(deal.buyer_name)} / ${esc(deal.target_name)}</div>
-        <div class="comp-meta">${esc(val)} · ${esc(yearOf(deal.announcement_date))}</div>
-      </div>
-      <div class="comp-scores">
-        ${criticScore != null
-          ? `<div class="comp-sc ct"><span class="cs-label">CS</span>${criticScore}</div>`
-          : `<div class="comp-sc lk"><span class="cs-label">CS</span>—</div>`}
-        ${outcomeScore != null
-          ? `<div class="comp-sc os"><span class="cs-label">OS</span>${outcomeScore}</div>`
-          : `<div class="comp-sc lk"><span class="cs-label">OS</span>—</div>`}
-      </div>
-    </a>`
+    return `<div class="comp-wrap">
+      <a class="comp" href="deal.html?id=${deal.deal_id}">
+        <div class="comp-poster ${bg}"><span>${esc(deal.target_name || '')}</span></div>
+        <div class="comp-body">
+          <div class="comp-name">${esc(deal.buyer_name)} / ${esc(deal.target_name)}</div>
+          <div class="comp-meta">${esc(val)} · ${esc(yearOf(deal.announcement_date))}</div>
+        </div>
+        <div class="comp-scores">
+          ${criticScore != null
+            ? `<div class="comp-sc ct"><span class="cs-label">CS</span>${criticScore}</div>`
+            : `<div class="comp-sc lk"><span class="cs-label">CS</span>—</div>`}
+          ${outcomeScore != null
+            ? `<div class="comp-sc os"><span class="cs-label">OS</span>${outcomeScore}</div>`
+            : `<div class="comp-sc lk"><span class="cs-label">OS</span>—</div>`}
+        </div>
+      </a>
+      ${cmpHref ? `<a class="comp-compare-btn" href="${cmpHref}">Compare side-by-side &rarr;</a>` : ''}
+    </div>`
   })
 
   return items.join('')
+}
+
+
+/* ---------- 3k2. Comparison Table (side-by-side multi-deal view) ---------- */
+
+/**
+ * Render a comparison table for 2-5 deals. Each deal gets a column.
+ * Rows: buyer, target, type, value, date, status, CS, OS, 4 dimensions, TAs, lead molecules.
+ */
+export function renderComparison(deals) {
+  if (!deals || deals.length < 2) {
+    return '<p style="color:var(--ink-muted);text-align:center;padding:40px">Select at least 2 deals to compare.</p>'
+  }
+  if (deals.length > 5) {
+    deals = deals.slice(0, 5)
+  }
+
+  // Helpers
+  const score = (v) => (v == null ? '—' : Math.round(v))
+  const scoreTierFor = (v) => (v == null ? '' : v >= 75 ? 'high' : v >= 50 ? 'mid' : 'low')
+  const ta = (d) => parseTAs(d.therapeutic_areas).join(' · ') || '—'
+  const moleculeList = (d) => {
+    try {
+      const m = d.lead_molecules ? JSON.parse(d.lead_molecules) : null
+      return Array.isArray(m) && m.length ? m.join(', ') : (d.lead_molecules || '—')
+    } catch { return d.lead_molecules || '—' }
+  }
+
+  // Column headers — each deal is a poster + name
+  const headerCells = deals.map(d => `
+    <th class="cmp-head">
+      <a href="deal.html?id=${d.deal_id}" class="cmp-head-link">
+        ${renderPoster(d, 'carousel')}
+      </a>
+    </th>`).join('')
+
+  // Value row with poster at top (spans whole column header above)
+  function row(label, cells, { strong = false, highlightHighest = false } = {}) {
+    return `<tr class="cmp-row${strong ? ' cmp-strong' : ''}">
+      <th class="cmp-label">${esc(label)}</th>
+      ${cells.map(c => `<td class="cmp-val">${c}</td>`).join('')}
+    </tr>`
+  }
+
+  const rows = [
+    row('Deal Type', deals.map(d => esc(d.deal_type || '—'))),
+    row('Announced', deals.map(d => formatDate(d.announcement_date))),
+    row('Closed', deals.map(d => d.close_date ? formatDate(d.close_date) : '—')),
+    row('Value', deals.map(d => `<strong>${formatValue(d.deal_value_usd_mm)}</strong>`), { strong: true }),
+    row('Status', deals.map(d => esc(d.deal_status || '—'))),
+    row('Therapeutic Areas', deals.map(ta)),
+    row('Lead Molecules', deals.map(moleculeList)),
+
+    // Score rows with color tier
+    row('Critic Score', deals.map(d => {
+      const s = score(d.critic_score); const t = scoreTierFor(d.critic_score)
+      return `<span class="cmp-score ${t}">${s}</span>`
+    }), { strong: true }),
+    row('Outcome Score', deals.map(d => {
+      const s = score(d.outcome_score); const t = scoreTierFor(d.outcome_score)
+      return `<span class="cmp-score ${t}">${s}</span>`
+    }), { strong: true }),
+
+    row('Strategic Fit',     deals.map(d => score(d.strategic_fit_score))),
+    row('Financial Return',  deals.map(d => score(d.financial_return_score))),
+    row('Asset Performance', deals.map(d => score(d.pipeline_outcome_score))),
+    row('Value Realization', deals.map(d => score(d.integration_score))),
+    row('Deal Difficulty',   deals.map(d => score(d.deal_difficulty_score))),
+
+    row('EV / Revenue', deals.map(d => d.deal_ev_revenue_x != null ? `${d.deal_ev_revenue_x.toFixed(1)}x` : '—')),
+    row('EV / EBITDA',  deals.map(d => d.deal_ev_ebitda_x != null ? `${d.deal_ev_ebitda_x.toFixed(1)}x` : '—')),
+    row('Equity Sought', deals.map(d => d.equity_sought_pct != null ? `${d.equity_sought_pct}%` : '—')),
+    row('Financing', deals.map(d => esc(d.financing_type || '—'))),
+  ]
+
+  return `<table class="cmp-table">
+    <thead><tr><th class="cmp-label"></th>${headerCells}</tr></thead>
+    <tbody>${rows.join('')}</tbody>
+  </table>`
 }
 
 
