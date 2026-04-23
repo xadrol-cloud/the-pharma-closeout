@@ -1,0 +1,28 @@
+{
+  "name": "the-pharma-closeout",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "node --test tests/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xadrol-cloud/the-pharma-closeout.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/xadrol-cloud/the-pharma-closeout/issues"
+  },
+  "homepage": "https://github.com/xadrol-cloud/the-pharma-closeout#readme",
+  "devDependencies": {
+    "@supabase/supabase-js": "^2.104.0"
+  }
+}
