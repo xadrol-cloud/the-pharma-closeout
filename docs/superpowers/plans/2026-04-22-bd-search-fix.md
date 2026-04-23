@@ -27,6 +27,13 @@ Phase 0 discovery revealed that the DB splits what users call one TA across mult
 **Deviation 3 — Task 1.2 scope narrowed after Phase 1 DB re-audit.**
 Between the 2026-04-22 16:46 ET audit that motivated this plan and Phase 1 execution, the DB was partially corrected (source unclear — possibly a scheduled enrichment run). Outlier count above $400B is now 0. Of the original 7 targets: 3 are still wrong and need fixes (Novo/Vivtex $2.1B → ~$175M; AbbVie/Genentech null → ~$595M; Sanofi/Lexicon $2.82B → ~$260M); 3 already carry correct values but no source citation (Novartis/Regulus 1700; Merck/Harpoon 680; Amgen/Immunex 16000); 1 is plausible pending verification (Lilly/BI 444, expected ~500). Task 1.2 now fixes the 3 wrong values and attaches `primary_source_url` + `deal_sources` row for all 7 to satisfy the provenance rule.
 
+**Deviation 5 — Post-Task-1.2 schema + enum findings (apply to Task 4.4 and future data work):**
+- `deals_enriched` is a SQL **view**. PostgREST returns `500 cannot update view` on PATCH/POST. Writes must target the underlying `deals` base table (plus related tables `deal_sources`, `deal_critic_reviews`, etc. as appropriate).
+- Schema-enforced enums to match exactly:
+  - `source_type ∈ {SEC Filing, Press Release, News Article, Earnings Call Transcript, Annual Report, Analyst Report, Court Filing}`
+  - `source_tier ∈ {Primary, Provisional}` (text, NOT int)
+  - `value_confidence ∈ {Confirmed, Reported, Unknown, Estimated}` (text, NOT high/medium/low)
+
 **Deviation 4 — Source tracking uses `primary_source_url` column + `deal_sources` table, not a nonexistent `sources` JSONB column.**
 `deals_enriched` does not have a `sources` column. Actual provenance surface:
 - `deals_enriched.primary_source_url` (text) — the canonical citation URL for the deal row
