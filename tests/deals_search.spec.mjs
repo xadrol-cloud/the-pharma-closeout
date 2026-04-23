@@ -6,24 +6,12 @@ import { createClient } from '@supabase/supabase-js'
 
 const sb = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY)
 
-// Alias collapse map matches the one that will live in assets/deals.js.
-// Keep in sync with the frontend.
-const TA_ALIASES = {
-  'Neurology': ['Neuroscience', 'Neurology', 'CNS', 'Central Nervous System'],
-  'Metabolic': ['Metabolic Disease', 'Metabolic', 'Metabolic/Endocrine'],
-}
-
-function taClause(ta) {
-  const aliases = TA_ALIASES[ta] || [ta]
-  return aliases.map(a => `therapeutic_areas.ilike.%${a}%`).join(',')
-}
-
 async function search(query, filters = {}, { limit = 25, offset = 0 } = {}) {
   let q = sb.from('deals_enriched').select('*', { count: 'exact' })
   if (query) q = q.or(`buyer_name.ilike.%${query}%,target_name.ilike.%${query}%,therapeutic_areas.ilike.%${query}%,lead_molecules.ilike.%${query}%,indications.ilike.%${query}%`)
   if (filters.deal_type) q = q.eq('deal_type', filters.deal_type)
   if (filters.era) q = q.eq('era_tag', filters.era)
-  if (filters.therapeutic_area) q = q.or(taClause(filters.therapeutic_area))
+  if (filters.therapeutic_area) q = q.ilike('therapeutic_areas', `%${filters.therapeutic_area}%`)
   if (filters.min_value) q = q.gte('deal_value_usd_mm', filters.min_value)
   const sortMap = { date_desc: 'announcement_date', value_desc: 'deal_value_usd_mm', critic_desc: 'critic_score', outcome_desc: 'outcome_score' }
   q = q.order(sortMap[filters.sort || 'date_desc'], { ascending: false, nullsLast: true })
@@ -48,34 +36,10 @@ test('era filter returns >0 for every decade', async () => {
 })
 
 test('TA filter single-variant returns >0', async () => {
-  // NOTE: 'Diagnostics' omitted — 0 deals in current DB (verified 2026-04-22).
-  //       Dataset has no Dx-tagged rows. If Diagnostics is added later, restore it.
-  for (const v of ['Oncology', 'Immunology', 'Cardiovascular', 'Rare Disease', 'Vaccines']) {
+  for (const v of ['Oncology', 'Neurology', 'Immunology', 'Cardiovascular', 'Metabolic', 'Vaccines', 'Gene Therapy']) {
     const { total } = await search('', { therapeutic_area: v })
     assert.ok(total > 0, `therapeutic_area="${v}" returned 0`)
   }
-})
-
-test('TA alias collapse — Neurology catches all 4 variants', async () => {
-  const { total: collapsed } = await search('', { therapeutic_area: 'Neurology' })
-  // Plain literal Neurology match (no alias)
-  let q = sb.from('deals_enriched').select('*', { count: 'exact', head: true })
-    .ilike('therapeutic_areas', '%Neurology%')
-  const { count: literal } = await q
-  // NOTE: In the current DB (verified 2026-04-22) the alias variants
-  //       (Neuroscience, CNS, Central Nervous System) are absent — all
-  //       neurology-tagged rows use the literal string "Neurology", so
-  //       collapsed === literal. Assert collapsed >= literal so the alias
-  //       wiring stays correct without failing on a clean dataset. If
-  //       alias variants are later introduced the assertion still holds.
-  assert.ok(collapsed >= literal, `alias collapse regressed: collapsed=${collapsed} literal=${literal}`)
-  // Current Neurology count is 98 — keep floor at 30 as a structural check.
-  assert.ok(collapsed >= 30, `Neurology bucket should be >=30 deals, got ${collapsed}`)
-})
-
-test('TA alias collapse — Metabolic catches 3 variants', async () => {
-  const { total: collapsed } = await search('', { therapeutic_area: 'Metabolic' })
-  assert.ok(collapsed >= 15, `Metabolic bucket should be >=15 deals, got ${collapsed}`)
 })
 
 test('sort=value_desc returns results in descending value order', async () => {

@@ -18,16 +18,14 @@ const supabase = createClient(
    1. UTILITY FUNCTIONS
    ========================================================================== */
 
-const SELF_HOSTED_LOGOS = []
-
 /**
- * Get logo URL for a company domain.
- * Checks SELF_HOSTED_LOGOS first, then falls back to gstatic favicon API.
+ * Get logo URL for a company.
+ * Prefers the enrichment-pipeline's local asset (logo_local_path on companies),
+ * falls back to gstatic favicon when only a domain is known.
  */
-export function logoUrl(domain) {
+export function logoUrl(localPath, domain) {
+  if (localPath) return `/assets/${localPath}`
   if (!domain) return null
-  const hosted = SELF_HOSTED_LOGOS.find(l => domain.includes(l))
-  if (hosted) return `/assets/logos/${hosted}.png`
   return `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${domain}&size=128`
 }
 
@@ -89,8 +87,8 @@ function shortType(dealType) {
 }
 
 /** Build logo HTML for a company — either image or text fallback */
-function logoHtml(domain, name, cssPrefix) {
-  const url = logoUrl(domain)
+function logoHtml(localPath, domain, name, cssPrefix) {
+  const url = logoUrl(localPath, domain)
   if (url) {
     return `<img src="${url}" alt="${esc(name)}" onerror="this.parentElement.innerHTML='<span class=\\'${cssPrefix}-logo-text\\'>${esc(initials(name))}</span>'">`
   }
@@ -194,19 +192,30 @@ export async function fetchTopOutcomeDeals(limit = 20) {
   return data || []
 }
 
-/** Search deals by text query + optional filters */
-export async function searchDeals(query, filters = {}) {
-  let q = supabase.from('deals_enriched').select('*')
+/** Search deals by text query + optional filters. Returns { deals, total }. */
+export async function searchDeals(query, filters = {}, { limit = 25, offset = 0 } = {}) {
+  let q = supabase.from('deals_enriched').select('*', { count: 'exact' })
   if (query) {
     q = q.or(`buyer_name.ilike.%${query}%,target_name.ilike.%${query}%,therapeutic_areas.ilike.%${query}%,lead_molecules.ilike.%${query}%,indications.ilike.%${query}%`)
   }
   if (filters.deal_type) q = q.eq('deal_type', filters.deal_type)
   if (filters.era) q = q.eq('era_tag', filters.era)
+  if (filters.therapeutic_area) q = q.ilike('therapeutic_areas', `%${filters.therapeutic_area}%`)
   if (filters.min_value) q = q.gte('deal_value_usd_mm', filters.min_value)
-  if (filters.max_value) q = q.lte('deal_value_usd_mm', filters.max_value)
-  q = q.order('announcement_date', { ascending: false }).limit(50)
-  const { data } = await q
-  return data || []
+  q = applySortClause(q, filters.sort || 'date_desc')
+  q = q.range(offset, offset + limit - 1)
+  const { data, error, count } = await q
+  if (error) throw error
+  return { deals: data || [], total: count || 0 }
+}
+
+function applySortClause(q, sortKey) {
+  switch (sortKey) {
+    case 'value_desc':   return q.order('deal_value_usd_mm', { ascending: false, nullsLast: true })
+    case 'critic_desc':  return q.order('critic_score',      { ascending: false, nullsLast: true })
+    case 'outcome_desc': return q.order('outcome_score',     { ascending: false, nullsLast: true })
+    default:             return q.order('announcement_date', { ascending: false, nullsLast: true })
+  }
 }
 
 /** Fetch disease indications for a deal (ordered by US patients desc) */
@@ -367,9 +376,9 @@ export function renderPoster(deal, size = 'carousel') {
       </div>
       <div class="fp-center">
         <div class="fp-logos">
-          <div class="fp-logo">${logoHtml(deal.buyer_domain, deal.buyer_name, 'fp')}</div>
+          <div class="fp-logo">${logoHtml(deal.buyer_logo_local_path, deal.buyer_domain, deal.buyer_name, 'fp')}</div>
           <span class="fp-times">&times;</span>
-          <div class="fp-logo">${logoHtml(deal.target_domain, deal.target_name, 'fp')}</div>
+          <div class="fp-logo">${logoHtml(deal.target_logo_local_path, deal.target_domain, deal.target_name, 'fp')}</div>
         </div>
         <div class="fp-buyer">${esc(deal.buyer_name)}</div>
         <div class="fp-target">${esc(deal.target_name)}</div>
@@ -400,9 +409,9 @@ export function renderPoster(deal, size = 'carousel') {
       </div>
       <div class="c-center">
         <div class="c-logos">
-          <div class="c-logo">${logoHtml(deal.buyer_domain, deal.buyer_name, 'c')}</div>
+          <div class="c-logo">${logoHtml(deal.buyer_logo_local_path, deal.buyer_domain, deal.buyer_name, 'c')}</div>
           <span class="c-times">&times;</span>
-          <div class="c-logo">${logoHtml(deal.target_domain, deal.target_name, 'c')}</div>
+          <div class="c-logo">${logoHtml(deal.target_logo_local_path, deal.target_domain, deal.target_name, 'c')}</div>
         </div>
         <div class="c-buyer">${esc(deal.buyer_name)}</div>
         <div class="c-target">${esc(deal.target_name)}</div>
