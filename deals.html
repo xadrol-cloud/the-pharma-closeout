@@ -82,31 +82,54 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input id="search-input" class="search-bar" type="text" placeholder="Company, molecule, therapeutic area, indication...">
     </div>
-    <div id="filters" class="search-filters">
-      <select name="deal_type" class="f-chip" aria-label="Deal Type">
-        <option value="">All Deal Types</option>
-        <option value="Acquisition">Acquisition / M&A</option>
-        <option value="Licensing / Option">Licensing / Option</option>
-        <option value="Co-Development / Collaboration">Co-Dev / Collaboration</option>
-        <option value="Asset Acquisition">Asset Acquisition</option>
-        <option value="Take-Private">Take-Private</option>
-      </select>
-      <select name="era" class="f-chip" aria-label="Era">
-        <option value="">All Eras</option>
-        <option value="Pre-2010">Pre-2010</option>
-        <option value="2010-2015">2010-2015</option>
-        <option value="2016-2020">2016-2020</option>
-        <option value="2021-Present">2021-Present</option>
-      </select>
-      <select name="min_value" class="f-chip" aria-label="Min Value">
-        <option value="">Any Value</option>
-        <option value="500">$500M+</option>
-        <option value="1000">$1B+</option>
-        <option value="5000">$5B+</option>
-        <option value="10000">$10B+</option>
-        <option value="50000">$50B+</option>
-      </select>
-    </div>
+<div id="filters" class="filters">
+  <select name="deal_type" class="f-chip" aria-label="Deal Type">
+    <option value="">All Deal Types</option>
+    <option value="Acquisition/Merger">Acquisition / M&A</option>
+    <option value="Licensing/Option">Licensing / Option</option>
+    <option value="Co-Development">Co-Dev / Collaboration</option>
+    <option value="Asset Purchase">Asset Purchase</option>
+  </select>
+  <select name="era" class="f-chip" aria-label="Era">
+    <option value="">All Eras</option>
+    <option value="2020s">2020s</option>
+    <option value="2010s">2010s</option>
+    <option value="2000s">2000s</option>
+    <option value="1990s">1990s</option>
+  </select>
+  <select name="therapeutic_area" class="f-chip" aria-label="Therapeutic Area">
+    <option value="">All Therapeutic Areas</option>
+    <option value="Oncology">Oncology</option>
+    <option value="Neurology">Neurology</option>
+    <option value="Immunology">Immunology</option>
+    <option value="Cardiovascular">Cardiovascular</option>
+    <option value="Metabolic">Metabolic</option>
+    <option value="Infectious Disease">Infectious Disease</option>
+    <option value="Respiratory">Respiratory</option>
+    <option value="Vaccines">Vaccines</option>
+    <option value="Rare Disease">Rare Disease</option>
+    <option value="Gene Therapy">Gene Therapy</option>
+    <option value="Dermatology">Dermatology</option>
+    <option value="Ophthalmology">Ophthalmology</option>
+    <option value="Hematology">Hematology</option>
+    <option value="Gastroenterology">Gastroenterology</option>
+    <option value="Other">Other</option>
+  </select>
+  <select name="min_value" class="f-chip" aria-label="Min Value">
+    <option value="">Any Value</option>
+    <option value="500">$500M+</option>
+    <option value="1000">$1B+</option>
+    <option value="5000">$5B+</option>
+    <option value="10000">$10B+</option>
+    <option value="50000">$50B+</option>
+  </select>
+  <select name="sort" class="f-chip" aria-label="Sort">
+    <option value="date_desc">Newest First</option>
+    <option value="value_desc">Highest Value</option>
+    <option value="critic_desc">Highest Critic Score</option>
+    <option value="outcome_desc">Highest Outcome Score</option>
+  </select>
+</div>
   </div>
   <div id="search-results" style="margin-top:24px"></div>
 </div>
