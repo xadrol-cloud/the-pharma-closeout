@@ -27,6 +27,20 @@ Phase 0 discovery revealed that the DB splits what users call one TA across mult
 **Deviation 3 — Task 1.2 scope narrowed after Phase 1 DB re-audit.**
 Between the 2026-04-22 16:46 ET audit that motivated this plan and Phase 1 execution, the DB was partially corrected (source unclear — possibly a scheduled enrichment run). Outlier count above $400B is now 0. Of the original 7 targets: 3 are still wrong and need fixes (Novo/Vivtex $2.1B → ~$175M; AbbVie/Genentech null → ~$595M; Sanofi/Lexicon $2.82B → ~$260M); 3 already carry correct values but no source citation (Novartis/Regulus 1700; Merck/Harpoon 680; Amgen/Immunex 16000); 1 is plausible pending verification (Lilly/BI 444, expected ~500). Task 1.2 now fixes the 3 wrong values and attaches `primary_source_url` + `deal_sources` row for all 7 to satisfy the provenance rule.
 
+**Deviation 6 — Task 2.2 re-scoped: view DDL, not row-by-row re-score.**
+Phase 2.1 diagnostic discovered that `critic_score` is NOT a persisted column — it is computed live inside the `deals_enriched` VIEW. The current formula (`100 * COUNT(Bullish|Neutral) / COUNT(non-null)`) treats Neutral sentiment as equivalent to Bullish, so only a Bearish tag pulls the score below 100. Fix is a single `CREATE OR REPLACE VIEW` DDL with weighted scoring:
+
+```sql
+critic_score = ROUND(
+  (100 * COUNT(Bullish) + 50 * COUNT(Neutral) + 0 * COUNT(Bearish))
+  / NULLIF(COUNT(sentiment IS NOT NULL), 0)
+)
+```
+
+Semantics: CS=100 = all Bullish; CS=50 = all Neutral; CS=0 = all Bearish. Stricter and more informative than the previous formula.
+
+`scripts/rescoring/rerun_critic_scores.py` is not needed (no per-row writes). Task 2.2 deliverable becomes: write migration SQL file, apply, verify distribution. The re-score script path in the plan is deleted.
+
 **Deviation 5 — Post-Task-1.2 schema + enum findings (apply to Task 4.4 and future data work):**
 - `deals_enriched` is a SQL **view**. PostgREST returns `500 cannot update view` on PATCH/POST. Writes must target the underlying `deals` base table (plus related tables `deal_sources`, `deal_critic_reviews`, etc. as appropriate).
 - Schema-enforced enums to match exactly:
