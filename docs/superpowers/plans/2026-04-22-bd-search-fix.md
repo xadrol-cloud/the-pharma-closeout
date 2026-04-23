@@ -18,11 +18,11 @@
 
 ## Plan deviations (recorded after Phase 0 discovery, 2026-04-22)
 
-**Deviation 1 — TA filter list expanded from 12 to 14 options + alias collapse.**
-Phase 0 discovery revealed that the DB splits what users call one TA across multiple tags (Neurology bucket = `Neuroscience` / `Neurology` / `CNS` / `Central Nervous System` = 42 deals; Metabolic bucket = `Metabolic Disease` / `Metabolic` / `Metabolic/Endocrine` = 21 deals). Also surfaced: Diagnostics (14), Vaccines (13), Gastroenterology (10) are higher-volume than Dermatology (7) which was on the original list. Approved revision:
+**Deviation 1 — TA filter list finalized at 15 options, no alias collapse needed (revised post-Task-3.1).**
+Phase 0 discovery (early execution) showed fragmented TA tags. By Phase 3 verification, the DB had been auto-normalized (no `Neuroscience`, `CNS`, `Metabolic Disease`, or `Metabolic/Endocrine` tags remained — all collapsed to `Neurology` and `Metabolic` canonical forms). Also: `Diagnostics` is currently 0 deals (not 14); `Gene Therapy` has 25 deals (5th largest tag, not in original spec). Final revision:
 
-- **TA list:** Oncology, Immunology, Neurology, Cardiovascular, Rare Disease, Infectious Disease, Hematology, Ophthalmology, Respiratory, Diagnostics, Vaccines, Metabolic, Gastroenterology, Dermatology, Other (15 options total including "Other").
-- **Alias collapse in searchDeals:** when filter sends `therapeutic_area=Neurology`, query must OR-match `Neuroscience|Neurology|CNS|Central Nervous System`. Same for `Metabolic` → `Metabolic Disease|Metabolic|Metabolic/Endocrine`. See updated Task 3.3.
+- **TA list:** Oncology, Neurology, Immunology, Cardiovascular, Metabolic, Infectious Disease, Respiratory, Vaccines, Rare Disease, Gene Therapy, Dermatology, Ophthalmology, Hematology, Gastroenterology, Other (15 options).
+- **Alias collapse DROPPED** — per CLAUDE.md YAGNI rule, no code for variants that don't exist in the data. If fragmentation reappears, re-add the TA_ALIASES map.
 
 **Deviation 3 — Task 1.2 scope narrowed after Phase 1 DB re-audit.**
 Between the 2026-04-22 16:46 ET audit that motivated this plan and Phase 1 execution, the DB was partially corrected (source unclear — possibly a scheduled enrichment run). Outlier count above $400B is now 0. Of the original 7 targets: 3 are still wrong and need fixes (Novo/Vivtex $2.1B → ~$175M; AbbVie/Genentech null → ~$595M; Sanofi/Lexicon $2.82B → ~$260M); 3 already carry correct values but no source citation (Novartis/Regulus 1700; Merck/Harpoon 680; Amgen/Immunex 16000); 1 is plausible pending verification (Lilly/BI 444, expected ~500). Task 1.2 now fixes the 3 wrong values and attaches `primary_source_url` + `deal_sources` row for all 7 to satisfy the provenance rule.
@@ -744,19 +744,19 @@ Replace the `<div id="filters">...</div>` block with:
   <select name="therapeutic_area" class="f-chip" aria-label="Therapeutic Area">
     <option value="">All Therapeutic Areas</option>
     <option value="Oncology">Oncology</option>
-    <option value="Immunology">Immunology</option>
     <option value="Neurology">Neurology</option>
+    <option value="Immunology">Immunology</option>
     <option value="Cardiovascular">Cardiovascular</option>
-    <option value="Rare Disease">Rare Disease</option>
-    <option value="Infectious Disease">Infectious Disease</option>
-    <option value="Hematology">Hematology</option>
-    <option value="Ophthalmology">Ophthalmology</option>
-    <option value="Respiratory">Respiratory</option>
-    <option value="Diagnostics">Diagnostics</option>
-    <option value="Vaccines">Vaccines</option>
     <option value="Metabolic">Metabolic</option>
-    <option value="Gastroenterology">Gastroenterology</option>
+    <option value="Infectious Disease">Infectious Disease</option>
+    <option value="Respiratory">Respiratory</option>
+    <option value="Vaccines">Vaccines</option>
+    <option value="Rare Disease">Rare Disease</option>
+    <option value="Gene Therapy">Gene Therapy</option>
     <option value="Dermatology">Dermatology</option>
+    <option value="Ophthalmology">Ophthalmology</option>
+    <option value="Hematology">Hematology</option>
+    <option value="Gastroenterology">Gastroenterology</option>
     <option value="Other">Other</option>
   </select>
   <select name="min_value" class="f-chip" aria-label="Min Value">
@@ -803,25 +803,13 @@ export async function searchDeals(query, filters = {}, { limit = 25, offset = 0 
   }
   if (filters.deal_type) q = q.eq('deal_type', filters.deal_type)
   if (filters.era) q = q.eq('era_tag', filters.era)
-  if (filters.therapeutic_area) {
-    const aliases = TA_ALIASES[filters.therapeutic_area] || [filters.therapeutic_area]
-    const taClause = aliases.map(a => `therapeutic_areas.ilike.%${a}%`).join(',')
-    q = q.or(taClause)
-  }
+  if (filters.therapeutic_area) q = q.ilike('therapeutic_areas', `%${filters.therapeutic_area}%`)
   if (filters.min_value) q = q.gte('deal_value_usd_mm', filters.min_value)
   q = applySortClause(q, filters.sort || 'date_desc')
   q = q.range(offset, offset + limit - 1)
   const { data, error, count } = await q
   if (error) throw error
   return { deals: data || [], total: count || 0 }
-}
-
-// Alias collapse: DB has fragmented tags that users perceive as one TA.
-// When a user selects "Neurology", match any variant. Single source of truth.
-const TA_ALIASES = {
-  'Neurology': ['Neuroscience', 'Neurology', 'CNS', 'Central Nervous System'],
-  'Metabolic': ['Metabolic Disease', 'Metabolic', 'Metabolic/Endocrine'],
-  // Other TAs are single-variant — the default passes them through unchanged
 }
 
 function applySortClause(q, sortKey) {
