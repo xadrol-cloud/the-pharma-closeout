@@ -210,12 +210,15 @@ export async function searchDeals(query, filters = {}, { limit = 25, offset = 0 
 }
 
 function applySortClause(q, sortKey) {
-  switch (sortKey) {
-    case 'value_desc':   return q.order('deal_value_usd_mm', { ascending: false, nullsLast: true })
-    case 'critic_desc':  return q.order('critic_score',      { ascending: false, nullsLast: true })
-    case 'outcome_desc': return q.order('outcome_score',     { ascending: false, nullsLast: true })
-    default:             return q.order('announcement_date', { ascending: false, nullsLast: true })
-  }
+  const primary = {
+    value_desc:   ['deal_value_usd_mm', false],
+    critic_desc:  ['critic_score',      false],
+    outcome_desc: ['outcome_score',     false],
+    date_desc:    ['announcement_date', false],
+  }[sortKey] || ['announcement_date', false]
+  // deal_id as stable tie-breaker — ensures paginated offset returns disjoint rows
+  return q.order(primary[0], { ascending: primary[1], nullsFirst: false })
+          .order('deal_id',  { ascending: true })
 }
 
 /** Fetch disease indications for a deal (ordered by US patients desc) */
@@ -224,7 +227,7 @@ export async function fetchDiseaseIndications(dealId) {
     .from('disease_indications')
     .select('*')
     .eq('deal_id', dealId)
-    .order('us_patients_annual', { ascending: false, nullsLast: true });
+    .order('us_patients_annual', { ascending: false, nullsFirst: false });
   return data || [];
 }
 

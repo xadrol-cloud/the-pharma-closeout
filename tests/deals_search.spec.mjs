@@ -14,7 +14,8 @@ async function search(query, filters = {}, { limit = 25, offset = 0 } = {}) {
   if (filters.therapeutic_area) q = q.ilike('therapeutic_areas', `%${filters.therapeutic_area}%`)
   if (filters.min_value) q = q.gte('deal_value_usd_mm', filters.min_value)
   const sortMap = { date_desc: 'announcement_date', value_desc: 'deal_value_usd_mm', critic_desc: 'critic_score', outcome_desc: 'outcome_score' }
-  q = q.order(sortMap[filters.sort || 'date_desc'], { ascending: false, nullsLast: true })
+  q = q.order(sortMap[filters.sort || 'date_desc'], { ascending: false, nullsFirst: false })
+        .order('deal_id', { ascending: true })
   q = q.range(offset, offset + limit - 1)
   const { data, count, error } = await q
   if (error) throw error
@@ -48,8 +49,13 @@ test('sort=value_desc returns results in descending value order', async () => {
   for (let i = 1; i < vals.length; i++) assert.ok(vals[i-1] >= vals[i], `out of order at ${i}: ${vals[i-1]} < ${vals[i]}`)
 })
 
-test('sort=critic_desc returns results in descending CS order', async () => {
+test('sort=critic_desc returns non-null scores first, in descending order', async () => {
   const { deals } = await search('', { therapeutic_area: 'Oncology', sort: 'critic_desc' })
+  const firstNullIdx = deals.findIndex(d => d.critic_score == null)
+  const firstNonNullIdx = deals.findIndex(d => d.critic_score != null)
+  if (firstNullIdx !== -1 && firstNonNullIdx !== -1) {
+    assert.ok(firstNonNullIdx < firstNullIdx, `nulls appear before non-nulls (first null at ${firstNullIdx}, first score at ${firstNonNullIdx})`)
+  }
   const vals = deals.map(d => d.critic_score).filter(v => v != null)
   for (let i = 1; i < vals.length; i++) assert.ok(vals[i-1] >= vals[i], `out of order at ${i}: ${vals[i-1]} < ${vals[i]}`)
 })
