@@ -1105,41 +1105,71 @@ export function initCarousel(container, options = {}) {
  */
 export function initSearch(inputEl, filtersEl, resultsEl) {
   if (!inputEl || !resultsEl) return
-
   let debounceTimer = null
-  const filters = {}
+  let loadedCount = 0
+  let totalCount = 0
 
-  // Collect filter state from chips
   function readFilters() {
-    if (!filtersEl) return
-    filtersEl.querySelectorAll('select').forEach(sel => {
-      if (sel.value) filters[sel.name] = sel.value
-      else delete filters[sel.name]
+    const f = {}
+    filtersEl?.querySelectorAll('select').forEach(sel => {
+      if (sel.value) f[sel.name] = sel.value
     })
+    return f
   }
 
-  async function runSearch() {
-    readFilters()
+  async function runSearch({ append = false } = {}) {
     const query = inputEl.value.trim()
-    if (!query && !Object.keys(filters).length) {
+    const filters = readFilters()
+    const hasNonSortFilter = Object.keys(filters).filter(k => k !== 'sort').length > 0
+    if (query.length < 2 && !hasNonSortFilter) {
       resultsEl.innerHTML = ''
       return
     }
-    resultsEl.innerHTML = '<p style="color:var(--ink-faint);font-size:13px;text-align:center;padding:40px 0">Searching...</p>'
-    const deals = await searchDeals(query, filters)
-    if (!deals.length) {
-      resultsEl.innerHTML = '<p style="color:var(--ink-faint);font-size:13px;text-align:center;padding:40px 0">No deals found.</p>'
-      return
+    const offset = append ? loadedCount : 0
+    if (!append) resultsEl.innerHTML = '<p class="search-status">Searching...</p>'
+    try {
+      const { deals, total } = await searchDeals(query, filters, { limit: 25, offset })
+      if (!append) loadedCount = 0
+      loadedCount += deals.length
+      totalCount = total
+      renderResults(deals, append)
+    } catch (e) {
+      resultsEl.innerHTML = '<p class="search-status error">Search is temporarily unavailable. Try again.</p>'
+      console.error('searchDeals error', e)
     }
-    resultsEl.innerHTML = `<div class="grid">${deals.map(d => renderPoster(d, 'carousel')).join('')}</div>`
+  }
+
+  function renderResults(deals, append) {
+    const gridHtml = deals.map(d => renderPoster(d, 'carousel')).join('')
+    if (append) {
+      resultsEl.querySelector('.grid')?.insertAdjacentHTML('beforeend', gridHtml)
+    } else if (!deals.length) {
+      resultsEl.innerHTML = '<p class="search-status">No deals found.</p>'
+      return
+    } else {
+      resultsEl.innerHTML = `
+        <p class="search-count">Showing ${loadedCount} of ${totalCount} results</p>
+        <div class="grid">${gridHtml}</div>`
+    }
+    updateLoadMore()
+  }
+
+  function updateLoadMore() {
+    resultsEl.querySelector('.load-more-btn')?.remove()
+    if (loadedCount < totalCount) {
+      const btn = document.createElement('button')
+      btn.className = 'load-more-btn'
+      btn.textContent = `Load more (${totalCount - loadedCount} remaining)`
+      btn.onclick = () => runSearch({ append: true })
+      resultsEl.appendChild(btn)
+    }
+    const countEl = resultsEl.querySelector('.search-count')
+    if (countEl) countEl.textContent = `Showing ${loadedCount} of ${totalCount} results`
   }
 
   inputEl.addEventListener('input', () => {
     clearTimeout(debounceTimer)
-    debounceTimer = setTimeout(runSearch, 350)
+    debounceTimer = setTimeout(() => runSearch({ append: false }), 350)
   })
-
-  if (filtersEl) {
-    filtersEl.addEventListener('change', runSearch)
-  }
+  filtersEl?.addEventListener('change', () => runSearch({ append: false }))
 }
