@@ -8,6 +8,12 @@
 
 **Tech Stack:** Frontend — vanilla ES modules + Supabase JS client (CDN). Data — Python 3, supabase-py, pytest, WebFetch via Claude Agent SDK or `requests`. Host — GitHub Pages deploy from `main` on `xadrol-cloud/the-pharma-closeout`.
 
+**Environment assumptions:**
+- Node **≥18** required for `tests/deals_search.spec.mjs` (uses native fetch + native `node:test`).
+- Windows + Git Bash (commands use Unix syntax: `grep`, `export`, `wc -l`, forward slashes in paths).
+- Env vars pre-set: `SUPABASE_URL`, `SUPABASE_ANON_KEY` (readonly client), `SUPABASE_SERVICE_KEY` (write client for data-repo scripts).
+- Python 3.10+ with `supabase`, `requests`, `pytest` installed in BD Data Base repo.
+
 ---
 
 ## Repo paths (both machines)
@@ -78,7 +84,7 @@ SELECT value AS ta, COUNT(*) AS n
 FROM deals_enriched, jsonb_array_elements_text(therapeutic_areas) AS value
 GROUP BY value ORDER BY n DESC LIMIT 20;
 ```
-Expected: distinct TA names with counts. Verify the 12 TAs in the spec cover ≥90% of deals. If a high-volume TA is missing, replace "Other" in the spec with it. **If the TA list changes, update the spec before proceeding.**
+Expected: distinct TA names with counts. Verify the 12 TAs in the spec cover ≥90% of deals. If a high-volume TA is missing, replace "Other" in the spec list with it. **If the TA list changes, add a "Plan deviation note" at the top of this plan document recording the swap and the reason, then proceed.** Do not block on amending the spec.
 
 - [ ] **Step 4: No commit** (discovery only — write findings to a scratchpad for later tasks)
 
@@ -864,9 +870,16 @@ git commit -m "feat: initSearch adds Load More pagination, min-query gate, error
 **Files:**
 - Modify: `C:\Users\xadro\the-pharma-closeout\assets\deals.css` — append after line 864
 
-- [ ] **Step 1: Append styles**
+- [ ] **Step 1: Locate the filter-chips section**
 
-Add to the end of the FILTER CHIPS section (around line 864):
+```bash
+grep -n "f-chip" assets/deals.css
+```
+Expected: a match near line 845 and 857. Styles go immediately after the last `.f-chip` rule (~line 864).
+
+- [ ] **Step 2: Append styles**
+
+Add to the end of the FILTER CHIPS section:
 
 ```css
 /* Search results — count + status + load more */
@@ -901,7 +914,7 @@ Add to the end of the FILTER CHIPS section (around line 864):
 .load-more-btn:hover { opacity: 0.85; }
 ```
 
-- [ ] **Step 2: Commit**
+- [ ] **Step 3: Commit**
 
 ```bash
 git add assets/deals.css
@@ -1146,6 +1159,11 @@ from scripts.validate_deal_value import validate_or_log
 if validate_or_log(deal):
     client.table("deals_enriched").upsert(deal).execute()
 ```
+
+*Import path note:* if `from scripts.validate_deal_value import ...` fails with `ModuleNotFoundError`, `scripts/` lacks an `__init__.py` and isn't on `sys.path`. Options in order of preference:
+1. Add `scripts/__init__.py` (empty file) once, and run scripts from repo root (`python -m scripts.<name>`).
+2. At the top of each modified writer, prepend `sys.path`: `import sys; sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))`.
+Pick (1) if no existing writer does sys.path manipulation; pick (2) if the codebase already uses that pattern to match convention.
 
 - [ ] **Step 3: Run existing test suite to confirm no regressions**
 
