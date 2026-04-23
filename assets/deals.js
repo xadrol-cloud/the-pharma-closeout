@@ -194,9 +194,12 @@ export async function fetchTopOutcomeDeals(limit = 20) {
   return data || []
 }
 
-/** Search deals by text query + optional filters */
-export async function searchDeals(query, filters = {}) {
-  let q = supabase.from('deals_enriched').select('*')
+/** Search deals by text query + optional filters + sort + pagination.
+ * Returns { data, count } where count is the total matching rows (for pagination).
+ */
+export async function searchDeals(query, filters = {}, opts = {}) {
+  const { sort = 'date_desc', page = 0, pageSize = 24 } = opts
+  let q = supabase.from('deals_enriched').select('*', { count: 'exact' })
   if (query) {
     q = q.or(`buyer_name.ilike.%${query}%,target_name.ilike.%${query}%,therapeutic_areas.ilike.%${query}%,lead_molecules.ilike.%${query}%,indications.ilike.%${query}%`)
   }
@@ -205,9 +208,26 @@ export async function searchDeals(query, filters = {}) {
   if (filters.era) q = q.eq('era_tag', filters.era)
   if (filters.min_value) q = q.gte('deal_value_usd_mm', filters.min_value)
   if (filters.max_value) q = q.lte('deal_value_usd_mm', filters.max_value)
-  q = q.order('announcement_date', { ascending: false }).limit(50)
-  const { data } = await q
-  return data || []
+
+  // Sort
+  const sortMap = {
+    date_desc:  ['announcement_date', false],
+    date_asc:   ['announcement_date', true],
+    value_desc: ['deal_value_usd_mm', false],
+    value_asc:  ['deal_value_usd_mm', true],
+    critic_desc:  ['critic_score', false],
+    outcome_desc: ['outcome_score', false],
+  }
+  const [col, asc] = sortMap[sort] || sortMap.date_desc
+  q = q.order(col, { ascending: asc, nullsFirst: false })
+
+  // Pagination via range
+  const from = page * pageSize
+  const to = from + pageSize - 1
+  q = q.range(from, to)
+
+  const { data, count } = await q
+  return { data: data || [], count: count || 0 }
 }
 
 /** Fetch disease indications for a deal (ordered by US patients desc) */
@@ -349,7 +369,8 @@ export function renderPoster(deal, size = 'carousel') {
   const year = yearOf(deal.announcement_date)
   const bg = bgClass(deal.deal_type)
   const tas = parseTAs(deal.therapeutic_areas)
-  const ta = tas[0] || ''
+  // Show up to 2 TAs — join with middot if there are multiple (e.g., "Oncology · Hematology")
+  const ta = tas.length > 1 ? `${tas[0]} · ${tas[1]}` : (tas[0] || '')
   const val = formatValue(deal.deal_value_usd_mm)
   const type = shortType(deal.deal_type)
   const ring = ringClass(deal.deal_type)
@@ -1114,18 +1135,20 @@ export function initCarousel(container, options = {}) {
 /* ---------- 4b. Search ---------- */
 
 /**
- * Wire up debounced search + filter binding.
+ * Wire up debounced search + filter binding + pagination + sort.
  * @param {HTMLInputElement} inputEl - The search input
  * @param {HTMLElement} filtersEl - Container with filter chips
  * @param {HTMLElement} resultsEl - Container where results get rendered
+ * @param {Object} opts - { sortSelectId, pageSize }
  */
-export function initSearch(inputEl, filtersEl, resultsEl) {
+export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
   if (!inputEl || !resultsEl) return
 
+  const pageSize = opts.pageSize || 24
   let debounceTimer = null
+  let currentPage = 0
   const filters = {}
 
-  // Collect filter state from chips
   function readFilters() {
     if (!filtersEl) return
     filtersEl.querySelectorAll('select').forEach(sel => {
@@ -1134,28 +1157,63 @@ export function initSearch(inputEl, filtersEl, resultsEl) {
     })
   }
 
-  async function runSearch() {
+  function currentSort() {
+    const sortEl = opts.sortSelectId ? document.getElementById(opts.sortSelectId) : null
+    return sortEl ? sortEl.value : 'date_desc'
+  }
+
+  function renderPager(count) {
+    const totalPages = Math.max(1, Math.ceil(count / pageSize))
+    if (totalPages <= 1) return ''
+    const p = currentPage + 1
+    return `<div class="pager">
+      <button class="pager-btn" data-page="prev" ${currentPage === 0 ? 'disabled' : ''}>&larr; Prev</button>
+      <span class="pager-info">Page ${p} of ${totalPages} &middot; ${count} results</span>
+      <button class="pager-btn" data-page="next" ${p >= totalPages ? 'disabled' : ''}>Next &rarr;</button>
+    </div>`
+  }
+
+  async function runSearch(keepPage = false) {
     readFilters()
+    if (!keepPage) currentPage = 0
     const query = inputEl.value.trim()
     if (!query && !Object.keys(filters).length) {
       resultsEl.innerHTML = ''
       return
     }
     resultsEl.innerHTML = '<p style="color:var(--ink-faint);font-size:13px;text-align:center;padding:40px 0">Searching...</p>'
-    const deals = await searchDeals(query, filters)
+    const { data: deals, count } = await searchDeals(query, filters, {
+      sort: currentSort(), page: currentPage, pageSize,
+    })
     if (!deals.length) {
       resultsEl.innerHTML = '<p style="color:var(--ink-faint);font-size:13px;text-align:center;padding:40px 0">No deals found.</p>'
       return
     }
-    resultsEl.innerHTML = `<div class="grid">${deals.map(d => renderPoster(d, 'carousel')).join('')}</div>`
+    const grid = `<div class="grid">${deals.map(d => renderPoster(d, 'carousel')).join('')}</div>`
+    resultsEl.innerHTML = grid + renderPager(count)
+
+    // Wire pager buttons
+    resultsEl.querySelectorAll('.pager-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.dataset.page === 'prev' && currentPage > 0) currentPage--
+        else if (btn.dataset.page === 'next') currentPage++
+        else return
+        runSearch(true)
+        resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      })
+    })
   }
 
   inputEl.addEventListener('input', () => {
     clearTimeout(debounceTimer)
-    debounceTimer = setTimeout(runSearch, 350)
+    debounceTimer = setTimeout(() => runSearch(false), 350)
   })
 
   if (filtersEl) {
-    filtersEl.addEventListener('change', runSearch)
+    filtersEl.addEventListener('change', () => runSearch(false))
+  }
+  if (opts.sortSelectId) {
+    const sortEl = document.getElementById(opts.sortSelectId)
+    if (sortEl) sortEl.addEventListener('change', () => runSearch(false))
   }
 }

@@ -125,6 +125,14 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
         <option value="10000">$10B+</option>
         <option value="50000">$50B+</option>
       </select>
+      <select id="sort-select" class="f-chip" aria-label="Sort by">
+        <option value="date_desc">Newest first</option>
+        <option value="date_asc">Oldest first</option>
+        <option value="value_desc">Highest value</option>
+        <option value="value_asc">Lowest value</option>
+        <option value="critic_desc">Highest Critic Score</option>
+        <option value="outcome_desc">Highest Outcome Score</option>
+      </select>
     </div>
   </div>
   <div id="search-results" style="margin-top:24px"></div>
@@ -265,7 +273,7 @@ if (qPrefill) {
   searchInput.value = qPrefill
 }
 
-initSearch(searchInput, filtersEl, resultsEl)
+initSearch(searchInput, filtersEl, resultsEl, { sortSelectId: 'sort-select', pageSize: 24 })
 
 // Trigger initial search if prefill was set
 if (qPrefill) {
