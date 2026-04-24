@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K6XEWCK7W4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K6XEWCK7W4');
+</script>
+<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "521570287";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script>
+<script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=521570287&fmt=gif" />
+</noscript>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deal Comparison | The Pharma Closeout</title>
+<meta name="description" content="Side-by-side comparison of pharma BD deals — scores, financials, therapeutic areas, and outcome metrics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/deals.css?v=20260423a">
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-brand">The Pharma <em>Closeout</em></span>
+  <div class="nav-sep"></div>
+  <div class="nav-links">
+    <a href="index.html">Podcast</a>
+    <a href="ai-research.html">Research</a>
+    <a href="deals.html" class="active">Deal Intelligence</a>
+    <a href="about.html">About</a>
+  </div>
+  <div class="nav-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="nav-search-input" type="text" placeholder="Search deals..." aria-label="Search deals">
+  </div>
+</nav>
+
+<div class="section" style="padding-top:32px;">
+  <h1 class="deal-title" style="margin-bottom:8px;">Deal Comparison</h1>
+  <p style="color:var(--ink-muted);font-size:14px;margin-bottom:24px;">Side-by-side analysis of selected deals.</p>
+  <div id="loading" style="text-align:center;padding:80px 40px;color:var(--ink-faint);font-size:14px;">Loading deals...</div>
+  <div id="comparison-root" style="display:none;"></div>
+  <div id="empty-state" style="display:none;text-align:center;padding:80px 40px;">
+    <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
+      No deals selected for comparison. Try the URL format:<br>
+      <code style="font-family:var(--mono);font-size:12px;background:var(--bg-tint,#f5f5f0);padding:4px 8px;border-radius:3px;">
+        compare.html?ids=deal_id_1,deal_id_2
+      </code>
+    </p>
+    <a href="deals.html" style="color:var(--gold);font-weight:600;text-decoration:none;">Browse the Deal Database &rarr;</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <span class="footer-brand">The Pharma <em>Closeout</em></span>
+  <div class="footer-links">
+    <a href="index.html">Podcast</a>
+    <a href="ai-research.html">Research</a>
+    <a href="deals.html">Deal Intelligence</a>
+    <a href="about.html">About</a>
+    <span>&copy; 2026 The Pharma Closeout</span>
+  </div>
+</footer>
+
+<script type="module">
+import { fetchDeal, fetchDealOutcomes, renderComparison } from './assets/deals.js?v=20260423a'
+
+const params = new URLSearchParams(window.location.search)
+const idsRaw = params.get('ids') || ''
+const ids = idsRaw.split(',').map(s => s.trim()).filter(Boolean)
+
+const loadingEl = document.getElementById('loading')
+const rootEl = document.getElementById('comparison-root')
+const emptyEl = document.getElementById('empty-state')
+
+if (ids.length < 2) {
+  loadingEl.style.display = 'none'
+  emptyEl.style.display = ''
+} else {
+  try {
+    // Fetch each deal + its outcomes in parallel; merge latest-window outcome scores into the deal
+    const keep = ids.slice(0, 5)
+    const results = await Promise.all(keep.map(async (id) => {
+      const [deal, outcomes] = await Promise.all([fetchDeal(id), fetchDealOutcomes(id)])
+      if (!deal) return null
+      // Pick latest-window outcome with populated dimension scores (same logic as deal.html score breakdown)
+      const sorted = (outcomes || []).slice().sort((a, b) => {
+        const order = { '15yr': 0, '10yr': 1, '5yr': 2 }
+        return (order[a.window] ?? 3) - (order[b.window] ?? 3)
+      })
+      const latest = sorted.find(o => o.strategic_fit_score != null) || sorted[0] || {}
+      // Merge dimension scores into the deal object so renderComparison reads them
+      for (const k of ['strategic_fit_score', 'financial_return_score', 'pipeline_outcome_score',
+                       'integration_score', 'deal_difficulty_score']) {
+        if (latest[k] != null) deal[k] = latest[k]
+      }
+      return deal
+    }))
+    const valid = results.filter(Boolean)
+    loadingEl.style.display = 'none'
+    if (valid.length < 2) {
+      emptyEl.style.display = ''
+      emptyEl.querySelector('p').innerHTML =
+        `Could not find ${ids.length - valid.length} of the requested deal(s). ` +
+        `<a href="deals.html" style="color:var(--gold);font-weight:600;">Browse the Deal Database &rarr;</a>`
+    } else {
+      rootEl.innerHTML = renderComparison(valid)
+      rootEl.style.display = ''
+      document.title = valid.map(d => `${d.buyer_name}/${d.target_name}`).join(' vs ').substring(0, 100) + ' | Deal Comparison'
+    }
+  } catch (err) {
+    console.error('Comparison load error:', err)
+    loadingEl.innerHTML = 'Error loading comparison. <a href="deals.html" style="color:var(--gold)">Browse deals &rarr;</a>'
+  }
+}
+
+// Wire nav search
+const navInput = document.getElementById('nav-search-input')
+if (navInput) {
+  navInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && navInput.value.trim()) {
+      window.location.href = `deals.html?q=${encodeURIComponent(navInput.value.trim())}`
+    }
+  })
+}
+</script>
+
+</body>
+</html>

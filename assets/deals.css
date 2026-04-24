@@ -1611,6 +1611,201 @@ body {
 .src-headline a:hover { color: var(--blue); }
 .src-date { font-size: 10px; color: var(--ink-faint); margin-top: 1px; }
 
+/* Source link-health badges */
+.src-health {
+  font-family: var(--mono);
+  font-size: 9px; font-weight: 600;
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.3px;
+  vertical-align: middle;
+  display: inline-block;
+}
+.src-health.src-dead { color: #b4232c; background: rgba(180, 35, 44, 0.08); }
+.src-health.src-blocked { color: #996515; background: rgba(153, 101, 21, 0.08); }
+.src-health.src-error { color: #6b6b6b; background: rgba(107, 107, 107, 0.08); }
+
+/* Source-alignment badges (Q3 audit) */
+.src-align {
+  font-family: var(--mono);
+  font-size: 9px; font-weight: 600;
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.3px;
+  vertical-align: middle;
+  display: inline-block;
+}
+.src-align.src-retro   { color: #996515; background: rgba(196, 147, 50, 0.12); }
+.src-align.src-near    { color: #6b6b6b; background: rgba(107, 107, 107, 0.08); }
+.src-align.src-preleak { color: #1c5f8a; background: rgba(28, 95, 138, 0.10); }
+
+/* Pagination */
+.pager {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  margin-top: 32px; padding: 16px 0;
+  border-top: 1px solid var(--rule-light);
+}
+.pager-btn {
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 8px 16px;
+  background: var(--paper); color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.pager-btn:hover:not(:disabled) { background: var(--bg-tint); border-color: var(--gold); }
+.pager-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.pager-info {
+  font-family: var(--mono); font-size: 11px; color: var(--ink-muted);
+  letter-spacing: 0.5px;
+}
+
+/* Comparison table */
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink);
+  margin-top: 24px;
+}
+.cmp-table thead th.cmp-head {
+  padding: 12px 8px;
+  vertical-align: bottom;
+  text-align: center;
+  border-bottom: 2px solid var(--ink);
+  width: auto;
+}
+.cmp-head-link { display: block; text-decoration: none; }
+.cmp-table th.cmp-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ink-muted);
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--rule-light);
+  white-space: nowrap;
+  width: 180px;
+}
+.cmp-row td.cmp-val {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--rule-light);
+  text-align: center;
+  vertical-align: middle;
+}
+.cmp-row.cmp-strong td.cmp-val { font-weight: 600; font-size: 14px; }
+.cmp-row:hover { background: rgba(196, 147, 50, 0.04); }
+
+.cmp-score {
+  display: inline-block;
+  min-width: 34px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 13px;
+  background: var(--rule-light);
+  color: var(--ink);
+}
+.cmp-score.high { background: rgba(64, 145, 88, 0.15); color: #1c5f34; }
+.cmp-score.mid  { background: rgba(196, 147, 50, 0.15); color: #6b4e15; }
+.cmp-score.low  { background: rgba(180, 35, 44, 0.12); color: #8a1a22; }
+
+/* Comparables sidebar — add compare button */
+.comp-compare-btn {
+  display: block; text-align: center;
+  font-family: var(--mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.6px; text-transform: uppercase;
+  color: var(--gold);
+  padding: 4px 8px; margin-top: 4px;
+  border: 1px solid rgba(196, 147, 50, 0.3);
+  border-radius: 3px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.comp-compare-btn:hover { background: rgba(196, 147, 50, 0.08); }
+
+/* Poster selection checkbox overlay */
+.poster-select {
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 22px; height: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.poster-select:hover {
+  border-color: var(--gold);
+  background: rgba(196, 147, 50, 0.4);
+}
+.poster-select svg {
+  width: 14px; height: 14px;
+  color: var(--gold);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.poster-select.checked {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+.poster-select.checked svg {
+  color: #000;
+  opacity: 1;
+}
+.feat-poster, .c-poster { position: relative; }
+
+/* Floating Compare button */
+.compare-fab {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  z-index: 1000;
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 20px;
+  background: var(--gold);
+  color: #000;
+  border: none;
+  border-radius: 40px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+  animation: fabSlide 0.3s ease-out;
+}
+.compare-fab:hover {
+  background: #d4a03a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+.compare-fab .cf-count {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  color: #000;
+  min-width: 24px; height: 24px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 12px;
+  padding: 0 6px;
+}
+.compare-fab .cf-arrow { font-size: 16px; }
+@keyframes fabSlide {
+  from { transform: translateY(80px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
 
 /* ==========================================================================
    22. FOOTER

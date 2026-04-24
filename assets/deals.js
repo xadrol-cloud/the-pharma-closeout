@@ -360,7 +360,8 @@ export function renderPoster(deal, size = 'carousel') {
   const year = yearOf(deal.announcement_date)
   const bg = bgClass(deal.deal_type)
   const tas = parseTAs(deal.therapeutic_areas)
-  const ta = tas[0] || ''
+  // Show up to 2 TAs — join with middot if there are multiple (e.g., "Oncology · Hematology")
+  const ta = tas.length > 1 ? `${tas[0]} · ${tas[1]}` : (tas[0] || '')
   const val = formatValue(deal.deal_value_usd_mm)
   const type = shortType(deal.deal_type)
   const ring = ringClass(deal.deal_type)
@@ -988,7 +989,7 @@ export function renderScoreBreakdown(outcomes, deal) {
 
 /* ---------- 3k. Comparables Sidebar ---------- */
 
-export function renderComparables(comparables) {
+export function renderComparables(comparables, currentDealId) {
   if (!comparables || !comparables.length) return ''
 
   const items = comparables.map(deal => {
@@ -996,40 +997,248 @@ export function renderComparables(comparables) {
     const criticScore = deal.critic_score != null ? Math.round(deal.critic_score) : null
     const outcomeScore = deal.outcome_score != null ? Math.round(deal.outcome_score) : null
     const val = formatValue(deal.deal_value_usd_mm)
+    const cmpHref = currentDealId ? `compare.html?ids=${currentDealId},${deal.deal_id}` : null
 
-    return `<a class="comp" href="deal.html?id=${deal.deal_id}">
-      <div class="comp-poster ${bg}"><span>${esc(deal.target_name || '')}</span></div>
-      <div class="comp-body">
-        <div class="comp-name">${esc(deal.buyer_name)} / ${esc(deal.target_name)}</div>
-        <div class="comp-meta">${esc(val)} · ${esc(yearOf(deal.announcement_date))}</div>
-      </div>
-      <div class="comp-scores">
-        ${criticScore != null
-          ? `<div class="comp-sc ct"><span class="cs-label">CS</span>${criticScore}</div>`
-          : `<div class="comp-sc lk"><span class="cs-label">CS</span>—</div>`}
-        ${outcomeScore != null
-          ? `<div class="comp-sc os"><span class="cs-label">OS</span>${outcomeScore}</div>`
-          : `<div class="comp-sc lk"><span class="cs-label">OS</span>—</div>`}
-      </div>
-    </a>`
+    return `<div class="comp-wrap">
+      <a class="comp" href="deal.html?id=${deal.deal_id}">
+        <div class="comp-poster ${bg}"><span>${esc(deal.target_name || '')}</span></div>
+        <div class="comp-body">
+          <div class="comp-name">${esc(deal.buyer_name)} / ${esc(deal.target_name)}</div>
+          <div class="comp-meta">${esc(val)} · ${esc(yearOf(deal.announcement_date))}</div>
+        </div>
+        <div class="comp-scores">
+          ${criticScore != null
+            ? `<div class="comp-sc ct"><span class="cs-label">CS</span>${criticScore}</div>`
+            : `<div class="comp-sc lk"><span class="cs-label">CS</span>—</div>`}
+          ${outcomeScore != null
+            ? `<div class="comp-sc os"><span class="cs-label">OS</span>${outcomeScore}</div>`
+            : `<div class="comp-sc lk"><span class="cs-label">OS</span>—</div>`}
+        </div>
+      </a>
+      ${cmpHref ? `<a class="comp-compare-btn" href="${cmpHref}">Compare side-by-side &rarr;</a>` : ''}
+    </div>`
   })
 
   return items.join('')
 }
 
 
+/* ==========================================================================
+   4c. Multi-select comparison flow
+   ========================================================================== */
+
+const _selectedDealIds = new Set()
+
+/** Initialize multi-select: injects checkbox overlays on all posters + floating Compare button. */
+export function initMultiSelect() {
+  // Inject a single floating compare button if not already present
+  if (!document.getElementById('compare-fab')) {
+    const fab = document.createElement('button')
+    fab.id = 'compare-fab'
+    fab.className = 'compare-fab'
+    fab.style.display = 'none'
+    fab.innerHTML = '<span class="cf-count">0</span><span class="cf-label">Compare</span><span class="cf-arrow">&rarr;</span>'
+    fab.addEventListener('click', () => {
+      if (_selectedDealIds.size >= 2) {
+        const ids = Array.from(_selectedDealIds).slice(0, 5).join(',')
+        window.location.href = `compare.html?ids=${ids}`
+      }
+    })
+    document.body.appendChild(fab)
+  }
+
+  // Delegated click handler for poster select checkboxes
+  document.addEventListener('click', (e) => {
+    const cb = e.target.closest('.poster-select')
+    if (!cb) return
+    e.preventDefault()
+    e.stopPropagation()
+    const dealId = cb.dataset.dealId
+    if (!dealId) return
+    const checked = cb.classList.toggle('checked')
+    if (checked) {
+      if (_selectedDealIds.size >= 5) {
+        cb.classList.remove('checked')
+        updateFab()
+        return
+      }
+      _selectedDealIds.add(dealId)
+    } else {
+      _selectedDealIds.delete(dealId)
+    }
+    updateFab()
+  }, true) // capture phase so it fires before anchor navigation
+
+  // Run once to inject checkboxes on already-rendered posters
+  injectSelectorOnPosters()
+
+  // Re-scan when the DOM changes (carousels, search results re-render)
+  const mo = new MutationObserver(() => injectSelectorOnPosters())
+  mo.observe(document.body, { childList: true, subtree: true })
+}
+
+function injectSelectorOnPosters() {
+  document.querySelectorAll('a[href^="deal.html?id="]').forEach(anchor => {
+    // Match feat-poster or c-poster (not mini / featured-info CTAs)
+    const poster = anchor.querySelector('.feat-poster, .c-poster')
+    if (!poster) return
+    if (poster.querySelector('.poster-select')) return // already injected
+    const dealId = new URL(anchor.href).searchParams.get('id')
+    if (!dealId) return
+    const cb = document.createElement('div')
+    cb.className = 'poster-select' + (_selectedDealIds.has(dealId) ? ' checked' : '')
+    cb.dataset.dealId = dealId
+    cb.title = 'Select for comparison'
+    cb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>'
+    poster.appendChild(cb)
+  })
+}
+
+function updateFab() {
+  const fab = document.getElementById('compare-fab')
+  if (!fab) return
+  const n = _selectedDealIds.size
+  fab.querySelector('.cf-count').textContent = n
+  if (n >= 2) {
+    fab.style.display = ''
+    fab.classList.add('active')
+  } else {
+    fab.style.display = 'none'
+    fab.classList.remove('active')
+  }
+}
+
+
+/* ---------- 3k2. Comparison Table (side-by-side multi-deal view) ---------- */
+
+/**
+ * Render a comparison table for 2-5 deals. Each deal gets a column.
+ * Rows: buyer, target, type, value, date, status, CS, OS, 4 dimensions, TAs, lead molecules.
+ */
+export function renderComparison(deals) {
+  if (!deals || deals.length < 2) {
+    return '<p style="color:var(--ink-muted);text-align:center;padding:40px">Select at least 2 deals to compare.</p>'
+  }
+  if (deals.length > 5) {
+    deals = deals.slice(0, 5)
+  }
+
+  // Helpers
+  const score = (v) => (v == null ? '—' : Math.round(v))
+  const scoreTierFor = (v) => (v == null ? '' : v >= 75 ? 'high' : v >= 50 ? 'mid' : 'low')
+  const ta = (d) => parseTAs(d.therapeutic_areas).join(' · ') || '—'
+  const moleculeList = (d) => {
+    try {
+      const m = d.lead_molecules ? JSON.parse(d.lead_molecules) : null
+      return Array.isArray(m) && m.length ? m.join(', ') : (d.lead_molecules || '—')
+    } catch { return d.lead_molecules || '—' }
+  }
+
+  // Column headers — each deal is a poster + name
+  const headerCells = deals.map(d => `
+    <th class="cmp-head">
+      <a href="deal.html?id=${d.deal_id}" class="cmp-head-link">
+        ${renderPoster(d, 'carousel')}
+      </a>
+    </th>`).join('')
+
+  // Value row with poster at top (spans whole column header above)
+  function row(label, cells, { strong = false, highlightHighest = false } = {}) {
+    return `<tr class="cmp-row${strong ? ' cmp-strong' : ''}">
+      <th class="cmp-label">${esc(label)}</th>
+      ${cells.map(c => `<td class="cmp-val">${c}</td>`).join('')}
+    </tr>`
+  }
+
+  const rows = [
+    row('Deal Type', deals.map(d => esc(d.deal_type || '—'))),
+    row('Announced', deals.map(d => formatDate(d.announcement_date))),
+    row('Closed', deals.map(d => d.close_date ? formatDate(d.close_date) : '—')),
+    row('Value', deals.map(d => `<strong>${formatValue(d.deal_value_usd_mm)}</strong>`), { strong: true }),
+    row('Status', deals.map(d => esc(d.deal_status || '—'))),
+    row('Therapeutic Areas', deals.map(ta)),
+    row('Lead Molecules', deals.map(moleculeList)),
+
+    // Score rows with color tier
+    row('Critic Score', deals.map(d => {
+      const s = score(d.critic_score); const t = scoreTierFor(d.critic_score)
+      return `<span class="cmp-score ${t}">${s}</span>`
+    }), { strong: true }),
+    row('Outcome Score', deals.map(d => {
+      const s = score(d.outcome_score); const t = scoreTierFor(d.outcome_score)
+      return `<span class="cmp-score ${t}">${s}</span>`
+    }), { strong: true }),
+
+    row('Strategic Fit',     deals.map(d => score(d.strategic_fit_score))),
+    row('Financial Return',  deals.map(d => score(d.financial_return_score))),
+    row('Asset Performance', deals.map(d => score(d.pipeline_outcome_score))),
+    row('Value Realization', deals.map(d => score(d.integration_score))),
+    row('Deal Difficulty',   deals.map(d => score(d.deal_difficulty_score))),
+
+    row('EV / Revenue', deals.map(d => d.deal_ev_revenue_x != null ? `${d.deal_ev_revenue_x.toFixed(1)}x` : '—')),
+    row('EV / EBITDA',  deals.map(d => d.deal_ev_ebitda_x != null ? `${d.deal_ev_ebitda_x.toFixed(1)}x` : '—')),
+    row('Equity Sought', deals.map(d => d.equity_sought_pct != null ? `${d.equity_sought_pct}%` : '—')),
+    row('Financing', deals.map(d => esc(d.financing_type || '—'))),
+  ]
+
+  return `<table class="cmp-table">
+    <thead><tr><th class="cmp-label"></th>${headerCells}</tr></thead>
+    <tbody>${rows.join('')}</tbody>
+  </table>`
+}
+
+
 /* ---------- 3l. Sources List ---------- */
+
+/** Link health badge: green for 2xx, orange for 403/401 (still accessible to humans), red for 404/410 (dead). */
+function linkHealthBadge(status) {
+  if (status == null) return '' // never probed
+  if (status >= 200 && status < 300) return '' // OK, no badge needed (keep UI clean)
+  if (status === 404 || status === 410) return '<span class="src-health src-dead" title="Dead link (404)">⚠ Dead</span>'
+  if (status === 403 || status === 401) return '<span class="src-health src-blocked" title="Source exists but blocks automated access">🔒</span>'
+  if (status === -1) return '<span class="src-health src-error" title="Connection error">⚠</span>'
+  if (status >= 500) return '<span class="src-health src-error" title="Server error">⚠</span>'
+  return ''
+}
+
+/** Source-alignment badge: flags retrospective / pre-leak / near coverage.
+ *  Primary (±90d of announcement) and unknown get NO badge to keep UI clean. */
+function alignmentBadge(alignment) {
+  if (!alignment || alignment === 'primary') return ''
+  if (alignment === 'retrospective') return '<span class="src-align src-retro" title="Published >1 year after the deal was announced — commentary, not primary source">Retrospective</span>'
+  if (alignment === 'near') return '<span class="src-align src-near" title="Published 3-12 months after announcement — follow-up coverage">Follow-up</span>'
+  if (alignment === 'pre-leak') return '<span class="src-align src-preleak" title="Published >90 days before announcement — possible leak or rumor coverage">Pre-leak</span>'
+  return ''
+}
 
 export function renderSources(sources) {
   if (!sources || !sources.length) return '<p style="color:var(--ink-faint);font-size:13px">No sources indexed.</p>'
 
   const SHOW_LIMIT = 5
-  const items = sources.map((s, i) => {
+  // Prefer listing healthy sources first so dead links don't dominate the visible fold
+  const sorted = [...sources].sort((a, b) => {
+    const sa = a.link_status
+    const sb = b.link_status
+    const ok = (s) => s != null && s >= 200 && s < 400
+    if (ok(sa) && !ok(sb)) return -1
+    if (!ok(sa) && ok(sb)) return 1
+    return 0
+  })
+  const items = sorted.map((s, i) => {
     const hidden = i >= SHOW_LIMIT ? ' style="display:none" data-extra-source' : ''
+    const healthBadge = linkHealthBadge(s.link_status)
+    const alignBadge = alignmentBadge(s.source_alignment)
+    const href = (s.link_status === 404 || s.link_status === 410) && s.url
+      ? `https://web.archive.org/web/*/${encodeURIComponent(s.url)}` // offer Wayback fallback for dead links
+      : (s.url || '#')
+    // Show the actual publication date if we extracted it; fall back to date_accessed
+    const dateStr = s.published_date
+      ? formatDate(s.published_date)
+      : formatDate(s.date_accessed)
     return `<div class="src-item"${hidden}>
-      <div class="src-type">${esc(s.source_type || 'Article')}</div>
-      <div class="src-headline"><a href="${esc(s.url || '#')}" target="_blank">${esc(s.headline || s.source_name || 'Source')}</a></div>
-      <div class="src-date">${esc(s.source_name || '')} · ${esc(formatDate(s.date_accessed || s.published_date))}</div>
+      <div class="src-type">${esc(s.source_type || 'Article')}${healthBadge}${alignBadge}</div>
+      <div class="src-headline"><a href="${esc(href)}" target="_blank">${esc(s.headline || s.source_name || 'Source')}</a></div>
+      <div class="src-date">${esc(s.source_name || '')} · ${esc(dateStr)}</div>
     </div>`
   })
 
@@ -1101,12 +1310,13 @@ export function initCarousel(container, options = {}) {
 /* ---------- 4b. Search ---------- */
 
 /**
- * Wire up debounced search + filter binding.
+ * Wire up debounced search + filter binding + pagination + sort.
  * @param {HTMLInputElement} inputEl - The search input
  * @param {HTMLElement} filtersEl - Container with filter chips
  * @param {HTMLElement} resultsEl - Container where results get rendered
+ * @param {Object} opts - { sortSelectId, pageSize }
  */
-export function initSearch(inputEl, filtersEl, resultsEl) {
+export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
   if (!inputEl || !resultsEl) return
   let debounceTimer = null
   let loadedCount = 0

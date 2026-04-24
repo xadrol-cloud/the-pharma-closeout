@@ -37,7 +37,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Newsreader:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css">
+<link rel="stylesheet" href="assets/deals.css?v=20260423a">
 </head>
 <body>
 
@@ -53,7 +53,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   </div>
   <div class="nav-search">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" placeholder="Search deals..." aria-label="Search deals">
+    <input id="nav-search-input" type="text" placeholder="Search deals..." aria-label="Search deals">
   </div>
 </nav>
 
@@ -113,7 +113,8 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     <option value="Ophthalmology">Ophthalmology</option>
     <option value="Hematology">Hematology</option>
     <option value="Gastroenterology">Gastroenterology</option>
-    <option value="Other">Other</option>
+    <option value="Nephrology">Nephrology</option>
+    <option value="Women's Health">Women's Health</option>
   </select>
   <select name="min_value" class="f-chip" aria-label="Min Value">
     <option value="">Any Value</option>
@@ -229,8 +230,8 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <script type="module">
 import {
   fetchFeaturedDeal, fetchLatestDeals, fetchTrendingDeals, fetchTopOutcomeDeals,
-  renderPoster, renderFeaturedInfo, initCarousel, initSearch, searchDeals
-} from './assets/deals.js'
+  renderPoster, renderFeaturedInfo, initCarousel, initSearch, initMultiSelect, searchDeals
+} from './assets/deals.js?v=20260423a'
 
 // Featured deal
 const featured = await fetchFeaturedDeal()
@@ -258,11 +259,39 @@ topEl.innerHTML = topOS.map(d => renderPoster(d, 'carousel')).join('')
 initCarousel(document.getElementById('top-section'), {})
 
 // Search
-initSearch(
-  document.getElementById('search-input'),
-  document.getElementById('filters'),
-  document.getElementById('search-results')
-)
+const searchInput = document.getElementById('search-input')
+const filtersEl = document.getElementById('filters')
+const resultsEl = document.getElementById('search-results')
+
+// Prefill from ?q= query string (allows nav search from other pages to land here)
+const params = new URLSearchParams(window.location.search)
+const qPrefill = params.get('q')
+if (qPrefill) {
+  searchInput.value = qPrefill
+}
+
+initSearch(searchInput, filtersEl, resultsEl, { sortSelectId: 'sort-select', pageSize: 24 })
+
+// Trigger initial search if prefill was set
+if (qPrefill) {
+  searchInput.dispatchEvent(new Event('input'))
+}
+
+// Multi-select compare: injects checkbox overlays + floating Compare button
+initMultiSelect()
+
+// Wire nav search input: Enter focuses the main search
+const navInput = document.getElementById('nav-search-input')
+if (navInput) {
+  navInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && navInput.value.trim()) {
+      searchInput.value = navInput.value.trim()
+      searchInput.dispatchEvent(new Event('input'))
+      searchInput.focus()
+      searchInput.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  })
+}
 </script>
 
 </body>
