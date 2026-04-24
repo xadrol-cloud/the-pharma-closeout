@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate } from './format.js?v=20260423c'
+import { formatValue, formatDate } from './format.js?v=20260423d'
 
 export { formatValue, formatDate }
 
@@ -185,6 +185,65 @@ export function isHistoricalDeal(deal) {
   if (!deal) return false
   const y = deal.announcement_date ? parseInt(deal.announcement_date.substring(0, 4), 10) : null
   return y != null && !isNaN(y) && y < 1990
+}
+
+/**
+ * Task 39: Copy a deal row to the clipboard as tab-separated values for
+ * direct Excel paste. Columns match a typical BD analyst pull sheet.
+ */
+export function exportDealRow(deal) {
+  if (!deal) return false
+  let tas = ''
+  try { tas = JSON.parse(deal.therapeutic_areas || '[]').join('; ') } catch { tas = '' }
+  const cols = [
+    'Buyer', 'Target', 'Announcement Date', 'Deal Type', 'Deal Value ($MM)',
+    'Upfront ($MM)', 'Cash Portion ($MM)', 'Stock Portion ($MM)',
+    'Close Date', 'Time To Close (days)', 'Therapeutic Areas',
+    'Critic Score', 'Outcome Score', 'Primary Source URL',
+  ]
+  const row = [
+    deal.buyer_name, deal.target_name, deal.announcement_date,
+    deal.deal_type, deal.deal_value_usd_mm, deal.upfront_usd_mm || '',
+    deal.cash_portion_usd_mm || '', deal.stock_portion_usd_mm || '',
+    deal.close_date || '', deal.time_to_close_days || '',
+    tas,
+    deal.critic_score != null ? deal.critic_score : '',
+    deal.outcome_score != null ? deal.outcome_score : '',
+    deal.primary_source_url || '',
+  ]
+  const q = v => `"${String(v == null ? '' : v).replace(/"/g, '""')}"`
+  const tsv = cols.map(q).join('\t') + '\n' + row.map(q).join('\t')
+  const done = () => {
+    try {
+      if (typeof alert === 'function') {
+        alert('Deal row copied (tab-separated). Paste directly into Excel.')
+      }
+    } catch { /* no-op */ }
+  }
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(tsv).then(done, () => {
+        fallbackCopy(tsv); done()
+      })
+    } else {
+      fallbackCopy(tsv); done()
+    }
+  } catch {
+    fallbackCopy(tsv); done()
+  }
+  return true
+}
+
+function fallbackCopy(text) {
+  try {
+    const ta = document.createElement('textarea')
+    ta.value = text
+    ta.style.position = 'fixed'; ta.style.left = '-9999px'
+    document.body.appendChild(ta)
+    ta.focus(); ta.select()
+    document.execCommand('copy')
+    document.body.removeChild(ta)
+  } catch { /* no-op */ }
 }
 
 
@@ -382,6 +441,69 @@ export async function fetchComparables(deal, limit = 5) {
   q = q.order('outcome_score', { ascending: false, nullsFirst: false }).limit(limit)
   const { data } = await q
   return data || []
+}
+
+
+/**
+ * Task 41: Corporate lineage. Walk predecessor/successor by matching
+ * buyer_name or target_name across deals. Returns up to 10 linked deals
+ * (excluding the current deal).
+ */
+export async function fetchCorporateLineage(deal, limit = 10) {
+  if (!deal || (!deal.buyer_name && !deal.target_name)) return []
+  const names = []
+  if (deal.buyer_name) names.push(deal.buyer_name)
+  if (deal.target_name) names.push(deal.target_name)
+  // Quote each name so commas inside names don't break the .or() filter
+  const esc = n => `"${String(n).replace(/"/g, '\\"')}"`
+  const orExpr = names.flatMap(n => [
+    `buyer_name.eq.${esc(n)}`,
+    `target_name.eq.${esc(n)}`,
+  ]).join(',')
+  try {
+    const { data } = await supabase.from('deals_enriched').select('*')
+      .or(orExpr)
+      .neq('deal_id', deal.deal_id)
+      .order('announcement_date', { ascending: true, nullsFirst: false })
+      .limit(limit)
+    return data || []
+  } catch {
+    return []
+  }
+}
+
+/**
+ * Task 43: Companion deals — same buyer + target pair, different deal_id.
+ * Detects follow-on deals, option exercises, amendments, etc. Falls back
+ * to name match when buyer_id/target_id columns are not populated.
+ */
+export async function fetchCompanionDeals(deal, limit = 10) {
+  if (!deal) return []
+  try {
+    // Prefer id-based match when available
+    if (deal.buyer_id && deal.target_id) {
+      const { data } = await supabase.from('deals_enriched').select('*')
+        .eq('buyer_id', deal.buyer_id)
+        .eq('target_id', deal.target_id)
+        .neq('deal_id', deal.deal_id)
+        .order('announcement_date', { ascending: true, nullsFirst: false })
+        .limit(limit)
+      if (data && data.length) return data
+    }
+    // Fallback: name-based match
+    if (deal.buyer_name && deal.target_name) {
+      const { data } = await supabase.from('deals_enriched').select('*')
+        .eq('buyer_name', deal.buyer_name)
+        .eq('target_name', deal.target_name)
+        .neq('deal_id', deal.deal_id)
+        .order('announcement_date', { ascending: true, nullsFirst: false })
+        .limit(limit)
+      return data || []
+    }
+  } catch {
+    return []
+  }
+  return []
 }
 
 
@@ -657,6 +779,7 @@ function renderRevenueChart(rows, deal = null) {
     .map(r => ({
       date: String(r.year || r.period_label),
       value: r.value_usd_mm / 1000,
+      valueMm: r.value_usd_mm,
       label: r.value_label || `$${(r.value_usd_mm / 1000).toFixed(1)}B`,
       asset: r.asset_name || ''
     }))
@@ -682,6 +805,15 @@ function renderRevenueChart(rows, deal = null) {
   const growth = first > 0 ? (((last - first) / first) * 100).toFixed(0) : '\u2014'
   const growthColor = growth !== '\u2014' && parseFloat(growth) >= 0 ? 'green' : 'red'
 
+  // Task 40: CSV export of data points
+  const csvHeader = 'Period,Revenue_USD_MM,Revenue_USD_B,Asset'
+  const csvRows = dataPoints.map(d =>
+    `"${String(d.date).replace(/"/g, '""')}",${d.valueMm != null ? d.valueMm : ''},${d.value.toFixed(3)},"${String(d.asset).replace(/"/g, '""')}"`
+  )
+  const csvString = [csvHeader, ...csvRows].join('\n')
+  const csvFilename = `revenue-arc-${(deal && deal.deal_id) || 'export'}.csv`
+  const csvHref = `data:text/csv;charset=utf-8,${encodeURIComponent(csvString)}`
+
   return `<div class="rev-card">
   <div class="rev-headline">Revenue Arc</div>
   <div class="rev-subtitle">Post-acquisition revenue trajectory${dataPoints[0].asset ? ` \u2014 ${esc(dataPoints[0].asset)}` : ''}</div>
@@ -705,6 +837,10 @@ function renderRevenueChart(rows, deal = null) {
     <div class="rev-stat"><div class="rev-stat-val">${dataPoints.length}</div><div class="rev-stat-label">Data Points</div></div>
   </div>
   ${deal && deal.revenue_annotation ? `<div class="rev-annotation">${esc(deal.revenue_annotation)}</div>` : ''}
+  <a class="rev-export" href="${csvHref}" download="${csvFilename}" title="Download revenue arc data as CSV">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Download CSV
+  </a>
   </div>`
 }
 
@@ -1036,11 +1172,17 @@ export function renderKeyAssets(allAssets) {
 export function renderScoreBreakdown(outcomes, deal) {
   if (!outcomes || !outcomes.length) return ''
 
+  // Task 42: per-dimension methodology tooltip text. Surfaces on `title` hover
+  // over the score label and populates the inline methodology help block.
   const baseDimensions = [
-    { label: 'Strategic Fit', key: 'strategic_fit_score', icon: '🎯', baseWeight: 25 },
-    { label: 'Financial Return', key: 'financial_return_score', icon: '📈', baseWeight: 35 },
-    { label: 'Asset Performance', key: 'pipeline_outcome_score', icon: '🧬', baseWeight: 25 },
-    { label: 'Value Realization', key: 'integration_score', icon: '⚙️', baseWeight: 15 },
+    { label: 'Strategic Fit', key: 'strategic_fit_score', icon: '🎯', baseWeight: 25,
+      tooltip: 'Does the deal align with the buyer\'s stated strategy, TA focus, and portfolio gaps? Weighted higher for platform and licensing stages.' },
+    { label: 'Financial Return', key: 'financial_return_score', icon: '📈', baseWeight: 35,
+      tooltip: 'Post-deal revenue, margin contribution, and IRR vs. upfront + milestones paid. Weighted highest for launched-product deals.' },
+    { label: 'Asset Performance', key: 'pipeline_outcome_score', icon: '🧬', baseWeight: 25,
+      tooltip: 'Clinical readouts, approvals, label expansions, and pipeline progression of acquired assets. Weighted highest for preclinical deals.' },
+    { label: 'Value Realization', key: 'integration_score', icon: '⚙️', baseWeight: 15,
+      tooltip: 'Integration execution, talent retention, milestone achievement, and synergies captured vs. targeted.' },
   ]
 
   const weightProfiles = {
@@ -1077,9 +1219,11 @@ export function renderScoreBreakdown(outcomes, deal) {
     // and embed the numeric value inside the fill so low scores are readable.
     const fillTier = score == null ? 'none' : tier
     const fillPct = score == null ? 100 : Math.max(pct, 3)
+    // Task 42: tooltip combines methodology + weight + current score for a quick hover
+    const tip = `${dim.label} (${dim.weight} weight): ${dim.tooltip || ''}${score != null ? ` Current score: ${display}/100.` : ' Score not yet calculated.'}`
     return `<div class="sc-row">
       <div class="sc-header" aria-expanded="false" onclick="this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true');this.closest('.sc-row').querySelector('.sc-detail').classList.toggle('open')">
-        <span class="sc-label">${dim.icon} ${dim.label} <span style="font-size:11px;color:var(--ink-faint)">(${dim.weight})</span></span>
+        <span class="sc-label" title="${esc(tip)}">${dim.icon} ${dim.label} <span style="font-size:11px;color:var(--ink-faint)">(${dim.weight})</span><span class="sc-info" aria-hidden="true" title="${esc(tip)}">?</span></span>
         <span class="sc-num">${display}</span>
         <div class="sc-chev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
       </div>
@@ -1103,7 +1247,81 @@ export function renderScoreBreakdown(outcomes, deal) {
     rows.push(`<div class="sc-method" style="margin-top:4px;font-size:11px;color:var(--ink-faint)">Weights adjusted for: ${stageLabels[stage]}</div>`)
   }
 
+  // Task 42: methodology link — hover any dimension label for the per-dimension tooltip
+  rows.push('<div class="sc-method sc-method-tip" style="margin-top:6px;font-size:11px;">Hover any dimension label for methodology. Weights shift by lifecycle stage; the final outcome score multiplies by a deal-difficulty factor (0.8&ndash;1.2).</div>')
+
   return rows.join('')
+}
+
+
+/* ---------- 3j-bis. Corporate Lineage + Companion Deals (Tasks 41, 43) ---------- */
+
+/** Shared mini-list renderer for sidebar cards that show 2-4 linked deals. */
+function renderLineageList(deals, emptyMsg) {
+  if (!deals || !deals.length) return `<div class="lin-empty">${emptyMsg}</div>`
+  const preview = deals.slice(0, 4)
+  const overflow = deals.slice(4)
+  const row = d => {
+    const val = formatValue(d.deal_value_usd_mm)
+    const y = yearOf(d.announcement_date)
+    const type = shortType(d.deal_type) || 'Deal'
+    return `<a class="lin-row" href="deal.html?id=${encodeURIComponent(d.deal_id)}">
+      <div class="lin-year">${esc(y || '')}</div>
+      <div class="lin-body">
+        <div class="lin-name">${esc(d.buyer_name || '')} / ${esc(d.target_name || '')}</div>
+        <div class="lin-meta">${esc(type)} &middot; ${esc(val)}</div>
+      </div>
+    </a>`
+  }
+  const previewHtml = preview.map(row).join('')
+  if (!overflow.length) return previewHtml
+  const overflowHtml = overflow.map(row).join('')
+  return `${previewHtml}
+    <details class="lin-more">
+      <summary>See full chain (${deals.length})</summary>
+      ${overflowHtml}
+    </details>`
+}
+
+/**
+ * Task 41: Render the corporate lineage sidebar card. Shows predecessor/
+ * successor deals (same buyer or target name).
+ */
+export function renderCorporateLineage(deals, currentDeal) {
+  if (!deals || !deals.length) return ''
+  // Partition: deals that involve the buyer vs. the target
+  const buyer = currentDeal && currentDeal.buyer_name
+  const target = currentDeal && currentDeal.target_name
+  const buyerChain = deals.filter(d => d.buyer_name === buyer || d.target_name === buyer)
+  const targetChain = deals.filter(d => (d.buyer_name === target || d.target_name === target) && !buyerChain.includes(d))
+
+  const sections = []
+  if (buyerChain.length) {
+    sections.push(`<div class="lin-section">
+      <div class="lin-section-label">${esc(buyer)}</div>
+      ${renderLineageList(buyerChain, '')}
+    </div>`)
+  }
+  if (targetChain.length) {
+    sections.push(`<div class="lin-section">
+      <div class="lin-section-label">${esc(target)}</div>
+      ${renderLineageList(targetChain, '')}
+    </div>`)
+  }
+  if (!sections.length) return ''
+  return sections.join('')
+}
+
+/**
+ * Task 43: Render the companion-deals ("Related Deals") sidebar card.
+ * Same buyer + target pair, different deal_id (follow-ons, amendments, option exercises).
+ */
+export function renderCompanionDeals(deals, currentDeal) {
+  if (!deals || !deals.length) return ''
+  return `<div class="lin-section">
+    <div class="lin-section-label" style="font-size:11px;color:var(--ink-faint);margin-bottom:6px;">Other deals between the same parties</div>
+    ${renderLineageList(deals, '')}
+  </div>`
 }
 
 

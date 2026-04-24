@@ -1956,7 +1956,8 @@ body {
 
 
 /* ==========================================================================
-   Phase 16d — Frontend template fixes (cache-buster 20260423c)
+   Phase 16d — Frontend template fixes (cache-buster 20260423d)
+   Phase 16h — Analyst workflow features (Tasks 39-43)
    ========================================================================== */
 
 /* Task 18: Deal Status badge in hero */
@@ -2033,3 +2034,119 @@ body {
   border-left: 2px solid var(--gold);
   line-height: 1.5;
 }
+
+/* ==========================================================================
+   Phase 16h — Analyst workflow (Tasks 39-43)
+   ========================================================================== */
+
+/* Task 40: Revenue Arc CSV export link under the chart card */
+.rev-export {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 5px 10px;
+  font-family: var(--mono);
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-muted);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.rev-export:hover {
+  color: var(--gold);
+  border-color: rgba(196, 147, 50, 0.4);
+  background: rgba(196, 147, 50, 0.06);
+}
+.rev-export svg {
+  width: 12px; height: 12px;
+  stroke: currentColor;
+}
+
+/* Task 42: Score methodology tooltip indicator */
+.sc-info {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 14px; height: 14px;
+  margin-left: 2px;
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  color: var(--ink-faint);
+  background: var(--rule-light);
+  border-radius: 50%;
+  cursor: help;
+}
+.sc-info:hover { background: var(--gold); color: #fff; }
+.sc-label[title] { cursor: help; }
+.sc-method-tip { font-style: italic; line-height: 1.5; }
+
+/* Tasks 41, 43: Corporate lineage + companion deals sidebar cards */
+.lin-section { margin-bottom: 14px; }
+.lin-section:last-child { margin-bottom: 0; }
+.lin-section-label {
+  font-family: var(--mono);
+  font-size: 10px; font-weight: 600;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--rule-light);
+}
+.lin-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  color: inherit;
+  text-decoration: none;
+  transition: background 0.12s;
+}
+.lin-row:hover { background: var(--surface); }
+.lin-year {
+  flex-shrink: 0;
+  width: 36px;
+  font-family: var(--mono);
+  font-size: 11px; font-weight: 600;
+  color: var(--ink-muted);
+  padding-top: 1px;
+}
+.lin-body { flex: 1; min-width: 0; }
+.lin-name {
+  font-size: 12px; font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.lin-meta {
+  font-size: 10px;
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+.lin-empty {
+  font-size: 11px;
+  color: var(--ink-faint);
+  font-style: italic;
+  padding: 4px 0;
+}
+.lin-more {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--rule-light);
+}
+.lin-more summary {
+  font-family: var(--mono);
+  font-size: 10px; font-weight: 600;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 3px;
+  list-style: none;
+}
+.lin-more summary::-webkit-details-marker { display: none; }
+.lin-more summary:hover { background: rgba(196, 147, 50, 0.08); }
+.lin-more[open] summary { margin-bottom: 4px; }

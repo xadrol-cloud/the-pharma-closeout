@@ -37,7 +37,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260423c">
+<link rel="stylesheet" href="assets/deals.css?v=20260423d">
 </head>
 <body>
 
@@ -148,6 +148,18 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       <div id="sources"></div>
     </div>
 
+    <!-- Task 41: Corporate Lineage -->
+    <div id="lineage-section" class="sidebar-card" style="display:none;">
+      <div class="sb-title">Corporate Lineage</div>
+      <div id="lineage"></div>
+    </div>
+
+    <!-- Task 43: Companion Deals -->
+    <div id="companions-section" class="sidebar-card" style="display:none;">
+      <div class="sb-title">Related Deals</div>
+      <div id="companions"></div>
+    </div>
+
   </div>
 
 </div>
@@ -156,9 +168,9 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
      FLOATING ACTION BAR
      ═══════════════════════════════════════════════════════════════════ -->
 <div id="deal-fab" class="fab" style="display:none;">
-  <button class="fab-btn" title="Export to Excel (coming soon)" disabled>
-    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
-    Excel
+  <button class="fab-btn" title="Copy deal row to clipboard (tab-separated, paste into Excel)" onclick="window.__copyDealRow && window.__copyDealRow()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    Copy Row
   </button>
   <div class="fab-div"></div>
   <button class="fab-btn" title="Export to PowerPoint (coming soon)" disabled>
@@ -194,12 +206,15 @@ import {
   fetchDeal, fetchDealSources, fetchDealOutcomes, fetchComparables,
   fetchDiseaseIndications, fetchDiseaseAssets,
   fetchDealTimeline, fetchDealValueArc,
+  fetchCorporateLineage, fetchCompanionDeals,
   renderPoster, renderScorePill, renderTimeline, renderValueArc,
   renderDiseaseContext, renderFinancials, renderCriticReviews,
   renderKeyAssets, renderScoreBreakdown, renderComparables as renderComps,
-  renderSources, formatValue, formatDate, parseTAs,
-  renderDealStatus, renderValuePill, isHistoricalDeal
-} from './assets/deals.js?v=20260423c'
+  renderSources, renderCorporateLineage, renderCompanionDeals,
+  formatValue, formatDate, parseTAs,
+  renderDealStatus, renderValuePill, isHistoricalDeal,
+  exportDealRow
+} from './assets/deals.js?v=20260423d'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -324,6 +339,29 @@ if (!dealId) {
       const sourcesHtml = renderSources(sources)
       document.getElementById('sources').innerHTML = sourcesHtml
       document.getElementById('sources-section').style.display = ''
+
+      // ── Task 39: Copy Deal Row binding ──
+      window.__copyDealRow = () => exportDealRow(deal)
+
+      // ── Task 41: Corporate Lineage sidebar ──
+      try {
+        const lineage = await fetchCorporateLineage(deal)
+        const lineageHtml = renderCorporateLineage(lineage, deal)
+        if (lineageHtml) {
+          document.getElementById('lineage').innerHTML = lineageHtml
+          document.getElementById('lineage-section').style.display = ''
+        }
+      } catch (e) { console.warn('lineage fetch failed', e) }
+
+      // ── Task 43: Companion (same-parties) Deals sidebar ──
+      try {
+        const companions = await fetchCompanionDeals(deal)
+        const companionsHtml = renderCompanionDeals(companions, deal)
+        if (companionsHtml) {
+          document.getElementById('companions').innerHTML = companionsHtml
+          document.getElementById('companions-section').style.display = ''
+        }
+      } catch (e) { console.warn('companions fetch failed', e) }
 
       // ── Task 26: Historical deal variant (pre-1990) ──
       if (isHistoricalDeal(deal)) {
