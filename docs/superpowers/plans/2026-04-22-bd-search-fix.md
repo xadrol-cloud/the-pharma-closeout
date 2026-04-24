@@ -11,8 +11,73 @@
 **Environment assumptions:**
 - Node **≥18** required for `tests/deals_search.spec.mjs` (uses native fetch + native `node:test`).
 - Windows + Git Bash (commands use Unix syntax: `grep`, `export`, `wc -l`, forward slashes in paths).
-- Env vars pre-set: `SUPABASE_URL`, `SUPABASE_ANON_KEY` (readonly client), `SUPABASE_SERVICE_KEY` (write client for data-repo scripts).
-- Python 3.10+ with `supabase`, `requests`, `pytest` installed in BD Data Base repo.
+- Env vars pre-set by `source ~/.claude/bd-env.sh`: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_KEY`.
+- Python 3.10+ with `requests`, `pytest` installed in BD Data Base repo.
+
+---
+
+## Plan deviations (recorded after Phase 0 discovery, 2026-04-22)
+
+**Deviation 1 — TA filter list finalized at 15 options, no alias collapse needed (revised post-Task-3.1).**
+Phase 0 discovery (early execution) showed fragmented TA tags. By Phase 3 verification, the DB had been auto-normalized (no `Neuroscience`, `CNS`, `Metabolic Disease`, or `Metabolic/Endocrine` tags remained — all collapsed to `Neurology` and `Metabolic` canonical forms). Also: `Diagnostics` is currently 0 deals (not 14); `Gene Therapy` has 25 deals (5th largest tag, not in original spec). Final revision:
+
+- **TA list:** Oncology, Neurology, Immunology, Cardiovascular, Metabolic, Infectious Disease, Respiratory, Vaccines, Rare Disease, Gene Therapy, Dermatology, Ophthalmology, Hematology, Gastroenterology, Other (15 options).
+- **Alias collapse DROPPED** — per CLAUDE.md YAGNI rule, no code for variants that don't exist in the data. If fragmentation reappears, re-add the TA_ALIASES map.
+
+**Deviation 3 — Task 1.2 scope narrowed after Phase 1 DB re-audit.**
+Between the 2026-04-22 16:46 ET audit that motivated this plan and Phase 1 execution, the DB was partially corrected (source unclear — possibly a scheduled enrichment run). Outlier count above $400B is now 0. Of the original 7 targets: 3 are still wrong and need fixes (Novo/Vivtex $2.1B → ~$175M; AbbVie/Genentech null → ~$595M; Sanofi/Lexicon $2.82B → ~$260M); 3 already carry correct values but no source citation (Novartis/Regulus 1700; Merck/Harpoon 680; Amgen/Immunex 16000); 1 is plausible pending verification (Lilly/BI 444, expected ~500). Task 1.2 now fixes the 3 wrong values and attaches `primary_source_url` + `deal_sources` row for all 7 to satisfy the provenance rule.
+
+**Deviation 6 — Task 2.2 re-scoped: view DDL, not row-by-row re-score.**
+Phase 2.1 diagnostic discovered that `critic_score` is NOT a persisted column — it is computed live inside the `deals_enriched` VIEW. The current formula (`100 * COUNT(Bullish|Neutral) / COUNT(non-null)`) treats Neutral sentiment as equivalent to Bullish, so only a Bearish tag pulls the score below 100. Fix is a single `CREATE OR REPLACE VIEW` DDL with weighted scoring:
+
+```sql
+critic_score = ROUND(
+  (100 * COUNT(Bullish) + 50 * COUNT(Neutral) + 0 * COUNT(Bearish))
+  / NULLIF(COUNT(sentiment IS NOT NULL), 0)
+)
+```
+
+Semantics: CS=100 = all Bullish; CS=50 = all Neutral; CS=0 = all Bearish. Stricter and more informative than the previous formula.
+
+`scripts/rescoring/rerun_critic_scores.py` is not needed (no per-row writes). Task 2.2 deliverable becomes: write migration SQL file, apply, verify distribution. The re-score script path in the plan is deleted.
+
+**Deviation 5 — Post-Task-1.2 schema + enum findings (apply to Task 4.4 and future data work):**
+- `deals_enriched` is a SQL **view**. PostgREST returns `500 cannot update view` on PATCH/POST. Writes must target the underlying `deals` base table (plus related tables `deal_sources`, `deal_critic_reviews`, etc. as appropriate).
+- Schema-enforced enums to match exactly:
+  - `source_type ∈ {SEC Filing, Press Release, News Article, Earnings Call Transcript, Annual Report, Analyst Report, Court Filing}`
+  - `source_tier ∈ {Primary, Provisional}` (text, NOT int)
+  - `value_confidence ∈ {Confirmed, Reported, Unknown, Estimated}` (text, NOT high/medium/low)
+
+**Deviation 4 — Source tracking uses `primary_source_url` column + `deal_sources` table, not a nonexistent `sources` JSONB column.**
+`deals_enriched` does not have a `sources` column. Actual provenance surface:
+- `deals_enriched.primary_source_url` (text) — the canonical citation URL for the deal row
+- `deals_enriched.source_tier` (int) — 1-7 per Research Standards spec
+- `deals_enriched.value_confidence` (text) — low / medium / high
+- `deal_sources` table — per-source rows keyed by `deal_id`, columns: `source_id`, `url`, `source_type`, `source_name`, `excerpt`, `date_accessed`, `link_status`, `link_checked_at`, `link_final_url`, `sentiment`, `created_at`
+
+Task 1.2 correction pattern: `UPDATE deals_enriched SET deal_value_usd_mm=?, primary_source_url=?, source_tier=1, value_confidence='high' WHERE deal_id=?` + `INSERT INTO deal_sources (deal_id, url, source_type, source_name, excerpt, date_accessed) VALUES (...)`.
+
+**Side findings (out of scope, tracked separately):**
+- Sanofi/Lexicon and Lilly/BI each have 2 near-duplicate rows in `deals_enriched` — queued as a follow-up dedup task.
+
+**Deviation 2 — Python Supabase access uses direct PostgREST, not supabase-py.**
+`supabase-py 2.10.0` rejects the new 2026 `sb_secret_` key format. All Python scripts in this plan (Tasks 1.1, 1.2, 2.1, 2.2, 4.1-4.4) use `requests` with PostgREST endpoints, matching the pattern already established in `scripts/migrate_to_supabase.py`. Helper snippet:
+
+```python
+import requests
+import json
+with open("config/supabase_config.json") as f:
+    cfg = json.load(f)
+URL = cfg["url"].rstrip("/")
+KEY = cfg["secret_key"]  # write key; use publishable_key for read-only
+HEADERS = {"apikey": KEY, "Authorization": f"Bearer {KEY}", "Content-Type": "application/json"}
+
+def table(name):
+    return f"{URL}/rest/v1/{name}"
+# Query: requests.get(table("deals_enriched"), headers=HEADERS, params={"select": "*"})
+# Upsert: requests.post(table("deals_enriched"), headers={**HEADERS, "Prefer": "resolution=merge-duplicates,return=representation"}, json=[row])
+# Update: requests.patch(table("deals_enriched"), headers=HEADERS, params={"deal_id": f"eq.{deal_id}"}, json=updates)
+```
 
 ---
 
@@ -679,16 +744,19 @@ Replace the `<div id="filters">...</div>` block with:
   <select name="therapeutic_area" class="f-chip" aria-label="Therapeutic Area">
     <option value="">All Therapeutic Areas</option>
     <option value="Oncology">Oncology</option>
-    <option value="Immunology">Immunology</option>
     <option value="Neurology">Neurology</option>
-    <option value="Metabolic">Metabolic</option>
-    <option value="Rare Disease">Rare Disease</option>
+    <option value="Immunology">Immunology</option>
     <option value="Cardiovascular">Cardiovascular</option>
+    <option value="Metabolic">Metabolic</option>
     <option value="Infectious Disease">Infectious Disease</option>
     <option value="Respiratory">Respiratory</option>
-    <option value="Hematology">Hematology</option>
+    <option value="Vaccines">Vaccines</option>
+    <option value="Rare Disease">Rare Disease</option>
+    <option value="Gene Therapy">Gene Therapy</option>
     <option value="Dermatology">Dermatology</option>
     <option value="Ophthalmology">Ophthalmology</option>
+    <option value="Hematology">Hematology</option>
+    <option value="Gastroenterology">Gastroenterology</option>
     <option value="Other">Other</option>
   </select>
   <select name="min_value" class="f-chip" aria-label="Min Value">
@@ -754,10 +822,7 @@ function applySortClause(q, sortKey) {
 }
 ```
 
-*If Phase 0.1 discovery showed `therapeutic_areas` is `jsonb` (not `text`), replace the `.ilike` line for TA with:*
-```javascript
-if (filters.therapeutic_area) q = q.cs('therapeutic_areas', [filters.therapeutic_area])
-```
+*Phase 0 confirmed `therapeutic_areas` is `text` (JSON-stringified) — `.ilike` with percent wildcards is the correct matcher, not `.cs()`.*
 
 - [ ] **Step 2: Manual verification — no other callers**
 
