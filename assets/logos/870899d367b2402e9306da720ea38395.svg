@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   width="595.03809"
+   height="282.8479"
+   id="svg3224">
+  <defs
+     id="defs3226" />
+  <g
+     transform="translate(-75.147781,-390.6442)"
+     id="layer1">
+    <rect
+       width="272.38956"
+       height="272.38956"
+       x="86.148582"
+       y="395.87335"
+       id="rect3247"
+       style="opacity:1;fill:#3baeae;fill-opacity:1;stroke:#ff0000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       width="272.38956"
+       height="272.38956"
+       x="362.55865"
+       y="395.87335"
+       id="rect3249"
+       style="opacity:1;fill:#00a2c5;fill-opacity:1;stroke:#ff0000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       x="407.44656"
+       y="627.86627"
+       transform="scale(0.9516879,1.0507646)"
+       id="text3251"
+       xml:space="preserve"
+       style="font-size:921.68377686px;font-style:normal;font-weight:normal;line-height:125%;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"><tspan
+         x="407.44656"
+         y="627.86627"
+         id="tspan3253"
+         style="font-size:64.00582123px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;font-family:Arial;-inkscape-font-specification:Arial">AMYLIN</tspan></text>
+    <text
+       x="658.94238"
+       y="643.11353"
+       transform="scale(0.9726062,1.0281654)"
+       id="text3255"
+       xml:space="preserve"
+       style="font-size:197.89414978px;font-style:normal;font-weight:normal;line-height:125%;fill:#00a2c5;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"><tspan
+         x="658.94238"
+         y="643.11353"
+         id="tspan3257"
+         style="font-size:13.74264812px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#00a2c5;fill-opacity:1;font-family:Arial;-inkscape-font-specification:Arial">TM</tspan></text>
+  </g>
+</svg>
