@@ -1210,6 +1210,16 @@ function linkHealthBadge(status) {
   return ''
 }
 
+/** Source-alignment badge: flags retrospective / pre-leak / near coverage.
+ *  Primary (±90d of announcement) and unknown get NO badge to keep UI clean. */
+function alignmentBadge(alignment) {
+  if (!alignment || alignment === 'primary') return ''
+  if (alignment === 'retrospective') return '<span class="src-align src-retro" title="Published >1 year after the deal was announced — commentary, not primary source">Retrospective</span>'
+  if (alignment === 'near') return '<span class="src-align src-near" title="Published 3-12 months after announcement — follow-up coverage">Follow-up</span>'
+  if (alignment === 'pre-leak') return '<span class="src-align src-preleak" title="Published >90 days before announcement — possible leak or rumor coverage">Pre-leak</span>'
+  return ''
+}
+
 export function renderSources(sources) {
   if (!sources || !sources.length) return '<p style="color:var(--ink-faint);font-size:13px">No sources indexed.</p>'
 
@@ -1225,14 +1235,19 @@ export function renderSources(sources) {
   })
   const items = sorted.map((s, i) => {
     const hidden = i >= SHOW_LIMIT ? ' style="display:none" data-extra-source' : ''
-    const badge = linkHealthBadge(s.link_status)
+    const healthBadge = linkHealthBadge(s.link_status)
+    const alignBadge = alignmentBadge(s.source_alignment)
     const href = (s.link_status === 404 || s.link_status === 410) && s.url
       ? `https://web.archive.org/web/*/${encodeURIComponent(s.url)}` // offer Wayback fallback for dead links
       : (s.url || '#')
+    // Show the actual publication date if we extracted it; fall back to date_accessed
+    const dateStr = s.published_date
+      ? formatDate(s.published_date)
+      : formatDate(s.date_accessed)
     return `<div class="src-item"${hidden}>
-      <div class="src-type">${esc(s.source_type || 'Article')}${badge}</div>
+      <div class="src-type">${esc(s.source_type || 'Article')}${healthBadge}${alignBadge}</div>
       <div class="src-headline"><a href="${esc(href)}" target="_blank">${esc(s.headline || s.source_name || 'Source')}</a></div>
-      <div class="src-date">${esc(s.source_name || '')} · ${esc(formatDate(s.date_accessed || s.published_date))}</div>
+      <div class="src-date">${esc(s.source_name || '')} · ${esc(dateStr)}</div>
     </div>`
   })
 

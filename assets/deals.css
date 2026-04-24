@@ -1595,6 +1595,21 @@ body {
 .src-health.src-blocked { color: #996515; background: rgba(153, 101, 21, 0.08); }
 .src-health.src-error { color: #6b6b6b; background: rgba(107, 107, 107, 0.08); }
 
+/* Source-alignment badges (Q3 audit) */
+.src-align {
+  font-family: var(--mono);
+  font-size: 9px; font-weight: 600;
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.3px;
+  vertical-align: middle;
+  display: inline-block;
+}
+.src-align.src-retro   { color: #996515; background: rgba(196, 147, 50, 0.12); }
+.src-align.src-near    { color: #6b6b6b; background: rgba(107, 107, 107, 0.08); }
+.src-align.src-preleak { color: #1c5f8a; background: rgba(28, 95, 138, 0.10); }
+
 /* Pagination */
 .pager {
   display: flex; align-items: center; justify-content: center; gap: 16px;
