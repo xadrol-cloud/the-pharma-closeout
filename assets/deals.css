@@ -799,11 +799,16 @@ body {
 .sc-header[aria-expanded="true"] .sc-chev svg { fill: var(--green); }
 
 .sc-num { font-family: var(--mono); font-size: 13px; font-weight: 600; }
-.sc-bar { height: 6px; background: var(--rule-light); border-radius: 3px; overflow: hidden; margin-top: 5px; }
-.sc-fill { height: 100%; border-radius: 3px; }
+/* Task 22b: taller bars + inline numeric labels; 3% minimum keeps zero-scores visible. */
+.sc-bar { height: 10px; background: var(--rule-light); border-radius: 3px; overflow: hidden; margin-top: 5px; position: relative; }
+.sc-fill { height: 100%; border-radius: 3px; position: relative; display: flex; align-items: center; padding-left: 6px; }
 .sc-fill.high { background: var(--green); }
 .sc-fill.mid  { background: var(--amber); }
 .sc-fill.low  { background: var(--red); }
+.sc-fill.none { background: var(--rule-light); }
+.sc-fill-num { font-family: var(--mono); font-size: 9px; font-weight: 700; color: #fff; text-shadow: 0 0 2px rgba(0,0,0,0.4); line-height: 1; }
+.sc-fill.low  .sc-fill-num { color: #8a1a22; text-shadow: none; }
+.sc-fill.none .sc-fill-num { color: var(--ink-faint); text-shadow: none; }
 
 .sc-detail {
   overflow: hidden;
@@ -1948,3 +1953,83 @@ body {
 .am-group-label.ok { color: var(--green); }
 .am-group-label.pip { color: var(--amber); }
 .am-group-label.div { color: var(--red); }
+
+
+/* ==========================================================================
+   Phase 16d — Frontend template fixes (cache-buster 20260423c)
+   ========================================================================== */
+
+/* Task 18: Deal Status badge in hero */
+.deal-status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.deal-status.ds-red   { background: #c43a3a; color: #fff; }
+.deal-status.ds-green { background: #2d8a4f; color: #fff; }
+.deal-status.ds-gold  { background: var(--gold); color: #000; }
+.deal-status.ds-gray  { background: var(--ink-muted); color: #fff; }
+
+/* Task 19: hero value pill */
+.hero-value {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 4px;
+  background: var(--gold);
+  color: #000;
+  font-weight: 700;
+  font-size: 16px;
+  margin-right: 8px;
+}
+.hero-value.hero-value-null {
+  background: var(--rule-light);
+  color: var(--ink-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Task 20: single-column disease panel when right column has no content */
+.dp-grid-single { grid-template-columns: 1fr !important; }
+
+/* Task 22: three-tier score pill background tints + tooltip affordance */
+.score-tier-high { background: rgba(45, 138, 79, 0.12); }
+.score-tier-mid  { background: rgba(196, 147, 50, 0.12); }
+.score-tier-low  { background: rgba(196, 58, 58, 0.12); }
+.score-tier-none { background: var(--rule-light); color: var(--ink-faint); }
+.feat-score[title] { cursor: help; }
+
+/* Task 24: progressive disclosure accordion */
+.acc-hidden-wrap[data-collapsed="true"] .acc-hidden.collapsed { display: none; }
+.acc-hidden-wrap[data-collapsed="false"] .acc-hidden.collapsed { display: block; }
+.acc-toggle {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 6px;
+  background: transparent;
+  border: 1px dashed var(--rule);
+  color: var(--gold);
+  cursor: pointer;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
+}
+.acc-toggle:hover { background: rgba(196, 147, 50, 0.08); }
+
+/* Task 27: revenue-arc annotation caption */
+.rev-annotation {
+  font-size: 11px;
+  font-style: italic;
+  color: var(--ink-muted);
+  margin-top: 8px;
+  padding-left: 12px;
+  border-left: 2px solid var(--gold);
+  line-height: 1.5;
+}

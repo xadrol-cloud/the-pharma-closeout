@@ -7,6 +7,9 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+import { formatValue, formatDate } from './format.js?v=20260423c'
+
+export { formatValue, formatDate }
 
 const supabase = createClient(
   'https://nuqhlvlslwroupedduog.supabase.co',
@@ -29,19 +32,7 @@ export function logoUrl(localPath, domain) {
   return `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${domain}&size=128`
 }
 
-/** Format deal value: 1000 → "$1.0B", 500 → "$500M", null → "—" */
-export function formatValue(mm) {
-  if (mm == null || isNaN(mm)) return '—'
-  if (mm >= 1000) return `$${(mm / 1000).toFixed(1)}B`
-  return `$${Math.round(mm)}M`
-}
-
-/** Format ISO date string: "2019-01-03" → "Jan 3, 2019" */
-export function formatDate(isoDate) {
-  if (!isoDate) return '—'
-  const d = new Date(isoDate + 'T00:00:00')
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-}
+/* formatValue + formatDate live in ./format.js (imported + re-exported at top). */
 
 /** Safely parse a JSON array string, returning [] on failure */
 export function parseTAs(jsonStr) {
@@ -107,6 +98,19 @@ function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')
 }
 
+/**
+ * Task 24: progressive-disclosure accordion for long lists.
+ * Shows the first N rows, tucks the rest behind a "Show X more" button.
+ * Caller passes pre-rendered row HTML strings.
+ */
+function accordion(visibleRows, hiddenRows) {
+  if (!hiddenRows.length) return visibleRows.join('')
+  const hidden = hiddenRows.map(r => `<div class="acc-hidden collapsed">${r}</div>`).join('')
+  return visibleRows.join('') +
+    `<div class="acc-hidden-wrap" data-collapsed="true">${hidden}</div>` +
+    `<button class="acc-toggle" type="button" onclick="const w=this.previousElementSibling;w.setAttribute('data-collapsed','false');this.remove()">Show ${hiddenRows.length} more &rarr;</button>`
+}
+
 /** Verdict color class from outcome verdict string */
 function verdictColor(verdict) {
   if (!verdict) return 'amber'
@@ -141,6 +145,46 @@ function scoreTier(score, max = 10) {
   if (pct >= 0.7) return 'high'
   if (pct >= 0.4) return 'mid'
   return 'low'
+}
+
+/**
+ * Deal Status badge for the hero (Task 18).
+ * Returns empty string for null / 'Active' — we only surface non-default states.
+ * Maps the deal_outcome_status enum onto red/green/gold/gray colorways.
+ */
+export function renderDealStatus(status) {
+  if (!status || status === 'Active') return ''
+  const map = {
+    'Terminated':          { cls: 'ds-red',   label: 'DEAL TERMINATED' },
+    'Regulatory_Failure':  { cls: 'ds-red',   label: 'REGULATORY SETBACK' },
+    'Market_Withdrawal':   { cls: 'ds-red',   label: 'MARKET WITHDRAWAL' },
+    'Commercial_Success':  { cls: 'ds-green', label: 'COMMERCIAL SUCCESS' },
+    'Partial_Success':     { cls: 'ds-gold',  label: 'PARTIAL SUCCESS' },
+    'Pending':             { cls: 'ds-gray',  label: 'PENDING' },
+    'Unclear':             { cls: 'ds-gray',  label: 'STATUS UNCLEAR' },
+  }
+  const m = map[status]
+  if (!m) return ''
+  return `<span class="deal-status ${m.cls}">${m.label}</span>`
+}
+
+/**
+ * Deal value pill for the hero (Task 19).
+ * Gold pill when disclosed, muted gray chip when undisclosed.
+ */
+export function renderValuePill(usdMm) {
+  if (usdMm == null) return '<span class="hero-value hero-value-null">Value Undisclosed</span>'
+  return `<span class="hero-value">${formatValue(usdMm)}</span>`
+}
+
+/**
+ * Detect pre-1990 historical deals (Task 26) — triggers a stripped-down template
+ * that hides disease/revenue sections where modern data does not exist.
+ */
+export function isHistoricalDeal(deal) {
+  if (!deal) return false
+  const y = deal.announcement_date ? parseInt(deal.announcement_date.substring(0, 4), 10) : null
+  return y != null && !isNaN(y) && y < 1990
 }
 
 
@@ -481,13 +525,18 @@ export function renderFeaturedInfo(deal) {
 
 /**
  * Large score pill. type: 'critic' or 'outcome'. score: number or null.
+ * Task 22: three-tier coloring + tooltip on low/null scores.
  */
 export function renderScorePill(type, score, subtitle = '') {
   const cls = type === 'critic' ? 'fs-critic' : 'fs-outcome'
   const label = type === 'critic' ? 'Critic Score' : 'Outcome Score'
+  const tier = score == null ? 'none' : score >= 70 ? 'high' : score >= 40 ? 'mid' : 'low'
+  const tip = score == null ? 'Score not yet calculated'
+            : tier === 'low' ? 'Low: limited comparables or insufficient data'
+            : ''
   const display = score != null ? score : '—'
 
-  return `<div class="feat-score ${cls}">
+  return `<div class="feat-score ${cls} score-tier-${tier}"${tip ? ` title="${esc(tip)}"` : ''}>
   <span class="feat-score-num">${display}</span>
   <div class="feat-score-label">
     <span class="feat-score-type">${label}</span>
@@ -553,27 +602,56 @@ export function renderTimeline(events, outcomes, dealSummary) {
     </div>`
   })
 
-  return `<div class="tl">${items.join('')}</div>`
+  // Task 24: progressive disclosure — timeline caps at 5 items before toggle
+  const CAP = 5
+  const visible = items.slice(0, CAP)
+  const hidden = items.slice(CAP)
+  return `<div class="tl">${accordion(visible, hidden)}</div>`
 }
 
 
 /* ---------- 3e. Value Arc (adaptive visualization) ---------- */
 
 /**
+ * Task 21: data-type contract for Deal Value Arc cells.
+ * Accepts explicit currency strings ($1.2B, $500M, etc.) or a whitelist of
+ * stage labels. Anything else (raw notes, HTML fragments, mojibake) is rejected
+ * so the snapshot card can fall back to "Data pending" instead of rendering junk.
+ */
+function sanitizeArcCell(v) {
+  if (v == null || v === '') return null
+  const s = String(v).trim()
+  if (/^\$[\d,.]+[KMBT]?(?:\s|$)/.test(s)) return s
+  const allowedLabels = ['Pre-revenue', 'Launch phase', 'Divested', 'Terminated',
+                         'Pending close', 'N/A', 'Data pending']
+  if (allowedLabels.includes(s)) return s
+  return null
+}
+
+/** Route a raw value_label through sanitizeArcCell; otherwise derive from mm. */
+function arcCellLabel(row) {
+  const clean = sanitizeArcCell(row.value_label)
+  if (clean) return clean
+  if (row.value_usd_mm != null) return formatValue(row.value_usd_mm)
+  return 'Data pending'
+}
+
+/**
  * Adaptive value arc from deal_value_arc table.
  * Switches rendering by arc_type: revenue, pipeline, milestone, snapshot.
+ * Accepts an optional `deal` row so Task 27 can surface revenue_annotation.
  */
-export function renderValueArc(arcRows) {
+export function renderValueArc(arcRows, deal = null) {
   if (!arcRows || !arcRows.length) return ''
   const arcType = arcRows[0].arc_type
-  if (arcType === 'revenue') return renderRevenueChart(arcRows)
+  if (arcType === 'revenue') return renderRevenueChart(arcRows, deal)
   if (arcType === 'pipeline') return renderPipelineTracker(arcRows)
   if (arcType === 'milestone') return renderMilestoneBar(arcRows)
   if (arcType === 'snapshot') return renderSnapshotCard(arcRows)
   return ''
 }
 
-function renderRevenueChart(rows) {
+function renderRevenueChart(rows, deal = null) {
   const dataPoints = rows
     .filter(r => r.value_usd_mm != null && (r.year != null || r.period_label))
     .map(r => ({
@@ -617,13 +695,17 @@ function renderRevenueChart(rows) {
       <path d="${linePath}" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linejoin="round"/>
       ${points.map(p => `<circle cx="${p.x}" cy="${p.y}" r="4" fill="var(--paper)" stroke="var(--green)" stroke-width="2"/>`).join('')}
       ${points.map(p => `<text x="${p.x}" y="${p.y - 10}" text-anchor="middle" font-size="10" fill="var(--ink-muted)" font-family="var(--mono)">${p.label}</text>`).join('')}
+      ${points.map(p => `<text x="${p.x}" y="${h - 4}" text-anchor="middle" font-size="9" fill="var(--ink-faint)">${esc(p.date)}</text>`).join('')}
+      <text x="4" y="12" font-size="10" fill="var(--ink-muted)" font-family="var(--mono)">Revenue (USD B)</text>
     </svg>
   </div>
   <div class="rev-stats">
     <div class="rev-stat"><div class="rev-stat-val green">$${maxVal.toFixed(1)}B</div><div class="rev-stat-label">Peak Revenue</div></div>
     <div class="rev-stat"><div class="rev-stat-val ${growthColor}">${growth}%</div><div class="rev-stat-label">Total Growth</div></div>
     <div class="rev-stat"><div class="rev-stat-val">${dataPoints.length}</div><div class="rev-stat-label">Data Points</div></div>
-  </div></div>`
+  </div>
+  ${deal && deal.revenue_annotation ? `<div class="rev-annotation">${esc(deal.revenue_annotation)}</div>` : ''}
+  </div>`
 }
 
 function renderPipelineTracker(rows) {
@@ -678,7 +760,7 @@ function renderMilestoneBar(rows) {
     const pct = total > 0 ? ((r.value_usd_mm || 0) / total * 100).toFixed(1) : 0
     return `<div class="mst-seg" style="width:${pct}%">
       <div class="mst-label">${esc(r.period_label || '')}</div>
-      <div class="mst-val">${esc(r.value_label || '')}</div>
+      <div class="mst-val">${esc(arcCellLabel(r))}</div>
     </div>`
   })
 
@@ -700,7 +782,7 @@ function renderSnapshotCard(rows) {
       <div class="rev-headline">Deal Value Context</div>
       <div class="rev-subtitle">${esc(r.period_label || '')}</div>
       <div class="snap-single">
-        <div class="snap-val">${esc(r.value_label || formatValue(r.value_usd_mm))}</div>
+        <div class="snap-val">${esc(arcCellLabel(r))}</div>
         ${r.status ? `<div class="snap-status">${esc(r.status)}</div>` : ''}
       </div>
     </div>`
@@ -718,14 +800,14 @@ function renderSnapshotCard(rows) {
     <div class="snap-grid">
       <div class="snap-panel">
         <div class="snap-panel-label">${esc(before.period_label || 'At Deal Time')}</div>
-        <div class="snap-val">${esc(before.value_label || formatValue(before.value_usd_mm))}</div>
+        <div class="snap-val">${esc(arcCellLabel(before))}</div>
         ${before.status ? `<div class="snap-status">${esc(before.status)}</div>` : ''}
         ${before.asset_name ? `<div class="snap-asset">${esc(before.asset_name)}</div>` : ''}
       </div>
       <div class="snap-arrow">&rarr;</div>
       <div class="snap-panel">
         <div class="snap-panel-label">${esc(after.period_label || 'Current Status')}</div>
-        <div class="snap-val">${esc(after.value_label || formatValue(after.value_usd_mm))}</div>
+        <div class="snap-val">${esc(arcCellLabel(after))}</div>
         ${after.status ? `<div class="snap-status">${esc(after.status)}</div>` : ''}
         ${after.asset_name ? `<div class="snap-asset">${esc(after.asset_name)}</div>` : ''}
       </div>
@@ -749,6 +831,20 @@ function fmtMarket(mm) {
   if (mm == null || isNaN(mm)) return '—'
   if (mm >= 1000) return `$${(mm / 1000).toFixed(1)}B`
   return `$${Math.round(mm)}M`
+}
+
+/**
+ * Task 25: stat card schema validation. Rejects cells whose value is not a
+ * recognizable numeric/percent/currency token (with a short whitelist of
+ * placeholder labels like "N/A" and "<1%"). Prevents 500-word narrative
+ * strings from leaking into tiny callout cards.
+ */
+function sanitizeStatValue(v) {
+  if (v == null || v === '') return null
+  const s = String(v).trim()
+  if (s.length > 40) return null
+  if (!/^[\d.,$%<>~\-\s/KMBT]+$/.test(s) && !['N/A', '<1%'].includes(s)) return null
+  return s
 }
 
 export function renderDiseaseContext(indications, assets) {
@@ -777,19 +873,33 @@ export function renderDiseaseContext(indications, assets) {
     const marketFormatted = fmtMarket(ind.market_size_usd_mm)
     const marketLabel = ind.market_size_label || 'US Market'
 
-    // Market row cells
+    // Task 20: detect empty right panel so we can collapse the grid
+    const rightPanelText = (ind.second_column_text || '').trim()
+    const hasRightPanel = rightPanelText.length > 0
+    const gridCls = hasRightPanel ? 'dp-grid' : 'dp-grid dp-grid-single'
+    const rightBlock = hasRightPanel
+      ? `<div class="dp-block"><h4>${esc(ind.second_column_label || 'Competitive Landscape')}</h4><p>${esc(rightPanelText)}</p></div>`
+      : ''
+
+    // Task 25: push callout cards only when value + label both pass validation
     const mktCells = []
+    const pushCell = (rawValue, label, source) => {
+      const clean = sanitizeStatValue(rawValue)
+      if (!clean) return
+      if (!label || !String(label).trim()) return
+      mktCells.push(`<div class="mkt-cell"><div class="mc-val">${esc(clean)}</div><div class="mc-label">${esc(label)}</div><div class="mc-src">${esc(source || '')}</div></div>`)
+    }
     if (ind.us_patients_annual != null) {
-      mktCells.push(`<div class="mkt-cell"><div class="mc-val">${esc(fmtPatients(ind.us_patients_annual))}</div><div class="mc-label">New Cases/yr</div><div class="mc-src">${esc(ind.us_patients_source || '')}</div></div>`)
+      pushCell(fmtPatients(ind.us_patients_annual), 'New Cases/yr', ind.us_patients_source)
     }
     if (ind.prevalence_or_living_with) {
-      mktCells.push(`<div class="mkt-cell"><div class="mc-val">${esc(ind.prevalence_or_living_with)}</div><div class="mc-label">Prevalence</div><div class="mc-src">${esc(ind.prevalence_source || '')}</div></div>`)
+      pushCell(ind.prevalence_or_living_with, 'Prevalence', ind.prevalence_source)
     }
     if (ind.market_size_usd_mm != null) {
-      mktCells.push(`<div class="mkt-cell"><div class="mc-val">${esc(fmtMarket(ind.market_size_usd_mm))}</div><div class="mc-label">${esc(ind.market_size_label || 'US Market')}</div><div class="mc-src">${esc(ind.market_size_source || '')}</div></div>`)
+      pushCell(fmtMarket(ind.market_size_usd_mm), ind.market_size_label || 'US Market', ind.market_size_source)
     }
     if (ind.fourth_metric_value) {
-      mktCells.push(`<div class="mkt-cell"><div class="mc-val">${esc(ind.fourth_metric_value)}</div><div class="mc-label">${esc(ind.fourth_metric_label || '')}</div><div class="mc-src">${esc(ind.fourth_metric_source || '')}</div></div>`)
+      pushCell(ind.fourth_metric_value, ind.fourth_metric_label, ind.fourth_metric_source)
     }
 
     // Asset mini rows
@@ -799,7 +909,7 @@ export function renderDiseaseContext(indications, assets) {
 
     return `<div class="disease-card"><div class="disease-header" aria-expanded="${expanded ? 'true' : 'false'}" onclick="this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true');this.nextElementSibling.classList.toggle('open')"><div class="disease-icon" style="background:#f3f4f6">${ind.indication_emoji || '💊'}</div><div class="disease-name-block"><div class="disease-name">${esc(ind.indication)}</div><div class="disease-assets">${assetTags}</div></div><div class="disease-stats"><div class="ds"><div class="ds-val">${patientsFormatted}</div><div class="ds-label">US Cases/yr</div></div><div class="ds"><div class="ds-val">${marketFormatted}</div><div class="ds-label">${esc(marketLabel)}</div></div></div><div class="dchev"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div></div>
     <div class="dpanel${expanded ? ' open' : ''}"><div class="dpanel-inner">
-      <div class="dp-grid"><div class="dp-block"><h4>Disease Overview</h4><p>${esc(ind.disease_overview || '')}</p></div><div class="dp-block"><h4>${esc(ind.second_column_label || 'Competitive Landscape')}</h4><p>${esc(ind.second_column_text || '')}</p></div></div>
+      <div class="${gridCls}"><div class="dp-block"><h4>Disease Overview</h4><p>${esc(ind.disease_overview || '')}</p></div>${rightBlock}</div>
       ${mktCells.length ? `<div class="mkt-row">${mktCells.join('')}</div>` : ''}
       ${indAssets.length ? `<div class="asset-mini"><div class="am-title">Assets in this indication</div>${assetRows}</div>` : ''}
     </div></div></div>`
@@ -904,9 +1014,15 @@ export function renderKeyAssets(allAssets) {
     }
   }
 
+  // Task 24: progressive disclosure — cap first render at 5 rows, rest behind toggle
+  const CAP = 5
+  const visible = rows.slice(0, CAP)
+  const hidden = rows.slice(CAP)
+  const body = accordion(visible, hidden)
+
   return `<div class="asset-mini">
     <div class="am-title">Key Assets</div>
-    ${rows.join('')}
+    ${body}
   </div>`
 }
 
@@ -957,13 +1073,17 @@ export function renderScoreBreakdown(outcomes, deal) {
     const expKey = dim.key.replace('_score', '_explanation')
     const explanation = latest[expKey] || ''
 
+    // Task 22b: enforce a 3% minimum width so near-zero bars remain visible,
+    // and embed the numeric value inside the fill so low scores are readable.
+    const fillTier = score == null ? 'none' : tier
+    const fillPct = score == null ? 100 : Math.max(pct, 3)
     return `<div class="sc-row">
       <div class="sc-header" aria-expanded="false" onclick="this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true');this.closest('.sc-row').querySelector('.sc-detail').classList.toggle('open')">
         <span class="sc-label">${dim.icon} ${dim.label} <span style="font-size:11px;color:var(--ink-faint)">(${dim.weight})</span></span>
         <span class="sc-num">${display}</span>
         <div class="sc-chev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
       </div>
-      <div class="sc-bar"><div class="sc-fill ${tier}" style="width:${pct}%"></div></div>
+      <div class="sc-bar"><div class="sc-fill ${fillTier}" style="width:${fillPct}%"><span class="sc-fill-num">${display}</span></div></div>
       <div class="sc-detail">
         <div class="sc-detail-inner ${tier}">
           ${explanation ? esc(explanation) : (score != null ? `Score: <strong>${display}/100</strong>` : 'Score not yet calculated for this dimension.')}

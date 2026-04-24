@@ -37,7 +37,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260423b">
+<link rel="stylesheet" href="assets/deals.css?v=20260423c">
 </head>
 <body>
 
@@ -72,6 +72,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   <div class="hero-content">
     <div class="title-row">
       <h1 class="deal-title" id="hero-title"></h1>
+      <span id="hero-status"></span>
     </div>
     <div id="hero-scores" class="feat-scores" style="margin-top:16px;"></div>
     <div class="hero-meta" id="hero-meta"></div>
@@ -196,8 +197,9 @@ import {
   renderPoster, renderScorePill, renderTimeline, renderValueArc,
   renderDiseaseContext, renderFinancials, renderCriticReviews,
   renderKeyAssets, renderScoreBreakdown, renderComparables as renderComps,
-  renderSources, formatValue, formatDate, parseTAs
-} from './assets/deals.js?v=20260423b'
+  renderSources, formatValue, formatDate, parseTAs,
+  renderDealStatus, renderValuePill, isHistoricalDeal
+} from './assets/deals.js?v=20260423c'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -227,16 +229,19 @@ if (!dealId) {
       document.getElementById('hero-poster').innerHTML = renderPoster(deal, 'featured')
       document.getElementById('hero-title').textContent = `${deal.buyer_name} / ${deal.target_name}`
 
+      // Task 18: Deal Status badge next to the title
+      document.getElementById('hero-status').innerHTML = renderDealStatus(deal.deal_outcome_status)
+
       // Score pills
       document.getElementById('hero-scores').innerHTML =
         renderScorePill('critic', deal.critic_score != null ? Math.round(deal.critic_score) : null, 'Market consensus') +
         renderScorePill('outcome', deal.outcome_score != null ? Math.round(deal.outcome_score) : null,
           deal.outcome_score != null ? 'Outcome results' : `Unlocks ${parseInt(deal.close_date?.substring(0,4) || deal.announcement_date?.substring(0,4) || '2025') + 5}`)
 
-      // Meta line
-      const val = formatValue(deal.deal_value_usd_mm)
+      // Task 19: Meta line leads with value pill, falls back to "Value Undisclosed"
       document.getElementById('hero-meta').innerHTML =
-        `${deal.deal_type || 'Acquisition'} &middot; <strong>${val}</strong> &middot; ${formatDate(deal.announcement_date)}`
+        renderValuePill(deal.deal_value_usd_mm) +
+        ` ${deal.deal_type || 'Acquisition'} &middot; ${formatDate(deal.announcement_date)}`
 
       // Tags
       const tas = parseTAs(deal.therapeutic_areas)
@@ -272,7 +277,7 @@ if (!dealId) {
 
       // ── Value Arc (from deal_value_arc table) ──
       const valueArc = await fetchDealValueArc(dealId)
-      const arcHtml = renderValueArc(valueArc)
+      const arcHtml = renderValueArc(valueArc, deal)
       if (arcHtml) {
         document.getElementById('revenue-arc').innerHTML = arcHtml
         document.getElementById('revenue-section').style.display = ''
@@ -319,6 +324,22 @@ if (!dealId) {
       const sourcesHtml = renderSources(sources)
       document.getElementById('sources').innerHTML = sourcesHtml
       document.getElementById('sources-section').style.display = ''
+
+      // ── Task 26: Historical deal variant (pre-1990) ──
+      if (isHistoricalDeal(deal)) {
+        // Hide modern-data sections that make no sense on pre-1990 records
+        document.getElementById('disease-section').style.display = 'none'
+        document.getElementById('revenue-section').style.display = 'none'
+        // Stack a "HISTORICAL RECORD" badge next to the status
+        document.getElementById('hero-status').innerHTML +=
+          '<span class="deal-status ds-gray">HISTORICAL RECORD</span>'
+        // Flag default scoring on the sidebar
+        const sb = document.getElementById('score-breakdown')
+        if (sb) {
+          sb.insertAdjacentHTML('afterbegin',
+            '<div class="sc-method" style="color:var(--ink-faint);font-style:italic">Default scoring: insufficient historical data</div>')
+        }
+      }
     }
   } catch (err) {
     console.error('Deal load error:', err)
