@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate } from './format.js?v=20260423d'
+import { formatValue, formatDate } from './format.js?v=20260425b'
 
 export { formatValue, formatDate }
 
