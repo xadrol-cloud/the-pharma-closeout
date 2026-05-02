@@ -1967,6 +1967,33 @@ input, textarea, select {
   .carousel  { gap: 12px; }
 }
 
+/* ===================================================================
+   New mobile breakpoints (added 2026-05-02)
+   600px: existing tablet-portrait band (unchanged above)
+   480px: standard phone band — single-col grids, accordion filters,
+          tighter padding, hamburger-only nav
+   375px: tightest band — font-size floors, hide non-essential metadata
+   =================================================================== */
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  /* additional rules added by later tasks */
+}
+
+@media (max-width: 375px) {
+  /* additional rules added by later tasks */
+}
+
+@media (hover: hover) {
+  /* hover rules wrapped here by Task 4.4 */
+}
+
+@media (hover: none) {
+  /* touch-only adjustments added by Task 4.4 */
+}
+
 /* Key Assets group labels */
 .am-group-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 6px 0 3px; margin-top: 8px; }
 .am-group-label:first-child { margin-top: 0; }
