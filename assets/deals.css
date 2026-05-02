@@ -25,6 +25,7 @@
   --ink-faint: #a0a3ad;
 
   /* Surfaces */
+  --bg: #0a0a0a;          /* page canvas / dark drawer backdrop */
   --surface: #f7f7f5;
   --paper: #ffffff;
   --rule: #e4e4e0;
@@ -209,6 +210,11 @@ input, textarea, select {
   padding: 0;
 }
 
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
 .nav-toggle .nav-toggle-bars {
   display: block;
   width: 18px;
@@ -244,7 +250,7 @@ input, textarea, select {
     top: 100%;
     right: 0;
     left: 0;
-    background: var(--bg, #0a0a0a);
+    background: var(--bg);
     border-bottom: 1px solid #333;
     padding: 12px 16px;
     gap: 8px;
