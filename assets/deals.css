@@ -188,6 +188,76 @@ input, textarea, select {
   color: rgba(255,255,255,0.3);
 }
 
+/* ===================================================================
+   Canonical hamburger nav (added 2026-05-02)
+   Used when markup includes .nav-toggle + #nav-links[data-collapsed].
+   Pages with this markup get hamburger behavior on phone, horizontal
+   links on desktop. Pages without the markup retain legacy .nav behavior.
+   =================================================================== */
+
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #333;
+  background: transparent;
+  color: inherit;
+  border-radius: 6px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.nav-toggle .nav-toggle-bars {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  position: relative;
+}
+.nav-toggle .nav-toggle-bars::before,
+.nav-toggle .nav-toggle-bars::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+}
+.nav-toggle .nav-toggle-bars::before { top: -6px; }
+.nav-toggle .nav-toggle-bars::after { top: 6px; }
+
+.nav-links[data-collapsed] {
+  /* desktop default — no collapse behavior */
+}
+
+@media (max-width: 768px) {
+  .nav-toggle { display: inline-flex; }
+  .nav-links[data-collapsed='true'] {
+    display: none;
+  }
+  .nav-links[data-collapsed='false'] {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    background: var(--bg, #0a0a0a);
+    border-bottom: 1px solid #333;
+    padding: 12px 16px;
+    gap: 8px;
+    z-index: 50;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  }
+  .nav-links[data-collapsed='false'] a {
+    display: block;
+    padding: 12px 0;
+    font-size: 15px;
+  }
+}
+
 
 /* ==========================================================================
    3. POSTER CARDS — Criterion Collection aesthetic
