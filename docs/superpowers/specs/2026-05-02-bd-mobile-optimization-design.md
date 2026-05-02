@@ -43,7 +43,7 @@ The current desktop CSS architecture is sound. The gap is missing mobile breakpo
 
 **File ownership:**
 - All shared rules live in `assets/deals.css`.
-- `index.html` adds a parallel mobile block in its existing inline `<style>` (page is self-contained, deliberately).
+- `index.html` adds a parallel mobile block in its existing inline `<style>`. **This is a deliberate exception, not the same shadow-CSS problem rejected in Section 2** — `index.html` is intentionally self-contained (recent copy refresh, separate ownership). Do not "unify" the inline rules into deals.css during implementation.
 - New file: `assets/nav.js` (~20 lines) for shared hamburger toggle logic.
 
 ## 4. Nav Unification
@@ -66,7 +66,7 @@ The current desktop CSS architecture is sound. The gap is missing mobile breakpo
 - Brand link always visible, serves as home affordance.
 - Active page indicated via `.nav-active` class injected per-page.
 
-**Risk:** `index.html` inline nav CSS may have specifics tied to the recent copy refresh (gold-thread accent line under brand, etc.). Implementation must diff carefully to preserve aesthetic touches.
+**Risk & resolution:** `index.html` inline nav CSS may have specifics tied to the recent copy refresh (gold-thread accent line under brand, etc.). **Resolution path:** before touching nav markup on `index.html`, implementer captures the current rendered nav (screenshot at desktop and phone widths), enumerates the inline CSS rules that affect `.nav` / `.nav-links` / brand area, and confirms each is preserved or intentionally replaced in the new shared pattern. Do not bulk-replace.
 
 ## 5. Per-Page Targeted Fixes
 
@@ -198,7 +198,7 @@ const html = `
 - Button styled to match brand (override Gumroad's default styling via `.gumroad-button` selector).
 - Mobile: full-width below 500px, `min-height: 48px`, font-size 16px.
 
-**Risk & fallback:** Gumroad's overlay UI has limited theming control. If the overlay visually clashes with the site brand at implementation time, fallback to the redirect-link pattern with relabeled CTA "Continue to Gumroad →" so user expectation is set. Decision deferred to implementation review.
+**Risk & fallback:** Gumroad's overlay UI has limited theming control. **Implementer must verify Gumroad overlay rendering on iOS Safari before committing to this markup** (test on real device or BrowserStack) — early verification prevents a mid-implementation pivot. If the overlay visually clashes with the site brand or breaks on iOS Safari, fallback to the redirect-link pattern with relabeled CTA "Continue to Gumroad →" so user expectation is set. Decision logged in implementation report.
 
 ## 9. Cross-Cutting Global Rules
 
