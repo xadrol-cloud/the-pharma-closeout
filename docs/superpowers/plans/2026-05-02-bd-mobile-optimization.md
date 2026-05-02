@@ -451,11 +451,11 @@ With:
 
 - [ ] **Step 3: Verify desktop at 1440px** — filter button is hidden, filter row visible (because Task 4.2 will add the desktop-hides-toggle CSS, which doesn't exist yet, so on this step the toggle button will be visible on desktop too. Don't worry — it's fixed in 4.2).
 
-- [ ] **Step 4: Commit.**
+- [ ] **Step 4: Commit.** Note the intermediate state in the message so a task-by-task reviewer doesn't flag the desktop toggle visibility as a regression.
 
 ```bash
 git add deals.html
-git commit -m "html: filter accordion markup on deals.html (CSS/JS land in 4.2 + 4.3)"
+git commit -m "html(deals): filter accordion markup (toggle hidden on desktop in 4.2; JS in 4.3)"
 ```
 
 ### Task 4.2: Add filter accordion CSS to deals.css
@@ -590,13 +590,15 @@ git commit -m "js: filter accordion toggle + active-count updater"
 **Files:**
 - Modify: `assets/deals.css`
 
-- [ ] **Step 1: Wrap existing `:hover` rules for `.poster`, `.c-poster`, ring animations in `@media (hover: hover)`.** Locate the existing rules (search for `.poster:hover` and `.c-poster:hover`, around lines 194-316). Wrap them in:
+- [ ] **Step 1: Wrap existing `:hover` rules for `.poster`, `.c-poster`, ring animations in `@media (hover: hover)`.** Use `Grep -n "poster:hover|c-poster:hover|ringCW|ringCCW"` to locate the rules (around lines 194-316). For each rule block, identify the matching closing brace by reading line-by-line — the rule block ends at the first `}` at column 0 (zero indentation) following the opening `{`. Wrap each block in:
 
 ```css
 @media (hover: hover) {
-  /* existing .poster:hover, .c-poster:hover, ring rules */
+  /* existing .poster:hover or .c-poster:hover or ring rule */
 }
 ```
+
+**Verify wrap completeness:** after editing, grep for `:hover` rules outside any `@media` wrapper — there should be none for poster/ring selectors.
 
 - [ ] **Step 2: Add touch-only rules for poster-select checkbox.** Append to the file:
 
@@ -777,7 +779,11 @@ git commit -m "css(deal): prose 15px on phone, mkt-row 1-col, footer column"
 - Modify: `assets/deals.js` (find table rendering)
 - Modify: `assets/deals.css`
 
-- [ ] **Step 1: Locate where `.cmp-table` is rendered on deal.html.** Search `assets/deals.js` for `cmp-table`. The deal page may render an inline comparable-deals table separate from compare.html's `renderComparison()`. Wrap it in a `<div class="cmp-wrap">` container.
+- [ ] **Step 1: Locate where `.cmp-table` is rendered on deal.html.** Use Grep across the repo for `cmp-table`. Two possibilities:
+  - **JS-rendered:** found inside a template string in `assets/deals.js`. Wrap by editing the JS template string to emit `<div class="cmp-wrap"><table class="cmp-table">...</table></div>`.
+  - **Static HTML:** found directly in `deal.html`. Wrap by editing the HTML file directly.
+
+  The deal page may render an inline comparable-deals table separate from compare.html's `renderComparison()`. Wrap whichever location holds the table in a `<div class="cmp-wrap">` container.
 
 - [ ] **Step 2: Add CSS to `assets/deals.css`:**
 
