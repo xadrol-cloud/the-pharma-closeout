@@ -16,6 +16,7 @@
   function close() {
     toggle.setAttribute('aria-expanded', 'false');
     links.setAttribute('data-collapsed', 'true');
+    toggle.focus(); // return focus to trigger on programmatic close
   }
   function isOpen() {
     return toggle.getAttribute('aria-expanded') === 'true';
