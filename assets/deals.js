@@ -643,6 +643,74 @@ export function renderFeaturedInfo(deal) {
 }
 
 
+/* ---------- 3a.5 Result Row (Phase 11 WS-E) ---------- */
+
+/** Map deal_type to the WS-C semantic palette slug */
+function dealTypeSlug(dealType) {
+  if (!dealType) return 'ma'
+  const t = dealType.toLowerCase()
+  if (t.includes('licensing') || t.includes('option')) return 'licensing'
+  if (t.includes('co-dev') || t.includes('codev') || t.includes('collaboration')) return 'codev'
+  if (t.includes('asset')) return 'asset'
+  return 'ma'
+}
+
+/** Map status to .status-pill data-status slug */
+function statusSlug(status) {
+  if (!status) return 'pending'
+  const s = String(status).toLowerCase()
+  if (s.includes('complete') || s.includes('closed')) return 'complete'
+  if (s.includes('archive')) return 'archived'
+  if (s.includes('pending')) return 'pending'
+  return 'pending'
+}
+
+/** Row-list view of a single deal — used by renderResults().
+ *  Replaces poster-grid for search results. Carousels stay as-is. */
+export function renderResultRow(deal) {
+  if (!deal) return ''
+  const ds = dealTypeSlug(deal.deal_type)
+  const dsLabel = shortType(deal.deal_type)
+  const ta = parseTAs(deal.therapeutic_areas)[0] || ''
+  const cs = deal.critic_score != null ? Math.round(deal.critic_score) : null
+  const os = deal.outcome_score != null ? Math.round(deal.outcome_score) : null
+  const csTier = tierForScore(cs)
+  const csLabel = tierLabelFor(cs, 'critic')
+  const val = formatValue(deal.deal_value_usd_mm)
+  const date = formatDate(deal.announcement_date)
+  const status = deal.deal_outcome_status
+
+  const titleText = deal.deal_title
+    || `${deal.buyer_name || ''} / ${deal.target_name || ''}`.trim()
+
+  return `<a class="result-row" href="deal.html?id=${esc(deal.deal_id)}">
+    <div class="result-poster ${bgClass(deal.deal_type)}">
+      <span class="rp-type">${esc(dsLabel)}</span>
+      <span class="rp-year">${esc(yearOf(deal.announcement_date))}</span>
+    </div>
+    <div class="result-body">
+      <div class="result-title">${esc(titleText)}</div>
+      <div class="result-pair">${esc(deal.buyer_name || '')} <span class="rp-x">×</span> ${esc(deal.target_name || '')}</div>
+      <div class="result-pills">
+        <span class="deal-type-pill" data-type="${ds}">${esc(dsLabel)}</span>
+        ${ta ? `<span class="ta-tag">${esc(ta)}</span>` : ''}
+        ${status ? `<span class="status-pill" data-status="${statusSlug(status)}">${esc(status)}</span>` : ''}
+      </div>
+      <div class="result-meta">${val ? `<strong>${esc(val)}</strong>` : ''}${date ? ` · ${esc(date)}` : ''}</div>
+    </div>
+    <div class="result-scores">
+      ${cs != null ? `
+        <div class="score-block">
+          ${csLabel ? `<span class="tier-label" data-tier="${csTier}">${csLabel}</span>` : ''}
+          <div class="score-chip" data-tier="${csTier}">${cs}</div>
+        </div>
+      ` : ''}
+      ${os != null ? `<div class="score-chip score-chip-mini result-os" data-tier="${tierForScore(os)}" title="Outcome Score">${os}</div>` : ''}
+    </div>
+  </a>`
+}
+
+
 /* ---------- 3b.5 Deal Value Cascade Bar (Phase 11 WS-G) ---------- */
 
 /**
@@ -1765,16 +1833,18 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
   }
 
   function renderResults(deals, append) {
-    const gridHtml = deals.map(d => renderPoster(d, 'carousel')).join('')
+    // Phase 11 WS-E: row-list view for search results (carousels stay
+    // poster-grid above). Each row = poster thumb + body + scores.
+    const rowsHtml = deals.map(d => renderResultRow(d)).join('')
     if (append) {
-      resultsEl.querySelector('.grid')?.insertAdjacentHTML('beforeend', gridHtml)
+      resultsEl.querySelector('.row-list')?.insertAdjacentHTML('beforeend', rowsHtml)
     } else if (!deals.length) {
       resultsEl.innerHTML = '<p class="search-status">No deals found.</p>'
       return
     } else {
       resultsEl.innerHTML = `
         <p class="search-count">Showing ${loadedCount} of ${totalCount} results</p>
-        <div class="grid">${gridHtml}</div>`
+        <div class="row-list">${rowsHtml}</div>`
     }
     updateLoadMore()
   }
