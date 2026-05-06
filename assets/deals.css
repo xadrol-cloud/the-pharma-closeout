@@ -128,8 +128,17 @@ input, textarea, select {
 .nav-brand {
   font-family: var(--brand);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 22px;
+  letter-spacing: -0.3px;
   color: #e8e4de;
+  white-space: nowrap;
+}
+@media (max-width: 600px) {
+  .nav-brand { font-size: 15px; }
+  /* Hide the brand-after-separator line on phone — saves ~28px so
+     brand + hamburger + nav-cta all fit on one row */
+  .nav { gap: 12px; padding: 0 16px; }
+  .nav-sep { display: none; }
 }
 .nav-brand em {
   font-style: normal;
@@ -2797,3 +2806,38 @@ html, body { overflow-x: hidden; }
 .status-pill[data-status='pending']         { background: #c9a84c; color: #0a0a0a; }
 .status-pill[data-status='archived']        { background: #5c5c5c; }
 .status-pill[data-status='pending_review']  { background: #c9a84c; color: #0a0a0a; }
+
+
+/* WS-F — Persistent gold-pill nav CTA. Lives on the right side of
+   the nav, channels traffic to /ai-research.html#briefing (Gumroad
+   overlay funnel). */
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  background: var(--gold);
+  color: #0a0a0a;
+  padding: 8px 14px;
+  border-radius: 18px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  margin-left: auto;
+  margin-right: 14px;
+  white-space: nowrap;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.nav-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(196, 168, 76, 0.35);
+}
+@media (max-width: 600px) {
+  .nav-cta {
+    padding: 6px 12px;
+    font-size: 11px;
+    margin-right: 8px;
+  }
+  /* On phone, hide the search input to make room for the CTA */
+  .nav-cta + .nav-search { display: none; }
+}
