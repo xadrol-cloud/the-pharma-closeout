@@ -1727,6 +1727,30 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
 }
 
 // =====================================================================
+// Share button (Phase 5.4) — uses navigator.share with clipboard fallback
+// =====================================================================
+;(function () {
+  const btn = document.getElementById('fab-share')
+  if (!btn) return
+  btn.addEventListener('click', async () => {
+    const url = window.location.href
+    const title = document.title
+    if (navigator.share) {
+      try { await navigator.share({ title, url }) } catch (_) { /* user cancelled */ }
+      return
+    }
+    try {
+      await navigator.clipboard.writeText(url)
+      const originalText = btn.lastChild.textContent
+      btn.lastChild.textContent = ' Copied!'
+      setTimeout(() => { btn.lastChild.textContent = originalText }, 2000)
+    } catch (_) {
+      window.prompt('Copy this URL:', url)
+    }
+  })
+})()
+
+// =====================================================================
 // Filter accordion toggle (added 2026-05-02, Phase 4 mobile optimization)
 // Pairs with .filter-toggle button + #filters[data-collapsed] container.
 // Hidden on desktop via CSS; this just wires phone-width interaction.

@@ -68,6 +68,11 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
      ═══════════════════════════════════════════════════════════════════ -->
 <div id="loading" style="text-align:center;padding:120px 40px;color:var(--ink-faint);font-size:14px;">Loading deal...</div>
 
+<!-- Breadcrumb (always visible, even while deal-hero loads) -->
+<nav class="breadcrumb-nav" aria-label="Breadcrumb">
+  <a class="breadcrumb-back" href="deals.html">← All deals</a>
+</nav>
+
 <!-- ═══════════════════════════════════════════════════════════════════
      HERO
      ═══════════════════════════════════════════════════════════════════ -->
@@ -185,6 +190,11 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   <button class="fab-btn primary" title="Generate Deal Sheet (coming soon)" disabled>
     <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
     Deal Sheet
+  </button>
+  <div class="fab-div"></div>
+  <button class="fab-btn" id="fab-share" title="Share this deal">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    Share
   </button>
 </div>
 

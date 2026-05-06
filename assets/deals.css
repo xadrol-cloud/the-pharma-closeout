@@ -2044,6 +2044,30 @@ input, textarea, select {
 
 
 /* ===================================================================
+   Phase 5.4 — Breadcrumb (always-visible back link on deal.html)
+   =================================================================== */
+.breadcrumb-nav {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 12px 40px 0;
+}
+.breadcrumb-back {
+  display: inline-block;
+  padding: 8px 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink-muted);
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: color 0.15s;
+}
+.breadcrumb-back:hover { color: var(--gold); }
+@media (max-width: 600px) {
+  .breadcrumb-nav { padding: 12px 16px 0; }
+}
+
+
+/* ===================================================================
    Phase 5.3 + 6.1 — cmp-table mobile pattern
    Wraps comparison table in horizontal-scroll container with sticky
    label column. Swipe hint shows on phone, hides on hover-capable.
