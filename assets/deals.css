@@ -2044,6 +2044,50 @@ input, textarea, select {
 
 
 /* ===================================================================
+   Phase 5 mobile experience (deal.html, 2026-05-02)
+   - Hero inner padding tightened on phone
+   - FAB labels wrap then stack
+   - Body + prose font bumps for legibility
+   - Multi-col grids collapse to 1-col on tightest band
+   - Footer becomes column on phone
+   =================================================================== */
+@media (max-width: 600px) {
+  body { font-size: 15px; }
+  .hero-inner {
+    padding: 20px 16px;
+    gap: 16px;
+  }
+  .tl-body,
+  .review-quote,
+  .dp-block p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .rev-stats { flex-wrap: wrap; }
+  .rev-stat { min-width: 80px; }
+  .fab { flex-wrap: wrap; }
+  .fab-btn {
+    flex: 1 1 calc(50% - 4px);
+    min-width: 0;
+    white-space: normal;
+  }
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+@media (max-width: 480px) {
+  .fab-btn { flex: 1 1 100%; }
+  .mkt-row { grid-template-columns: 1fr; }
+}
+
+
+/* ===================================================================
    Touch-device adjustments (Phase 4 mobile optimization, 2026-05-02)
    - Bump poster-select to 36x36 for tap target
    - Hide carousel arrows; touch users swipe instead
