@@ -2759,16 +2759,35 @@ html, body { overflow-x: hidden; }
   max-width: 110px;
 }
 
-/* Hero score-block layout — replaces old .feat-scores horizontal pills */
-#hero-scores.feat-scores {
+/* Hero score-block layout — replaces old .feat-scores horizontal pills.
+   Force side-by-side on mobile, overriding the legacy phase-5
+   .feat-scores { flex-direction: column } rule. */
+#hero-scores.feat-scores,
+.featured .feat-scores {
   display: flex;
+  flex-direction: row;
   gap: 20px;
   align-items: flex-start;
+  flex-wrap: wrap;
+}
+@media (max-width: 768px) {
+  .feat-scores { flex-direction: row !important; gap: 14px; }
 }
 @media (max-width: 600px) {
-  .score-block { margin-right: 12px; }
-  .score-chip { width: 70px; height: 70px; font-size: 30px; }
-  #hero-scores.feat-scores { gap: 14px; }
+  .score-block {
+    margin-right: 0;
+    flex: 1 1 calc(50% - 7px);
+    min-width: 0;
+    max-width: 50%;
+  }
+  .score-chip { width: 64px; height: 64px; font-size: 26px; border-radius: 7px; }
+  .score-meta { font-size: 9px; max-width: 100%; line-height: 1.35; }
+  .tier-label { font-size: 9px; letter-spacing: 1.2px; }
+  #hero-scores.feat-scores,
+  .featured .feat-scores { gap: 10px; }
+}
+@media (max-width: 375px) {
+  .score-chip { width: 56px; height: 56px; font-size: 22px; }
 }
 
 /* WS-C — Semantic deal-type pill palette */
