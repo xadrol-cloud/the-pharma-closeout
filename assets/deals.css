@@ -1723,33 +1723,87 @@ input, textarea, select {
    19. FLOATING ACTION BAR (FAB)
    ========================================================================== */
 
+/* Left-side collapsible drawer. Tab handle always visible at the
+   left edge; click expands the .fab-actions panel to the right.
+   Position: vertically centered on the viewport. */
 .fab {
   position: fixed;
-  bottom: max(24px, env(safe-area-inset-bottom, 0px) + 12px);
-  right: max(24px, env(safe-area-inset-right, 0px) + 12px);
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 200;
-  display: flex; gap: 1px;
+  display: flex;
+  align-items: stretch;
   background: var(--ink);
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  border-radius: 0 12px 12px 0;
+  box-shadow: 6px 4px 20px rgba(0, 0, 0, 0.25);
+  transition: max-width 0.28s cubic-bezier(0.19, 1, 0.22, 1);
   overflow: hidden;
+  max-width: 240px; /* expanded width cap */
+}
+.fab[data-collapsed='true'] { max-width: 36px; }
+.fab[data-collapsed='true'] .fab-actions { display: none; }
+
+.fab-tab {
+  flex: 0 0 36px;
+  background: var(--ink);
+  border: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.15s;
+}
+.fab-tab:hover { background: #2d2f36; }
+.fab-tab-chevron {
+  width: 14px; height: 14px;
+  transition: transform 0.28s cubic-bezier(0.19, 1, 0.22, 1);
+  opacity: 0.85;
+}
+.fab[data-collapsed='false'] .fab-tab-chevron { transform: rotate(180deg); }
+.fab-tab-label {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  opacity: 0.7;
+}
+
+.fab-actions {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 .fab-btn {
-  padding: 10px 16px;
+  padding: 12px 16px;
   font-family: var(--sans);
   font-size: 12px; font-weight: 600;
   color: #fff;
   background: var(--ink);
   border: none; cursor: pointer;
-  display: flex; align-items: center; gap: 6px;
+  display: flex; align-items: center; gap: 10px;
   transition: background 0.15s;
   white-space: nowrap;
+  text-align: left;
+  min-height: 44px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
-.fab-btn:hover { background: #2d2f36; }
-.fab-btn svg   { width: 14px; height: 14px; fill: currentColor; opacity: 0.7; }
+.fab-btn:last-child { border-bottom: 0; }
+.fab-btn:hover:not([disabled]) { background: #2d2f36; }
+.fab-btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+.fab-btn svg { width: 14px; height: 14px; fill: currentColor; opacity: 0.7; flex-shrink: 0; }
+.fab-btn span { flex: 1; min-width: 0; }
 .fab-btn.primary { background: var(--gold); color: #000; }
-.fab-btn.primary:hover { background: #d4a03d; }
-.fab-div { width: 1px; background: rgba(255,255,255,0.1); }
+.fab-btn.primary:hover:not([disabled]) { background: #d4a03d; }
+.fab-div { display: none; } /* legacy markup separator — drawer uses borders instead */
 
 
 /* ==========================================================================

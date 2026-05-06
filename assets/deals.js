@@ -1727,6 +1727,41 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
 }
 
 // =====================================================================
+// FAB drawer toggle — left-side collapsible action bar on deal.html
+// Tab handle always visible; click expands the drawer to the right.
+// =====================================================================
+;(function () {
+  const fab = document.getElementById('deal-fab')
+  const tab = fab && fab.querySelector('.fab-tab')
+  if (!fab || !tab) return
+
+  function setCollapsed(collapsed) {
+    fab.setAttribute('data-collapsed', collapsed ? 'true' : 'false')
+    tab.setAttribute('aria-expanded', collapsed ? 'false' : 'true')
+    tab.setAttribute('title', collapsed ? 'Show actions' : 'Hide actions')
+  }
+
+  tab.addEventListener('click', (e) => {
+    e.stopPropagation()
+    setCollapsed(fab.getAttribute('data-collapsed') !== 'true')
+  })
+
+  // Click outside collapses
+  document.addEventListener('click', (e) => {
+    if (fab.getAttribute('data-collapsed') === 'true') return
+    if (fab.contains(e.target)) return
+    setCollapsed(true)
+  })
+
+  // Escape collapses
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && fab.getAttribute('data-collapsed') === 'false') {
+      setCollapsed(true)
+    }
+  })
+})()
+
+// =====================================================================
 // Share button (Phase 5.4) — uses navigator.share with clipboard fallback
 // =====================================================================
 ;(function () {
