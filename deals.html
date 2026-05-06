@@ -92,8 +92,15 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   <span class="filter-toggle-count" data-active="0"></span>
   <span class="filter-toggle-chevron" aria-hidden="true">▾</span>
 </button>
+<div class="deal-type-toggles" role="group" aria-label="Deal type filter">
+  <button type="button" class="dt-toggle active" data-dt="" data-type="">All</button>
+  <button type="button" class="dt-toggle" data-dt="Acquisition/Merger" data-type="ma">M&amp;A</button>
+  <button type="button" class="dt-toggle" data-dt="Licensing/Option" data-type="licensing">Licensing</button>
+  <button type="button" class="dt-toggle" data-dt="Co-Development" data-type="codev">Co-Dev</button>
+  <button type="button" class="dt-toggle" data-dt="Asset Purchase" data-type="asset">Asset</button>
+</div>
 <div id="filters" class="filters filter-row" data-collapsed="true">
-  <select name="deal_type" class="f-chip" aria-label="Deal Type">
+  <select name="deal_type" class="f-chip dt-select-hidden" aria-label="Deal Type" hidden>
     <option value="">All Deal Types</option>
     <option value="Acquisition/Merger">Acquisition / M&A</option>
     <option value="Licensing/Option">Licensing / Option</option>

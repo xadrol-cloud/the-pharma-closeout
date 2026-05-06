@@ -2841,3 +2841,42 @@ html, body { overflow-x: hidden; }
   /* On phone, hide the search input to make room for the CTA */
   .nav-cta + .nav-search { display: none; }
 }
+
+
+/* WS-D — Deal-type pill toggle group (above filter accordion) */
+.deal-type-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin: 16px auto 12px;
+  max-width: 800px;
+}
+.dt-toggle {
+  padding: 6px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink-muted);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.dt-toggle:hover { border-color: var(--ink-muted); color: var(--ink); }
+.dt-toggle.active {
+  color: #fff;
+  border-color: transparent;
+}
+.dt-toggle.active[data-type=''] { background: var(--ink); }
+.dt-toggle.active[data-type='ma']         { background: #7a4c8f; }
+.dt-toggle.active[data-type='licensing']  { background: #3d5fa3; }
+.dt-toggle.active[data-type='codev']      { background: #2a8a8a; }
+.dt-toggle.active[data-type='asset']      { background: #c47b3a; }
+.dt-select-hidden { display: none !important; }
+@media (max-width: 600px) {
+  .deal-type-toggles { gap: 5px; margin: 12px auto 8px; padding: 0 12px; }
+  .dt-toggle { padding: 5px 12px; font-size: 11px; }
+}

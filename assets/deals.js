@@ -1751,6 +1751,26 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
 }
 
 // =====================================================================
+// Phase 11 WS-D — Deal-type pill toggles. Pills drive a hidden
+// <select name="deal_type"> so the existing initSearch change-handler
+// picks up the value without API changes.
+// =====================================================================
+;(function () {
+  const toggles = document.querySelectorAll('.dt-toggle')
+  const hiddenSelect = document.querySelector('.dt-select-hidden')
+  if (!toggles.length || !hiddenSelect) return
+
+  toggles.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      toggles.forEach((b) => b.classList.remove('active'))
+      btn.classList.add('active')
+      hiddenSelect.value = btn.dataset.dt || ''
+      hiddenSelect.dispatchEvent(new Event('change', { bubbles: true }))
+    })
+  })
+})()
+
+// =====================================================================
 // FAB drawer toggle — left-side collapsible action bar on deal.html
 // Tab handle always visible; click expands the drawer to the right.
 // =====================================================================
