@@ -1519,10 +1519,11 @@ export function renderComparison(deals) {
     row('Financing', deals.map(d => esc(d.financing_type || '—'))),
   ]
 
-  return `<table class="cmp-table">
+  return `<div class="cmp-wrap"><table class="cmp-table">
     <thead><tr><th class="cmp-label"></th>${headerCells}</tr></thead>
     <tbody>${rows.join('')}</tbody>
-  </table>`
+  </table></div>
+  <div class="cmp-swipe-hint">← swipe to compare →</div>`
 }
 
 

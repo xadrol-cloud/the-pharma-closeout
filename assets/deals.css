@@ -2044,6 +2044,33 @@ input, textarea, select {
 
 
 /* ===================================================================
+   Phase 5.3 + 6.1 — cmp-table mobile pattern
+   Wraps comparison table in horizontal-scroll container with sticky
+   label column. Swipe hint shows on phone, hides on hover-capable.
+   =================================================================== */
+.cmp-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 16px;
+}
+.cmp-wrap .cmp-table th.cmp-label {
+  position: sticky;
+  left: 0;
+  background: var(--paper, #fff);
+  z-index: 1;
+}
+.cmp-swipe-hint {
+  display: none;
+  text-align: center;
+  font-size: 11px;
+  color: var(--ink-muted);
+  padding: 6px 0 12px;
+}
+@media (max-width: 600px) { .cmp-swipe-hint { display: block; } }
+@media (hover: hover)     { .cmp-swipe-hint { display: none !important; } }
+
+
+/* ===================================================================
    Phase 5 mobile experience (deal.html, 2026-05-02)
    - Hero inner padding tightened on phone
    - FAB labels wrap then stack
