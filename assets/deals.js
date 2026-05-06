@@ -620,12 +620,14 @@ export function renderFeaturedInfo(deal) {
   const outcomeScore = deal.outcome_score != null ? Math.round(deal.outcome_score) : null
 
   return `<div class="feat-info">
+  <div class="feat-header">
+    <div class="feat-title">${esc(deal.buyer_name)} acquires ${esc(deal.target_name)}</div>
+    <div class="feat-meta">${esc(deal.deal_type || 'Acquisition')} &middot; <strong>${esc(val)}</strong> &middot; ${esc(formatDate(deal.announcement_date))}</div>
+  </div>
   <div class="feat-scores">
     ${renderScorePill('critic', criticScore, 'Industry consensus')}
     ${renderScorePill('outcome', outcomeScore, 'Measured results')}
   </div>
-  <div class="feat-title">${esc(deal.buyer_name)} acquires ${esc(deal.target_name)}</div>
-  <div class="feat-meta">${esc(deal.deal_type || 'Acquisition')} &middot; <strong>${esc(val)}</strong> &middot; ${esc(formatDate(deal.announcement_date))}</div>
   ${deal.editorial_summary ? `<div class="feat-lede">${esc(deal.editorial_summary)}</div>` : ''}
   <div class="feat-tags">
     ${tas.slice(0, 3).map(t => `<span class="feat-tag ft-blue">${esc(t)}</span>`).join('')}

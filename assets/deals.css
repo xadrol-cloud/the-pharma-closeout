@@ -1621,7 +1621,16 @@ input, textarea, select {
   padding: 24px 0 32px;
   border-bottom: 1px solid var(--rule);
 }
-.feat-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.featured { align-items: stretch; }
+.feat-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 14px;
+}
+.feat-header { display: flex; flex-direction: column; gap: 6px; }
+.feat-info > .feat-meta { margin-top: 0; }
 .feat-title {
   font-family: var(--serif);
   font-size: 32px; font-weight: 700;
