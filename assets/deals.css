@@ -974,6 +974,69 @@ input, textarea, select {
   border: none; background: none;
 }
 
+/* ===================================================================
+   Filter accordion (added 2026-05-02, Phase 4 mobile optimization)
+   Toggle button hidden on desktop, visible on phone (<600px).
+   Filter row collapsed by default on phone; toggling sets
+   data-collapsed='false' to expand.
+   =================================================================== */
+.filter-toggle {
+  display: none;
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  color: inherit;
+  font-family: var(--sans);
+  font-size: 14px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+  min-height: 44px;
+}
+.filter-toggle-label {
+  font-weight: 600;
+}
+.filter-toggle-count[data-active]:not([data-active='0'])::before {
+  content: '· ' attr(data-active) ' active';
+  color: var(--gold);
+  font-size: 12px;
+  margin-left: 8px;
+  font-weight: 500;
+}
+.filter-toggle-chevron {
+  display: inline-block;
+  margin-left: auto;
+  transition: transform 0.18s ease;
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+.filter-toggle[aria-expanded='true'] .filter-toggle-chevron {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 600px) {
+  .filter-toggle { display: inline-flex; }
+  .filter-row[data-collapsed='true'] { display: none; }
+  .filter-row[data-collapsed='false'] {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    background: var(--surface);
+    border: 1px solid var(--gold);
+    border-radius: 6px;
+    margin-bottom: 12px;
+  }
+  .filter-row[data-collapsed='false'] select {
+    width: 100%;
+    min-height: 44px;
+  }
+}
+
 /* Search results — count + status + load more */
 .search-count {
   color: var(--ink-faint);
