@@ -1724,3 +1724,35 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
   })
   filtersEl?.addEventListener('change', () => runSearch({ append: false }))
 }
+
+// =====================================================================
+// Filter accordion toggle (added 2026-05-02, Phase 4 mobile optimization)
+// Pairs with .filter-toggle button + #filters[data-collapsed] container.
+// Hidden on desktop via CSS; this just wires phone-width interaction.
+// =====================================================================
+;(function () {
+  const toggle = document.querySelector('.filter-toggle')
+  const row = document.getElementById('filters')
+  if (!toggle || !row) return
+
+  toggle.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true'
+    toggle.setAttribute('aria-expanded', open ? 'false' : 'true')
+    row.setAttribute('data-collapsed', open ? 'true' : 'false')
+  })
+
+  function updateActiveCount() {
+    let active = 0
+    row.querySelectorAll('select').forEach((s) => {
+      const v = s.value
+      if (v && v !== '' && v !== 'all' && v !== 'date_desc') active += 1
+    })
+    const counter = toggle.querySelector('.filter-toggle-count')
+    if (counter) counter.setAttribute('data-active', String(active))
+  }
+
+  row.querySelectorAll('select').forEach((s) => {
+    s.addEventListener('change', updateActiveCount)
+  })
+  updateActiveCount()
+})()
