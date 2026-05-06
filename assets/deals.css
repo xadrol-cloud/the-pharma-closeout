@@ -2683,3 +2683,117 @@ html, body { overflow-x: hidden; }
     line-height: 1.5;
   }
 }
+
+
+/* =====================================================================
+   Phase 11 — Broadway-aesthetic refresh (2026-05-05)
+   Spec: docs/superpowers/specs/2026-05-05-broadway-aesthetic-design.md
+   ===================================================================== */
+
+/* WS-A — Tier-coded score chips. Color = signal, number = readout.
+   Five tiers mirror Scoring V2 anchored ranges (90+/75-89/60-74/40-59/<40). */
+.score-block {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-right: 16px;
+  vertical-align: top;
+}
+.score-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+.score-chip[data-tier='exceptional'] { background: #2d8a4f; }
+.score-chip[data-tier='strong']      { background: #2a8a8a; }
+.score-chip[data-tier='adequate']    { background: #c9a84c; color: #0a0a0a; }
+.score-chip[data-tier='weak']        { background: #c47b3a; }
+.score-chip[data-tier='failed']      { background: #c43a3a; }
+.score-chip[data-tier='none']        { background: var(--surface); color: var(--ink-muted); font-size: 28px; }
+.score-chip-mini {
+  width: 44px; height: 44px;
+  font-size: 18px;
+  border-radius: 6px;
+}
+
+/* WS-B — Verbal tier callouts. Color matches the chip below. */
+.tier-label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+.tier-label[data-tier='exceptional'] { color: #2d8a4f; }
+.tier-label[data-tier='strong']      { color: #2a8a8a; }
+.tier-label[data-tier='adequate']    { color: #c9a84c; }
+.tier-label[data-tier='weak']        { color: #c47b3a; }
+.tier-label[data-tier='failed']      { color: #c43a3a; }
+
+.score-meta {
+  font-family: var(--sans);
+  font-size: 10px;
+  color: var(--ink-faint);
+  text-align: center;
+  letter-spacing: 0.4px;
+  max-width: 110px;
+}
+
+/* Hero score-block layout — replaces old .feat-scores horizontal pills */
+#hero-scores.feat-scores {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+@media (max-width: 600px) {
+  .score-block { margin-right: 12px; }
+  .score-chip { width: 70px; height: 70px; font-size: 30px; }
+  #hero-scores.feat-scores { gap: 14px; }
+}
+
+/* WS-C — Semantic deal-type pill palette */
+.deal-type-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+}
+.deal-type-pill[data-type='ma']         { background: #7a4c8f; }
+.deal-type-pill[data-type='licensing']  { background: #3d5fa3; }
+.deal-type-pill[data-type='codev']      { background: #2a8a8a; }
+.deal-type-pill[data-type='asset']      { background: #c47b3a; }
+.deal-type-pill[data-type='other']      { background: #5c5c5c; }
+
+.status-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+}
+.status-pill[data-status='complete']        { background: #2d8a4f; }
+.status-pill[data-status='pending']         { background: #c9a84c; color: #0a0a0a; }
+.status-pill[data-status='archived']        { background: #5c5c5c; }
+.status-pill[data-status='pending_review']  { background: #c9a84c; color: #0a0a0a; }

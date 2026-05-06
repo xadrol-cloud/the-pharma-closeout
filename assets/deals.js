@@ -643,27 +643,51 @@ export function renderFeaturedInfo(deal) {
 }
 
 
-/* ---------- 3c. Score Pill ---------- */
+/* ---------- 3c. Score Block (Phase 11 WS-A + WS-B) ---------- */
 
 /**
- * Large score pill. type: 'critic' or 'outcome'. score: number or null.
- * Task 22: three-tier coloring + tooltip on low/null scores.
+ * Map a numeric score (0-100) to a tier slug used by data-tier
+ * attribute on .score-chip / .tier-label CSS rules.
+ */
+export function tierForScore(score) {
+  if (score == null) return 'none'
+  if (score >= 90) return 'exceptional'
+  if (score >= 75) return 'strong'
+  if (score >= 60) return 'adequate'
+  if (score >= 40) return 'weak'
+  return 'failed'
+}
+
+/**
+ * Verbal tier label. dimension: 'critic' (default) or 'outcome' —
+ * Outcome Score uses different nouns per the Scoring V2 anchored
+ * range vocabulary.
+ */
+export function tierLabelFor(score, dimension = 'critic') {
+  const t = tierForScore(score)
+  if (t === 'none') return ''
+  const critic = { exceptional: 'EXCEPTIONAL', strong: 'STRONG', adequate: 'ADEQUATE', weak: 'WEAK', failed: 'FAILED' }
+  const outcome = { exceptional: 'OUTPERFORMED', strong: 'MET THESIS', adequate: 'TRACKING', weak: 'UNDERPERFORMED', failed: 'FAILED' }
+  return (dimension === 'outcome' ? outcome : critic)[t]
+}
+
+/**
+ * Tier-coded score block. type: 'critic' or 'outcome'.
+ * Renders: tier label (colored, all-caps) above a saturated score
+ * chip (large number, tier-colored bg) above an optional meta line.
  */
 export function renderScorePill(type, score, subtitle = '') {
-  const cls = type === 'critic' ? 'fs-critic' : 'fs-outcome'
+  const dimension = type === 'outcome' ? 'outcome' : 'critic'
   const label = type === 'critic' ? 'Critic Score' : 'Outcome Score'
-  const tier = score == null ? 'none' : score >= 70 ? 'high' : score >= 40 ? 'mid' : 'low'
-  const tip = score == null ? 'Score not yet calculated'
-            : tier === 'low' ? 'Low: limited comparables or insufficient data'
-            : ''
+  const tier = tierForScore(score)
+  const tierLabel = tierLabelFor(score, dimension)
   const display = score != null ? score : '—'
+  const meta = subtitle ? `${label} · ${esc(subtitle)}` : label
 
-  return `<div class="feat-score ${cls} score-tier-${tier}"${tip ? ` title="${esc(tip)}"` : ''}>
-  <span class="feat-score-num">${display}</span>
-  <div class="feat-score-label">
-    <span class="feat-score-type">${label}</span>
-    ${subtitle ? `<span class="feat-score-desc">${esc(subtitle)}</span>` : ''}
-  </div>
+  return `<div class="score-block" data-dim="${dimension}">
+  ${tierLabel ? `<span class="tier-label" data-tier="${tier}">${tierLabel}</span>` : ''}
+  <div class="score-chip" data-tier="${tier}">${display}</div>
+  <span class="score-meta">${meta}</span>
 </div>`
 }
 
