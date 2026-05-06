@@ -38,21 +38,25 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/deals.css?v=20260425b">
+<script defer src="assets/nav.js?v=20260425b"></script>
 </head>
 <body>
 
 <!-- ═══════════════════════════════════════════════════════════════════
      NAV
      ═══════════════════════════════════════════════════════════════════ -->
-<nav class="nav">
-  <div class="nav-brand">The Pharma <em>Closeout</em></div>
+<nav class="nav" aria-label="Main navigation">
+  <span class="nav-brand">The Pharma <em>Closeout</em></span>
   <div class="nav-sep"></div>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="deals.html" class="active">Deal Intelligence</a>
-    <a href="ai-research.html">Research</a>
-    <a href="about.html">About</a>
-  </div>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+    <span class="nav-toggle-bars"></span>
+  </button>
+  <ul id="nav-links" class="nav-links" data-collapsed="true">
+    <li><a href="index.html">Podcast</a></li>
+    <li><a href="ai-research.html">Research</a></li>
+    <li><a href="deals.html" class="active">Deal Intelligence</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
   <div class="nav-search">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
     <input type="text" placeholder="Search deals..." id="nav-search-input">
