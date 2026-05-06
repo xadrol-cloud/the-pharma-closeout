@@ -2038,6 +2038,41 @@ input, textarea, select {
 .section:nth-of-type(3) { animation: fadeUp 0.4s ease 0.3s both; }
 
 
+/* ===================================================================
+   Touch-device adjustments (Phase 4 mobile optimization, 2026-05-02)
+   - Bump poster-select to 36x36 for tap target
+   - Hide carousel arrows; touch users swipe instead
+   - Null out poster :hover lift + ring spin to prevent phantom-hover
+     side effects when a user taps a poster
+   =================================================================== */
+@media (hover: none) {
+  .poster-select { width: 36px; height: 36px; }
+  .section-arrows { display: none; }
+
+  .poster:hover, .feat-poster:hover, .c-poster:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06);
+  }
+  .poster:hover .p-logo,
+  .feat-poster:hover .fp-logo,
+  .c-poster:hover .c-logo {
+    transform: none;
+  }
+  .poster:hover .p-logo::after,
+  .poster:hover .p-logo:first-child::after,
+  .poster:hover .p-logo:last-child::after,
+  .feat-poster:hover .fp-logo::after,
+  .feat-poster:hover .fp-logo:first-child::after,
+  .feat-poster:hover .fp-logo:last-child::after,
+  .c-poster:hover .c-logo::after,
+  .c-poster:hover .c-logo:first-child::after,
+  .c-poster:hover .c-logo:last-child::after {
+    opacity: 0;
+    animation: none;
+  }
+}
+
+
 /* ==========================================================================
    25. RESPONSIVE BREAKPOINTS
    ========================================================================== */
