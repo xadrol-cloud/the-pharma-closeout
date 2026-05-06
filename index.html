@@ -475,9 +475,16 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     .nav-links[data-collapsed='false'] { display: flex; }
     .nav-links a { padding: 0.75rem 0; font-size: 0.85rem; }
 
+    .hero { min-height: auto; padding: 6rem 0 3rem; }
     .hero h1 { font-size: clamp(2.8rem, 12vw, 5rem); }
     .hero-sub { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
-    .hero-tagline { font-size: 0.7rem; letter-spacing: 0.1em; }
+    .hero-tagline { font-size: 0.85rem; letter-spacing: 0.1em; }
+    .hero-links a {
+      display: inline-block;
+      padding: 0.75rem 0;
+      min-height: 44px;
+      box-sizing: border-box;
+    }
 
     .wire-title { white-space: normal; }
     .wire-date { width: 4rem; }
@@ -490,6 +497,18 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 
     .footer-inner { flex-direction: column; }
     .footer-right { align-items: flex-start; }
+    .footer-connect {
+      flex-direction: column;
+      gap: 0;
+    }
+    .footer-connect a {
+      display: block;
+      padding: 0.75rem 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .wire-meta { display: none; }
   }
 </style>
 </head>
