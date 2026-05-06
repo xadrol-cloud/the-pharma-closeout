@@ -102,6 +102,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   ]
 }
 </script>
+<script src="https://gumroad.com/js/gumroad.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The AI Reckoning — The Pharma Closeout</title>
@@ -680,7 +681,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     border: 1px solid rgba(196, 147, 50, 0.15);
     color: var(--white);
     font-family: var(--font-body);
-    font-size: 0.85rem;
+    font-size: 16px; /* 16px floor prevents iOS auto-zoom */
     margin-bottom: 0.75rem;
     transition: border-color 0.3s;
     outline: none;
@@ -836,12 +837,14 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     display: flex; flex-direction: column; gap: 0.5rem;
   }
   .btn-primary {
-    display: inline-flex; align-items: center; gap: 0.5rem;
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
     background: var(--gold); color: var(--black);
     font-family: var(--font-body);
     font-size: 0.8rem; font-weight: 600;
     letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 0.9rem 2.25rem;
+    padding: 1rem 2.25rem;
+    min-height: 44px;
+    box-sizing: border-box;
     border: none; cursor: pointer;
     transition: all 0.3s;
     position: relative; overflow: hidden;
@@ -856,7 +859,10 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   .btn-primary:hover::after { transform: translateX(100%); }
   .btn-primary:hover { box-shadow: 0 0 30px rgba(196, 147, 50, 0.2); }
   .btn-secondary {
-    display: inline-block; padding: 0.9rem 2rem;
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 1rem 2rem;
+    min-height: 44px;
+    box-sizing: border-box;
     font-family: var(--font-body); font-weight: 600;
     letter-spacing: 0.06em; text-transform: uppercase;
     font-size: 0.7rem; color: var(--gold);
@@ -1113,7 +1119,13 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     .ep-player { margin-left: 0; }
     .ep-number { font-size: 1.6rem; min-width: 2rem; }
 
-    .price-block { flex-direction: column; gap: 1.5rem; }
+    .price-block {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.5rem;
+    }
+    .price-display, .price-cta { width: 100%; text-align: center; justify-content: center; }
+    .price-cta { align-items: stretch; }
 
     .footer-inner { flex-direction: column; }
     .footer-right { align-items: flex-start; }
@@ -1123,6 +1135,12 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     .value-grid { grid-template-columns: 1fr; }
     .ep-subtitle { display: none; }
     .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+    .proof-strip {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      justify-items: center;
+    }
   }
 
   /* ── STICKY CTA BAR ── */
@@ -1148,10 +1166,12 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     text-decoration: none; white-space: nowrap;
   }
   .sticky-cta-close {
+    width: 44px; height: 44px;
     background: none; border: none; color: var(--gray-light);
-    cursor: pointer; font-size: 1.2rem; padding: 0.25rem;
-    line-height: 1;
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
   }
+  .sticky-cta-close-icon { font-size: 1.2rem; line-height: 1; }
   .sticky-cta-close:hover { color: var(--white); }
   @media (max-width: 500px) {
     .sticky-cta { flex-wrap: wrap; padding: 0.6rem 1rem; padding-bottom: calc(0.6rem + env(safe-area-inset-bottom, 0px)); }
@@ -1397,7 +1417,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     <div class="briefing-form">
       <div class="briefing-form-title">Download the Briefing</div>
       <div class="briefing-form-sub">Free PDF. Enter your email at checkout and download instantly.</div>
-      <a href="https://thepharmacloseout.gumroad.com/l/briefing" target="_blank" rel="noopener" class="form-submit" style="display: block; text-align: center; text-decoration: none;" onclick="trackEvent('briefing_click', {location: 'briefing_section'})">Get the Free Briefing &rarr;</a>
+      <a href="https://thepharmacloseout.gumroad.com/l/briefing?wanted=true" target="_blank" rel="noopener" class="form-submit gumroad-button" style="display: block; text-align: center; text-decoration: none;" onclick="trackEvent('briefing_click', {location: 'briefing_section'})">Get the Free Briefing &rarr;</a>
       <p class="form-note">Powered by Gumroad. Your email is collected for delivery only.</p>
     </div>
   </div>
@@ -1791,7 +1811,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="sticky-cta" id="stickyCta">
   <span class="sticky-cta-text">Get the free 28-page AI in Pharma briefing</span>
   <a href="https://thepharmacloseout.gumroad.com/l/briefing" target="_blank" rel="noopener" class="sticky-cta-btn" onclick="trackEvent('sticky_cta_click')">Download Free &rarr;</a>
-  <button class="sticky-cta-close" onclick="document.getElementById('stickyCta').classList.add('dismissed')" aria-label="Dismiss">&times;</button>
+  <button class="sticky-cta-close" onclick="document.getElementById('stickyCta').classList.add('dismissed')" aria-label="Dismiss"><span class="sticky-cta-close-icon" aria-hidden="true">&times;</span></button>
 </div>
 
 </body>
