@@ -235,7 +235,10 @@ input, textarea, select {
 .nav-toggle .nav-toggle-bars::after { top: 6px; }
 
 .nav-links[data-collapsed] {
-  /* desktop default — no collapse behavior */
+  /* desktop default — no collapse behavior; reset list defaults so <ul> markup renders clean */
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 @media (max-width: 768px) {
