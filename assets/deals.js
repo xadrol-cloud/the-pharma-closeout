@@ -643,6 +643,47 @@ export function renderFeaturedInfo(deal) {
 }
 
 
+/* ---------- 3b.5 Deal Value Cascade Bar (Phase 11 WS-G) ---------- */
+
+/**
+ * Horizontal segmented bar visualizing deal economics.
+ * Reads available columns: upfront_usd_mm, cash_portion_usd_mm,
+ * stock_portion_usd_mm, deal_value_usd_mm. Falls back to a single
+ * 'Total' segment if only the total is known.
+ */
+export function renderCascadeBar(deal) {
+  if (!deal || deal.deal_value_usd_mm == null) return ''
+  const total = +deal.deal_value_usd_mm
+  if (!total || total <= 0) return ''
+
+  const upfront = +deal.upfront_usd_mm || 0
+  const segments = []
+
+  if (upfront > 0 && upfront < total) {
+    segments.push({ kind: 'upfront', label: 'Upfront', amount: upfront })
+    segments.push({ kind: 'milestones', label: 'Milestones', amount: total - upfront })
+  } else if (upfront >= total) {
+    segments.push({ kind: 'upfront', label: 'Total', amount: total })
+  } else {
+    segments.push({ kind: 'milestones', label: 'Total', amount: total })
+  }
+
+  const fmt = (mm) => {
+    if (mm >= 1000) return `$${(mm / 1000).toFixed(mm >= 10000 ? 0 : 1)}B`
+    return `$${Math.round(mm)}M`
+  }
+  const segHtml = segments.map(s => {
+    const pct = (s.amount / total) * 100
+    return `<div class="vc-segment" data-kind="${s.kind}" style="--pct: ${pct.toFixed(1)}">
+      <span class="vc-amount">${fmt(s.amount)}</span>
+      <span class="vc-label">${s.label}</span>
+    </div>`
+  }).join('')
+
+  return `<div class="value-cascade" data-total="${total}">${segHtml}</div>`
+}
+
+
 /* ---------- 3c. Score Block (Phase 11 WS-A + WS-B) ---------- */
 
 /**
@@ -1128,11 +1169,19 @@ export function renderCriticReviews(sources) {
   const cards = reviews.map(r => {
     const cls = sentimentClass(r.sentiment)
     const badgeCls = cls === 'bull' ? 'b-bull' : cls === 'bear' ? 'b-bear' : 'b-neut'
+    // WS-H: per-outlet critic score chip (mini variant of WS-A chip)
+    const cs = r.critic_score != null ? Math.round(r.critic_score) : null
+    const chipHtml = cs != null
+      ? `<div class="score-chip score-chip-mini review-chip" data-tier="${tierForScore(cs)}">${cs}</div>`
+      : ''
     return `<a class="review ${cls}" href="${esc(r.url || '#')}" target="_blank">
-      <div class="review-quote">"${esc(r.excerpt || r.headline || '')}"</div>
-      <div class="review-foot">
-        <div class="review-src"><strong>${esc(r.source_name || '')}</strong> · ${esc(formatDate(r.date_accessed || r.published_date))}<span class="badge ${badgeCls}">${sentimentLabel(r.sentiment)}</span></div>
-        <span class="review-arrow">→</span>
+      ${chipHtml}
+      <div class="review-body">
+        <div class="review-quote">"${esc(r.excerpt || r.headline || '')}"</div>
+        <div class="review-foot">
+          <div class="review-src"><strong>${esc(r.source_name || '')}</strong> · ${esc(formatDate(r.date_accessed || r.published_date))}<span class="badge ${badgeCls}">${sentimentLabel(r.sentiment)}</span></div>
+          <span class="review-arrow">→</span>
+        </div>
       </div>
     </a>`
   })

@@ -85,6 +85,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       <span id="hero-status"></span>
     </div>
     <div id="hero-scores" class="feat-scores" style="margin-top:16px;"></div>
+    <div id="hero-cascade" style="margin-top:14px;"></div>
     <div class="hero-meta" id="hero-meta"></div>
     <div class="tags" id="hero-tags"></div>
     <div class="hero-lede" id="hero-summary"></div>
@@ -231,6 +232,7 @@ import {
   renderSources, renderCorporateLineage, renderCompanionDeals,
   formatValue, formatDate, parseTAs,
   renderDealStatus, renderValuePill, isHistoricalDeal,
+  renderCascadeBar,
   exportDealRow
 } from './assets/deals.js?v=20260505d'
 
@@ -275,6 +277,9 @@ if (!dealId) {
       document.getElementById('hero-meta').innerHTML =
         renderValuePill(deal.deal_value_usd_mm) +
         ` ${deal.deal_type || 'Acquisition'} &middot; ${formatDate(deal.announcement_date)}`
+
+      // Phase 11 WS-G: deal value cascade bar (upfront / milestones)
+      document.getElementById('hero-cascade').innerHTML = renderCascadeBar(deal)
 
       // Tags
       const tas = parseTAs(deal.therapeutic_areas)
