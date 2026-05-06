@@ -219,6 +219,8 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     display: flex; gap: 3rem;
   }
   .distribution-link {
+    display: block;
+    padding: 0.75rem 0;
     transition: opacity 0.2s;
   }
   .distribution-link:hover {
@@ -379,7 +381,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <!-- ── VIDEO HERO ── -->
 <section class="about-hero" aria-label="About">
   <div class="about-hero-fallback"></div>
-  <video class="about-hero-video" autoplay muted loop playsinline aria-hidden="true">
+  <video class="about-hero-video" autoplay muted loop playsinline preload="none" aria-hidden="true">
     <source src="assets/about-hero.mp4" type="video/mp4">
   </video>
   <div class="about-hero-overlay"></div>
@@ -476,20 +478,26 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   });
 })();
 
-/* ── VIDEO FALLBACK ── */
+/* ── VIDEO FALLBACK + saveData skip-autoplay (Phase 8.1) ── */
 (function() {
   var video = document.querySelector('.about-hero-video');
-  if (video) {
-    video.addEventListener('error', function() {
+  if (!video) return;
+
+  // Skip autoplay on save-data or slow connections (saves bandwidth on phone)
+  var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (conn && (conn.saveData || conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g')) {
+    video.removeAttribute('autoplay');
+    try { video.pause(); } catch (_) {}
+  }
+
+  video.addEventListener('error', function() {
+    video.style.display = 'none';
+  });
+  var source = video.querySelector('source');
+  if (source) {
+    source.addEventListener('error', function() {
       video.style.display = 'none';
     });
-    // Also hide if source fails to load
-    var source = video.querySelector('source');
-    if (source) {
-      source.addEventListener('error', function() {
-        video.style.display = 'none';
-      });
-    }
   }
 })();
 </script>

@@ -37,7 +37,8 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Newsreader:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260502b">
+<link rel="stylesheet" href="assets/deals.css?v=20260505b">
+<script defer src="assets/nav.js?v=20260505b"></script>
 </head>
 <body>
 
@@ -45,12 +46,15 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <nav class="nav" aria-label="Main navigation">
   <span class="nav-brand">The Pharma <em>Closeout</em></span>
   <div class="nav-sep"></div>
-  <div class="nav-links">
-    <a href="index.html">Podcast</a>
-    <a href="ai-research.html">Research</a>
-    <a href="deals.html" class="active">Deal Intelligence</a>
-    <a href="about.html">About</a>
-  </div>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+    <span class="nav-toggle-bars"></span>
+  </button>
+  <ul id="nav-links" class="nav-links" data-collapsed="true">
+    <li><a href="index.html">Podcast</a></li>
+    <li><a href="ai-research.html">Research</a></li>
+    <li><a href="deals.html" class="active">Deal Intelligence</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
   <div class="nav-search">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     <input id="nav-search-input" type="text" placeholder="Search deals..." aria-label="Search deals">
@@ -82,7 +86,12 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input id="search-input" class="search-bar" type="text" placeholder="Company, molecule, therapeutic area, indication...">
     </div>
-<div id="filters" class="filters">
+<button type="button" class="filter-toggle" aria-expanded="false" aria-controls="filters">
+  <span class="filter-toggle-label">Filters</span>
+  <span class="filter-toggle-count" data-active="0"></span>
+  <span class="filter-toggle-chevron" aria-hidden="true">▾</span>
+</button>
+<div id="filters" class="filters filter-row" data-collapsed="true">
   <select name="deal_type" class="f-chip" aria-label="Deal Type">
     <option value="">All Deal Types</option>
     <option value="Acquisition/Merger">Acquisition / M&A</option>
@@ -231,7 +240,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 import {
   fetchFeaturedDeal, fetchLatestDeals, fetchTrendingDeals, fetchTopOutcomeDeals,
   renderPoster, renderFeaturedInfo, initCarousel, initSearch, initMultiSelect, searchDeals
-} from './assets/deals.js?v=20260502b'
+} from './assets/deals.js?v=20260505b'
 
 // Featured deal
 const featured = await fetchFeaturedDeal()

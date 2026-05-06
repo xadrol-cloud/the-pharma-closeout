@@ -25,6 +25,7 @@
   --ink-faint: #a0a3ad;
 
   /* Surfaces */
+  --bg: #0a0a0a;          /* page canvas / dark drawer backdrop */
   --surface: #f7f7f5;
   --paper: #ffffff;
   --rule: #e4e4e0;
@@ -85,6 +86,26 @@ body {
   font-size: 14px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+}
+
+/* ===================================================================
+   Mobile-optimization global rules (added 2026-05-02)
+   - Input font-size 16px globally to suppress iOS Safari auto-zoom
+   - Reduced-motion guards
+   - Print baseline (untouched)
+   =================================================================== */
+
+input, textarea, select {
+  font-size: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 
@@ -166,6 +187,84 @@ body {
   width: 14px;
   height: 14px;
   color: rgba(255,255,255,0.3);
+}
+
+/* ===================================================================
+   Canonical hamburger nav (added 2026-05-02)
+   Used when markup includes .nav-toggle + #nav-links[data-collapsed].
+   Pages with this markup get hamburger behavior on phone, horizontal
+   links on desktop. Pages without the markup retain legacy .nav behavior.
+   =================================================================== */
+
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #333;
+  background: transparent;
+  color: inherit;
+  border-radius: 6px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.nav-toggle .nav-toggle-bars {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  position: relative;
+}
+.nav-toggle .nav-toggle-bars::before,
+.nav-toggle .nav-toggle-bars::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+}
+.nav-toggle .nav-toggle-bars::before { top: -6px; }
+.nav-toggle .nav-toggle-bars::after { top: 6px; }
+
+.nav-links[data-collapsed] {
+  /* desktop default — no collapse behavior; reset list defaults so <ul> markup renders clean */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .nav-toggle { display: inline-flex; }
+  .nav-links[data-collapsed='true'] {
+    display: none;
+  }
+  .nav-links[data-collapsed='false'] {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    background: var(--bg);
+    border-bottom: 1px solid #333;
+    padding: 12px 16px;
+    gap: 8px;
+    z-index: 50;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  }
+  .nav-links[data-collapsed='false'] a {
+    display: block;
+    padding: 12px 0;
+    font-size: 15px;
+  }
 }
 
 
@@ -375,6 +474,9 @@ body {
   grid-template-columns: repeat(5, 1fr);
   gap: clamp(16px,2vw,28px);
 }
+/* Search results render carousel posters inside .grid — let them
+   fill the column width instead of staying at 200px fixed. */
+.grid .c-poster { width: 100%; max-width: none; }
 
 /* Staggered reveal */
 .grid > :nth-child(2) { animation-delay: .06s; }
@@ -873,6 +975,69 @@ body {
   cursor: pointer;
   padding: 6px 10px;
   border: none; background: none;
+}
+
+/* ===================================================================
+   Filter accordion (added 2026-05-02, Phase 4 mobile optimization)
+   Toggle button hidden on desktop, visible on phone (<600px).
+   Filter row collapsed by default on phone; toggling sets
+   data-collapsed='false' to expand.
+   =================================================================== */
+.filter-toggle {
+  display: none;
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  color: inherit;
+  font-family: var(--sans);
+  font-size: 14px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+  min-height: 44px;
+}
+.filter-toggle-label {
+  font-weight: 600;
+}
+.filter-toggle-count[data-active]:not([data-active='0'])::before {
+  content: '· ' attr(data-active) ' active';
+  color: var(--gold);
+  font-size: 12px;
+  margin-left: 8px;
+  font-weight: 500;
+}
+.filter-toggle-chevron {
+  display: inline-block;
+  margin-left: auto;
+  transition: transform 0.18s ease;
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+.filter-toggle[aria-expanded='true'] .filter-toggle-chevron {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 600px) {
+  .filter-toggle { display: inline-flex; }
+  .filter-row[data-collapsed='true'] { display: none; }
+  .filter-row[data-collapsed='false'] {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    background: var(--surface);
+    border: 1px solid var(--gold);
+    border-radius: 6px;
+    margin-bottom: 12px;
+  }
+  .filter-row[data-collapsed='false'] select {
+    width: 100%;
+    min-height: 44px;
+  }
 }
 
 /* Search results — count + status + load more */
@@ -1560,7 +1725,8 @@ body {
 
 .fab {
   position: fixed;
-  bottom: 24px; right: 24px;
+  bottom: max(24px, env(safe-area-inset-bottom, 0px) + 12px);
+  right: max(24px, env(safe-area-inset-right, 0px) + 12px);
   z-index: 200;
   display: flex; gap: 1px;
   background: var(--ink);
@@ -1772,7 +1938,8 @@ body {
 /* Floating Compare button */
 .compare-fab {
   position: fixed;
-  bottom: 24px; right: 24px;
+  bottom: max(24px, env(safe-area-inset-bottom, 0px) + 12px);
+  right: max(24px, env(safe-area-inset-right, 0px) + 12px);
   z-index: 1000;
   display: flex; align-items: center; gap: 10px;
   padding: 12px 20px;
@@ -1876,6 +2043,136 @@ body {
 .section:nth-of-type(3) { animation: fadeUp 0.4s ease 0.3s both; }
 
 
+/* ===================================================================
+   Phase 5.4 — Breadcrumb (always-visible back link on deal.html)
+   =================================================================== */
+.breadcrumb-nav {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 12px 40px 0;
+}
+.breadcrumb-back {
+  display: inline-block;
+  padding: 8px 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink-muted);
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: color 0.15s;
+}
+.breadcrumb-back:hover { color: var(--gold); }
+@media (max-width: 600px) {
+  .breadcrumb-nav { padding: 12px 16px 0; }
+}
+
+
+/* ===================================================================
+   Phase 5.3 + 6.1 — cmp-table mobile pattern
+   Wraps comparison table in horizontal-scroll container with sticky
+   label column. Swipe hint shows on phone, hides on hover-capable.
+   =================================================================== */
+.cmp-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 16px;
+}
+.cmp-wrap .cmp-table th.cmp-label {
+  position: sticky;
+  left: 0;
+  background: var(--paper, #fff);
+  z-index: 1;
+}
+.cmp-swipe-hint {
+  display: none;
+  text-align: center;
+  font-size: 11px;
+  color: var(--ink-muted);
+  padding: 6px 0 12px;
+}
+@media (max-width: 600px) { .cmp-swipe-hint { display: block; } }
+@media (hover: hover)     { .cmp-swipe-hint { display: none !important; } }
+
+
+/* ===================================================================
+   Phase 5 mobile experience (deal.html, 2026-05-02)
+   - Hero inner padding tightened on phone
+   - FAB labels wrap then stack
+   - Body + prose font bumps for legibility
+   - Multi-col grids collapse to 1-col on tightest band
+   - Footer becomes column on phone
+   =================================================================== */
+@media (max-width: 600px) {
+  body { font-size: 15px; }
+  .hero-inner {
+    padding: 20px 16px;
+    gap: 16px;
+  }
+  .tl-body,
+  .review-quote,
+  .dp-block p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .rev-stats { flex-wrap: wrap; }
+  .rev-stat { min-width: 80px; }
+  .fab { flex-wrap: wrap; }
+  .fab-btn {
+    flex: 1 1 calc(50% - 4px);
+    min-width: 0;
+    white-space: normal;
+  }
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+@media (max-width: 480px) {
+  .fab-btn { flex: 1 1 100%; }
+  .mkt-row { grid-template-columns: 1fr; }
+}
+
+
+/* ===================================================================
+   Touch-device adjustments (Phase 4 mobile optimization, 2026-05-02)
+   - Bump poster-select to 36x36 for tap target
+   - Hide carousel arrows; touch users swipe instead
+   - Null out poster :hover lift + ring spin to prevent phantom-hover
+     side effects when a user taps a poster
+   =================================================================== */
+@media (hover: none) {
+  .poster-select { width: 36px; height: 36px; }
+  .section-arrows { display: none; }
+
+  .poster:hover, .feat-poster:hover, .c-poster:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06);
+  }
+  .poster:hover .p-logo,
+  .feat-poster:hover .fp-logo,
+  .c-poster:hover .c-logo {
+    transform: none;
+  }
+  .poster:hover .p-logo::after,
+  .poster:hover .p-logo:first-child::after,
+  .poster:hover .p-logo:last-child::after,
+  .feat-poster:hover .fp-logo::after,
+  .feat-poster:hover .fp-logo:first-child::after,
+  .feat-poster:hover .fp-logo:last-child::after,
+  .c-poster:hover .c-logo::after,
+  .c-poster:hover .c-logo:first-child::after,
+  .c-poster:hover .c-logo:last-child::after {
+    opacity: 0;
+    animation: none;
+  }
+}
+
+
 /* ==========================================================================
    25. RESPONSIVE BREAKPOINTS
    ========================================================================== */
@@ -1945,6 +2242,33 @@ body {
   /* Carousel cards slightly smaller */
   .c-poster { width: 160px; }
   .carousel  { gap: 12px; }
+}
+
+/* ===================================================================
+   New mobile breakpoints (added 2026-05-02)
+   600px: existing tablet-portrait band (unchanged above)
+   480px: standard phone band — single-col grids, accordion filters,
+          tighter padding, hamburger-only nav
+   375px: tightest band — font-size floors, hide non-essential metadata
+   =================================================================== */
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  /* additional rules added by later tasks */
+}
+
+@media (max-width: 375px) {
+  /* additional rules added by later tasks */
+}
+
+@media (hover: hover) {
+  /* hover rules wrapped here by Task 4.4 */
+}
+
+@media (hover: none) {
+  /* touch-only adjustments added by Task 4.4 */
 }
 
 /* Key Assets group labels */

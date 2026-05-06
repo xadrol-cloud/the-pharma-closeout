@@ -37,22 +37,26 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260502b">
+<link rel="stylesheet" href="assets/deals.css?v=20260505b">
+<script defer src="assets/nav.js?v=20260505b"></script>
 </head>
 <body>
 
 <!-- ═══════════════════════════════════════════════════════════════════
      NAV
      ═══════════════════════════════════════════════════════════════════ -->
-<nav class="nav">
-  <div class="nav-brand">The Pharma <em>Closeout</em></div>
+<nav class="nav" aria-label="Main navigation">
+  <span class="nav-brand">The Pharma <em>Closeout</em></span>
   <div class="nav-sep"></div>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="deals.html" class="active">Deal Intelligence</a>
-    <a href="ai-research.html">Research</a>
-    <a href="about.html">About</a>
-  </div>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+    <span class="nav-toggle-bars"></span>
+  </button>
+  <ul id="nav-links" class="nav-links" data-collapsed="true">
+    <li><a href="index.html">Podcast</a></li>
+    <li><a href="ai-research.html">Research</a></li>
+    <li><a href="deals.html" class="active">Deal Intelligence</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
   <div class="nav-search">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
     <input type="text" placeholder="Search deals..." id="nav-search-input">
@@ -63,6 +67,11 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
      LOADING STATE
      ═══════════════════════════════════════════════════════════════════ -->
 <div id="loading" style="text-align:center;padding:120px 40px;color:var(--ink-faint);font-size:14px;">Loading deal...</div>
+
+<!-- Breadcrumb (always visible, even while deal-hero loads) -->
+<nav class="breadcrumb-nav" aria-label="Breadcrumb">
+  <a class="breadcrumb-back" href="deals.html">← All deals</a>
+</nav>
 
 <!-- ═══════════════════════════════════════════════════════════════════
      HERO
@@ -182,6 +191,11 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
     Deal Sheet
   </button>
+  <div class="fab-div"></div>
+  <button class="fab-btn" id="fab-share" title="Share this deal">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    Share
+  </button>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════════
@@ -214,7 +228,7 @@ import {
   formatValue, formatDate, parseTAs,
   renderDealStatus, renderValuePill, isHistoricalDeal,
   exportDealRow
-} from './assets/deals.js?v=20260502b'
+} from './assets/deals.js?v=20260505b'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 

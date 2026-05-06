@@ -1519,10 +1519,11 @@ export function renderComparison(deals) {
     row('Financing', deals.map(d => esc(d.financing_type || '—'))),
   ]
 
-  return `<table class="cmp-table">
+  return `<div class="cmp-wrap"><table class="cmp-table">
     <thead><tr><th class="cmp-label"></th>${headerCells}</tr></thead>
     <tbody>${rows.join('')}</tbody>
-  </table>`
+  </table></div>
+  <div class="cmp-swipe-hint">← swipe to compare →</div>`
 }
 
 
@@ -1724,3 +1725,59 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
   })
   filtersEl?.addEventListener('change', () => runSearch({ append: false }))
 }
+
+// =====================================================================
+// Share button (Phase 5.4) — uses navigator.share with clipboard fallback
+// =====================================================================
+;(function () {
+  const btn = document.getElementById('fab-share')
+  if (!btn) return
+  btn.addEventListener('click', async () => {
+    const url = window.location.href
+    const title = document.title
+    if (navigator.share) {
+      try { await navigator.share({ title, url }) } catch (_) { /* user cancelled */ }
+      return
+    }
+    try {
+      await navigator.clipboard.writeText(url)
+      const originalText = btn.lastChild.textContent
+      btn.lastChild.textContent = ' Copied!'
+      setTimeout(() => { btn.lastChild.textContent = originalText }, 2000)
+    } catch (_) {
+      window.prompt('Copy this URL:', url)
+    }
+  })
+})()
+
+// =====================================================================
+// Filter accordion toggle (added 2026-05-02, Phase 4 mobile optimization)
+// Pairs with .filter-toggle button + #filters[data-collapsed] container.
+// Hidden on desktop via CSS; this just wires phone-width interaction.
+// =====================================================================
+;(function () {
+  const toggle = document.querySelector('.filter-toggle')
+  const row = document.getElementById('filters')
+  if (!toggle || !row) return
+
+  toggle.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true'
+    toggle.setAttribute('aria-expanded', open ? 'false' : 'true')
+    row.setAttribute('data-collapsed', open ? 'true' : 'false')
+  })
+
+  function updateActiveCount() {
+    let active = 0
+    row.querySelectorAll('select').forEach((s) => {
+      const v = s.value
+      if (v && v !== '' && v !== 'all' && v !== 'date_desc') active += 1
+    })
+    const counter = toggle.querySelector('.filter-toggle-count')
+    if (counter) counter.setAttribute('data-active', String(active))
+  }
+
+  row.querySelectorAll('select').forEach((s) => {
+    s.addEventListener('change', updateActiveCount)
+  })
+  updateActiveCount()
+})()

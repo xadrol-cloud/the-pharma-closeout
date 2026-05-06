@@ -53,6 +53,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <meta name="twitter:card" content="summary">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0a'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23c49332'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;0,6..72,700;0,6..72,800;1,6..72,300;1,6..72,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<script defer src="assets/nav.js?v=20260505b"></script>
 <style>
   :root {
     --black: #0a0a0a;
@@ -123,9 +124,9 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   }
   .nav-toggle span::before { content: ''; top: -6px; left: 0; }
   .nav-toggle span::after { content: ''; top: 6px; left: 0; }
-  .nav-toggle.active span { background: transparent; }
-  .nav-toggle.active span::before { transform: rotate(45deg); top: 0; }
-  .nav-toggle.active span::after { transform: rotate(-45deg); top: 0; }
+  .nav-toggle[aria-expanded='true'] span { background: transparent; }
+  .nav-toggle[aria-expanded='true'] span::before { transform: rotate(45deg); top: 0; }
+  .nav-toggle[aria-expanded='true'] span::after { transform: rotate(-45deg); top: 0; }
 
   /* ── HERO ── */
   .hero {
@@ -463,19 +464,27 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   @media (max-width: 800px) {
     .nav-toggle { display: flex; }
     .nav-links {
-      display: none; position: absolute; top: 72px; left: 0; right: 0;
+      position: absolute; top: 72px; left: 0; right: 0;
       flex-direction: column; gap: 0;
       padding: 1rem clamp(1.5rem, 4vw, 4rem) 1.5rem;
       background: rgba(10, 10, 10, 0.95);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--rule);
     }
-    .nav-links.open { display: flex; }
+    .nav-links[data-collapsed='true'] { display: none; }
+    .nav-links[data-collapsed='false'] { display: flex; }
     .nav-links a { padding: 0.75rem 0; font-size: 0.85rem; }
 
+    .hero { min-height: auto; padding: 6rem 0 3rem; }
     .hero h1 { font-size: clamp(2.8rem, 12vw, 5rem); }
     .hero-sub { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
-    .hero-tagline { font-size: 0.7rem; letter-spacing: 0.1em; }
+    .hero-tagline { font-size: 0.85rem; letter-spacing: 0.1em; }
+    .hero-links a {
+      display: inline-block;
+      padding: 0.75rem 0;
+      min-height: 44px;
+      box-sizing: border-box;
+    }
 
     .wire-title { white-space: normal; }
     .wire-date { width: 4rem; }
@@ -488,6 +497,18 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 
     .footer-inner { flex-direction: column; }
     .footer-right { align-items: flex-start; }
+    .footer-connect {
+      flex-direction: column;
+      gap: 0;
+    }
+    .footer-connect a {
+      display: block;
+      padding: 0.75rem 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .wire-meta { display: none; }
   }
 </style>
 </head>
@@ -499,8 +520,8 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <nav aria-label="Main navigation">
   <div class="nav-inner">
     <div class="logo">The Pharma Closeout</div>
-    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><span></span></button>
-    <ul class="nav-links">
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links"><span></span></button>
+    <ul id="nav-links" class="nav-links" data-collapsed="true">
       <li><a href="#podcast">Podcast</a></li>
       <li><a href="#articles">Articles</a></li>
       <li><a href="ai-research.html">Research</a></li>
@@ -625,23 +646,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   });
 })();
 
-/* ── MOBILE NAV TOGGLE ── */
-(function() {
-  var toggle = document.querySelector('.nav-toggle');
-  var links = document.querySelector('.nav-links');
-  toggle.addEventListener('click', function() {
-    var open = links.classList.toggle('open');
-    toggle.classList.toggle('active', open);
-    toggle.setAttribute('aria-expanded', open);
-  });
-  links.querySelectorAll('a').forEach(function(a) {
-    a.addEventListener('click', function() {
-      links.classList.remove('open');
-      toggle.classList.remove('active');
-      toggle.setAttribute('aria-expanded', 'false');
-    });
-  });
-})();
+/* Mobile nav toggle now in assets/nav.js (Phase 3 unification) */
 
 /* ── HERO PULSE LINE ── */
 (function() {
