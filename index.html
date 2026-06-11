@@ -163,6 +163,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     letter-spacing: 0.15em;
     text-transform: uppercase;
   }
+  .hero-tagline .tag-phrase { white-space: nowrap; }
   .hero-links {
     display: flex; gap: 2rem;
   }
@@ -322,7 +323,10 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
   }
-  .article-featured {}
+  .article-featured {
+    display: flex; flex-direction: column;
+    align-items: flex-start;
+  }
   .article-featured .af-date {
     font-size: 0.7rem; color: var(--gray);
     letter-spacing: 0.1em; text-transform: uppercase;
@@ -345,6 +349,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     font-size: 0.8rem; color: var(--gold);
     border-bottom: 1px solid var(--gold);
     padding-bottom: 2px;
+    margin-top: auto; /* bottom-align with the article list column */
   }
 
   .article-list {}
@@ -475,10 +480,12 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     .nav-links[data-collapsed='false'] { display: flex; }
     .nav-links a { padding: 0.75rem 0; font-size: 0.85rem; }
 
-    .hero { min-height: auto; padding: 6rem 0 3rem; }
+    .hero { min-height: auto; padding: 6rem 1.5rem 3rem; }
     .hero h1 { font-size: clamp(2.8rem, 12vw, 5rem); }
     .hero-sub { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
     .hero-tagline { font-size: 0.85rem; letter-spacing: 0.1em; }
+    /* Waveform: take it out of absolute flow so it can't overlap the action links */
+    .hero-pulse { position: static; order: 10; height: 60px; margin-top: 2.5rem; }
     .hero-links a {
       display: inline-block;
       padding: 0.75rem 0;
@@ -542,7 +549,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   <div class="hero-pulse" aria-hidden="true"><canvas id="pulseCanvas"></canvas></div>
   <h1>The Pharma<br>Closeout</h1>
   <div class="hero-sub">
-    <span class="hero-tagline">The signal &ensp;/&ensp; The synthesis &ensp;/&ensp; The closeout</span>
+    <span class="hero-tagline"><span class="tag-phrase">The signal</span> &ensp;/&ensp; <span class="tag-phrase">The synthesis</span> &ensp;/&ensp; <span class="tag-phrase">The closeout</span></span>
     <div class="hero-links">
       <a href="#podcast">Listen &rarr;</a>
       <a href="#articles">Read &rarr;</a>
@@ -574,7 +581,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     Every deal gets the read, made simple.
   </p>
   <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-    <a href="deals.html" style="display: inline-flex; align-items: center; background: var(--gold); color: var(--black); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.7rem 1.5rem; transition: box-shadow 0.3s;">Read the closeout &rarr;</a>
+    <a href="deals.html" style="display: inline-flex; align-items: center; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.7rem 1.5rem; transition: opacity 0.3s;">Read the closeout &rarr;</a>
     <a href="deals.html?ta=Oncology" style="font-size: 0.8rem; color: var(--gold); border-bottom: 1px solid rgba(196,147,50,0.4); padding-bottom: 2px; transition: border-color 0.3s;">Compare deals &rarr;</a>
   </div>
 </section>
@@ -733,7 +740,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     .then(function(data) {
       if (data.status === 'ok' && data.items) {
         data.items.slice(0, 4).forEach(function(ep) {
-          items.push({ title: ep.title, link: ep.link || 'https://open.spotify.com/show/6bib0887ucySx51e49M3tp' });
+          items.push({ title: cleanTitle(decodeEntities(ep.title)), link: ep.link || 'https://open.spotify.com/show/6bib0887ucySx51e49M3tp' });
         });
       }
       check();
@@ -745,7 +752,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     .then(function(data) {
       if (data.status === 'ok' && data.items) {
         data.items.slice(0, 4).forEach(function(item) {
-          items.push({ title: item.title, link: item.link });
+          items.push({ title: decodeEntities(item.title), link: item.link });
         });
       }
       check();
@@ -758,6 +765,31 @@ function esc(str) {
   var d = document.createElement('div');
   d.textContent = str || '';
   return d.innerHTML;
+}
+
+/* Decode HTML entities once (feed titles arrive pre-escaped; esc() would
+   double-escape them and render literal "&amp;"). */
+function decodeEntities(str) {
+  if (!str) return '';
+  var t = document.createElement('textarea');
+  t.innerHTML = str;
+  return t.value;
+}
+
+/* Strip leading "Jun 07, 2026 |" style date prefixes from episode titles —
+   the date is already shown in its own column/label. */
+function cleanTitle(str) {
+  return (str || '').replace(/^\s*[A-Za-z]{3,9}\.?\s+\d{1,2},?\s+\d{4}\s*[|–—:-]\s*/, '');
+}
+
+/* Truncate at the last word boundary before limit (no mid-word cuts). */
+function truncateWords(str, limit) {
+  if (!str) return '';
+  if (str.length <= limit) return str;
+  var cut = str.slice(0, limit);
+  var sp = cut.lastIndexOf(' ');
+  if (sp > 0) cut = cut.slice(0, sp);
+  return cut.replace(/[\s,;:.–—-]+$/, '') + '...';
 }
 
 /* ── SPOTIFY PODCAST RSS FEED ── */
@@ -785,13 +817,27 @@ function esc(str) {
       var latest = eps[0];
       var d = new Date(latest.pubDate);
       var dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      var desc = latest.description ? latest.description.replace(/<[^>]*>/g, '').slice(0, 260) : '';
-      if (latest.description && latest.description.replace(/<[^>]*>/g, '').length > 260) desc += '...';
+      var desc = latest.description
+        ? truncateWords(decodeEntities(latest.description.replace(/<[^>]*>/g, '')), 260)
+        : '';
 
       labelEl.textContent = 'Latest Episode \u00B7 ' + dateStr;
-      titleEl.innerHTML = '<a href="' + esc(latest.link || SPOTIFY_SHOW) + '" target="_blank" rel="noopener">' + esc(latest.title) + '</a>';
+      titleEl.innerHTML = '<a href="' + esc(latest.link || SPOTIFY_SHOW) + '" target="_blank" rel="noopener">' + esc(cleanTitle(decodeEntities(latest.title))) + '</a>';
       descEl.textContent = desc;
-      embedEl.innerHTML = '<iframe src="https://open.spotify.com/embed/show/6bib0887ucySx51e49M3tp?utm_source=generator&theme=0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Spotify player"></iframe>';
+      embedEl.innerHTML = '<iframe src="https://open.spotify.com/embed/show/6bib0887ucySx51e49M3tp?utm_source=generator&theme=0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Spotify player"></iframe>';
+
+      // Embed fallback: if the Spotify iframe never loads (blocked / offline),
+      // collapse the reserved slot to a plain link instead of dead space.
+      (function() {
+        var fr = embedEl.querySelector('iframe');
+        var loaded = false;
+        fr.addEventListener('load', function() { loaded = true; });
+        setTimeout(function() {
+          if (!loaded) {
+            embedEl.innerHTML = '<a href="' + esc(latest.link || SPOTIFY_SHOW) + '" target="_blank" rel="noopener" style="font-size:0.85rem;color:var(--gold);border-bottom:1px solid var(--gold);padding-bottom:2px;">Play on Spotify &rarr;</a>';
+          }
+        }, 5000);
+      })();
 
       // Wire feed — next 6 episodes
       var wireEps = eps.slice(1, 7);
@@ -803,7 +849,7 @@ function esc(str) {
           : '';
         return '<li><a class="wire-item" href="' + esc(ep.link || SPOTIFY_SHOW) + '" target="_blank" rel="noopener">' +
           '<span class="wire-date">' + esc(edStr) + '</span>' +
-          '<span class="wire-title">' + esc(ep.title) + '</span>' +
+          '<span class="wire-title">' + esc(cleanTitle(decodeEntities(ep.title))) + '</span>' +
           '<span class="wire-meta">' + (epDur ? epDur + ' ' : '') + '<span class="wire-arrow">&rarr;</span></span>' +
         '</a></li>';
       }).join('');
@@ -840,13 +886,12 @@ function esc(str) {
       var fd = new Date(featured.pubDate);
       var fDateStr = fd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       var fDesc = featured.description
-        ? featured.description.replace(/<[^>]*>/g, '').slice(0, 200)
+        ? truncateWords(decodeEntities(featured.description.replace(/<[^>]*>/g, '')), 200)
         : '';
-      if (featured.description && featured.description.replace(/<[^>]*>/g, '').length > 200) fDesc += '...';
 
       featuredEl.innerHTML =
         '<div class="af-date">' + esc(fDateStr) + '</div>' +
-        '<h3 class="af-title"><a href="' + esc(featured.link) + '" target="_blank" rel="noopener">' + esc(featured.title) + '</a></h3>' +
+        '<h3 class="af-title"><a href="' + esc(featured.link) + '" target="_blank" rel="noopener">' + esc(decodeEntities(featured.title)) + '</a></h3>' +
         '<p class="af-desc">' + esc(fDesc) + '</p>' +
         '<a href="' + esc(featured.link) + '" target="_blank" rel="noopener" class="af-link">Read on Substack &rarr;</a>';
 
@@ -855,7 +900,7 @@ function esc(str) {
         var dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
         return '<a href="' + esc(item.link) + '" target="_blank" rel="noopener" class="article-list-item">' +
           '<div class="al-date">' + esc(dateStr) + '</div>' +
-          '<div class="al-title">' + esc(item.title) + '<span class="al-arrow">&rarr;</span></div>' +
+          '<div class="al-title">' + esc(decodeEntities(item.title)) + '<span class="al-arrow">&rarr;</span></div>' +
         '</a>';
       }).join('');
       moreEl.style.display = 'inline-block';

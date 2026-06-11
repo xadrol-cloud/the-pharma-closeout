@@ -1021,7 +1021,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     display: flex; flex-direction: column;
     align-items: flex-end; gap: 0.75rem;
   }
-  .footer-connect { display: flex; gap: 2rem; list-style: none; }
+  .footer-connect { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 1rem 2rem; list-style: none; max-width: 100%; }
   .footer-connect a {
     font-size: 0.75rem; color: var(--gray-light);
     letter-spacing: 0.08em; text-transform: uppercase;
@@ -1050,12 +1050,14 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     letter-spacing: 0.08em; text-transform: uppercase;
   }
 
-  /* ── SCROLL REVEAL ── */
+  /* ── SCROLL REVEAL (progressive enhancement) ──
+     Sections are visible by default. The hidden initial state is only
+     applied once JS adds .js-reveal to <html>, so no-JS, reader, print,
+     and full-page-capture contexts always see the content. */
   .reveal {
-    opacity: 0; transform: translateY(20px);
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
+  html.js-reveal .reveal:not(.visible) { opacity: 0; transform: translateY(20px); }
 
   /* ── ACCESSIBILITY ── */
   :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
@@ -1167,15 +1169,21 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   }
   .sticky-cta-close {
     width: 44px; height: 44px;
+    min-width: 44px; min-height: 44px; flex: 0 0 44px;
     background: none; border: none; color: var(--gray-light);
     cursor: pointer;
     display: inline-flex; align-items: center; justify-content: center;
   }
   .sticky-cta-close-icon { font-size: 1.2rem; line-height: 1; }
   .sticky-cta-close:hover { color: var(--white); }
+  .sticky-cta-text-short { display: none; }
   @media (max-width: 500px) {
-    .sticky-cta { flex-wrap: wrap; padding: 0.6rem 1rem; padding-bottom: calc(0.6rem + env(safe-area-inset-bottom, 0px)); }
-    .sticky-cta-text { font-size: 0.75rem; flex: 1; }
+    /* Single compact row: shorter label, no wrapping, tighter padding */
+    .sticky-cta { flex-wrap: nowrap; gap: 0.5rem; padding: 0.4rem 0.4rem 0.4rem 1rem; padding-bottom: calc(0.4rem + env(safe-area-inset-bottom, 0px)); }
+    .sticky-cta-text { font-size: 0.75rem; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sticky-cta-text-full { display: none; }
+    .sticky-cta-text-short { display: inline; }
+    .sticky-cta-btn { padding: 0.55rem 0.9rem; font-size: 0.65rem; }
   }
 </style>
 </head>
@@ -1193,6 +1201,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       <li><a href="index.html#podcast">Podcast</a></li>
       <li><a href="index.html#articles">Articles</a></li>
       <li><a href="ai-research.html" class="active">Research</a></li>
+      <li><a href="deals.html">Deal Intelligence</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="https://www.linkedin.com/company/the-pharma-closeout" target="_blank" rel="noopener">LinkedIn</a></li>
     </ul>
@@ -1623,6 +1632,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     </div>
     <div class="footer-right">
       <ul class="footer-connect">
+        <li><a href="deals.html">Deal Intelligence</a></li>
         <li><a href="https://www.linkedin.com/company/the-pharma-closeout" target="_blank" rel="noopener">LinkedIn</a></li>
         <li><a href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener">Newsletter</a></li>
         <li><a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" rel="noopener">Spotify</a></li>
@@ -1713,10 +1723,15 @@ function toggleEpisode(headerEl) {
   }
 }
 
-/* ── SCROLL REVEAL ── */
+/* ── SCROLL REVEAL (progressive enhancement) ── */
 (function() {
   var els = document.querySelectorAll('.reveal');
   if (!els.length) return;
+  // Only hide sections when the animation can actually run: skip for
+  // reduced-motion users and browsers without IntersectionObserver.
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion || !('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('js-reveal');
   var observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
@@ -1809,7 +1824,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- ── STICKY CTA BAR ── -->
 <div class="sticky-cta" id="stickyCta">
-  <span class="sticky-cta-text">Get the free 28-page AI in Pharma briefing</span>
+  <span class="sticky-cta-text"><span class="sticky-cta-text-full">Get the free 28-page AI in Pharma briefing</span><span class="sticky-cta-text-short">Free 28-page AI briefing</span></span>
   <a href="https://thepharmacloseout.gumroad.com/l/briefing" target="_blank" rel="noopener" class="sticky-cta-btn" onclick="trackEvent('sticky_cta_click')">Download Free &rarr;</a>
   <button class="sticky-cta-close" onclick="document.getElementById('stickyCta').classList.add('dismissed')" aria-label="Dismiss"><span class="sticky-cta-close-icon" aria-hidden="true">&times;</span></button>
 </div>

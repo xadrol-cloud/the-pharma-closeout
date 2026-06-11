@@ -7,9 +7,9 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate } from './format.js?v=20260425b'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260611a'
 
-export { formatValue, formatDate }
+export { formatValue, formatDate, isPlausibleDate }
 
 const supabase = createClient(
   'https://nuqhlvlslwroupedduog.supabase.co',
@@ -40,10 +40,32 @@ export function parseTAs(jsonStr) {
   try { return JSON.parse(jsonStr) } catch { return [] }
 }
 
-/** Get year from ISO date */
+/** Get year from ISO date — blank when the date fails the sanity guard */
 function yearOf(isoDate) {
-  if (!isoDate) return ''
+  if (!isoDate || !isPlausibleDate(isoDate)) return ''
   return isoDate.substring(0, 4)
+}
+
+/**
+ * Pipeline-artifact text gate. Wikidata ingest leaves strings like
+ * "Merger: Pfizer resulted in Unknown Successor (source: Wikidata Q891723
+ * merger instance)" in recap/timeline/review fields — these must never
+ * render. Callers fall back to their existing empty states.
+ */
+export function isPipelineArtifact(text) {
+  if (!text) return false
+  const s = String(text)
+  return s.includes('Unknown Successor') || /wikidata/i.test(s) || /\bQ\d{4,}\b/.test(s)
+}
+
+/**
+ * Prose cleaner for display: strips bare "(https://...)" parentheticals
+ * embedded in narrative fields — the links live in Sources already and
+ * raw URLs force horizontal overflow on phone widths.
+ */
+export function cleanProse(s) {
+  if (!s) return ''
+  return String(s).replace(/\s*\(\s*https?:\/\/[^)]*\)/g, '').trim()
 }
 
 /** Get CSS background class for a deal type */
@@ -152,7 +174,13 @@ function scoreTier(score, max = 10) {
  * Returns empty string for null / 'Active' — we only surface non-default states.
  * Maps the deal_outcome_status enum onto red/green/gold/gray colorways.
  */
-export function renderDealStatus(status) {
+export function renderDealStatus(status, deal = null) {
+  // Surface termination even when deal_outcome_status is unset but the
+  // row-level deal_status says Terminated — the red FAILED critic badge
+  // must not be the only signal.
+  if ((!status || status === 'Active') && deal && /terminat/i.test(String(deal.deal_status || ''))) {
+    status = 'Terminated'
+  }
   if (!status || status === 'Active') return ''
   const map = {
     'Terminated':          { cls: 'ds-red',   label: 'DEAL TERMINATED' },
@@ -165,7 +193,17 @@ export function renderDealStatus(status) {
   }
   const m = map[status]
   if (!m) return ''
-  return `<span class="deal-status ${m.cls}">${m.label}</span>`
+  let label = m.label
+  // Append the termination month/year when the row carries it (e.g.
+  // "DEAL TERMINATED · Dec 2023") so the failure is dated at a glance.
+  if ((status === 'Terminated' || status === 'Market_Withdrawal') && deal) {
+    const td = deal.termination_date || deal.terminated_date || deal.withdrawal_date || null
+    if (td && isPlausibleDate(td)) {
+      const dt = new Date(td + 'T00:00:00')
+      label += ` · ${dt.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}`
+    }
+  }
+  return `<span class="deal-status ${m.cls}">${label}</span>`
 }
 
 /**
@@ -184,7 +222,8 @@ export function renderValuePill(usdMm) {
 export function isHistoricalDeal(deal) {
   if (!deal) return false
   const y = deal.announcement_date ? parseInt(deal.announcement_date.substring(0, 4), 10) : null
-  return y != null && !isNaN(y) && y < 1990
+  // Years below 1900 are ingest artifacts, not historical records
+  return y != null && !isNaN(y) && y >= 1900 && y < 1990
 }
 
 /**
@@ -738,14 +777,10 @@ export function renderCascadeBar(deal) {
     segments.push({ kind: 'milestones', label: 'Total', amount: total })
   }
 
-  const fmt = (mm) => {
-    if (mm >= 1000) return `$${(mm / 1000).toFixed(mm >= 10000 ? 0 : 1)}B`
-    return `$${Math.round(mm)}M`
-  }
   const segHtml = segments.map(s => {
     const pct = (s.amount / total) * 100
     return `<div class="vc-segment" data-kind="${s.kind}" style="--pct: ${pct.toFixed(1)}">
-      <span class="vc-amount">${fmt(s.amount)}</span>
+      <span class="vc-amount">${formatValue(s.amount)}</span>
       <span class="vc-label">${s.label}</span>
     </div>`
   }).join('')
@@ -811,20 +846,16 @@ export function renderScorePill(type, score, subtitle = '') {
  * Verdict events can link to score breakdown via outcome_id.
  */
 export function renderTimeline(events, outcomes, dealSummary) {
-  if (!events || !events.length) {
-    if (dealSummary) {
-      return `<div class="tl"><div class="tl-item">
-        <div class="tl-dot amber"></div>
-        <div class="tl-date"></div>
-        <div class="tl-title">Deal Overview</div>
-        <div class="tl-body">${esc(dealSummary)}</div>
-      </div></div>
-      <p style="color:var(--ink-faint);font-size:12px;margin-top:8px;">Detailed timeline coming soon.</p>`
-    }
-    return '<p style="color:var(--ink-faint);font-size:13px">No outcome data available yet.</p>'
+  // Gate pipeline artifacts (Wikidata ingest strings) before rendering
+  const cleanEvents = (events || []).filter(e =>
+    !isPipelineArtifact(e.headline) && !isPipelineArtifact(e.summary))
+  if (!cleanEvents.length) {
+    // One-line note — the hero summary already covers the deal overview,
+    // so don't repeat it here.
+    return '<p style="color:var(--ink-faint);font-size:13px">No verified timeline events yet — milestones will appear here as outcomes are tracked.</p>'
   }
 
-  const items = events.map(e => {
+  const items = cleanEvents.map(e => {
     const color = e.verdict || 'amber'
     const isVerdict = e.event_type === 'verdict'
     const dotClass = isVerdict ? 'tl-dot tl-dot-verdict' : 'tl-dot'
@@ -853,7 +884,7 @@ export function renderTimeline(events, outcomes, dealSummary) {
       <div class="${dotClass} ${color}"></div>
       <div class="tl-date">${esc(e.event_date || '')}</div>
       <div class="tl-title">${esc(e.headline)}</div>
-      <div class="tl-body">${esc(e.summary)}</div>
+      <div class="tl-body">${esc(cleanProse(e.summary))}</div>
       ${scoreInline}
       ${e.source_url ? `<div class="tl-src"><a href="${esc(e.source_url)}" target="_blank">${esc(e.source_name || 'Source')} &rarr;</a></div>` : ''}
     </div>`
@@ -888,7 +919,16 @@ function sanitizeArcCell(v) {
 /** Route a raw value_label through sanitizeArcCell; otherwise derive from mm. */
 function arcCellLabel(row) {
   const clean = sanitizeArcCell(row.value_label)
-  if (clean) return clean
+  if (clean) {
+    // Normalize "$160,000M"-style labels through the shared formatter so
+    // values >= $1,000M render in B units everywhere (matches the hero).
+    const m = clean.match(/^\$([\d,]+(?:\.\d+)?)\s*M$/i)
+    if (m) {
+      const mm = parseFloat(m[1].replace(/,/g, ''))
+      if (!isNaN(mm) && mm >= 1000) return formatValue(mm)
+    }
+    return clean
+  }
   if (row.value_usd_mm != null) return formatValue(row.value_usd_mm)
   return 'Data pending'
 }
@@ -1118,6 +1158,21 @@ function sanitizeStatValue(v) {
   return s
 }
 
+/**
+ * Shared Key Assets / disease-card asset row. Each cell is its own grid
+ * column (see .am-row CSS). Drops duplicate descriptor text so the same
+ * string never renders twice in one row.
+ */
+function assetRowHtml(a) {
+  const name = (a.asset_name || '').trim()
+  const moa = (a.asset_moa || '').trim()
+  const status = (a.asset_status || '').trim()
+  const rev = (a.asset_revenue_label || '').trim()
+  const moaOut = moa && moa.toLowerCase() !== name.toLowerCase() ? moa : ''
+  const revOut = rev && rev.toLowerCase() !== moaOut.toLowerCase() && rev.toLowerCase() !== status.toLowerCase() ? rev : ''
+  return `<div class="am-row"><span class="am-name">${esc(name)}</span><span class="am-moa">${esc(moaOut)}</span><span class="am-status ${esc(a.asset_status_class || '')}">${esc(status)}</span><span class="am-rev">${esc(revOut)}</span></div>`
+}
+
 export function renderDiseaseContext(indications, assets) {
   if (!indications || !indications.length) {
     return '<p style="color:var(--ink-muted);font-size:14px;padding:16px 0;">Disease context data not yet available for this deal.</p>'
@@ -1139,18 +1194,28 @@ export function renderDiseaseContext(indications, assets) {
       `<span class="at-tag ${esc(a.asset_status_class || '')}">${esc(a.asset_header_tag || a.asset_name || '')}</span>`
     ).join('')
 
-    // Stats in header
+    // Stats in header — hide the whole block when both stats are null
     const patientsFormatted = fmtPatients(ind.us_patients_annual)
     const marketFormatted = fmtMarket(ind.market_size_usd_mm)
     const marketLabel = ind.market_size_label || 'US Market'
+    const hasHeaderStats = ind.us_patients_annual != null || ind.market_size_usd_mm != null
+    const statsHtml = hasHeaderStats
+      ? `<div class="disease-stats"><div class="ds"><div class="ds-val">${patientsFormatted}</div><div class="ds-label">US Cases/yr</div></div><div class="ds"><div class="ds-val">${marketFormatted}</div><div class="ds-label">${esc(marketLabel)}</div></div></div>`
+      : ''
 
-    // Task 20: detect empty right panel so we can collapse the grid
-    const rightPanelText = (ind.second_column_text || '').trim()
-    const hasRightPanel = rightPanelText.length > 0
-    const gridCls = hasRightPanel ? 'dp-grid' : 'dp-grid dp-grid-single'
-    const rightBlock = hasRightPanel
+    // Task 20 + empty-state polish: render each panel only when it has
+    // content (no orphan "Disease Overview" heading); strip raw URL
+    // parentheticals from prose before display.
+    const overviewText = cleanProse(ind.disease_overview || '')
+    const rightPanelText = cleanProse(ind.second_column_text || '')
+    const leftBlock = overviewText
+      ? `<div class="dp-block"><h4>Disease Overview</h4><p>${esc(overviewText)}</p></div>`
+      : ''
+    const rightBlock = rightPanelText
       ? `<div class="dp-block"><h4>${esc(ind.second_column_label || 'Competitive Landscape')}</h4><p>${esc(rightPanelText)}</p></div>`
       : ''
+    const gridCls = leftBlock && rightBlock ? 'dp-grid' : 'dp-grid dp-grid-single'
+    const gridHtml = leftBlock || rightBlock ? `<div class="${gridCls}">${leftBlock}${rightBlock}</div>` : ''
 
     // Task 25: push callout cards only when value + label both pass validation
     const mktCells = []
@@ -1173,14 +1238,12 @@ export function renderDiseaseContext(indications, assets) {
       pushCell(ind.fourth_metric_value, ind.fourth_metric_label, ind.fourth_metric_source)
     }
 
-    // Asset mini rows
-    const assetRows = indAssets.map(a =>
-      `<div class="am-row"><div class="am-name">${esc(a.asset_name || '')}</div><div class="am-moa">${esc(a.asset_moa || '')}</div><div class="am-status ${esc(a.asset_status_class || '')}">${esc(a.asset_status || '')}</div><div class="am-rev">${esc(a.asset_revenue_label || '')}</div></div>`
-    ).join('')
+    // Asset mini rows (shared renderer — dedupes descriptor columns)
+    const assetRows = indAssets.map(assetRowHtml).join('')
 
-    return `<div class="disease-card"><div class="disease-header" aria-expanded="${expanded ? 'true' : 'false'}" onclick="this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true');this.nextElementSibling.classList.toggle('open')"><div class="disease-icon" style="background:#f3f4f6">${ind.indication_emoji || '💊'}</div><div class="disease-name-block"><div class="disease-name">${esc(ind.indication)}</div><div class="disease-assets">${assetTags}</div></div><div class="disease-stats"><div class="ds"><div class="ds-val">${patientsFormatted}</div><div class="ds-label">US Cases/yr</div></div><div class="ds"><div class="ds-val">${marketFormatted}</div><div class="ds-label">${esc(marketLabel)}</div></div></div><div class="dchev"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div></div>
+    return `<div class="disease-card"><div class="disease-header" aria-expanded="${expanded ? 'true' : 'false'}" onclick="this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true');this.nextElementSibling.classList.toggle('open')"><div class="disease-icon" style="background:#f3f4f6">${ind.indication_emoji || '💊'}</div><div class="disease-name-block"><div class="disease-name">${esc(ind.indication)}</div><div class="disease-assets">${assetTags}</div></div>${statsHtml}<div class="dchev"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div></div>
     <div class="dpanel${expanded ? ' open' : ''}"><div class="dpanel-inner">
-      <div class="${gridCls}"><div class="dp-block"><h4>Disease Overview</h4><p>${esc(ind.disease_overview || '')}</p></div>${rightBlock}</div>
+      ${gridHtml}
       ${mktCells.length ? `<div class="mkt-row">${mktCells.join('')}</div>` : ''}
       ${indAssets.length ? `<div class="asset-mini"><div class="am-title">Assets in this indication</div>${assetRows}</div>` : ''}
     </div></div></div>`
@@ -1195,7 +1258,11 @@ export function renderDiseaseContext(indications, assets) {
 export function renderFinancials(deal) {
   const evRev = deal.deal_ev_revenue_x != null ? `${deal.deal_ev_revenue_x.toFixed(1)}x` : '—'
   const evEbitda = deal.deal_ev_ebitda_x != null ? `${deal.deal_ev_ebitda_x.toFixed(1)}x` : '—'
-  const ttc = deal.time_to_close_days != null ? `${deal.time_to_close_days} days` : '—'
+  // Suppress derived TTC when non-positive or computed off an implausible
+  // close date (Wikidata ingest artifacts produce "0 days" / "-2 days")
+  const ttcValid = deal.time_to_close_days != null && deal.time_to_close_days > 0 &&
+    (!deal.close_date || isPlausibleDate(deal.close_date))
+  const ttc = ttcValid ? `${deal.time_to_close_days} days` : '—'
   const equity = deal.equity_sought_pct != null ? `${deal.equity_sought_pct}%` : '—'
   const cashPct = deal.cash_portion_usd_mm != null ? formatValue(deal.cash_portion_usd_mm) : null
   const stockPct = deal.stock_portion_usd_mm != null ? formatValue(deal.stock_portion_usd_mm) : null
@@ -1228,12 +1295,24 @@ export function renderFinancials(deal) {
 
 /* ---------- 3h. Critic Reviews ---------- */
 
+/** Sources eligible to render as critic reviews: sentiment-tagged and not
+ *  pipeline artifacts (Wikidata ingest strings never render as quotes). */
+function eligibleReviews(sources) {
+  return (sources || []).filter(s =>
+    s.sentiment && !isPipelineArtifact(s.excerpt) && !isPipelineArtifact(s.headline))
+}
+
+/** Count of renderable critic reviews — used for the "Score pending" hero state. */
+export function criticReviewCount(sources) {
+  return eligibleReviews(sources).length
+}
+
 /**
- * Scrollable review cards with sentiment color-coding.
- * Filters to sources that have a sentiment value.
+ * Review cards with sentiment color-coding. First 3 render expanded; the
+ * rest sit behind a "Show all N reviews" expander — never clipped mid-review.
  */
 export function renderCriticReviews(sources) {
-  const reviews = (sources || []).filter(s => s.sentiment)
+  const reviews = eligibleReviews(sources)
   if (!reviews.length) return '<p style="color:var(--ink-faint);font-size:13px">No analyst reviews available.</p>'
 
   const cards = reviews.map(r => {
@@ -1256,18 +1335,34 @@ export function renderCriticReviews(sources) {
     </a>`
   })
 
+  // Expand at whole-review boundaries: first 3 visible, rest behind toggle
+  const CAP = 3
+  const visible = cards.slice(0, CAP)
+  const hidden = cards.slice(CAP)
+  let body = visible.join('')
+  if (hidden.length) {
+    body += `<div class="acc-hidden-wrap" data-collapsed="true">${hidden.map(c => `<div class="acc-hidden collapsed">${c}</div>`).join('')}</div>` +
+      `<button class="acc-toggle" type="button" onclick="const w=this.previousElementSibling;w.setAttribute('data-collapsed','false');this.remove()">Show all ${reviews.length} reviews &rarr;</button>`
+  }
+
   return `<div class="card-head">
     <span class="card-title">Critic Reviews</span>
     <span class="reviews-count">${reviews.length}</span>
   </div>
-  <div class="reviews-container">${cards.join('')}</div>`
+  <div class="reviews-container">${body}</div>`
 }
 
 
 /* ---------- 3i. Key Assets (from disease_assets table) ---------- */
 
 export function renderKeyAssets(allAssets) {
-  if (!allAssets || !allAssets.length) return '<p style="color:var(--ink-faint);font-size:13px">No asset data available.</p>'
+  if (!allAssets || !allAssets.length) {
+    // Keep the section heading visible in the empty state
+    return `<div class="asset-mini" style="border-top:none;padding-top:0;margin-top:0;">
+      <div class="am-title">Key Assets</div>
+      <p style="color:var(--ink-faint);font-size:13px">No asset data available.</p>
+    </div>`
+  }
 
   const groups = { ok: [], pip: [], div: [] }
   for (const a of allAssets) {
@@ -1284,12 +1379,7 @@ export function renderKeyAssets(allAssets) {
     if (!assets || !assets.length) continue
     rows.push(`<div class="am-group-label ${cls}">${groupLabels[cls]}</div>`)
     for (const a of assets) {
-      rows.push(`<div class="am-row">
-        <span class="am-name">${esc(a.asset_name || '')}</span>
-        <span class="am-moa">${esc(a.asset_moa || '')}</span>
-        <span class="am-status ${esc(a.asset_status_class || '')}">${esc(a.asset_status || '')}</span>
-        <span class="am-rev">${esc(a.asset_revenue_label || '')}</span>
-      </div>`)
+      rows.push(assetRowHtml(a))
     }
   }
 
@@ -1406,10 +1496,10 @@ function renderLineageList(deals, emptyMsg) {
   const overflow = deals.slice(4)
   const row = d => {
     const val = formatValue(d.deal_value_usd_mm)
-    const y = yearOf(d.announcement_date)
+    const y = yearOf(d.announcement_date) // blank for implausible years (ingest artifacts)
     const type = shortType(d.deal_type) || 'Deal'
     return `<a class="lin-row" href="deal.html?id=${encodeURIComponent(d.deal_id)}">
-      <div class="lin-year">${esc(y || '')}</div>
+      <div class="lin-year">${esc(y || '—')}</div>
       <div class="lin-body">
         <div class="lin-name">${esc(d.buyer_name || '')} / ${esc(d.target_name || '')}</div>
         <div class="lin-meta">${esc(type)} &middot; ${esc(val)}</div>
@@ -1717,10 +1807,16 @@ export function renderSources(sources) {
     const dateStr = s.published_date
       ? formatDate(s.published_date)
       : formatDate(s.date_accessed)
+    // Don't repeat the title verbatim in the subtitle — when the headline
+    // is missing (title falls back to publisher), show just the date.
+    const title = s.headline || s.source_name || 'Source'
+    const subParts = []
+    if (s.source_name && s.source_name !== title) subParts.push(s.source_name)
+    subParts.push(dateStr)
     return `<div class="src-item"${hidden}>
       <div class="src-type">${esc(s.source_type || 'Article')}${healthBadge}${alignBadge}</div>
-      <div class="src-headline"><a href="${esc(href)}" target="_blank">${esc(s.headline || s.source_name || 'Source')}</a></div>
-      <div class="src-date">${esc(s.source_name || '')} · ${esc(dateStr)}</div>
+      <div class="src-headline"><a href="${esc(href)}" target="_blank">${esc(title)}</a></div>
+      <div class="src-date">${esc(subParts.join(' · '))}</div>
     </div>`
   })
 

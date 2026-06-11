@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- charset must be first in <head> (within the first 1024 bytes) or the
+     parser can fall back to windows-1252 and mojibake accented names -->
+<meta charset="UTF-8">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-K6XEWCK7W4"></script>
 <script>
@@ -28,7 +31,6 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <noscript>
 <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=521570287&fmt=gif" />
 </noscript>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Deal Intelligence | The Pharma Closeout</title>
 <meta name="description" content="In-depth deal analysis with critic scores, outcome tracking, and financial breakdowns.">
@@ -37,7 +39,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260531a">
+<link rel="stylesheet" href="assets/deals.css?v=20260611a">
 <script defer src="assets/nav.js?v=20260531a"></script>
 </head>
 <body>
@@ -233,8 +235,9 @@ import {
   formatValue, formatDate, parseTAs,
   renderDealStatus, renderValuePill, isHistoricalDeal,
   renderCascadeBar,
-  exportDealRow
-} from './assets/deals.js?v=20260531a'
+  exportDealRow,
+  criticReviewCount, isPipelineArtifact, cleanProse, isPlausibleDate
+} from './assets/deals.js?v=20260611a'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -264,22 +267,38 @@ if (!dealId) {
       document.getElementById('hero-poster').innerHTML = renderPoster(deal, 'featured')
       document.getElementById('hero-title').textContent = `${deal.buyer_name} / ${deal.target_name}`
 
-      // Task 18: Deal Status badge next to the title
-      document.getElementById('hero-status').innerHTML = renderDealStatus(deal.deal_outcome_status)
+      // Task 18: Deal Status badge next to the title (deal row passed so
+      // terminated deals get a dated pill even without outcome status)
+      document.getElementById('hero-status').innerHTML = renderDealStatus(deal.deal_outcome_status, deal)
 
-      // Score pills
+      // Score pills — when reviews exist but the score needs >=4, say so
+      const reviewCount = criticReviewCount(sources)
+      const criticSubtitle = deal.critic_score == null && reviewCount > 0
+        ? (reviewCount < 4 ? `Score pending — ${reviewCount} of 4 reviews` : 'Score pending')
+        : 'Market consensus'
+      // Date sanity guard: never derive "Unlocks" from implausible years
+      const unlockBase = [deal.close_date, deal.announcement_date].find(d => d && isPlausibleDate(d))
+      const outcomeSubtitle = deal.outcome_score != null
+        ? 'Outcome results'
+        : (unlockBase ? `Unlocks ${parseInt(unlockBase.substring(0,4), 10) + 5}` : 'Unlocks pending')
       document.getElementById('hero-scores').innerHTML =
-        renderScorePill('critic', deal.critic_score != null ? Math.round(deal.critic_score) : null, 'Market consensus') +
-        renderScorePill('outcome', deal.outcome_score != null ? Math.round(deal.outcome_score) : null,
-          deal.outcome_score != null ? 'Outcome results' : `Unlocks ${parseInt(deal.close_date?.substring(0,4) || deal.announcement_date?.substring(0,4) || '2025') + 5}`)
-
-      // Task 19: Meta line leads with value pill, falls back to "Value Undisclosed"
-      document.getElementById('hero-meta').innerHTML =
-        renderValuePill(deal.deal_value_usd_mm) +
-        ` ${deal.deal_type || 'Acquisition'} &middot; ${formatDate(deal.announcement_date)}`
+        renderScorePill('critic', deal.critic_score != null ? Math.round(deal.critic_score) : null, criticSubtitle) +
+        renderScorePill('outcome', deal.outcome_score != null ? Math.round(deal.outcome_score) : null, outcomeSubtitle)
 
       // Phase 11 WS-G: deal value cascade bar (upfront / milestones)
-      document.getElementById('hero-cascade').innerHTML = renderCascadeBar(deal)
+      const cascadeHtml = renderCascadeBar(deal)
+      document.getElementById('hero-cascade').innerHTML = cascadeHtml
+
+      // Task 19: Meta line leads with value pill, falls back to "Value
+      // Undisclosed". Drop the pill when the cascade bar is a single
+      // "Total" band showing the identical value (no duplicate $160B).
+      const upfrontMm = +deal.upfront_usd_mm || 0
+      const totalMm = +deal.deal_value_usd_mm || 0
+      const cascadeShowsBreakdown = upfrontMm > 0 && upfrontMm < totalMm
+      const valuePillHtml = cascadeHtml && !cascadeShowsBreakdown ? '' : renderValuePill(deal.deal_value_usd_mm)
+      document.getElementById('hero-meta').innerHTML =
+        valuePillHtml +
+        ` ${deal.deal_type || 'Acquisition'} &middot; ${formatDate(deal.announcement_date)}`
 
       // Tags
       const tas = parseTAs(deal.therapeutic_areas)
@@ -288,17 +307,18 @@ if (!dealId) {
         (deal.deal_type ? `<span class="tag t-muted">${deal.deal_type}</span>` : '')
       document.getElementById('hero-tags').innerHTML = tagHtml
 
-      // Summary / editorial lede
-      if (deal.deal_summary) {
-        document.getElementById('hero-summary').textContent = deal.deal_summary
+      // Summary / editorial lede — gate pipeline artifacts (Wikidata
+      // ingest strings) and strip raw URL parentheticals from prose
+      if (deal.deal_summary && !isPipelineArtifact(deal.deal_summary)) {
+        document.getElementById('hero-summary').textContent = cleanProse(deal.deal_summary)
         document.getElementById('hero-summary').style.display = ''
       }
 
       // Editorial lede
-      if (deal.editorial_lede) {
+      if (deal.editorial_lede && !isPipelineArtifact(deal.editorial_lede)) {
         const ledeEl = document.createElement('div')
         ledeEl.className = 'feat-lede'
-        ledeEl.textContent = deal.editorial_lede
+        ledeEl.textContent = cleanProse(deal.editorial_lede)
         document.getElementById('hero-summary').after(ledeEl)
       }
 

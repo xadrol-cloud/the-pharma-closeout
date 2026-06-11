@@ -37,6 +37,29 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/deals.css?v=20260531a">
 <script defer src="assets/nav.js?v=20260531a"></script>
+<style>
+/* ── Page-local overrides (compare.html only) ── */
+
+/* Keep the hamburger from being crushed by the crowded flex nav.
+   Root cause lives in assets/deals.css (.nav-toggle, ~line 208): width/height
+   44px but no flex-shrink protection, so the flex nav squeezes it to ~12px
+   on phone. Page-local guard until the shared asset is patched. */
+.nav-toggle { flex: 0 0 44px; min-width: 44px; min-height: 44px; }
+
+/* Mobile comparison affordance: cap column width so the next deal's column
+   "peeks" past the right edge as a scroll cue, add gentle horizontal snap,
+   and always show the swipe hint on narrow viewports (the shared
+   hover-capable rule otherwise hides it in narrow desktop windows). */
+@media (max-width: 600px) {
+  .cmp-table thead th.cmp-head { width: 55vw; min-width: 55vw; }
+  .cmp-table thead th.cmp-head .c-poster { width: 100%; max-width: 190px; margin: 0 auto; }
+  .cmp-row td.cmp-val { min-width: 55vw; }
+  .cmp-table th.cmp-label { max-width: 96px; white-space: normal; }
+  .cmp-wrap { scroll-snap-type: x proximity; scroll-padding-left: 96px; }
+  .cmp-table thead th.cmp-head { scroll-snap-align: start; }
+  .cmp-swipe-hint { display: block !important; }
+}
+</style>
 </head>
 <body>
 
@@ -66,12 +89,10 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   <div id="comparison-root" style="display:none;"></div>
   <div id="empty-state" style="display:none;text-align:center;padding:80px 40px;">
     <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
-      No deals selected for comparison. Try the URL format:<br>
-      <code style="font-family:var(--mono);font-size:12px;background:var(--bg-tint,#f5f5f0);padding:4px 8px;border-radius:3px;">
-        compare.html?ids=deal_id_1,deal_id_2
-      </code>
+      Pick any two deals from the <a href="deals.html" style="color:var(--gold);font-weight:600;text-decoration:none;">Deal Database</a> and tap <strong>Compare</strong> to see them side by side.
     </p>
     <a href="deals.html" style="color:var(--gold);font-weight:600;text-decoration:none;">Browse the Deal Database &rarr;</a>
+    <p style="color:var(--ink-faint);font-size:11px;margin-top:24px;font-family:var(--mono);">You can also link directly: compare.html?ids=deal_id_1,deal_id_2</p>
   </div>
 </div>
 
@@ -129,6 +150,11 @@ if (ids.length < 2) {
         `<a href="deals.html" style="color:var(--gold);font-weight:600;">Browse the Deal Database &rarr;</a>`
     } else {
       rootEl.innerHTML = renderComparison(valid)
+      // Hide metric rows where every compared deal is null (rendered as em-dash)
+      rootEl.querySelectorAll('.cmp-row').forEach(tr => {
+        const vals = Array.from(tr.querySelectorAll('td.cmp-val'))
+        if (vals.length && vals.every(td => td.textContent.trim() === '—')) tr.remove()
+      })
       rootEl.style.display = ''
       document.title = valid.map(d => `${d.buyer_name}/${d.target_name}`).join(' vs ').substring(0, 100) + ' | Deal Comparison'
     }

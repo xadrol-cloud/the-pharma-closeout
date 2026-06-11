@@ -25,11 +25,23 @@ export function formatValue(mm) {
 }
 
 /**
+ * Date sanity guard. Wikidata ingest artifacts surface years like 1849 or
+ * 1886 on modern deals — anything outside 1900-2100 is treated as invalid
+ * so the renderer never shows impossible dates.
+ */
+export function isPlausibleDate(isoDate) {
+  if (!isoDate) return false
+  const y = parseInt(String(isoDate).substring(0, 4), 10)
+  return !isNaN(y) && y >= 1900 && y <= 2100
+}
+
+/**
  * Format an ISO date string ("2019-01-03") into "Jan 3, 2019".
- * Returns "—" when the input is empty/null.
+ * Returns "—" when the input is empty/null or fails the sanity guard.
  */
 export function formatDate(isoDate) {
   if (!isoDate) return '—'
+  if (!isPlausibleDate(isoDate)) return '—'
   const d = new Date(isoDate + 'T00:00:00')
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 }
