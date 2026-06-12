@@ -302,6 +302,7 @@ export async function fetchDeal(dealId) {
 export async function fetchLatestDeals(limit = 20) {
   const { data } = await supabase
     .from('deals_enriched').select('*')
+    .neq('enrichment_status', 'archived')
     .order('announcement_date', { ascending: false })
     .limit(limit)
   return data || []
@@ -311,6 +312,7 @@ export async function fetchLatestDeals(limit = 20) {
 export async function fetchTrendingDeals(limit = 20) {
   const { data } = await supabase
     .from('deals_enriched').select('*')
+    .neq('enrichment_status', 'archived')
     .not('trending_rank', 'is', null)
     .order('trending_rank')
     .limit(limit)
@@ -318,6 +320,7 @@ export async function fetchTrendingDeals(limit = 20) {
   // Fallback: highest value deals
   const { data: fallback } = await supabase
     .from('deals_enriched').select('*')
+    .neq('enrichment_status', 'archived')
     .not('deal_value_usd_mm', 'is', null)
     .order('deal_value_usd_mm', { ascending: false })
     .limit(limit)
@@ -328,6 +331,7 @@ export async function fetchTrendingDeals(limit = 20) {
 export async function fetchTopOutcomeDeals(limit = 20) {
   const { data } = await supabase
     .from('deals_enriched').select('*')
+    .neq('enrichment_status', 'archived')
     .not('outcome_score', 'is', null)
     .order('outcome_score', { ascending: false })
     .limit(limit)
@@ -337,6 +341,7 @@ export async function fetchTopOutcomeDeals(limit = 20) {
 /** Search deals by text query + optional filters. Returns { deals, total }. */
 export async function searchDeals(query, filters = {}, { limit = 25, offset = 0 } = {}) {
   let q = supabase.from('deals_enriched').select('*', { count: 'exact' })
+    .neq('enrichment_status', 'archived')
   if (query) {
     q = q.or(`buyer_name.ilike.%${query}%,target_name.ilike.%${query}%,therapeutic_areas.ilike.%${query}%,lead_molecules.ilike.%${query}%,indications.ilike.%${query}%`)
   }
@@ -444,6 +449,7 @@ export async function fetchFeaturedDeal() {
   // Fallback: highest outcome score
   const { data: top } = await supabase
     .from('deals_enriched').select('*')
+    .neq('enrichment_status', 'archived')
     .not('outcome_score', 'is', null)
     .order('outcome_score', { ascending: false })
     .limit(1)
@@ -451,6 +457,7 @@ export async function fetchFeaturedDeal() {
   // Final fallback: most recent high-value deal
   const { data: recent } = await supabase
     .from('deals_enriched').select('*')
+    .neq('enrichment_status', 'archived')
     .not('deal_value_usd_mm', 'is', null)
     .order('deal_value_usd_mm', { ascending: false })
     .limit(1)
@@ -466,6 +473,7 @@ export async function fetchComparables(deal, limit = 5) {
       if (ids.length) {
         const { data } = await supabase
           .from('deals_enriched').select('*')
+          .neq('enrichment_status', 'archived')
           .in('deal_id', ids)
         if (data && data.length) return data
       }
@@ -475,6 +483,7 @@ export async function fetchComparables(deal, limit = 5) {
   const tas = deal.therapeutic_areas ? JSON.parse(deal.therapeutic_areas) : []
   const ta = tas[0] || ''
   let q = supabase.from('deals_enriched').select('*')
+    .neq('enrichment_status', 'archived')
     .neq('deal_id', deal.deal_id)
   if (ta) q = q.ilike('therapeutic_areas', `%${ta}%`)
   q = q.order('outcome_score', { ascending: false, nullsFirst: false }).limit(limit)
@@ -501,6 +510,7 @@ export async function fetchCorporateLineage(deal, limit = 10) {
   ]).join(',')
   try {
     const { data } = await supabase.from('deals_enriched').select('*')
+      .neq('enrichment_status', 'archived')
       .or(orExpr)
       .neq('deal_id', deal.deal_id)
       .order('announcement_date', { ascending: true, nullsFirst: false })
@@ -522,6 +532,7 @@ export async function fetchCompanionDeals(deal, limit = 10) {
     // Prefer id-based match when available
     if (deal.buyer_id && deal.target_id) {
       const { data } = await supabase.from('deals_enriched').select('*')
+        .neq('enrichment_status', 'archived')
         .eq('buyer_id', deal.buyer_id)
         .eq('target_id', deal.target_id)
         .neq('deal_id', deal.deal_id)
@@ -532,6 +543,7 @@ export async function fetchCompanionDeals(deal, limit = 10) {
     // Fallback: name-based match
     if (deal.buyer_name && deal.target_name) {
       const { data } = await supabase.from('deals_enriched').select('*')
+        .neq('enrichment_status', 'archived')
         .eq('buyer_name', deal.buyer_name)
         .eq('target_name', deal.target_name)
         .neq('deal_id', deal.deal_id)
