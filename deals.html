@@ -39,7 +39,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Newsreader:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260611a">
+<link rel="stylesheet" href="assets/deals.css?v=20260611c">
 <script defer src="assets/nav.js?v=20260531a"></script>
 </head>
 <body>
@@ -80,6 +80,18 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   </div>
 </div>
 
+
+<!-- ========== PRICE-CONTEXT STRIP (Move 1) ========== -->
+<div class="section" style="margin-top:18px;">
+  <div class="price-strip">
+    <span class="ps-item">Structured pharma deal data:</span>
+    <span class="ps-item ps-them">DealForma ~$18,000/yr</span>
+    <span class="ps-sep">·</span>
+    <span class="ps-item ps-them">Clarivate ~$176K/yr</span>
+    <span class="ps-sep">·</span>
+    <span class="ps-item ps-us"><strong>The Pharma Closeout — $0</strong> · no login, no demo call</span>
+  </div>
+</div>
 
 <!-- ========== SEARCH SECTION ========== -->
 <div class="search-section">
@@ -233,12 +245,47 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 
 
 <!-- ========== FOOTER ========== -->
+<!-- ========== FUNNEL BAND (Move 1) ========== -->
+<section class="funnel-band">
+  <div class="funnel-inner">
+    <div class="funnel-grid">
+      <div class="funnel-col">
+        <h4>Listen</h4>
+        <a href="index.html">The daily podcast &rarr;</a>
+        <a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" rel="noopener">On Spotify &rarr;</a>
+      </div>
+      <div class="funnel-col">
+        <h4>Read</h4>
+        <a href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener">The newsletter &rarr;</a>
+        <a href="ai-research.html">AI-in-Pharma research &rarr;</a>
+        <a href="hype-gap.html">The Hype Gap index &rarr;</a>
+      </div>
+      <div class="funnel-col">
+        <h4>Go deeper</h4>
+        <a href="ai-research.html#compendium">The Compendium — $149 &rarr;</a>
+        <a href="about.html">Advisory &rarr;</a>
+        <a href="methodology.html">Methodology &amp; sources &rarr;</a>
+      </div>
+      <div class="funnel-col">
+        <h4>Deal Alerts — free</h4>
+        <p>New deals + their historical-outcome read, Monday mornings.</p>
+        <div class="funnel-sub">
+          <iframe src="https://thepharmacloseout.substack.com/embed" width="100%" height="80" style="border:1px solid rgba(255,255,255,.14);border-radius:6px;background:#fff;" frameborder="0" scrolling="no" title="Subscribe to The Pharma Closeout"></iframe>
+        </div>
+        <div class="funnel-note">Browsing is always free, no login. We never sell your email.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer class="footer">
   <span class="footer-brand">The Pharma <em>Closeout</em></span>
   <div class="footer-links">
     <a href="index.html">Podcast</a>
     <a href="ai-research.html">Research</a>
     <a href="deals.html">Deal Intelligence</a>
+    <a href="hype-gap.html">Hype Gap</a>
+    <a href="methodology.html">Methodology</a>
     <a href="about.html">About</a>
     <span>&copy; 2026 The Pharma Closeout</span>
   </div>
@@ -250,7 +297,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 import {
   fetchFeaturedDeal, fetchLatestDeals, fetchTrendingDeals, fetchTopOutcomeDeals,
   renderPoster, renderFeaturedInfo, initCarousel, initSearch, initMultiSelect, searchDeals
-} from './assets/deals.js?v=20260611b'
+} from './assets/deals.js?v=20260611c'
 
 // Featured deal
 const featured = await fetchFeaturedDeal()

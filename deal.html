@@ -39,7 +39,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260611a">
+<link rel="stylesheet" href="assets/deals.css?v=20260611c">
 <script defer src="assets/nav.js?v=20260531a"></script>
 </head>
 <body>
@@ -87,6 +87,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       <span id="hero-status"></span>
     </div>
     <div id="hero-scores" class="feat-scores" style="margin-top:16px;"></div>
+    <div id="hero-hypegap"></div>
     <div id="hero-cascade" style="margin-top:14px;"></div>
     <div class="hero-meta" id="hero-meta"></div>
     <div class="tags" id="hero-tags"></div>
@@ -208,12 +209,45 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <!-- ═══════════════════════════════════════════════════════════════════
      FOOTER
      ═══════════════════════════════════════════════════════════════════ -->
-<footer id="deal-footer" class="footer" style="display:none;">
+<!-- ========== FUNNEL BAND (Move 1) ========== -->
+<section class="funnel-band">
+  <div class="funnel-inner">
+    <div class="funnel-grid">
+      <div class="funnel-col">
+        <h4>Listen</h4>
+        <a href="index.html">The daily podcast &rarr;</a>
+        <a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" rel="noopener">On Spotify &rarr;</a>
+      </div>
+      <div class="funnel-col">
+        <h4>Read</h4>
+        <a href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener">The newsletter &rarr;</a>
+        <a href="hype-gap.html">The Hype Gap index &rarr;</a>
+        <a href="methodology.html">Methodology &amp; sources &rarr;</a>
+      </div>
+      <div class="funnel-col">
+        <h4>Go deeper</h4>
+        <a href="ai-research.html#compendium">The Compendium — $149 &rarr;</a>
+        <a href="about.html">Advisory &rarr;</a>
+      </div>
+      <div class="funnel-col">
+        <h4>Deal Alerts — free</h4>
+        <p>This deal's outcome + every new deal's historical read, Mondays.</p>
+        <div class="funnel-sub">
+          <iframe src="https://thepharmacloseout.substack.com/embed" width="100%" height="80" style="border:1px solid rgba(255,255,255,.14);border-radius:6px;background:#fff;" frameborder="0" scrolling="no" title="Subscribe to The Pharma Closeout"></iframe>
+        </div>
+        <div class="funnel-note">Browsing is always free. We never sell your email.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="deal-footer" class="footer">
   <div class="footer-brand">The Pharma <em>Closeout</em></div>
   <div class="footer-links">
     <a href="index.html">Home</a>
     <a href="deals.html">Deals</a>
-    <a href="ai-research.html">Research</a>
+    <a href="hype-gap.html">Hype Gap</a>
+    <a href="methodology.html">Methodology</a>
     <a href="about.html">About</a>
     <span>&copy; 2026</span>
   </div>
@@ -236,8 +270,9 @@ import {
   renderDealStatus, renderValuePill, isHistoricalDeal,
   renderCascadeBar,
   exportDealRow,
-  criticReviewCount, isPipelineArtifact, cleanProse, isPlausibleDate
-} from './assets/deals.js?v=20260611b'
+  criticReviewCount, isPipelineArtifact, cleanProse, isPlausibleDate,
+  renderHypeGap, renderProvenance
+} from './assets/deals.js?v=20260611c'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -284,6 +319,9 @@ if (!dealId) {
       document.getElementById('hero-scores').innerHTML =
         renderScorePill('critic', deal.critic_score != null ? Math.round(deal.critic_score) : null, criticSubtitle) +
         renderScorePill('outcome', deal.outcome_score != null ? Math.round(deal.outcome_score) : null, outcomeSubtitle)
+
+      // Move 4: Hype Gap callout (renders only when both scores exist)
+      document.getElementById('hero-hypegap').innerHTML = renderHypeGap(deal)
 
       // Phase 11 WS-G: deal value cascade bar (upfront / milestones)
       const cascadeHtml = renderCascadeBar(deal)
@@ -378,9 +416,9 @@ if (!dealId) {
         document.getElementById('comparables-section').style.display = ''
       }
 
-      // ── Sidebar: Sources ──
+      // ── Sidebar: Sources (+ Move 2c provenance stamp) ──
       const sourcesHtml = renderSources(sources)
-      document.getElementById('sources').innerHTML = sourcesHtml
+      document.getElementById('sources').innerHTML = sourcesHtml + renderProvenance(deal)
       document.getElementById('sources-section').style.display = ''
 
       // ── Task 39: Copy Deal Row binding ──

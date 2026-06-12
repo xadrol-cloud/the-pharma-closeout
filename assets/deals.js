@@ -238,7 +238,7 @@ export function exportDealRow(deal) {
     'Buyer', 'Target', 'Announcement Date', 'Deal Type', 'Deal Value ($MM)',
     'Upfront ($MM)', 'Cash Portion ($MM)', 'Stock Portion ($MM)',
     'Close Date', 'Time To Close (days)', 'Therapeutic Areas',
-    'Critic Score', 'Outcome Score', 'Primary Source URL',
+    'Announcement Sentiment', 'Outcome Score', 'Hype Gap', 'Primary Source URL',
   ]
   const row = [
     deal.buyer_name, deal.target_name, deal.announcement_date,
@@ -248,6 +248,7 @@ export function exportDealRow(deal) {
     tas,
     deal.critic_score != null ? deal.critic_score : '',
     deal.outcome_score != null ? deal.outcome_score : '',
+    hypeGap(deal) != null ? hypeGap(deal) : '',
     deal.primary_source_url || '',
   ]
   const q = v => `"${String(v == null ? '' : v).replace(/"/g, '""')}"`
@@ -689,7 +690,7 @@ export function renderFeaturedInfo(deal) {
     <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
   <div class="score-explainer">
-    <div class="se-item"><div class="se-dot ct"></div> Critic Score — analyst & media consensus at announcement</div>
+    <div class="se-item"><div class="se-dot ct"></div> Announcement Sentiment — analyst & media reaction at announcement</div>
     <div class="se-item"><div class="se-dot os"></div> Outcome Score — post-close performance vs. thesis</div>
   </div>
 </div>`
@@ -836,7 +837,7 @@ export function tierLabelFor(score, dimension = 'critic') {
  */
 export function renderScorePill(type, score, subtitle = '') {
   const dimension = type === 'outcome' ? 'outcome' : 'critic'
-  const label = type === 'critic' ? 'Critic Score' : 'Outcome Score'
+  const label = type === 'critic' ? 'Announcement Sentiment' : 'Outcome Score'
   const tier = tierForScore(score)
   const tierLabel = tierLabelFor(score, dimension)
   const display = score != null ? score : '—'
@@ -847,6 +848,77 @@ export function renderScorePill(type, score, subtitle = '') {
   <div class="score-chip" data-tier="${tier}">${display}</div>
   <span class="score-meta">${meta}</span>
 </div>`
+}
+
+
+/* ---------- 3c.5 Hype Gap (Announcement Sentiment vs Outcome) ---------- */
+
+/**
+ * Hype Gap = Announcement Sentiment − Outcome Score, for deals that have BOTH.
+ * Positive ⇒ the street was more bullish at announcement than history bore out
+ * (over-hyped). Negative ⇒ the deal aged better than the street expected
+ * (under-rated). Returns null when either score is missing.
+ */
+export function hypeGap(deal) {
+  if (!deal) return null
+  const cs = deal.critic_score, os = deal.outcome_score
+  if (cs == null || os == null) return null
+  return Math.round(cs) - Math.round(os)
+}
+
+/** Verdict word for a hype-gap magnitude. */
+export function hypeGapLabel(gap) {
+  if (gap == null) return ''
+  if (gap >= 25) return 'Severely over-hyped'
+  if (gap >= 12) return 'Over-hyped'
+  if (gap <= -25) return 'Badly under-rated'
+  if (gap <= -12) return 'Under-rated'
+  return 'Lived up to the hype'
+}
+
+/**
+ * Per-deal Hype Gap callout for the deal page. Renders nothing until both
+ * scores exist (i.e. the outcome has unlocked) — this is the payoff metric.
+ */
+export function renderHypeGap(deal) {
+  const gap = hypeGap(deal)
+  if (gap == null) return ''
+  const cs = Math.round(deal.critic_score), os = Math.round(deal.outcome_score)
+  const dir = gap > 0 ? 'over' : (gap < 0 ? 'under' : 'even')
+  const sign = gap > 0 ? '+' : ''
+  return `<div class="hype-gap" data-dir="${dir}" title="Announcement Sentiment minus Outcome Score">
+    <div class="hg-headline">The Hype Gap</div>
+    <div class="hg-line">The Street said <strong>${cs}</strong> &middot; history says <strong>${os}</strong></div>
+    <div class="hg-verdict"><span class="hg-num">${sign}${gap}</span> ${esc(hypeGapLabel(gap))}</div>
+  </div>`
+}
+
+
+/* ---------- 3c.6 Provenance stamp (Move 2c — Trust layer) ---------- */
+
+/**
+ * Per-deal provenance footer: when the record was last refreshed by the
+ * research pipeline, the value-confidence tier, and the source tier — with
+ * a link to the public methodology. Builds reader trust / board-citability.
+ */
+export function renderProvenance(deal) {
+  if (!deal) return ''
+  const rows = []
+  const verified = [deal.last_automation_pass, deal.last_verified].find(d => d && isPlausibleDate(String(d).slice(0, 10)))
+  if (verified) {
+    rows.push(`<div class="pv-row"><span class="pv-k">Last verified</span><span class="pv-v">${esc(formatDate(String(verified).slice(0, 10)))}</span></div>`)
+  }
+  if (deal.value_confidence && deal.value_confidence !== 'Unknown') {
+    rows.push(`<div class="pv-row"><span class="pv-k">Value</span><span class="pv-v"><span class="pv-badge">${esc(deal.value_confidence)}</span></span></div>`)
+  }
+  if (deal.source_tier) {
+    rows.push(`<div class="pv-row"><span class="pv-k">Source tier</span><span class="pv-v"><span class="pv-badge">${esc(deal.source_tier)}</span></span></div>`)
+  }
+  if (!rows.length) return ''
+  return `<div class="provenance">
+    ${rows.join('')}
+    <div class="pv-row" style="margin-top:6px;"><span class="pv-v"><a href="methodology.html">How scores &amp; sources work &rarr;</a></span></div>
+  </div>`
 }
 
 
@@ -1358,7 +1430,7 @@ export function renderCriticReviews(sources) {
   }
 
   return `<div class="card-head">
-    <span class="card-title">Critic Reviews</span>
+    <span class="card-title">Announcement Reaction</span>
     <span class="reviews-count">${reviews.length}</span>
   </div>
   <div class="reviews-container">${body}</div>`

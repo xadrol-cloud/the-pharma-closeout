@@ -35,7 +35,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260531a">
+<link rel="stylesheet" href="assets/deals.css?v=20260611c">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
 /* ── Page-local overrides (compare.html only) ── */
@@ -87,6 +87,9 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   <p style="color:var(--ink-muted);font-size:14px;margin-bottom:24px;">Side-by-side analysis of selected deals.</p>
   <div id="loading" style="text-align:center;padding:80px 40px;color:var(--ink-faint);font-size:14px;">Loading deals...</div>
   <div id="comparison-root" style="display:none;"></div>
+  <div id="export-nudge" class="sub-nudge" style="display:none;">
+    Want this as a <strong>memo-ready, cited comparison pack</strong>? Subscribe to <a href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener">Deal Alerts</a> — export tooling ships to subscribers first. Browsing &amp; comparing stay free, always.
+  </div>
   <div id="empty-state" style="display:none;text-align:center;padding:80px 40px;">
     <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
       Pick any two deals from the <a href="deals.html" style="color:var(--gold);font-weight:600;text-decoration:none;">Deal Database</a> and tap <strong>Compare</strong> to see them side by side.
@@ -96,19 +99,53 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   </div>
 </div>
 
+<!-- ========== FUNNEL BAND (Move 1) ========== -->
+<section class="funnel-band">
+  <div class="funnel-inner">
+    <div class="funnel-grid">
+      <div class="funnel-col">
+        <h4>Listen</h4>
+        <a href="index.html">The daily podcast &rarr;</a>
+        <a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" rel="noopener">On Spotify &rarr;</a>
+      </div>
+      <div class="funnel-col">
+        <h4>Read</h4>
+        <a href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener">The newsletter &rarr;</a>
+        <a href="hype-gap.html">The Hype Gap index &rarr;</a>
+        <a href="methodology.html">Methodology &amp; sources &rarr;</a>
+      </div>
+      <div class="funnel-col">
+        <h4>Go deeper</h4>
+        <a href="ai-research.html#compendium">The Compendium — $149 &rarr;</a>
+        <a href="about.html">Advisory &rarr;</a>
+      </div>
+      <div class="funnel-col">
+        <h4>Deal Alerts — free</h4>
+        <p>New deals + their historical-outcome read, Monday mornings.</p>
+        <div class="funnel-sub">
+          <iframe src="https://thepharmacloseout.substack.com/embed" width="100%" height="80" style="border:1px solid rgba(255,255,255,.14);border-radius:6px;background:#fff;" frameborder="0" scrolling="no" title="Subscribe to The Pharma Closeout"></iframe>
+        </div>
+        <div class="funnel-note">Browsing is always free. We never sell your email.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer class="footer">
   <span class="footer-brand">The Pharma <em>Closeout</em></span>
   <div class="footer-links">
     <a href="index.html">Podcast</a>
     <a href="ai-research.html">Research</a>
     <a href="deals.html">Deal Intelligence</a>
+    <a href="hype-gap.html">Hype Gap</a>
+    <a href="methodology.html">Methodology</a>
     <a href="about.html">About</a>
     <span>&copy; 2026 The Pharma Closeout</span>
   </div>
 </footer>
 
 <script type="module">
-import { fetchDeal, fetchDealOutcomes, renderComparison } from './assets/deals.js?v=20260611b'
+import { fetchDeal, fetchDealOutcomes, renderComparison } from './assets/deals.js?v=20260611c'
 
 const params = new URLSearchParams(window.location.search)
 const idsRaw = params.get('ids') || ''
@@ -156,6 +193,7 @@ if (ids.length < 2) {
         if (vals.length && vals.every(td => td.textContent.trim() === '—')) tr.remove()
       })
       rootEl.style.display = ''
+      document.getElementById('export-nudge').style.display = ''
       document.title = valid.map(d => `${d.buyer_name}/${d.target_name}`).join(' vs ').substring(0, 100) + ' | Deal Comparison'
     }
   } catch (err) {

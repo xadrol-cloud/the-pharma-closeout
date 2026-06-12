@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K6XEWCK7W4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K6XEWCK7W4');
+</script>
+<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "521570287";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script>
+<script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=521570287&fmt=gif" />
+</noscript>
+<!-- JSON-LD Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "The Pharma Closeout",
+  "url": "https://thepharmacloseout.com",
+  "description": "Daily pharma intelligence and original research on AI in pharmaceutical and biotechnology industries.",
+  "sameAs": [
+    "https://open.spotify.com/show/6bib0887ucySx51e49M3tp",
+    "https://thepharmacloseout.substack.com/"
+  ]
+}
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Methodology &amp; Sources — The Pharma Closeout</title>
+<meta name="description" content="How the Pharma Closeout deal database is built: primary-source hierarchy, Announcement Sentiment and Outcome scoring, confidence and provenance, and full AI disclosure.">
+<meta property="og:title" content="Methodology & Sources — The Pharma Closeout">
+<meta property="og:description" content="Every score is traceable to primary sources. Here is exactly how the data is built.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thepharmacloseout.com/methodology">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0a'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23c49332'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;0,6..72,700;0,6..72,800;1,6..72,300;1,6..72,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --gold: #c49332;
+    --gold-dim: rgba(196, 147, 50, 0.12);
+    --white: #e8e4de;
+    --gray: #6b6b6b;
+    --gray-light: #999;
+    --rule: rgba(196, 147, 50, 0.15);
+
+    --font-display: 'Newsreader', Georgia, 'Times New Roman', serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--black);
+    color: var(--white);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ── NAV (duplicated from index.html) ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  nav.scrolled {
+    background: rgba(10, 10, 10, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-inner {
+    max-width: 1400px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 72px; padding: 0 clamp(1.5rem, 4vw, 4rem);
+  }
+  .logo {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 1.1rem; letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .logo a { transition: opacity 0.3s; }
+  .logo a:hover { opacity: 0.7; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--gray-light); font-size: 0.75rem;
+    font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a.active {
+    color: var(--gold);
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 2px;
+  }
+
+  /* ── MOBILE NAV (duplicated from index.html) ── */
+  .nav-toggle {
+    display: none; background: none; border: none; cursor: pointer;
+    width: 44px; height: 44px; position: relative;
+    align-items: center; justify-content: center;
+  }
+  .nav-toggle span,
+  .nav-toggle span::before,
+  .nav-toggle span::after {
+    display: block; width: 20px; height: 1.5px;
+    background: var(--white); position: absolute;
+    transition: transform 0.3s, opacity 0.2s;
+  }
+  .nav-toggle span::before { content: ''; top: -6px; left: 0; }
+  .nav-toggle span::after { content: ''; top: 6px; left: 0; }
+  .nav-toggle.active span { background: transparent; }
+  .nav-toggle.active span::before { transform: rotate(45deg); top: 0; }
+  .nav-toggle.active span::after { transform: rotate(-45deg); top: 0; }
+
+  /* ── HERO ── */
+  .meth-hero {
+    position: relative;
+    overflow: hidden;
+    padding: calc(72px + 4rem) clamp(1.5rem, 4vw, 4rem) 3.5rem;
+    background-image: radial-gradient(ellipse at 25% 40%, rgba(196, 147, 50, 0.07), transparent 65%);
+  }
+  .meth-hero-content {
+    position: relative; z-index: 1;
+    max-width: 1400px; margin: 0 auto; width: 100%;
+  }
+  .meth-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    max-width: 760px;
+  }
+  .meth-hero .lede {
+    margin-top: 1.5rem;
+    max-width: 620px;
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: var(--gray-light);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* ── SHARED ── */
+  .section {
+    max-width: 1400px; margin: 0 auto;
+    padding: 0 clamp(1.5rem, 4vw, 4rem);
+  }
+  .gold-rule {
+    border: none; height: 1px;
+    background: var(--rule);
+    margin: 0;
+  }
+  .section-label {
+    font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* ── CONTENT BLOCKS ── */
+  .block {
+    padding-top: 3.25rem; padding-bottom: 3.25rem;
+  }
+  .block-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: start;
+  }
+  .block-head h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-top: 0.75rem;
+  }
+  .block-body {
+    max-width: 720px;
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--gray-light);
+  }
+  .block-body p { margin-bottom: 1.25rem; }
+  .block-body p:last-child { margin-bottom: 0; }
+  .block-body strong { color: var(--white); font-weight: 500; }
+  .block-body a { color: var(--gold); transition: opacity 0.3s; }
+  .block-body a:hover { opacity: 0.7; }
+  .block-body ul {
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+  }
+  .block-body li {
+    position: relative;
+    padding-left: 1.4rem;
+    margin-bottom: 0.65rem;
+  }
+  .block-body li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.62em;
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem 3.5rem;
+    margin-top: 0.5rem;
+  }
+  .stat .stat-num {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat .stat-cap {
+    margin-top: 0.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  /* ── SCORE / DIMENSION CARDS ── */
+  .dim-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0 0.5rem;
+  }
+  .dim-card {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 1.25rem 1.35rem;
+    background: rgba(255, 255, 255, 0.012);
+  }
+  .dim-card .dim-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .dim-card .dim-name {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--white);
+  }
+  .dim-card .dim-weight {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .dim-card p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--gray-light);
+    margin: 0;
+  }
+
+  /* ── TIER TABLE ── */
+  .table-wrap {
+    margin-top: 1.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+  }
+  table.tier {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    min-width: 540px;
+  }
+  table.tier th,
+  table.tier td {
+    text-align: left;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  table.tier thead th {
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    background: rgba(196, 147, 50, 0.04);
+  }
+  table.tier tbody tr:last-child td { border-bottom: none; }
+  table.tier td.tier-num {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--gold);
+    width: 1%;
+    white-space: nowrap;
+  }
+  table.tier td .tier-name { color: var(--white); }
+  table.tier td.tier-when { color: var(--gray-light); }
+  .table-note {
+    font-size: 0.75rem;
+    color: var(--gray);
+    margin-top: 0.85rem;
+  }
+
+  /* ── CONFIDENCE CHIPS ── */
+  .conf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: 0.85rem;
+    margin: 1.5rem 0 0.5rem;
+  }
+  .conf-card {
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 1rem 1.15rem;
+  }
+  .conf-card .conf-name {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .conf-card p {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--gray-light);
+    margin: 0;
+  }
+
+  /* ── CALLOUT (AI disclosure) ── */
+  .callout {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    background: rgba(196, 147, 50, 0.04);
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    margin-top: 1.5rem;
+    max-width: 760px;
+  }
+  .callout p { margin-bottom: 1rem; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* ── VERSION FOOTER ── */
+  .version {
+    padding: 2.5rem clamp(1.5rem, 4vw, 4rem);
+    max-width: 1400px; margin: 0 auto;
+  }
+  .version p {
+    font-size: 0.8rem;
+    color: var(--gray);
+  }
+  .version strong { color: var(--gray-light); font-weight: 500; }
+
+  /* ── FOOTER (duplicated from index.html) ── */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 3rem clamp(1.5rem, 4vw, 4rem);
+  }
+  .footer-inner {
+    max-width: 1400px; margin: 0 auto;
+    display: flex; justify-content: space-between;
+    align-items: flex-start; flex-wrap: wrap; gap: 2rem;
+  }
+  .footer-brand {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 0.9rem; letter-spacing: 0.06em;
+    text-transform: uppercase; margin-bottom: 0.4rem;
+  }
+  .footer-tagline {
+    font-family: var(--font-display); font-style: italic;
+    color: var(--gray); font-size: 0.8rem;
+    font-weight: 300; letter-spacing: 0.03em;
+  }
+  .footer-right {
+    display: flex; flex-direction: column;
+    align-items: flex-end; gap: 0.75rem;
+  }
+  .footer-connect {
+    display: flex; flex-wrap: wrap; justify-content: flex-end;
+    gap: 1rem 2rem; list-style: none; max-width: 100%;
+  }
+  .footer-connect a {
+    font-size: 0.75rem; color: var(--gray-light);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .footer-connect a:hover { color: var(--gold); }
+  .copyright {
+    color: rgba(255,255,255,0.2); font-size: 0.7rem;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    nav { display: none !important; }
+    body { background: #fff; color: #111; }
+    .meth-hero { padding-top: 2rem; padding-bottom: 2rem; background-image: none; }
+    a { color: #111; }
+    .gold-rule { background: #ccc; }
+  }
+
+  /* ── ACCESSIBILITY ── */
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+  .skip-link {
+    position: absolute; top: -100%; left: 1rem;
+    background: var(--gold); color: var(--black);
+    padding: 0.75rem 1.5rem; font-weight: 600;
+    font-size: 0.85rem; z-index: 200;
+    transition: top 0.2s;
+  }
+  .skip-link:focus { top: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 800px) {
+    .nav-toggle { display: flex; }
+    .nav-links {
+      display: none; position: absolute; top: 72px; left: 0; right: 0;
+      flex-direction: column; gap: 0;
+      padding: 1rem clamp(1.5rem, 4vw, 4rem) 1.5rem;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 0.75rem 0; font-size: 0.85rem; }
+
+    .meth-hero {
+      padding-top: calc(72px + 2.5rem);
+      padding-bottom: 2.5rem;
+    }
+
+    .block-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    /* Grid items default to min-width:auto, so the 540px-min tier table
+       forces the column wider than the viewport. Cap them so the
+       table-wrap's overflow-x:auto actually engages. */
+    .block-head, .block-body { min-width: 0; max-width: 100%; }
+    .table-wrap { max-width: 100%; }
+    .block-head h2 { margin-top: 0.4rem; }
+
+    .footer-inner { flex-direction: column; }
+    .footer-right { align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#what" class="skip-link">Skip to content</a>
+
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <div class="logo"><a href="index.html">The Pharma Closeout</a></div>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><span></span></button>
+    <ul class="nav-links">
+      <li><a href="index.html#podcast">Podcast</a></li>
+      <li><a href="index.html#articles">Articles</a></li>
+      <li><a href="ai-research.html">Research</a></li>
+      <li><a href="deals.html">Deal Intelligence</a></li>
+      <li><a href="methodology.html" class="active">Methodology</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="https://www.linkedin.com/company/the-pharma-closeout" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="meth-hero" aria-label="Methodology and sources">
+  <div class="meth-hero-content">
+    <div class="section-label" style="margin-bottom: 1.5rem;">Methodology &amp; Sources</div>
+    <h1>How the data is built.</h1>
+    <p class="lede">Every score is traceable to primary sources. Here is exactly how the data, the sentiment, and the outcomes are produced &mdash; and where the limits are.</p>
+  </div>
+</section>
+
+<hr class="gold-rule">
+
+<main>
+
+<!-- ── 1. WHAT THIS IS ── -->
+<section id="what" class="section block" aria-label="What this is">
+  <div class="block-grid">
+    <div class="block-head">
+      <div class="section-label">01</div>
+      <h2>What this is</h2>
+    </div>
+    <div class="block-body">
+      <p>The Deal Intelligence database is a structured record of roughly <strong>1,284 pharma and biotech business-development transactions</strong> &mdash; acquisitions, licensing deals, collaborations, and option agreements &mdash; spanning the early 1990s through 2026.</p>
+      <p>Each deal carries three things: an <strong>Announcement Sentiment</strong> score that captures how the market reacted when the deal was struck, an <strong>Outcome Score</strong> that grades how the deal actually aged once results were in, and a body of <strong>sourced facts</strong> &mdash; deal value, structure, assets, revenue, and milestones &mdash; each tied to a traceable source URL.</p>
+      <div class="stat-row" role="list">
+        <div class="stat" role="listitem"><div class="stat-num">~1,284</div><div class="stat-cap">Deals tracked</div></div>
+        <div class="stat" role="listitem"><div class="stat-num">1990s&ndash;2026</div><div class="stat-cap">Coverage window</div></div>
+        <div class="stat" role="listitem"><div class="stat-num">7</div><div class="stat-cap">Source tiers</div></div>
+        <div class="stat" role="listitem"><div class="stat-num">3&times;/wk</div><div class="stat-cap">Refresh cadence</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="gold-rule">
+
+<!-- ── 2. ANNOUNCEMENT SENTIMENT ── -->
+<section class="section block" aria-label="Announcement Sentiment">
+  <div class="block-grid">
+    <div class="block-head">
+      <div class="section-label">02</div>
+      <h2>Announcement Sentiment</h2>
+    </div>
+    <div class="block-body">
+      <p>Announcement Sentiment is a <strong>0&ndash;100</strong> reading of how the street received a deal at the moment it was announced. It is computed only when there are at least <strong>four sentiment-tagged sources</strong> &mdash; analyst notes, trade-press coverage, and primary press releases &mdash; each individually tagged <strong>Bullish</strong>, <strong>Neutral</strong>, or <strong>Bearish</strong>. Until a deal clears that four-source threshold, its sentiment is shown as pending rather than guessed.</p>
+      <p>This metric measures <strong>the market's reaction, not our opinion.</strong> It is a mirror held up to the analyst and trade community as the deal landed. We surface the underlying reviews so you can read the consensus yourself.</p>
+      <p>One honest caveat: announcement-day coverage skews optimistic. Press releases are written by the dealmakers, and sell-side notes near a signing tend to extend the benefit of the doubt. A high Announcement Sentiment means the deal <em>sounded</em> good on day one &mdash; not that it <em>was</em> good. That is precisely what the Outcome Score exists to test.</p>
+      <p>Scores are banded into verbal tiers &mdash; <strong>Exceptional</strong> (90+), <strong>Strong</strong> (75&ndash;89), <strong>Adequate</strong> (60&ndash;74), <strong>Weak</strong> (40&ndash;59), and <strong>Failed</strong> (below 40).</p>
+    </div>
+  </div>
+</section>
+
+<hr class="gold-rule">
+
+<!-- ── 3. OUTCOME SCORE ── -->
+<section class="section block" aria-label="Outcome Score">
+  <div class="block-grid">
+    <div class="block-head">
+      <div class="section-label">03</div>
+      <h2>Outcome Score</h2>
+    </div>
+    <div class="block-body">
+      <p>The Outcome Score grades how a deal <strong>actually aged.</strong> It is assessed at <strong>5-, 10-, and 15-year anniversaries</strong> of the deal, each window backed by sourced facts &mdash; what was reported, approved, filed, or written down. The score <strong>unlocks five years after close</strong>; before then there is not yet enough verified history to grade fairly, so the deal shows no outcome.</p>
+      <p>The score is a weighted blend of four dimensions, then adjusted by a deal-difficulty factor:</p>
+      <div class="dim-grid">
+        <div class="dim-card">
+          <div class="dim-top"><span class="dim-name">Strategic Fit</span><span class="dim-weight">~25%</span></div>
+          <p>Does the deal align with the buyer's stated strategy, therapeutic-area focus, and portfolio gaps? Weighted higher for platform and licensing deals.</p>
+        </div>
+        <div class="dim-card">
+          <div class="dim-top"><span class="dim-name">Financial Return</span><span class="dim-weight">~35%</span></div>
+          <p>Post-deal revenue, margin contribution, and IRR versus upfront plus milestones paid. Weighted highest for launched-product deals.</p>
+        </div>
+        <div class="dim-card">
+          <div class="dim-top"><span class="dim-name">Asset Performance</span><span class="dim-weight">~25%</span></div>
+          <p>Clinical readouts, approvals, label expansions, and pipeline progression of the acquired assets. Weighted highest for pre-clinical deals.</p>
+        </div>
+        <div class="dim-card">
+          <div class="dim-top"><span class="dim-name">Value Realization</span><span class="dim-weight">~15%</span></div>
+          <p>Integration execution, talent retention, milestone achievement, and synergies captured versus targeted.</p>
+        </div>
+      </div>
+      <p>Those base weights shift by the deal's <strong>lifecycle stage</strong> &mdash; pre-clinical, Phase II/III, launched product, platform, or licensing &mdash; so a pre-clinical acquisition is judged mostly on whether the science worked, while a launched-product deal is judged mostly on the money. The weighted total is then multiplied by a <strong>deal-difficulty factor (0.8&ndash;1.2)</strong>: pulling off a hard, complex integration counts for more than coasting through an easy one.</p>
+      <p>Outcome tiers read as plain verdicts &mdash; <strong>Outperformed</strong>, <strong>Met Thesis</strong>, <strong>Tracking</strong>, <strong>Underperformed</strong>, and <strong>Failed</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="gold-rule">
+
+<!-- ── 4. SOURCE HIERARCHY ── -->
+<section class="section block" aria-label="Source hierarchy">
+  <div class="block-grid">
+    <div class="block-head">
+      <div class="section-label">04</div>
+      <h2>Source hierarchy</h2>
+    </div>
+    <div class="block-body">
+      <p>Facts are researched <strong>primary-source-first.</strong> Higher tiers must be exhausted before falling to lower ones, and when two sources conflict, the higher tier wins. Different facts demand different minimum tiers &mdash; deal value and close date must come from an SEC filing; pipeline assets must come from a company's own pipeline page or its archived equivalent.</p>
+      <div class="table-wrap">
+        <table class="tier">
+          <thead>
+            <tr>
+              <th scope="col">Tier</th>
+              <th scope="col">Source</th>
+              <th scope="col">What it provides / when it's used</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="tier-num">1</td>
+              <td><span class="tier-name">Company IR / Pipeline Page</span></td>
+              <td class="tier-when">The company's own pipeline, products, and investor pages. First action for every deal &mdash; authoritative for the asset list and asset status.</td>
+            </tr>
+            <tr>
+              <td class="tier-num">2</td>
+              <td><span class="tier-name">SEC / Regulatory Filings</span></td>
+              <td class="tier-when">8-K, 10-K, EDGAR. Definitive for deal value, close date, deal structure, and segment revenue.</td>
+            </tr>
+            <tr>
+              <td class="tier-num">3</td>
+              <td><span class="tier-name">Wayback Machine</span></td>
+              <td class="tier-when">Recovers a defunct or acquired company's pipeline page as it stood at deal time. The historical-deal workhorse.</td>
+            </tr>
+            <tr>
+              <td class="tier-num">4</td>
+              <td><span class="tier-name">ClinicalTrials.gov</span></td>
+              <td class="tier-when">Authoritative for active clinical programs, trial phase, and indications.</td>
+            </tr>
+            <tr>
+              <td class="tier-num">5</td>
+              <td><span class="tier-name">Company Press Releases</span></td>
+              <td class="tier-when">Milestone achievements, earnings releases, and stated deal rationale.</td>
+            </tr>
+            <tr>
+              <td class="tier-num">6</td>
+              <td><span class="tier-name">Industry Publications</span></td>
+              <td class="tier-when">Analyst sentiment, competitive context, and market framing. The right source for the Announcement Sentiment reviews.</td>
+            </tr>
+            <tr>
+              <td class="tier-num">7</td>
+              <td><span class="tier-name">General Web Search</span></td>
+              <td class="tier-when">Gap-filling only, after Tiers 1&ndash;6 are exhausted. Flagged as lower confidence.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">Field-to-tier minimums are enforced: revenue figures must come from a dated filing &mdash; never &ldquo;analysts estimate $X&rdquo; &mdash; and asset statuses are verified against Tier 1 or Tier 4 within six months of insertion.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="gold-rule">
+
+<!-- ── 5. CONFIDENCE & PROVENANCE ── -->
+<section class="section block" aria-label="Confidence and provenance">
+  <div class="block-grid">
+    <div class="block-head">
+      <div class="section-label">05</div>
+      <h2>Confidence &amp; provenance</h2>
+    </div>
+    <div class="block-body">
+      <p>Every record carries its own confidence level, derived from how many and how strong its sources are. This is what lets you decide how much weight to put on a given number.</p>
+      <div class="conf-grid">
+        <div class="conf-card">
+          <div class="conf-name">Confirmed</div>
+          <p>Backed by two or more primary sources &mdash; company website, SEC filing, or ClinicalTrials.gov. Auto-published.</p>
+        </div>
+        <div class="conf-card">
+          <div class="conf-name">Reported</div>
+          <p>One primary source plus at least one press release. Solid, single-anchor sourcing. Auto-published.</p>
+        </div>
+        <div class="conf-card">
+          <div class="conf-name">Estimated</div>
+          <p>Only trade-press or general web sources. Held for human review before it is trusted, not auto-published.</p>
+        </div>
+        <div class="conf-card">
+          <div class="conf-name">Unknown</div>
+          <p>No source located. The field is left blank and flagged for review &mdash; never filled with a guess.</p>
+        </div>
+      </div>
+      <p>Each value is also marked <strong>primary-sourced</strong> versus <strong>model-inferred</strong>, and timeline events carry a <strong>&ldquo;Last verified&rdquo;</strong> stamp. That stamp is the date a primary source was last successfully checked &mdash; pipeline data is re-verified on a 90-day cycle, clinical-trial status every 30 days, financials every 90, and sentiment every 180. If a refresh can't reach a primary source, the stamp is <em>not</em> advanced; the system never invents a timestamp to look fresher than it is.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="gold-rule">
+
+<!-- ── 6. AI DISCLOSURE ── -->
+<section class="section block" aria-label="AI disclosure">
+  <div class="block-grid">
+    <div class="block-head">
+      <div class="section-label">06</div>
+      <h2>AI disclosure</h2>
+    </div>
+    <div class="block-body">
+      <p>We believe you can only trust a number if you know how it was made. So, plainly:</p>
+      <div class="callout">
+        <p>The database is assembled by an <strong>AI research pipeline</strong> that runs <strong>three times a week</strong> against the primary sources above. Every enrichment pass is bounded by <strong>automated QA gates</strong> &mdash; source-URL requirements, tier minimums, dated-filing checks for financials &mdash; and surfaced for <strong>editorial review</strong> before low-confidence records are published.</p>
+        <p><strong>We never fabricate.</strong> When a fact can't be traced to a real source, it is left blank and flagged &mdash; not guessed, not back-filled from a model's memory, not softened into &ldquo;analysts estimate.&rdquo; A missing number is more useful than a confident wrong one.</p>
+        <p>If you spot something off, tell us. Corrections are welcome and they make the database better &mdash; reach us via the <a href="about.html">About page</a> or on <a href="https://www.linkedin.com/company/the-pharma-closeout" target="_blank" rel="noopener">LinkedIn</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<hr class="gold-rule">
+
+<!-- ── 7. VERSIONING ── -->
+<div class="version">
+  <p><strong>Methodology v1.0</strong> &middot; last updated 2026-06-11. Scoring rubric, source-tier definitions, and confidence criteria are versioned; material changes will be noted here.</p>
+</div>
+
+<!-- ── FOOTER (duplicated from index.html) ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-brand">The Pharma Closeout</div>
+      <p class="footer-tagline">Daily pharma intelligence in under 15 minutes.</p>
+    </div>
+    <div class="footer-right">
+      <ul class="footer-connect">
+        <li><a href="deals.html">Deal Intelligence</a></li>
+        <li><a href="methodology.html">Methodology</a></li>
+        <li><a href="https://www.linkedin.com/company/the-pharma-closeout" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener">Newsletter</a></li>
+        <li><a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" rel="noopener">Spotify</a></li>
+      </ul>
+      <p class="copyright">&copy; 2026 The Pharma Closeout</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── NAV SCROLL ── */
+(function() {
+  var nav = document.querySelector('nav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+})();
+
+/* ── MOBILE NAV TOGGLE ── */
+(function() {
+  var toggle = document.querySelector('.nav-toggle');
+  var links = document.querySelector('.nav-links');
+  toggle.addEventListener('click', function() {
+    var open = links.classList.toggle('open');
+    toggle.classList.toggle('active', open);
+    toggle.setAttribute('aria-expanded', open);
+  });
+  links.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      links.classList.remove('open');
+      toggle.classList.remove('active');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
