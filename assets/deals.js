@@ -1328,7 +1328,7 @@ export function renderCriticReviews(sources) {
       <div class="review-body">
         <div class="review-quote">"${esc(r.excerpt || r.headline || '')}"</div>
         <div class="review-foot">
-          <div class="review-src"><strong>${esc(r.source_name || '')}</strong> · ${esc(formatDate(r.date_accessed || r.published_date))}<span class="badge ${badgeCls}">${sentimentLabel(r.sentiment)}</span></div>
+          <div class="review-src"><strong>${esc(r.source_name || '')}</strong>${r.published_date ? ' · ' + esc(formatDate(r.published_date)) : ''}<span class="badge ${badgeCls}">${sentimentLabel(r.sentiment)}</span></div>
           <span class="review-arrow">→</span>
         </div>
       </div>
@@ -1803,10 +1803,11 @@ export function renderSources(sources) {
     const href = (s.link_status === 404 || s.link_status === 410) && s.url
       ? `https://web.archive.org/web/*/${encodeURIComponent(s.url)}` // offer Wayback fallback for dead links
       : (s.url || '#')
-    // Show the actual publication date if we extracted it; fall back to date_accessed
+    // Show the actual publication date if we extracted it; otherwise label the
+    // access date explicitly so a 2009 PR never reads as published in 2026.
     const dateStr = s.published_date
       ? formatDate(s.published_date)
-      : formatDate(s.date_accessed)
+      : (s.date_accessed ? 'accessed ' + formatDate(s.date_accessed) : '')
     // Don't repeat the title verbatim in the subtitle — when the headline
     // is missing (title falls back to publisher), show just the date.
     const title = s.headline || s.source_name || 'Source'
