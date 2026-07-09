@@ -14,6 +14,7 @@ import {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
+  renderComparableAged,
 } from './scoring.js?v=20260709b'
 
 export { formatValue, formatDate, isPlausibleDate }
@@ -21,6 +22,7 @@ export {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
+  renderComparableAged,
 }
 
 const supabase = createClient(

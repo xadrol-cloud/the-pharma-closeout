@@ -99,3 +99,13 @@ test('comparableOutcomeSummary: needs >=3 unlocked, returns median', () => {
   assert.equal(s.best, 80)
   assert.equal(s.worst, 40)
 })
+
+/* ---------- Move 9: render-smoke (string assertion) ---------- */
+import { renderComparableAged } from '../assets/scoring.js'
+test('renderComparableAged: empty on null, contains stats otherwise', () => {
+  assert.equal(renderComparableAged(null), '')
+  const html = renderComparableAged({ n: 3, median: 60, best: 80, worst: 40 })
+  assert.ok(html.includes('How deals like this aged'))
+  assert.ok(html.includes('60'))
+  assert.ok(html.includes('comparable'))
+})

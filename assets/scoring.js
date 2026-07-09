@@ -138,3 +138,16 @@ export function comparableOutcomeSummary(comps, { minN = 3 } = {}) {
   const median = scores.length % 2 ? scores[mid] : Math.round((scores[mid - 1] + scores[mid]) / 2)
   return { n: scores.length, median, best: scores[scores.length - 1], worst: scores[0], distribution: scores }
 }
+
+/* ---------- Move 9: comparable-aged panel (pure string renderer) ----------
+ * Rendered ONLY on a deal whose own outcome is still locked. Describes how its
+ * comparables aged; says nothing about this deal's own (ungraded) outcome. */
+export function renderComparableAged(summary) {
+  if (!summary) return ''
+  const t = tierForScore(summary.median)
+  return `<div class="card comp-aged" data-tier="${t}">
+    <div class="card-head"><span class="card-title">How deals like this aged</span></div>
+    <p class="ca-lede">This deal's own outcome hasn't unlocked yet — grades open five years after close. But its ${summary.n} closest comparable deals, old enough to be graded, aged like this:</p>
+    <div class="ca-stat"><span class="ca-num" data-tier="${t}">${summary.median}</span><span class="ca-lab">median outcome &middot; ranged ${summary.worst}&ndash;${summary.best}</span></div>
+  </div>`
+}
