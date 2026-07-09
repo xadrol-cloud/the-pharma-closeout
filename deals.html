@@ -65,6 +65,29 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </nav>
 
 
+<!-- ========== VALUE-PROP BAND (Move 4: lead with the Hype Gap) ========== -->
+<style>
+  .valueprop { max-width: 1000px; margin: 0 auto; padding: 40px 20px 10px; }
+  .valueprop .vp-eyebrow { font-family: var(--mono,'IBM Plex Mono',monospace); font-size: 11px; letter-spacing:.24em; text-transform:uppercase; color: var(--gold); }
+  .valueprop h1 { font-family: var(--serif,'Cormorant Garamond',serif); font-weight: 600; font-size: clamp(28px,5vw,44px); line-height:1.05; margin:.3em 0 .3em; color: var(--ink); max-width: 18ch; }
+  .valueprop p { font-size: 15px; color: var(--ink-light); line-height:1.6; max-width: 60ch; margin: 0; }
+  .gap-teaser { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; margin-top:18px; padding:12px 16px; border:1px solid var(--rule); border-radius:10px; text-decoration:none; background: var(--surface); transition: border-color .15s; max-width: 640px; }
+  .gap-teaser:hover { border-color: var(--gold); }
+  .gap-teaser .gt-label { font-family: var(--mono,'IBM Plex Mono',monospace); font-size:11px; letter-spacing:.14em; text-transform:uppercase; }
+  .gap-teaser[data-dir="over"] .gt-label { color: var(--red); }
+  .gap-teaser[data-dir="under"] .gt-label { color: var(--green); }
+  .gap-teaser .gt-pair { font-size:14px; font-weight:600; color: var(--ink); }
+  .gap-teaser .gt-nums { font-family: var(--mono,'IBM Plex Mono',monospace); font-size:12px; color: var(--ink-muted); }
+  .gap-teaser .gt-nums b { color: var(--ink); }
+  .gap-teaser .gt-gap { font-weight:600; color: var(--ink); }
+</style>
+<section class="valueprop">
+  <div class="vp-eyebrow">Deal Intelligence</div>
+  <h1>The only deal database that grades how deals <em>aged</em>.</h1>
+  <p>Everyone records what a deal cost. We score what it was worth — the gap between what the Street said at announcement and what history actually did. Free, no login.</p>
+  <div id="gap-teaser"></div>
+</section>
+
 <!-- ========== HERO: Featured Deal ========== -->
 <div class="hero">
   <div class="hero-top">
@@ -296,8 +319,16 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <script type="module">
 import {
   fetchFeaturedDeal, fetchLatestDeals, fetchTrendingDeals, fetchTopOutcomeDeals,
-  renderPoster, renderFeaturedInfo, initCarousel, initSearch, initMultiSelect, searchDeals
+  renderPoster, renderFeaturedInfo, initCarousel, initSearch, initMultiSelect, searchDeals,
+  fetchTopGapDeals, renderGapTeaser
 } from './assets/deals.js?v=20260709b'
+
+// Move 4: Hype Gap hero teaser — the single most over/under-rated deal
+fetchTopGapDeals(1).then(deals => {
+  if (deals && deals.length) {
+    document.getElementById('gap-teaser').innerHTML = renderGapTeaser(deals[0])
+  }
+}).catch(() => {})
 
 // Featured deal
 const featured = await fetchFeaturedDeal()

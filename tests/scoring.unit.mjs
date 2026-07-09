@@ -109,3 +109,13 @@ test('renderComparableAged: empty on null, contains stats otherwise', () => {
   assert.ok(html.includes('60'))
   assert.ok(html.includes('comparable'))
 })
+
+/* ---------- Move 4: gap teaser render-smoke ---------- */
+import { renderGapTeaser } from '../assets/scoring.js'
+test('renderGapTeaser: empty unless unlocked dual-scored; contains said/did', () => {
+  const CUR2 = new Date().getUTCFullYear()
+  assert.equal(renderGapTeaser({ critic_score: 90, outcome_score: 60, announcement_date: `${CUR2}-01-01` }), '') // locked
+  const html = renderGapTeaser({ deal_id: 'x', buyer_name: 'A', target_name: 'B', critic_score: 88, outcome_score: 8, announcement_date: '2018-01-01' })
+  assert.ok(html.includes('said') && html.includes('did'))
+  assert.ok(html.includes('+80'))
+})

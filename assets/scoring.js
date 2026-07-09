@@ -151,3 +151,18 @@ export function renderComparableAged(summary) {
     <div class="ca-stat"><span class="ca-num" data-tier="${t}">${summary.median}</span><span class="ca-lab">median outcome &middot; ranged ${summary.worst}&ndash;${summary.best}</span></div>
   </div>`
 }
+
+/* ---------- Move 4: Hype Gap hero teaser (pure string renderer) ---------- */
+function escHtml(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])) }
+export function renderGapTeaser(deal) {
+  const gap = hypeGap(deal)
+  if (gap == null) return ''
+  const cs = Math.round(deal.critic_score), os = Math.round(deal.outcome_score)
+  const dir = gap > 0 ? 'over' : (gap < 0 ? 'under' : 'even')
+  const sign = gap > 0 ? '+' : ''
+  return `<a class="gap-teaser" data-dir="${dir}" href="deal.html?id=${escHtml(deal.deal_id)}">
+    <span class="gt-label">${escHtml(hypeGapLabel(gap))}</span>
+    <span class="gt-pair">${escHtml(deal.buyer_name)} / ${escHtml(deal.target_name)}</span>
+    <span class="gt-nums">said <b>${cs}</b> &middot; did <b>${os}</b> &middot; <span class="gt-gap">${sign}${gap}</span></span>
+  </a>`
+}

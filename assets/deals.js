@@ -14,7 +14,7 @@ import {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
-  renderComparableAged,
+  renderComparableAged, renderGapTeaser,
 } from './scoring.js?v=20260709b'
 
 export { formatValue, formatDate, isPlausibleDate }
@@ -22,7 +22,7 @@ export {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
-  renderComparableAged,
+  renderComparableAged, renderGapTeaser,
 }
 
 const supabase = createClient(
@@ -357,6 +357,31 @@ export async function fetchTopOutcomeDeals(limit = 20) {
     .order('outcome_score', { ascending: false })
     .limit(limit * 4)
   return (data || []).filter(isOutcomeUnlocked).slice(0, limit)
+}
+
+/** Move 4: highest-|HypeGap| unlocked dual-scored deals, for the hero teaser.
+ *  Two-step (light score scan, then display fields) — the enriched view is
+ *  heavy and filtering computed critic_score 500s. */
+export async function fetchTopGapDeals(n = 1) {
+  const { data: light } = await supabase
+    .from('deals_enriched')
+    .select('deal_id,critic_score,outcome_score,announcement_date,close_date')
+    .neq('enrichment_status', 'archived')
+    .not('outcome_score', 'is', null)
+    .limit(2000)
+  const scored = (light || [])
+    .map(d => ({ d, gap: hypeGap(d) }))
+    .filter(x => x.gap != null)
+    .sort((a, b) => Math.abs(b.gap) - Math.abs(a.gap))
+    .slice(0, n)
+  if (!scored.length) return []
+  const ids = scored.map(x => x.d.deal_id)
+  const { data: disp } = await supabase
+    .from('deals_enriched')
+    .select('deal_id,buyer_name,target_name,announcement_date,close_date,deal_value_usd_mm,deal_type,critic_score,outcome_score')
+    .in('deal_id', ids)
+  const byId = Object.fromEntries((disp || []).map(d => [d.deal_id, d]))
+  return scored.map(x => byId[x.d.deal_id]).filter(Boolean)
 }
 
 /** Move 6: acquirer track records — batting average over unlocked scored deals. */
