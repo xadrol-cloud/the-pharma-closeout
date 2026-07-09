@@ -8,8 +8,18 @@
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
 import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260611a'
+// Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
+// import it offline. Re-exported below for existing browser importers.
+import {
+  OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
+  tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
+} from './scoring.js?v=20260709b'
 
 export { formatValue, formatDate, isPlausibleDate }
+export {
+  OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
+  tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
+}
 
 const supabase = createClient(
   'https://nuqhlvlslwroupedduog.supabase.co',
@@ -226,38 +236,9 @@ export function isHistoricalDeal(deal) {
   return y != null && !isNaN(y) && y >= 1900 && y < 1990
 }
 
-/**
- * Outcome-score unlock gate. Methodology (methodology.html §03) states the
- * Outcome Score "unlocks five years after close" — before then there is not
- * enough verified history to grade a deal, "so the deal shows no outcome."
- * Until a deal is at least OUTCOME_UNLOCK_YEARS past its close date (or its
- * announcement date, when close is unknown), any stored outcome_score is
- * treated as not yet displayable. This keeps the product consistent with its
- * own published method and stops provisional / model-seeded scores from
- * surfacing on brand-new deals (the single biggest credibility risk).
- */
-export const OUTCOME_UNLOCK_YEARS = 5
-
-export function outcomeUnlockYear(deal) {
-  if (!deal) return null
-  const base = [deal.close_date, deal.announcement_date]
-    .find(d => d && isPlausibleDate(String(d).slice(0, 10)))
-  if (!base) return null
-  const y = parseInt(String(base).slice(0, 4), 10)
-  return isNaN(y) ? null : y + OUTCOME_UNLOCK_YEARS
-}
-
-export function isOutcomeUnlocked(deal) {
-  const unlockYear = outcomeUnlockYear(deal)
-  if (unlockYear == null) return true          // no usable date → don't suppress
-  return unlockYear <= new Date().getUTCFullYear()
-}
-
-/** outcome_score, but only once the 5-year window has elapsed; else null. */
-export function displayOutcomeScore(deal) {
-  if (!deal || deal.outcome_score == null) return null
-  return isOutcomeUnlocked(deal) ? deal.outcome_score : null
-}
+/* Outcome-unlock gate (OUTCOME_UNLOCK_YEARS, outcomeUnlockYear,
+   isOutcomeUnlocked, displayOutcomeScore) now lives in scoring.js and is
+   imported + re-exported at the top of this module. */
 
 /**
  * Task 39: Copy a deal row to the clipboard as tab-separated values for
@@ -849,32 +830,7 @@ export function renderCascadeBar(deal) {
 
 
 /* ---------- 3c. Score Block (Phase 11 WS-A + WS-B) ---------- */
-
-/**
- * Map a numeric score (0-100) to a tier slug used by data-tier
- * attribute on .score-chip / .tier-label CSS rules.
- */
-export function tierForScore(score) {
-  if (score == null) return 'none'
-  if (score >= 90) return 'exceptional'
-  if (score >= 75) return 'strong'
-  if (score >= 60) return 'adequate'
-  if (score >= 40) return 'weak'
-  return 'failed'
-}
-
-/**
- * Verbal tier label. dimension: 'critic' (default) or 'outcome' —
- * Outcome Score uses different nouns per the Scoring V2 anchored
- * range vocabulary.
- */
-export function tierLabelFor(score, dimension = 'critic') {
-  const t = tierForScore(score)
-  if (t === 'none') return ''
-  const critic = { exceptional: 'EXCEPTIONAL', strong: 'STRONG', adequate: 'ADEQUATE', weak: 'WEAK', failed: 'FAILED' }
-  const outcome = { exceptional: 'OUTPERFORMED', strong: 'MET THESIS', adequate: 'TRACKING', weak: 'UNDERPERFORMED', failed: 'FAILED' }
-  return (dimension === 'outcome' ? outcome : critic)[t]
-}
+/* tierForScore / tierLabelFor now live in scoring.js (imported at top). */
 
 /**
  * Tier-coded score block. type: 'critic' or 'outcome'.
@@ -898,29 +854,7 @@ export function renderScorePill(type, score, subtitle = '') {
 
 
 /* ---------- 3c.5 Hype Gap (Announcement Sentiment vs Outcome) ---------- */
-
-/**
- * Hype Gap = Announcement Sentiment − Outcome Score, for deals that have BOTH.
- * Positive ⇒ the street was more bullish at announcement than history bore out
- * (over-hyped). Negative ⇒ the deal aged better than the street expected
- * (under-rated). Returns null when either score is missing.
- */
-export function hypeGap(deal) {
-  if (!deal) return null
-  const cs = deal.critic_score, os = displayOutcomeScore(deal)
-  if (cs == null || os == null) return null
-  return Math.round(cs) - Math.round(os)
-}
-
-/** Verdict word for a hype-gap magnitude. */
-export function hypeGapLabel(gap) {
-  if (gap == null) return ''
-  if (gap >= 25) return 'Severely over-hyped'
-  if (gap >= 12) return 'Over-hyped'
-  if (gap <= -25) return 'Badly under-rated'
-  if (gap <= -12) return 'Under-rated'
-  return 'Lived up to the hype'
-}
+/* hypeGap / hypeGapLabel now live in scoring.js (imported at top). */
 
 /**
  * Per-deal Hype Gap callout for the deal page. Renders nothing until both
