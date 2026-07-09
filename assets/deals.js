@@ -13,12 +13,14 @@ import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260611
 import {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
+  biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
 } from './scoring.js?v=20260709b'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
+  biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
 }
 
 const supabase = createClient(
@@ -353,6 +355,17 @@ export async function fetchTopOutcomeDeals(limit = 20) {
     .order('outcome_score', { ascending: false })
     .limit(limit * 4)
   return (data || []).filter(isOutcomeUnlocked).slice(0, limit)
+}
+
+/** Move 6: acquirer track records — batting average over unlocked scored deals. */
+export async function fetchAcquirerRecords(minN = 3) {
+  const { data } = await supabase
+    .from('deals_enriched')
+    .select('buyer_name,target_name,deal_id,outcome_score,announcement_date,close_date,deal_value_usd_mm')
+    .neq('enrichment_status', 'archived')
+    .not('outcome_score', 'is', null)
+    .limit(2000)
+  return acquirerBattingAverage(data || [], { minN })
 }
 
 /** Search deals by text query + optional filters. Returns { deals, total }. */

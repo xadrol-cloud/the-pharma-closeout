@@ -69,3 +69,72 @@ export function hypeGapLabel(gap) {
   if (gap <= -12) return 'Under-rated'
   return 'Lived up to the hype'
 }
+
+/* ---------- Move 3: Biobucks percentage ----------
+ * Upfront as % of total deal value. Mirrors renderCascadeBar's clamp
+ * (upfront >= total collapses to 100%). NULL when upfront is undisclosed
+ * (0/absent) or total is unknown — never a fabricated split. */
+export function biobucksPct(deal) {
+  if (!deal) return null
+  const total = +deal.deal_value_usd_mm
+  const up = +deal.upfront_usd_mm
+  if (!total || total <= 0 || !up || up <= 0) return null
+  return Math.min(100, Math.round((up / total) * 100))
+}
+
+/* ---------- Move 6: Acquirer track records ----------
+ * canonicalBuyer folds legal-suffix and known-alias variants so a serial
+ * acquirer isn't fragmented across "Pfizer" / "Pfizer Inc" / "Pfizer Inc.".
+ * Extend BUYER_ALIASES as new splits surface; keep it small and explicit. */
+const BUYER_ALIASES = {
+  'glaxosmithkline': 'gsk', 'gsk': 'gsk',
+  'bristol-myers squibb': 'bms', 'bristol myers squibb': 'bms', 'bms': 'bms',
+  'johnson johnson': 'johnson & johnson', 'j j': 'johnson & johnson',
+}
+export function canonicalBuyer(name) {
+  if (!name) return ''
+  let s = String(name).toLowerCase().trim()
+  s = s.replace(/\(.*?\)/g, ' ')                        // drop parentheticals
+  s = s.replace(/\b(incorporated|inc|ltd|limited|plc|ag|sa|corp|corporation|company|co|holding|holdings|group|the)\b/g, ' ')
+  s = s.replace(/[.,]/g, ' ').replace(/\s+/g, ' ').trim()
+  return BUYER_ALIASES[s] || s
+}
+
+export function acquirerBattingAverage(deals, { minN = 3 } = {}) {
+  const groups = new Map()
+  for (const d of (deals || [])) {
+    const os = displayOutcomeScore(d)               // only unlocked, scored deals
+    if (os == null) continue
+    const key = canonicalBuyer(d.buyer_name)
+    if (!key) continue
+    if (!groups.has(key)) groups.set(key, [])
+    groups.get(key).push({ ...d, _os: os })
+  }
+  const recs = []
+  for (const [buyer, arr] of groups) {
+    if (arr.length < minN) continue
+    const scores = arr.map(x => x._os)
+    const mean = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)
+    const sorted = [...arr].sort((a, b) => b._os - a._os)
+    const metThesis = scores.filter(s => s >= 60).length
+    recs.push({
+      buyer, n: arr.length, mean,
+      pctMetThesis: Math.round(100 * metThesis / scores.length),
+      best: sorted[0], worst: sorted[sorted.length - 1], deals: arr,
+    })
+  }
+  recs.sort((a, b) => (b.mean - a.mean) || (b.n - a.n))
+  return recs
+}
+
+/* ---------- Move 9: comparable-outcome summary ----------
+ * Summarize how a locked deal's comparables aged, WITHOUT asserting anything
+ * about the locked deal itself. Only unlocked, scored comps count; needs >=minN
+ * or returns null (no thin-data noise). */
+export function comparableOutcomeSummary(comps, { minN = 3 } = {}) {
+  const scores = (comps || []).map(displayOutcomeScore).filter(s => s != null).sort((a, b) => a - b)
+  if (scores.length < minN) return null
+  const mid = Math.floor(scores.length / 2)
+  const median = scores.length % 2 ? scores[mid] : Math.round((scores[mid - 1] + scores[mid]) / 2)
+  return { n: scores.length, median, best: scores[scores.length - 1], worst: scores[0], distribution: scores }
+}

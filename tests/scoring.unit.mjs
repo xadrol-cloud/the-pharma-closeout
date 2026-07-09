@@ -5,6 +5,7 @@ import assert from 'node:assert/strict'
 import {
   displayOutcomeScore, isOutcomeUnlocked, outcomeUnlockYear,
   hypeGap, hypeGapLabel, tierForScore, tierLabelFor,
+  biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
 } from '../assets/scoring.js'
 
 const CUR = new Date().getUTCFullYear()
@@ -55,4 +56,46 @@ test('tierForScore / tierLabelFor bands', () => {
   assert.equal(tierForScore(null), 'none')
   assert.equal(tierLabelFor(95, 'outcome'), 'OUTPERFORMED')
   assert.equal(tierLabelFor(95, 'critic'), 'EXCEPTIONAL')
+})
+
+/* ---------- Move 3: Biobucks percentage ---------- */
+test('biobucksPct: upfront/total, clamped, null-safe', () => {
+  assert.equal(biobucksPct({ upfront_usd_mm: 100, deal_value_usd_mm: 1000 }), 10)
+  assert.equal(biobucksPct({ upfront_usd_mm: 0, deal_value_usd_mm: 1000 }), null)   // undisclosed upfront
+  assert.equal(biobucksPct({ upfront_usd_mm: 1200, deal_value_usd_mm: 1000 }), 100) // clamp upfront>=total
+  assert.equal(biobucksPct({ deal_value_usd_mm: 0 }), null)
+  assert.equal(biobucksPct({ upfront_usd_mm: 250, deal_value_usd_mm: 1000 }), 25)
+})
+
+/* ---------- Move 6: Acquirer track records ---------- */
+test('canonicalBuyer folds legal-suffix and alias variants', () => {
+  assert.equal(canonicalBuyer('Pfizer Inc.'), canonicalBuyer('Pfizer Inc'))
+  assert.equal(canonicalBuyer('Pfizer Inc.'), canonicalBuyer('Pfizer'))
+  assert.equal(canonicalBuyer('GSK plc'), canonicalBuyer('GlaxoSmithKline plc'))
+  assert.equal(canonicalBuyer('Bristol-Myers Squibb Company'), canonicalBuyer('BMS'))
+})
+test('acquirerBattingAverage: min-n guard, mean, only unlocked scored', () => {
+  const d = (b, os, y) => ({ buyer_name: b, target_name: 't', deal_id: b + y, outcome_score: os, announcement_date: `${y}-01-01` })
+  const rows = [
+    d('Pfizer Inc.', 80, 2010), d('Pfizer Inc', 60, 2011), d('Pfizer', 70, 2012),
+    d('Tiny Co', 90, 2010),                       // n<3 → dropped
+    d('Locked Co', 99, CUR), d('Locked Co', 88, CUR), d('Locked Co', 77, CUR), // unlocked=false → dropped
+  ]
+  const recs = acquirerBattingAverage(rows, { minN: 3 })
+  assert.equal(recs.length, 1)
+  assert.equal(recs[0].n, 3)
+  assert.equal(recs[0].mean, 70)
+  assert.equal(recs[0].buyer, canonicalBuyer('Pfizer Inc.'))
+  assert.ok(recs[0].best.outcome_score >= recs[0].worst.outcome_score)
+})
+
+/* ---------- Move 9: comparable-outcome summary ---------- */
+test('comparableOutcomeSummary: needs >=3 unlocked, returns median', () => {
+  const c = (os, y) => ({ outcome_score: os, announcement_date: `${y}-01-01` })
+  assert.equal(comparableOutcomeSummary([c(70, 2010), c(50, 2011)]), null) // <3 unlocked
+  const s = comparableOutcomeSummary([c(80, 2010), c(60, 2011), c(40, 2012), c(99, CUR)]) // last locked, excluded
+  assert.equal(s.n, 3)
+  assert.equal(s.median, 60)
+  assert.equal(s.best, 80)
+  assert.equal(s.worst, 40)
 })
