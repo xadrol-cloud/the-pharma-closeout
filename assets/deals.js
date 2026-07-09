@@ -14,15 +14,15 @@ import {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
-  renderComparableAged, renderGapTeaser,
-} from './scoring.js?v=20260709b'
+  renderComparableAged, renderGapTeaser, hindsightCohorts,
+} from './scoring.js?v=20260709c'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
-  renderComparableAged, renderGapTeaser,
+  renderComparableAged, renderGapTeaser, hindsightCohorts,
 }
 
 const supabase = createClient(
@@ -393,6 +393,17 @@ export async function fetchAcquirerRecords(minN = 3) {
     .not('outcome_score', 'is', null)
     .limit(2000)
   return acquirerBattingAverage(data || [], { minN })
+}
+
+/** Move 7: "Deals of the Year, in hindsight" — aged best/worst per year cohort. */
+export async function fetchHindsightCohorts(opts = {}) {
+  const { data } = await supabase
+    .from('deals_enriched')
+    .select('deal_id,buyer_name,target_name,outcome_score,announcement_date,close_date,deal_value_usd_mm,deal_type')
+    .neq('enrichment_status', 'archived')
+    .not('outcome_score', 'is', null)
+    .limit(2000)
+  return hindsightCohorts(data || [], opts)
 }
 
 /** Search deals by text query + optional filters. Returns { deals, total }. */
