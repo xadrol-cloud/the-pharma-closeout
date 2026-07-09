@@ -129,6 +129,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+import { isOutcomeUnlocked } from './assets/deals.js?v=20260709a'
 const supabase = createClient(
   'https://nuqhlvlslwroupedduog.supabase.co',
   'sb_publishable_amtSGMKyQTDPPjkUHcoquw_uoSZfipS'
@@ -142,7 +143,7 @@ const yearOf = d => d ? String(d).slice(0,4) : ''
 // light score columns; step 2 fetches display fields for just the winners.
 const { data: light, error: lightErr } = await supabase
   .from('deals_enriched')
-  .select('deal_id,critic_score,outcome_score,enrichment_status')
+  .select('deal_id,critic_score,outcome_score,enrichment_status,announcement_date,close_date')
   .not('outcome_score', 'is', null)
   .limit(2000)
 
@@ -150,6 +151,7 @@ let rows = []
 if (!lightErr && light) {
   const dual = light
     .filter(d => d.enrichment_status !== 'archived' && d.critic_score != null)
+    .filter(isOutcomeUnlocked)   // exclude deals whose 5-yr outcome window hasn't elapsed
     .map(d => ({ deal_id: d.deal_id, gap: Math.round(d.critic_score) - Math.round(d.outcome_score),
                  critic_score: d.critic_score, outcome_score: d.outcome_score }))
   const overIds = dual.filter(r => r.gap > 0).sort((a, b) => b.gap - a.gap).slice(0, 15)

@@ -271,8 +271,9 @@ import {
   renderCascadeBar,
   exportDealRow,
   criticReviewCount, isPipelineArtifact, cleanProse, isPlausibleDate,
-  renderHypeGap, renderProvenance
-} from './assets/deals.js?v=20260611c'
+  renderHypeGap, renderProvenance,
+  displayOutcomeScore
+} from './assets/deals.js?v=20260709a'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -311,14 +312,17 @@ if (!dealId) {
       const criticSubtitle = deal.critic_score == null && reviewCount > 0
         ? (reviewCount < 4 ? `Score pending — ${reviewCount} of 4 reviews` : 'Score pending')
         : 'Market consensus'
-      // Date sanity guard: never derive "Unlocks" from implausible years
+      // Date sanity guard: never derive "Unlocks" from implausible years.
+      // Outcome only displays once its 5-year window has elapsed (methodology
+      // §03); a stored-but-locked score is suppressed and shown as "Unlocks YYYY".
+      const gatedOutcome = displayOutcomeScore(deal)
       const unlockBase = [deal.close_date, deal.announcement_date].find(d => d && isPlausibleDate(d))
-      const outcomeSubtitle = deal.outcome_score != null
+      const outcomeSubtitle = gatedOutcome != null
         ? 'Outcome results'
         : (unlockBase ? `Unlocks ${parseInt(unlockBase.substring(0,4), 10) + 5}` : 'Unlocks pending')
       document.getElementById('hero-scores').innerHTML =
         renderScorePill('critic', deal.critic_score != null ? Math.round(deal.critic_score) : null, criticSubtitle) +
-        renderScorePill('outcome', deal.outcome_score != null ? Math.round(deal.outcome_score) : null, outcomeSubtitle)
+        renderScorePill('outcome', gatedOutcome != null ? Math.round(gatedOutcome) : null, outcomeSubtitle)
 
       // Move 4: Hype Gap callout (renders only when both scores exist)
       document.getElementById('hero-hypegap').innerHTML = renderHypeGap(deal)
