@@ -41,6 +41,15 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/deals.css?v=20260611c">
 <script defer src="assets/nav.js?v=20260531a"></script>
+<style>
+  /* Move 9: comparable-aged panel */
+  .comp-aged .ca-lede { font-size: 13.5px; color: var(--ink-muted); line-height: 1.55; margin: 4px 0 14px; }
+  .comp-aged .ca-stat { display: flex; align-items: baseline; gap: 12px; }
+  .comp-aged .ca-num { font-family: var(--mono, 'IBM Plex Mono', monospace); font-size: 40px; font-weight: 600; line-height: 1; color: var(--gold); font-variant-numeric: tabular-nums; }
+  .comp-aged .ca-num[data-tier="exceptional"], .comp-aged .ca-num[data-tier="strong"] { color: var(--green, #6fa07b); }
+  .comp-aged .ca-num[data-tier="weak"], .comp-aged .ca-num[data-tier="failed"] { color: var(--red, #cf6048); }
+  .comp-aged .ca-lab { font-size: 12.5px; color: var(--ink-muted); }
+</style>
 </head>
 <body>
 
@@ -271,8 +280,10 @@ import {
   renderCascadeBar,
   exportDealRow,
   criticReviewCount, isPipelineArtifact, cleanProse, isPlausibleDate,
-  renderHypeGap, renderProvenance
-} from './assets/deals.js?v=20260611c'
+  renderHypeGap, renderProvenance,
+  displayOutcomeScore,
+  comparableOutcomeSummary, renderComparableAged
+} from './assets/deals.js?v=20260709b'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -311,14 +322,17 @@ if (!dealId) {
       const criticSubtitle = deal.critic_score == null && reviewCount > 0
         ? (reviewCount < 4 ? `Score pending — ${reviewCount} of 4 reviews` : 'Score pending')
         : 'Market consensus'
-      // Date sanity guard: never derive "Unlocks" from implausible years
+      // Date sanity guard: never derive "Unlocks" from implausible years.
+      // Outcome only displays once its 5-year window has elapsed (methodology
+      // §03); a stored-but-locked score is suppressed and shown as "Unlocks YYYY".
+      const gatedOutcome = displayOutcomeScore(deal)
       const unlockBase = [deal.close_date, deal.announcement_date].find(d => d && isPlausibleDate(d))
-      const outcomeSubtitle = deal.outcome_score != null
+      const outcomeSubtitle = gatedOutcome != null
         ? 'Outcome results'
         : (unlockBase ? `Unlocks ${parseInt(unlockBase.substring(0,4), 10) + 5}` : 'Unlocks pending')
       document.getElementById('hero-scores').innerHTML =
         renderScorePill('critic', deal.critic_score != null ? Math.round(deal.critic_score) : null, criticSubtitle) +
-        renderScorePill('outcome', deal.outcome_score != null ? Math.round(deal.outcome_score) : null, outcomeSubtitle)
+        renderScorePill('outcome', gatedOutcome != null ? Math.round(gatedOutcome) : null, outcomeSubtitle)
 
       // Move 4: Hype Gap callout (renders only when both scores exist)
       document.getElementById('hero-hypegap').innerHTML = renderHypeGap(deal)
@@ -408,12 +422,19 @@ if (!dealId) {
         document.getElementById('score-section').style.display = ''
       }
 
-      // ── Sidebar: Comparables ──
-      const comparables = await fetchComparables(deal)
-      const compsHtml = renderComps(comparables, dealId)
+      // ── Sidebar: Comparables (fetch wider so the "aged" summary has ≥3 unlocked) ──
+      const comparables = await fetchComparables(deal, 20)
+      const compsHtml = renderComps(comparables.slice(0, 5), dealId)
       if (compsHtml) {
         document.getElementById('comparables').innerHTML = compsHtml
         document.getElementById('comparables-section').style.display = ''
+      }
+
+      // ── Move 9: "How deals like this aged" — only when this deal's own
+      //    outcome is still locked (avoids fabricating its ungraded outcome) ──
+      if (displayOutcomeScore(deal) == null) {
+        const aged = renderComparableAged(comparableOutcomeSummary(comparables))
+        if (aged) document.getElementById('timeline-section').insertAdjacentHTML('beforebegin', aged)
       }
 
       // ── Sidebar: Sources (+ Move 2c provenance stamp) ──

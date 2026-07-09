@@ -8,8 +8,22 @@
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
 import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260611a'
+// Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
+// import it offline. Re-exported below for existing browser importers.
+import {
+  OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
+  tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
+  biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
+  renderComparableAged, renderGapTeaser,
+} from './scoring.js?v=20260709b'
 
 export { formatValue, formatDate, isPlausibleDate }
+export {
+  OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
+  tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
+  biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
+  renderComparableAged, renderGapTeaser,
+}
 
 const supabase = createClient(
   'https://nuqhlvlslwroupedduog.supabase.co',
@@ -226,6 +240,10 @@ export function isHistoricalDeal(deal) {
   return y != null && !isNaN(y) && y >= 1900 && y < 1990
 }
 
+/* Outcome-unlock gate (OUTCOME_UNLOCK_YEARS, outcomeUnlockYear,
+   isOutcomeUnlocked, displayOutcomeScore) now lives in scoring.js and is
+   imported + re-exported at the top of this module. */
+
 /**
  * Task 39: Copy a deal row to the clipboard as tab-separated values for
  * direct Excel paste. Columns match a typical BD analyst pull sheet.
@@ -330,13 +348,51 @@ export async function fetchTrendingDeals(limit = 20) {
 
 /** Top outcome score deals */
 export async function fetchTopOutcomeDeals(limit = 20) {
+  // Over-fetch, then drop deals whose outcome has not yet unlocked (<5yr),
+  // so the "Highest Outcome Scores" rail never features a too-recent deal.
   const { data } = await supabase
     .from('deals_enriched').select('*')
     .neq('enrichment_status', 'archived')
     .not('outcome_score', 'is', null)
     .order('outcome_score', { ascending: false })
-    .limit(limit)
-  return data || []
+    .limit(limit * 4)
+  return (data || []).filter(isOutcomeUnlocked).slice(0, limit)
+}
+
+/** Move 4: highest-|HypeGap| unlocked dual-scored deals, for the hero teaser.
+ *  Two-step (light score scan, then display fields) — the enriched view is
+ *  heavy and filtering computed critic_score 500s. */
+export async function fetchTopGapDeals(n = 1) {
+  const { data: light } = await supabase
+    .from('deals_enriched')
+    .select('deal_id,critic_score,outcome_score,announcement_date,close_date')
+    .neq('enrichment_status', 'archived')
+    .not('outcome_score', 'is', null)
+    .limit(2000)
+  const scored = (light || [])
+    .map(d => ({ d, gap: hypeGap(d) }))
+    .filter(x => x.gap != null)
+    .sort((a, b) => Math.abs(b.gap) - Math.abs(a.gap))
+    .slice(0, n)
+  if (!scored.length) return []
+  const ids = scored.map(x => x.d.deal_id)
+  const { data: disp } = await supabase
+    .from('deals_enriched')
+    .select('deal_id,buyer_name,target_name,announcement_date,close_date,deal_value_usd_mm,deal_type,critic_score,outcome_score')
+    .in('deal_id', ids)
+  const byId = Object.fromEntries((disp || []).map(d => [d.deal_id, d]))
+  return scored.map(x => byId[x.d.deal_id]).filter(Boolean)
+}
+
+/** Move 6: acquirer track records — batting average over unlocked scored deals. */
+export async function fetchAcquirerRecords(minN = 3) {
+  const { data } = await supabase
+    .from('deals_enriched')
+    .select('buyer_name,target_name,deal_id,outcome_score,announcement_date,close_date,deal_value_usd_mm')
+    .neq('enrichment_status', 'archived')
+    .not('outcome_score', 'is', null)
+    .limit(2000)
+  return acquirerBattingAverage(data || [], { minN })
 }
 
 /** Search deals by text query + optional filters. Returns { deals, total }. */
@@ -350,6 +406,13 @@ export async function searchDeals(query, filters = {}, { limit = 25, offset = 0 
   if (filters.era) q = q.eq('era_tag', filters.era)
   if (filters.therapeutic_area) q = q.ilike('therapeutic_areas', `%${filters.therapeutic_area}%`)
   if (filters.min_value) q = q.gte('deal_value_usd_mm', filters.min_value)
+  // When sorting by Outcome Score, restrict to deals whose outcome has
+  // unlocked (announced at least OUTCOME_UNLOCK_YEARS ago) so the ranking
+  // can't be topped by a too-recent deal that shows no outcome on its card.
+  if ((filters.sort || 'date_desc') === 'outcome_desc') {
+    const cutoff = `${new Date().getUTCFullYear() - OUTCOME_UNLOCK_YEARS}-12-31`
+    q = q.not('outcome_score', 'is', null).lte('announcement_date', cutoff)
+  }
   q = applySortClause(q, filters.sort || 'date_desc')
   q = q.range(offset, offset + limit - 1)
   const { data, error, count } = await q
@@ -447,14 +510,15 @@ export async function fetchFeaturedDeal() {
       .eq('deal_id', config.value).single()
     if (data) return data
   }
-  // Fallback: highest outcome score
+  // Fallback: highest outcome score among deals whose outcome has unlocked
   const { data: top } = await supabase
     .from('deals_enriched').select('*')
     .neq('enrichment_status', 'archived')
     .not('outcome_score', 'is', null)
     .order('outcome_score', { ascending: false })
-    .limit(1)
-  if (top && top.length) return top[0]
+    .limit(40)
+  const unlockedTop = (top || []).filter(isOutcomeUnlocked)
+  if (unlockedTop.length) return unlockedTop[0]
   // Final fallback: most recent high-value deal
   const { data: recent } = await supabase
     .from('deals_enriched').select('*')
@@ -616,7 +680,8 @@ export function renderPoster(deal, size = 'carousel') {
 
   // Carousel size (default)
   const criticScore = deal.critic_score != null ? Math.round(deal.critic_score) : null
-  const outcomeScore = deal.outcome_score != null ? Math.round(deal.outcome_score) : null
+  const _os = displayOutcomeScore(deal)
+  const outcomeScore = _os != null ? Math.round(_os) : null
 
   return `<a href="deal.html?id=${deal.deal_id}" style="text-decoration:none">
   <div class="c-poster ${ring}">
@@ -669,7 +734,8 @@ export function renderFeaturedInfo(deal) {
   const tas = parseTAs(deal.therapeutic_areas)
   const val = formatValue(deal.deal_value_usd_mm)
   const criticScore = deal.critic_score != null ? Math.round(deal.critic_score) : null
-  const outcomeScore = deal.outcome_score != null ? Math.round(deal.outcome_score) : null
+  const _os = displayOutcomeScore(deal)
+  const outcomeScore = _os != null ? Math.round(_os) : null
 
   return `<div class="feat-info">
   <div class="feat-header">
@@ -727,7 +793,8 @@ export function renderResultRow(deal) {
   const dsLabel = shortType(deal.deal_type)
   const ta = parseTAs(deal.therapeutic_areas)[0] || ''
   const cs = deal.critic_score != null ? Math.round(deal.critic_score) : null
-  const os = deal.outcome_score != null ? Math.round(deal.outcome_score) : null
+  const _os = displayOutcomeScore(deal)
+  const os = _os != null ? Math.round(_os) : null
   const csTier = tierForScore(cs)
   const csLabel = tierLabelFor(cs, 'critic')
   const val = formatValue(deal.deal_value_usd_mm)
@@ -803,32 +870,7 @@ export function renderCascadeBar(deal) {
 
 
 /* ---------- 3c. Score Block (Phase 11 WS-A + WS-B) ---------- */
-
-/**
- * Map a numeric score (0-100) to a tier slug used by data-tier
- * attribute on .score-chip / .tier-label CSS rules.
- */
-export function tierForScore(score) {
-  if (score == null) return 'none'
-  if (score >= 90) return 'exceptional'
-  if (score >= 75) return 'strong'
-  if (score >= 60) return 'adequate'
-  if (score >= 40) return 'weak'
-  return 'failed'
-}
-
-/**
- * Verbal tier label. dimension: 'critic' (default) or 'outcome' —
- * Outcome Score uses different nouns per the Scoring V2 anchored
- * range vocabulary.
- */
-export function tierLabelFor(score, dimension = 'critic') {
-  const t = tierForScore(score)
-  if (t === 'none') return ''
-  const critic = { exceptional: 'EXCEPTIONAL', strong: 'STRONG', adequate: 'ADEQUATE', weak: 'WEAK', failed: 'FAILED' }
-  const outcome = { exceptional: 'OUTPERFORMED', strong: 'MET THESIS', adequate: 'TRACKING', weak: 'UNDERPERFORMED', failed: 'FAILED' }
-  return (dimension === 'outcome' ? outcome : critic)[t]
-}
+/* tierForScore / tierLabelFor now live in scoring.js (imported at top). */
 
 /**
  * Tier-coded score block. type: 'critic' or 'outcome'.
@@ -852,29 +894,7 @@ export function renderScorePill(type, score, subtitle = '') {
 
 
 /* ---------- 3c.5 Hype Gap (Announcement Sentiment vs Outcome) ---------- */
-
-/**
- * Hype Gap = Announcement Sentiment − Outcome Score, for deals that have BOTH.
- * Positive ⇒ the street was more bullish at announcement than history bore out
- * (over-hyped). Negative ⇒ the deal aged better than the street expected
- * (under-rated). Returns null when either score is missing.
- */
-export function hypeGap(deal) {
-  if (!deal) return null
-  const cs = deal.critic_score, os = deal.outcome_score
-  if (cs == null || os == null) return null
-  return Math.round(cs) - Math.round(os)
-}
-
-/** Verdict word for a hype-gap magnitude. */
-export function hypeGapLabel(gap) {
-  if (gap == null) return ''
-  if (gap >= 25) return 'Severely over-hyped'
-  if (gap >= 12) return 'Over-hyped'
-  if (gap <= -25) return 'Badly under-rated'
-  if (gap <= -12) return 'Under-rated'
-  return 'Lived up to the hype'
-}
+/* hypeGap / hypeGapLabel now live in scoring.js (imported at top). */
 
 /**
  * Per-deal Hype Gap callout for the deal page. Renders nothing until both
@@ -1650,7 +1670,8 @@ export function renderComparables(comparables, currentDealId) {
   const items = comparables.map(deal => {
     const bg = bgClass(deal.deal_type)
     const criticScore = deal.critic_score != null ? Math.round(deal.critic_score) : null
-    const outcomeScore = deal.outcome_score != null ? Math.round(deal.outcome_score) : null
+    const _os = displayOutcomeScore(deal)
+  const outcomeScore = _os != null ? Math.round(_os) : null
     const val = formatValue(deal.deal_value_usd_mm)
     const cmpHref = currentDealId ? `compare.html?ids=${currentDealId},${deal.deal_id}` : null
 
@@ -1820,7 +1841,8 @@ export function renderComparison(deals) {
       return `<span class="cmp-score ${t}">${s}</span>`
     }), { strong: true }),
     row('Outcome Score', deals.map(d => {
-      const s = score(d.outcome_score); const t = scoreTierFor(d.outcome_score)
+      const gos = displayOutcomeScore(d)
+      const s = score(gos); const t = scoreTierFor(gos)
       return `<span class="cmp-score ${t}">${s}</span>`
     }), { strong: true }),
 
