@@ -881,17 +881,17 @@ input, textarea, select {
 
 /* UX overhaul R1/R2: neutral "no score yet" chip — replaces the old
    two-dash-chip treatment whenever a deal has neither a critic nor an
-   (unlocked) outcome score. Sized for a real tap target, not decorative. */
+   (unlocked) outcome score. Sized to the .c-sc.pending chip family;
+   not interactive, so no tap-target minimum. */
 .chip-unscored {
   display: inline-flex; align-items: center; justify-content: center;
-  min-height: 40px; min-width: 40px;
-  border-radius: 6px;
+  height: 22px; border-radius: 4px;
   background: var(--rule-light);
   color: var(--ink-faint);
   font-family: var(--mono);
-  font-size: 9px; font-weight: 700;
+  font-size: 8px; font-weight: 700;
   text-transform: uppercase; letter-spacing: .05em;
-  padding: 0 8px;
+  padding: 0 6px;
   white-space: nowrap;
 }
 

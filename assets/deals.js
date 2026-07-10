@@ -7,22 +7,22 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710b'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710c'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
-  renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB,
-} from './scoring.js?v=20260710b'
+  renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
+} from './scoring.js?v=20260710c'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
-  renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB,
+  renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
 }
 
 const supabase = createClient(
@@ -372,16 +372,46 @@ export async function fetchTopOutcomeDeals(limit = 20) {
   return (data || []).filter(isOutcomeUnlocked).slice(0, limit)
 }
 
+/** Bulk-scan pager: a single limit(2000) scan of the heavy deals_enriched
+ *  view 500s with a Postgres statement timeout (57014). Offset paging
+ *  (.range) ALSO times out past the first page — the view recomputes every
+ *  skipped row — so this pages by KEYSET: order by deal_id, then
+ *  deal_id > last-seen each page (verified live: 500-row keyset pages
+ *  return in ~2s; offset=500 deterministically 57014s).
+ *  buildQuery must return a FRESH query each call and its select MUST
+ *  include deal_id. Pages concatenate until a short page arrives.
+ *  Defensive: if a chunk errors, return what we already have — degrade,
+ *  never render nothing. */
+const BULK_PAGE_SIZE = 500
+const BULK_MAX_PAGES = 20 // 10k-row ceiling — guard against runaway loops
+async function fetchAllPaged(buildQuery) {
+  const all = []
+  let lastId = null
+  for (let page = 0; page < BULK_MAX_PAGES; page++) {
+    let rows = null
+    try {
+      let q = buildQuery().order('deal_id', { ascending: true }).limit(BULK_PAGE_SIZE)
+      if (lastId != null) q = q.gt('deal_id', lastId)
+      const { data, error } = await q
+      if (!error) rows = data || []
+    } catch { /* fall through — keep accumulated rows */ }
+    if (rows == null) break
+    all.push(...rows)
+    if (rows.length < BULK_PAGE_SIZE) break
+    lastId = rows[rows.length - 1].deal_id
+  }
+  return all
+}
+
 /** Move 4: highest-|HypeGap| unlocked dual-scored deals, for the hero teaser.
  *  Two-step (light score scan, then display fields) — the enriched view is
  *  heavy and filtering computed critic_score 500s. */
 export async function fetchTopGapDeals(n = 1) {
-  const { data: light } = await supabase
+  const light = await fetchAllPaged(() => supabase
     .from('deals_enriched')
     .select('deal_id,critic_score,outcome_score,announcement_date,close_date')
     .neq('enrichment_status', 'archived')
-    .not('outcome_score', 'is', null)
-    .limit(2000)
+    .not('outcome_score', 'is', null))
   const scored = (light || [])
     .map(d => ({ d, gap: hypeGap(d) }))
     .filter(x => x.gap != null)
@@ -399,25 +429,23 @@ export async function fetchTopGapDeals(n = 1) {
 
 /** Move 6: acquirer track records — batting average over unlocked scored deals. */
 export async function fetchAcquirerRecords(minN = 3) {
-  const { data } = await supabase
+  const data = await fetchAllPaged(() => supabase
     .from('deals_enriched')
     .select('buyer_name,target_name,deal_id,outcome_score,announcement_date,close_date,deal_value_usd_mm')
     .neq('enrichment_status', 'archived')
-    .not('outcome_score', 'is', null)
-    .limit(2000)
+    .not('outcome_score', 'is', null))
   return acquirerBattingAverage(data || [], { minN })
 }
 
 /** Move 3: Biobucks Index — median/mean upfront-% across licensing deals with
  *  a disclosed upfront. The "what the headline hides" metric no rival publishes. */
 export async function fetchBiobucksIndex() {
-  const { data } = await supabase
+  const data = await fetchAllPaged(() => supabase
     .from('deals_enriched')
-    .select('upfront_usd_mm,deal_value_usd_mm')
+    .select('deal_id,upfront_usd_mm,deal_value_usd_mm') // deal_id: keyset cursor
     .eq('deal_type', 'Licensing/Option')
     .not('upfront_usd_mm', 'is', null)
-    .gt('deal_value_usd_mm', 0)
-    .limit(2000)
+    .gt('deal_value_usd_mm', 0))
   const pcts = (data || []).map(biobucksPct).filter(p => p != null).sort((a, b) => a - b)
   if (pcts.length < 10) return null
   const median = pcts[Math.floor(pcts.length / 2)]
@@ -442,12 +470,11 @@ export async function fetchLastUpdated() {
 
 /** Move 7: "Deals of the Year, in hindsight" — aged best/worst per year cohort. */
 export async function fetchHindsightCohorts(opts = {}) {
-  const { data } = await supabase
+  const data = await fetchAllPaged(() => supabase
     .from('deals_enriched')
     .select('deal_id,buyer_name,target_name,outcome_score,announcement_date,close_date,deal_value_usd_mm,deal_type')
     .neq('enrichment_status', 'archived')
-    .not('outcome_score', 'is', null)
-    .limit(2000)
+    .not('outcome_score', 'is', null))
   return hindsightCohorts(data || [], opts)
 }
 
@@ -764,22 +791,24 @@ export function renderPoster(deal, size = 'carousel') {
         <span class="c-value">${esc(val)}</span>
       </div>
     </div>
-    <div class="c-scores">
-      ${criticScore != null
-        ? `<div class="c-sc ct" title="${SCORE_VOCAB.critic.tooltip}"><span class="c-sc-label">${SCORE_VOCAB.critic.abbr}</span>${criticScore}</div>`
-        : isScorePending(deal)
-          ? `<span class="c-sc pending">Score pending</span>`
-          : (outcomeScore == null
-              ? `<span class="chip-unscored" title="Unscored — grades open 5 yrs post-close">UNSCORED</span>`
-              : '' /* only outcome scored — OS chip stands alone, no dash chip */)}
-      ${outcomeScore != null
-        ? `<div class="c-sc os" title="${SCORE_VOCAB.outcome.tooltip}"><span class="c-sc-label">${SCORE_VOCAB.outcome.abbr}</span>${outcomeScore}</div>`
-        : (criticScore == null && !isScorePending(deal)
-            ? '' /* single UNSCORED chip already rendered above covers both */
-            : `<div class="c-sc lk" title="${SCORE_VOCAB.outcome.tooltip}"><span class="c-sc-label">${SCORE_VOCAB.outcome.abbr}</span>&mdash;</div>`)}
-    </div>
+    <div class="c-scores">${posterScoreChips(criticScore, outcomeScore, isScorePending(deal))}</div>
   </div>
 </a>`
+}
+
+/** Chip strip for carousel posters — one branch point via posterScoreState()
+ *  (scoring.js), so renderPoster and renderResultRow can't drift apart. */
+function posterScoreChips(criticScore, outcomeScore, isPending) {
+  const csChip = `<div class="c-sc ct" title="${esc(SCORE_VOCAB.critic.tooltip)}"><span class="c-sc-label">${esc(SCORE_VOCAB.critic.abbr)}</span>${criticScore}</div>`
+  const osChip = `<div class="c-sc os" title="${esc(SCORE_VOCAB.outcome.tooltip)}"><span class="c-sc-label">${esc(SCORE_VOCAB.outcome.abbr)}</span>${outcomeScore}</div>`
+  const osLock = `<div class="c-sc lk" title="${esc(SCORE_VOCAB.outcome.tooltip)}"><span class="c-sc-label">${esc(SCORE_VOCAB.outcome.abbr)}</span>&mdash;</div>`
+  switch (posterScoreState(criticScore, outcomeScore, isPending)) {
+    case 'both':          return csChip + osChip
+    case 'critic-locked': return csChip + osLock
+    case 'outcome-only':  return osChip
+    case 'pending':       return `<span class="c-sc pending">Score pending</span>` + osLock
+    default:              return `<span class="chip-unscored" title="Unscored — grades open 5 yrs post-close">UNSCORED</span>`
+  }
 }
 
 /** Mini poster for comparables sidebar (36x50) */
@@ -881,19 +910,32 @@ export function renderResultRow(deal) {
       </div>
       <div class="result-meta">${val ? `<strong>${esc(val)}</strong>` : ''}${date ? ` · ${esc(date)}` : ''}</div>
     </div>
-    <div class="result-scores">
-      ${cs != null ? `
-        <div class="score-block" title="${SCORE_VOCAB.critic.tooltip}">
+    <div class="result-scores">${resultRowScoreChips(cs, os, csTier, csLabel, isScorePending(deal))}</div>
+  </a>`
+}
+
+/** Score column for result rows — branches on posterScoreState() (scoring.js),
+ *  same decision table as posterScoreChips so the two surfaces can't drift.
+ *  CS and OS each get the same score-block wrapper (chip + mono sublabel). */
+function resultRowScoreChips(cs, os, csTier, csLabel, isPending) {
+  const csBlock = `
+        <div class="score-block" title="${esc(SCORE_VOCAB.critic.tooltip)}">
           ${csLabel ? `<span class="tier-label" data-tier="${csTier}">${csLabel}</span>` : ''}
           <div class="score-chip" data-tier="${csTier}">${cs}</div>
           <span class="row-score-label">${esc(SCORE_VOCAB.critic.name)}</span>
         </div>
-      ` : isScorePending(deal)
-          ? `<span class="c-sc pending">Score pending</span>`
-          : (os == null ? `<span class="chip-unscored" title="Unscored — grades open 5 yrs post-close">UNSCORED</span>` : '')}
-      ${os != null ? `<div class="score-chip score-chip-mini result-os" data-tier="${tierForScore(os)}" title="${SCORE_VOCAB.outcome.tooltip}">${os}</div><span class="row-score-label">${esc(SCORE_VOCAB.outcome.name)}</span>` : ''}
-    </div>
-  </a>`
+      `
+  const osBlock = `<div class="score-block" title="${esc(SCORE_VOCAB.outcome.tooltip)}">
+          <div class="score-chip score-chip-mini result-os" data-tier="${tierForScore(os)}">${os}</div>
+          <span class="row-score-label">${esc(SCORE_VOCAB.outcome.name)}</span>
+        </div>`
+  switch (posterScoreState(cs, os, isPending)) {
+    case 'both':          return csBlock + osBlock
+    case 'critic-locked': return csBlock
+    case 'outcome-only':  return osBlock
+    case 'pending':       return `<span class="c-sc pending">Score pending</span>`
+    default:              return `<span class="chip-unscored" title="Unscored — grades open 5 yrs post-close">UNSCORED</span>`
+  }
 }
 
 
@@ -949,9 +991,9 @@ export function renderScorePill(type, score, subtitle = '') {
   const tier = tierForScore(score)
   const tierLabel = tierLabelFor(score, dimension)
   const display = score != null ? score : '—'
-  const meta = subtitle ? `${label} · ${esc(subtitle)}` : label
+  const meta = subtitle ? `${esc(label)} · ${esc(subtitle)}` : esc(label)
 
-  return `<div class="score-block" data-dim="${dimension}" title="${vocab.tooltip}">
+  return `<div class="score-block" data-dim="${dimension}" title="${esc(vocab.tooltip)}">
   ${tierLabel ? `<span class="tier-label" data-tier="${tier}">${tierLabel}</span>` : ''}
   <div class="score-chip" data-tier="${tier}">${display}</div>
   <span class="score-meta">${meta}</span>
@@ -972,7 +1014,7 @@ export function renderHypeGap(deal) {
   const cs = Math.round(deal.critic_score), os = Math.round(deal.outcome_score)
   const dir = gap > 0 ? 'over' : (gap < 0 ? 'under' : 'even')
   const sign = gap > 0 ? '+' : ''
-  return `<div class="hype-gap" data-dir="${dir}" title="${SCORE_VOCAB.critic.name} minus ${SCORE_VOCAB.outcome.name}">
+  return `<div class="hype-gap" data-dir="${dir}" title="${esc(SCORE_VOCAB.critic.name)} minus ${esc(SCORE_VOCAB.outcome.name)}">
     <div class="hg-headline">The Hype Gap</div>
     <div class="hg-line">The Street said <strong>${cs}</strong> &middot; history says <strong>${os}</strong></div>
     <div class="hg-verdict"><span class="hg-num">${sign}${gap}</span> ${esc(hypeGapLabel(gap))}</div>
@@ -1491,7 +1533,7 @@ export function renderCriticReviews(sources) {
     // WS-H: per-outlet critic score chip (mini variant of WS-A chip)
     const cs = r.critic_score != null ? Math.round(r.critic_score) : null
     const chipHtml = cs != null
-      ? `<div class="score-chip score-chip-mini review-chip" data-tier="${tierForScore(cs)}" title="${SCORE_VOCAB.critic.tooltip}">${cs}</div>`
+      ? `<div class="score-chip score-chip-mini review-chip" data-tier="${tierForScore(cs)}" title="${esc(SCORE_VOCAB.critic.tooltip)}">${cs}</div>`
       : ''
     return `<a class="review ${cls}" href="${esc(r.url || '#')}" target="_blank">
       ${chipHtml}
@@ -1750,11 +1792,11 @@ export function renderComparables(comparables, currentDealId) {
         </div>
         <div class="comp-scores">
           ${criticScore != null
-            ? `<div class="comp-sc ct" title="${SCORE_VOCAB.critic.tooltip}"><span class="cs-label">${SCORE_VOCAB.critic.abbr}</span>${criticScore}</div>`
-            : `<div class="comp-sc lk" title="${SCORE_VOCAB.critic.tooltip}"><span class="cs-label">${SCORE_VOCAB.critic.abbr}</span>—</div>`}
+            ? `<div class="comp-sc ct" title="${esc(SCORE_VOCAB.critic.tooltip)}"><span class="cs-label">${esc(SCORE_VOCAB.critic.abbr)}</span>${criticScore}</div>`
+            : `<div class="comp-sc lk" title="${esc(SCORE_VOCAB.critic.tooltip)}"><span class="cs-label">${esc(SCORE_VOCAB.critic.abbr)}</span>—</div>`}
           ${outcomeScore != null
-            ? `<div class="comp-sc os" title="${SCORE_VOCAB.outcome.tooltip}"><span class="cs-label">${SCORE_VOCAB.outcome.abbr}</span>${outcomeScore}</div>`
-            : `<div class="comp-sc lk" title="${SCORE_VOCAB.outcome.tooltip}"><span class="cs-label">${SCORE_VOCAB.outcome.abbr}</span>—</div>`}
+            ? `<div class="comp-sc os" title="${esc(SCORE_VOCAB.outcome.tooltip)}"><span class="cs-label">${esc(SCORE_VOCAB.outcome.abbr)}</span>${outcomeScore}</div>`
+            : `<div class="comp-sc lk" title="${esc(SCORE_VOCAB.outcome.tooltip)}"><span class="cs-label">${esc(SCORE_VOCAB.outcome.abbr)}</span>—</div>`}
         </div>
       </a>
       ${cmpHref ? `<a class="comp-compare-btn" href="${cmpHref}">Compare side-by-side &rarr;</a>` : ''}

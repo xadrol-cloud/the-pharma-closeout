@@ -197,6 +197,20 @@ export function hindsightCohorts(deals, { minPerYear = 5, topN = 3 } = {}) {
 // "Announcement Sentiment", "Met Thesis", "Industry consensus" are
 // tooltip copy only — never a visible label.
 // ---------------------------------------------------------------
+/** UX overhaul R2: single decision point for poster/result-row score chips.
+ *  Both renderPoster and renderResultRow branch on this — never duplicate the
+ *  ternary chain in a renderer. States:
+ *    'both'          — critic and (unlocked) outcome scored
+ *    'critic-locked' — critic scored, outcome still locked/absent
+ *    'outcome-only'  — outcome scored but critic never was (OS chip stands alone)
+ *    'pending'       — no critic yet, announced recently (scoring catching up)
+ *    'unscored'      — neither score, not pending → one neutral UNSCORED chip */
+export function posterScoreState(criticScore, outcomeScore, isPending) {
+  if (criticScore != null) return outcomeScore != null ? 'both' : 'critic-locked'
+  if (outcomeScore != null) return 'outcome-only'
+  return isPending ? 'pending' : 'unscored'
+}
+
 export const SCORE_VOCAB = {
   critic: {
     abbr: 'CS',
