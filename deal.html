@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260710k">
+<link rel="stylesheet" href="assets/deals.css?v=20260710l">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
   /* Move 9: comparable-aged panel */
@@ -51,6 +51,10 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   .comp-aged .ca-num[data-tier="exceptional"], .comp-aged .ca-num[data-tier="strong"] { color: var(--green, #6fa07b); }
   .comp-aged .ca-num[data-tier="weak"], .comp-aged .ca-num[data-tier="failed"] { color: var(--red, #cf6048); }
   .comp-aged .ca-lab { font-size: 12.5px; color: var(--ink-muted); }
+
+  /* Task 2.1 (R6): cohort panel moved into the hero — give it breathing
+     room above/below when it renders (empty div collapses to 0 otherwise). */
+  #cohort-panel:not(:empty) { margin-top: 18px; max-width: 620px; }
 </style>
 </head>
 <body>
@@ -78,6 +82,13 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </nav>
 
 <!-- ═══════════════════════════════════════════════════════════════════
+     STICKY VERDICT BAR (Task 2.1 — R6)
+     Hidden by default; JS unhides it once the hero score-pill row
+     scrolls out of view, and hides it again when the row is back.
+     ═══════════════════════════════════════════════════════════════════ -->
+<div id="verdict-bar" class="verdict-bar" hidden></div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
      LOADING STATE
      ═══════════════════════════════════════════════════════════════════ -->
 <div id="loading" style="text-align:center;padding:120px 40px;color:var(--ink-faint);font-size:14px;">Loading deal...</div>
@@ -97,7 +108,9 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       <h1 class="deal-title" id="hero-title"></h1>
       <span id="hero-status"></span>
     </div>
+    <div id="hero-consensus"></div>
     <div id="hero-scores" class="feat-scores" style="margin-top:16px;"></div>
+    <div id="cohort-panel"></div>
     <div id="hero-hypegap"></div>
     <div id="hero-cascade" style="margin-top:14px;"></div>
     <div class="hero-meta" id="hero-meta"></div>
@@ -287,8 +300,9 @@ import {
   criticReviewCount, isPipelineArtifact, cleanProse, isPlausibleDate,
   renderHypeGap, renderProvenance,
   displayOutcomeScore,
-  comparableOutcomeSummary, renderComparableAged
-} from './assets/deals.js?v=20260710k'
+  comparableOutcomeSummary, renderComparableAged,
+  renderVerdictBar, esc
+} from './assets/deals.js?v=20260710l'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -322,6 +336,14 @@ if (!dealId) {
       // terminated deals get a dated pill even without outcome status)
       document.getElementById('hero-status').innerHTML = renderDealStatus(deal.deal_outcome_status, deal)
 
+      // Task 2.1 (R6): consensus line — editorial_summary is thin-coverage
+      // (see methodology), so this renders nothing when the field is null.
+      // Never fabricate a stand-in.
+      if (deal.editorial_summary) {
+        document.getElementById('hero-consensus').innerHTML =
+          `<p class="deal-consensus">${esc(deal.editorial_summary)}</p>`
+      }
+
       // Score pills — when reviews exist but the score needs >=4, say so
       const reviewCount = criticReviewCount(sources)
       const criticSubtitle = deal.critic_score == null && reviewCount > 0
@@ -338,6 +360,23 @@ if (!dealId) {
       document.getElementById('hero-scores').innerHTML =
         renderScorePill('critic', deal.critic_score != null ? Math.round(deal.critic_score) : null, criticSubtitle) +
         renderScorePill('outcome', gatedOutcome != null ? Math.round(gatedOutcome) : null, outcomeSubtitle)
+
+      // Task 2.1 (R6): sticky verdict bar — populated now that scores are
+      // known; visibility is toggled by the IntersectionObserver below once
+      // the hero score-pill row itself is in the DOM.
+      const verdictBarEl = document.getElementById('verdict-bar')
+      if (verdictBarEl) {
+        verdictBarEl.innerHTML = renderVerdictBar(deal)
+        const heroScoresEl = document.getElementById('hero-scores')
+        if (heroScoresEl && 'IntersectionObserver' in window) {
+          const verdictObserver = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+              verdictBarEl.hidden = entry.isIntersecting
+            }
+          }, { threshold: 0 })
+          verdictObserver.observe(heroScoresEl)
+        }
+      }
 
       // Move 4: Hype Gap callout (renders only when both scores exist)
       document.getElementById('hero-hypegap').innerHTML = renderHypeGap(deal)
@@ -436,11 +475,25 @@ if (!dealId) {
         document.getElementById('comparables-section').style.display = ''
       }
 
-      // ── Move 9: "How deals like this aged" — only when this deal's own
-      //    outcome is still locked (avoids fabricating its ungraded outcome) ──
+      // ── Move 9 / Task 2.1 (R6): "How deals like this aged" — only when
+      //    this deal's own outcome is still locked (avoids fabricating its
+      //    ungraded outcome). Now rendered INTO the hero (#cohort-panel)
+      //    instead of ahead of the Outcome Timeline card, so the verdict
+      //    reads top-of-page instead of ~90 lines down. ──
       if (displayOutcomeScore(deal) == null) {
-        const aged = renderComparableAged(comparableOutcomeSummary(comparables))
-        if (aged) document.getElementById('timeline-section').insertAdjacentHTML('beforebegin', aged)
+        const compSummary = comparableOutcomeSummary(comparables)
+        const aged = renderComparableAged(compSummary)
+        if (aged) document.getElementById('cohort-panel').innerHTML = aged
+
+        // Task 2.1: patch the (locked) outcome pill's subtitle with the
+        // cohort median when we have enough unlocked comps (>=3). When
+        // compSummary is null (thin comps), leave "Unlocks YYYY" as-is.
+        if (compSummary) {
+          const outcomePillMeta = document.querySelector('#hero-scores .score-block[data-dim="outcome"] .score-meta')
+          if (outcomePillMeta) {
+            outcomePillMeta.textContent = `Deals like this aged ${compSummary.median}`
+          }
+        }
       }
 
       // ── Sidebar: Sources (+ Move 2c provenance stamp) ──

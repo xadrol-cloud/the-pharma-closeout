@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710k'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710l'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents,
-} from './scoring.js?v=20260710k'
+} from './scoring.js?v=20260710l'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -144,7 +144,7 @@ function initials(name) {
 }
 
 /** HTML-escape a string */
-function esc(s) {
+export function esc(s) {
   if (!s) return ''
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')
 }
@@ -1003,6 +1003,41 @@ export function renderScorePill(type, score, subtitle = '') {
   <div class="score-chip" data-tier="${tier}">${display}</div>
   <span class="score-meta">${meta}</span>
 </div>`
+}
+
+
+/* ---------- 3c.1 Sticky Verdict Bar (Task 2.1 — R6) ----------
+ * Compact chip variant of the hero score pills for the sticky bar that
+ * appears once the hero score row scrolls out of view. Reuses SCORE_VOCAB
+ * abbreviations and tier colors so the bar can't drift from the hero. */
+function verdictBarChip(dimension, score) {
+  const vocab = SCORE_VOCAB[dimension]
+  const tier = tierForScore(score)
+  const display = score != null ? score : '—'
+  return `<span class="vb-chip" data-tier="${tier}" title="${esc(vocab.tooltip)}">
+    <span class="vb-chip-abbr">${esc(vocab.abbr)}</span>${display}
+  </span>`
+}
+
+/**
+ * Sticky verdict-bar content: short title (buyer / target), compact CS/OS
+ * chips, and deal status. Returns an HTML string for #verdict-bar; the
+ * caller controls visibility via the IntersectionObserver.
+ */
+export function renderVerdictBar(deal) {
+  if (!deal) return ''
+  const criticScore = deal.critic_score != null ? Math.round(deal.critic_score) : null
+  const os = displayOutcomeScore(deal)
+  const outcomeScore = os != null ? Math.round(os) : null
+  const title = `${esc(deal.buyer_name || '')} / ${esc(deal.target_name || '')}`
+  return `<div class="vb-inner">
+    <span class="vb-title">${title}</span>
+    <span class="vb-chips">
+      ${verdictBarChip('critic', criticScore)}
+      ${verdictBarChip('outcome', outcomeScore)}
+    </span>
+    <span class="vb-status">${renderDealStatus(deal.deal_outcome_status, deal)}</span>
+  </div>`
 }
 
 
