@@ -1,7 +1,7 @@
 // Unit tests for pure render helpers in assets/scoring.js (offline, node --test)
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { SCORE_VOCAB, posterScoreState, financialFieldsFor } from '../assets/scoring.js'
+import { SCORE_VOCAB, posterScoreState, financialFieldsFor, dedupeByDealId, sortTimelineEvents } from '../assets/scoring.js'
 
 test('SCORE_VOCAB: canonical names and tooltips for both dimensions', () => {
   assert.equal(SCORE_VOCAB.critic.name, 'Critic Score')
@@ -62,4 +62,26 @@ test('financialFieldsFor: M&A deal with data shows valuation fields', () => {
 test('financialFieldsFor: pending flag when close_date missing and status not complete', () => {
   const pending = { deal_type: 'Licensing/Option', deal_value_usd_mm: 500, deal_status: 'Pending' }
   assert.equal(financialFieldsFor(pending, { withMeta: true }).pending, true)
+})
+
+test('dedupeByDealId keeps first occurrence, drops repeats', () => {
+  const rows = [{ deal_id: 'a', v: 1 }, { deal_id: 'b' }, { deal_id: 'a', v: 2 }]
+  const out = dedupeByDealId(rows)
+  assert.equal(out.length, 2)
+  assert.equal(out[0].v, 1)
+})
+test('dedupeByDealId tolerates null/undefined input', () => {
+  assert.deepEqual(dedupeByDealId(null), [])
+})
+test('sortTimelineEvents orders by event_date, sort_order as tiebreak', () => {
+  const ev = [
+    { event_date: '2026-05-28', sort_order: 3, t: 'pending' },
+    { event_date: '2026-06-03', sort_order: 2, t: 'binsa' },
+    { event_date: '2026-05-28', sort_order: 1, t: 'announced' },
+  ]
+  assert.deepEqual(sortTimelineEvents(ev).map(e => e.t), ['announced', 'pending', 'binsa'])
+})
+test('sortTimelineEvents: missing event_date falls back to sort_order at end', () => {
+  const ev = [{ sort_order: 2, t: 'b' }, { event_date: '2026-01-01', sort_order: 9, t: 'a' }]
+  assert.deepEqual(sortTimelineEvents(ev).map(e => e.t), ['a', 'b'])
 })

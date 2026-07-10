@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Newsreader:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260710e">
+<link rel="stylesheet" href="assets/deals.css?v=20260710f">
 <script defer src="assets/nav.js?v=20260531a"></script>
 </head>
 <body>
@@ -328,8 +328,8 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 import {
   fetchFeaturedDeal, fetchLatestDeals, fetchTrendingDeals, fetchTopOutcomeDeals,
   renderPoster, renderFeaturedInfo, initCarousel, initSearch, initMultiSelect, searchDeals,
-  fetchTopGapDeals, renderGapTeaser, fetchBiobucksIndex, fetchLastUpdated
-} from './assets/deals.js?v=20260710e'
+  fetchTopGapDeals, renderGapTeaser, fetchBiobucksIndex, fetchLastUpdated, dedupeByDealId
+} from './assets/deals.js?v=20260710f'
 
 // Task 9.3: "Data updated {Mon D, YYYY}" trust stamp near the search header
 fetchLastUpdated().then(dateStr => {
@@ -361,19 +361,19 @@ if (featured) {
 }
 
 // Latest Deals carousel
-const latest = await fetchLatestDeals(20)
+const latest = dedupeByDealId(await fetchLatestDeals(20))
 const latestEl = document.getElementById('latest-carousel')
 latestEl.innerHTML = latest.map(d => renderPoster(d, 'carousel')).join('')
 initCarousel(document.getElementById('latest-section'), { autoScroll: true, interval: 4000 })
 
 // Trending carousel
-const trending = await fetchTrendingDeals(20)
+const trending = dedupeByDealId(await fetchTrendingDeals(20))
 const trendingEl = document.getElementById('trending-carousel')
 trendingEl.innerHTML = trending.map(d => renderPoster(d, 'carousel')).join('')
 initCarousel(document.getElementById('trending-section'), {})
 
 // Highest Outcome Scores carousel
-const topOS = await fetchTopOutcomeDeals(20)
+const topOS = dedupeByDealId(await fetchTopOutcomeDeals(20))
 const topEl = document.getElementById('top-carousel')
 topEl.innerHTML = topOS.map(d => renderPoster(d, 'carousel')).join('')
 initCarousel(document.getElementById('top-section'), {})

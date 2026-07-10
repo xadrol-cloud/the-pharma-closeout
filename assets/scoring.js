@@ -263,6 +263,47 @@ export function financialFieldsFor(deal, opts = {}) {
   return { fields, pending }
 }
 
+/** UX overhaul R4: defensive same-id dedupe for any list keyed by deal_id
+ *  (comparables, lineage, companion deals, carousel rails). First occurrence
+ *  wins. Null/undefined input degrades to an empty array rather than throwing —
+ *  callers that fetch defensively (fetchAllPaged et al.) may hand back
+ *  partial/empty results. Does NOT dedupe distinct deals that merely look
+ *  alike (e.g. two different Sanofi/Regeneron deal_ids) — that's a data-side
+ *  concern, not this function's job. */
+export function dedupeByDealId(rows) {
+  if (!rows) return []
+  const seen = new Set()
+  const out = []
+  for (const row of rows) {
+    const id = row && row.deal_id
+    if (seen.has(id)) continue
+    seen.add(id)
+    out.push(row)
+  }
+  return out
+}
+
+/** UX overhaul R4: chronological ordering for the Outcome Timeline — it
+ *  previously trusted fetch order, which is not guaranteed chronological.
+ *  Sorts by event_date ascending; sort_order breaks ties (including among
+ *  same-date events). Events with a missing/unparseable event_date sort
+ *  after all dated events, ordered by sort_order among themselves. */
+export function sortTimelineEvents(events) {
+  if (!events) return []
+  const withKey = events.map((e, i) => {
+    const t = e && e.event_date ? Date.parse(e.event_date) : NaN
+    return { e, i, t: isNaN(t) ? null : t }
+  })
+  withKey.sort((a, b) => {
+    if (a.t == null && b.t == null) return (a.e.sort_order ?? 0) - (b.e.sort_order ?? 0)
+    if (a.t == null) return 1
+    if (b.t == null) return -1
+    if (a.t !== b.t) return a.t - b.t
+    return (a.e.sort_order ?? 0) - (b.e.sort_order ?? 0)
+  })
+  return withKey.map(x => x.e)
+}
+
 export const SCORE_VOCAB = {
   critic: {
     abbr: 'CS',

@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710e'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710f'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -15,8 +15,8 @@ import {
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
-  financialFieldsFor,
-} from './scoring.js?v=20260710e'
+  financialFieldsFor, dedupeByDealId, sortTimelineEvents,
+} from './scoring.js?v=20260710f'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -24,6 +24,7 @@ export {
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
+  dedupeByDealId,
 }
 
 const supabase = createClient(
@@ -619,7 +620,7 @@ export async function fetchComparables(deal, limit = 5) {
   // Try comparable_deal_ids override first
   if (deal.comparable_deal_ids) {
     try {
-      const ids = JSON.parse(deal.comparable_deal_ids)
+      const ids = [...new Set(JSON.parse(deal.comparable_deal_ids))]
       if (ids.length) {
         const { data } = await supabase
           .from('deals_enriched').select('*')
@@ -1060,9 +1061,10 @@ export function renderProvenance(deal) {
  * Verdict events can link to score breakdown via outcome_id.
  */
 export function renderTimeline(events, outcomes, dealSummary) {
-  // Gate pipeline artifacts (Wikidata ingest strings) before rendering
-  const cleanEvents = (events || []).filter(e =>
-    !isPipelineArtifact(e.headline) && !isPipelineArtifact(e.summary))
+  // Gate pipeline artifacts (Wikidata ingest strings) before rendering, then
+  // enforce chronological order — fetch order is not guaranteed sorted.
+  const cleanEvents = sortTimelineEvents((events || []).filter(e =>
+    !isPipelineArtifact(e.headline) && !isPipelineArtifact(e.summary)))
   if (!cleanEvents.length) {
     // One-line note — the hero summary already covers the deal overview,
     // so don't repeat it here.
@@ -1690,9 +1692,10 @@ export function renderScoreBreakdown(outcomes, deal) {
 
 /** Shared mini-list renderer for sidebar cards that show 2-4 linked deals. */
 function renderLineageList(deals, emptyMsg) {
-  if (!deals || !deals.length) return `<div class="lin-empty">${emptyMsg}</div>`
-  const preview = deals.slice(0, 4)
-  const overflow = deals.slice(4)
+  const deduped = dedupeByDealId(deals)
+  if (!deduped.length) return `<div class="lin-empty">${emptyMsg}</div>`
+  const preview = deduped.slice(0, 4)
+  const overflow = deduped.slice(4)
   const row = d => {
     const val = formatValue(d.deal_value_usd_mm)
     const y = yearOf(d.announcement_date) // blank for implausible years (ingest artifacts)
@@ -1710,7 +1713,7 @@ function renderLineageList(deals, emptyMsg) {
   const overflowHtml = overflow.map(row).join('')
   return `${previewHtml}
     <details class="lin-more">
-      <summary>See full chain (${deals.length})</summary>
+      <summary>See full chain (${deduped.length})</summary>
       ${overflowHtml}
     </details>`
 }
@@ -1760,9 +1763,10 @@ export function renderCompanionDeals(deals, currentDeal) {
 /* ---------- 3k. Comparables Sidebar ---------- */
 
 export function renderComparables(comparables, currentDealId) {
-  if (!comparables || !comparables.length) return ''
+  const deduped = dedupeByDealId(comparables)
+  if (!deduped.length) return ''
 
-  const items = comparables.map(deal => {
+  const items = deduped.map(deal => {
     const bg = bgClass(deal.deal_type)
     const criticScore = deal.critic_score != null ? Math.round(deal.critic_score) : null
     const _os = displayOutcomeScore(deal)
