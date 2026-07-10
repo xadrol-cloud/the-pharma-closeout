@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710a'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710b'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -15,7 +15,7 @@ import {
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB,
-} from './scoring.js?v=20260710a'
+} from './scoring.js?v=20260710b'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -771,7 +771,7 @@ export function renderPoster(deal, size = 'carousel') {
           ? `<span class="c-sc pending">Score pending</span>`
           : (outcomeScore == null
               ? `<span class="chip-unscored" title="Unscored — grades open 5 yrs post-close">UNSCORED</span>`
-              : `<div class="c-sc lk" title="${SCORE_VOCAB.critic.tooltip}"><span class="c-sc-label">${SCORE_VOCAB.critic.abbr}</span>&mdash;</div>`)}
+              : '' /* only outcome scored — OS chip stands alone, no dash chip */)}
       ${outcomeScore != null
         ? `<div class="c-sc os" title="${SCORE_VOCAB.outcome.tooltip}"><span class="c-sc-label">${SCORE_VOCAB.outcome.abbr}</span>${outcomeScore}</div>`
         : (criticScore == null && !isScorePending(deal)
