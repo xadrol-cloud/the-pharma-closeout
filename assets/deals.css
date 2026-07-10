@@ -1372,6 +1372,11 @@ input, textarea, select {
 .fin-val.amber { color: var(--amber); }
 .fin-val.red   { color: var(--red); }
 .fin-note { font-size: 11px; color: var(--ink-faint); margin-top: 2px; }
+.fin-pending {
+  font-size: 12px; color: var(--ink-muted);
+  background: var(--surface); border-radius: 6px;
+  padding: 8px 12px; margin-bottom: 10px;
+}
 
 
 /* ==========================================================================

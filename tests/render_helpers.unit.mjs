@@ -1,7 +1,7 @@
 // Unit tests for pure render helpers in assets/scoring.js (offline, node --test)
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { SCORE_VOCAB, posterScoreState } from '../assets/scoring.js'
+import { SCORE_VOCAB, posterScoreState, financialFieldsFor } from '../assets/scoring.js'
 
 test('SCORE_VOCAB: canonical names and tooltips for both dimensions', () => {
   assert.equal(SCORE_VOCAB.critic.name, 'Critic Score')
@@ -35,4 +35,31 @@ test('posterScoreState: pending — no critic yet, announced recently', () => {
 test('posterScoreState: unscored — neither score, not pending', () => {
   assert.equal(posterScoreState(null, null, false), 'unscored')
   assert.equal(posterScoreState(undefined, undefined, false), 'unscored')
+})
+
+test('financialFieldsFor: licensing deal never shows M&A-only fields', () => {
+  const lic = { deal_type: 'Licensing/Option', deal_value_usd_mm: 11000, financing_type: null,
+    close_date: null, deal_ev_revenue_x: null, deal_ev_ebitda_x: null, time_to_close_days: null,
+    target_revenue_ltm_usd_mm: null, closing_structure: null, equity_sought_pct: null }
+  const labels = financialFieldsFor(lic).map(f => f.label)
+  assert.ok(!labels.includes('EV / EBITDA'))
+  assert.ok(!labels.includes('Equity Sought'))
+  assert.ok(!labels.includes('Target LTM Revenue'))
+  assert.ok(labels.includes('Deal Value'))
+})
+test('financialFieldsFor: null fields are dropped, not dashed', () => {
+  const lic = { deal_type: 'Licensing/Option', deal_value_usd_mm: 11000 }
+  for (const f of financialFieldsFor(lic)) assert.notEqual(f.value, '—')
+})
+test('financialFieldsFor: M&A deal with data shows valuation fields', () => {
+  const ma = { deal_type: 'Acquisition/Merger', deal_value_usd_mm: 68000, deal_ev_revenue_x: 4.2,
+    deal_ev_ebitda_x: 12.1, equity_sought_pct: 100, close_date: '2009-10-15', time_to_close_days: 262 }
+  const labels = financialFieldsFor(ma).map(f => f.label)
+  assert.ok(labels.includes('EV / Revenue'))
+  assert.ok(labels.includes('EV / EBITDA'))
+  assert.ok(labels.includes('Equity Sought'))
+})
+test('financialFieldsFor: pending flag when close_date missing and status not complete', () => {
+  const pending = { deal_type: 'Licensing/Option', deal_value_usd_mm: 500, deal_status: 'Pending' }
+  assert.equal(financialFieldsFor(pending, { withMeta: true }).pending, true)
 })

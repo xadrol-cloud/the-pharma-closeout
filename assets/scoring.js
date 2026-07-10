@@ -2,7 +2,7 @@
 // CDN-FREE by contract: imports ONLY ./format.js (no ?v= query string) so that
 // `node --test` can import this module offline. deals.js re-exports everything
 // here for the browser. Do not add CDN or Supabase imports to this file.
-import { isPlausibleDate } from './format.js'
+import { isPlausibleDate, formatValue, formatDate } from './format.js'
 
 /* ---------- Outcome-unlock gate (Move 1) ----------
  * Methodology (methodology.html §03): the Outcome Score "unlocks five years
@@ -209,6 +209,58 @@ export function posterScoreState(criticScore, outcomeScore, isPending) {
   if (criticScore != null) return outcomeScore != null ? 'both' : 'critic-locked'
   if (outcomeScore != null) return 'outcome-only'
   return isPending ? 'pending' : 'unscored'
+}
+
+/** UX overhaul R3: field applicability for the Deal Financials grid.
+ *  M&A-only concepts (valuation multiples, equity sought, closing structure,
+ *  target LTM revenue) never apply to licensing/option/co-dev deals — they
+ *  render only when the deal is actually an acquisition/merger/asset deal.
+ *  Fields whose value would be a bare em-dash are dropped entirely (except
+ *  Deal Value, which always anchors the grid even when null). */
+const M_AND_A_ONLY = ['EV / Revenue', 'EV / EBITDA', 'Target LTM Revenue', 'Equity Sought', 'Structure']
+
+function isMAndA(dealType) {
+  return /acquisition|merger|m&a|asset/i.test(dealType || '')
+}
+
+export function financialFieldsFor(deal, opts = {}) {
+  const mAndA = isMAndA(deal.deal_type)
+
+  const evRev = deal.deal_ev_revenue_x != null ? `${deal.deal_ev_revenue_x.toFixed(1)}x` : null
+  const evEbitda = deal.deal_ev_ebitda_x != null ? `${deal.deal_ev_ebitda_x.toFixed(1)}x` : null
+  // Suppress derived TTC when non-positive or computed off an implausible
+  // close date (Wikidata ingest artifacts produce "0 days" / "-2 days")
+  const ttcValid = deal.time_to_close_days != null && deal.time_to_close_days > 0 &&
+    (!deal.close_date || isPlausibleDate(deal.close_date))
+  const ttc = ttcValid ? `${deal.time_to_close_days} days` : null
+  const equity = deal.equity_sought_pct != null ? `${deal.equity_sought_pct}%` : null
+  const cashPct = deal.cash_portion_usd_mm != null ? formatValue(deal.cash_portion_usd_mm) : null
+  const stockPct = deal.stock_portion_usd_mm != null ? formatValue(deal.stock_portion_usd_mm) : null
+  let structure = deal.closing_structure || null
+  if (cashPct && stockPct) structure = `${cashPct} cash + ${stockPct} stock`
+  else if (cashPct) structure = `${cashPct} cash`
+
+  const candidates = [
+    { label: 'Deal Value', value: formatValue(deal.deal_value_usd_mm), always: true },
+    { label: 'Financing', value: deal.financing_type || null },
+    { label: 'Close Date', value: deal.close_date ? formatDate(deal.close_date) : null },
+    { label: 'EV / Revenue', value: evRev },
+    { label: 'EV / EBITDA', value: evEbitda },
+    { label: 'Time to Close', value: ttc },
+    { label: 'Target LTM Revenue', value: deal.target_revenue_ltm_usd_mm != null ? formatValue(deal.target_revenue_ltm_usd_mm) : null },
+    { label: 'Structure', value: structure },
+    { label: 'Equity Sought', value: equity },
+  ]
+
+  const fields = candidates
+    .filter(f => mAndA || !M_AND_A_ONLY.includes(f.label))
+    .filter(f => f.always || (f.value != null && f.value !== '—'))
+    .map(f => ({ label: f.label, value: f.value }))
+
+  if (!opts.withMeta) return fields
+
+  const pending = !deal.close_date && !/complete/i.test(deal.deal_status || '')
+  return { fields, pending }
 }
 
 export const SCORE_VOCAB = {

@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710d'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710e'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -15,7 +15,8 @@ import {
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
-} from './scoring.js?v=20260710d'
+  financialFieldsFor,
+} from './scoring.js?v=20260710e'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -1468,41 +1469,26 @@ export function renderDiseaseContext(indications, assets) {
 
 /* ---------- 3g. Financials Grid ---------- */
 
+/** UX overhaul R3: field applicability lives in scoring.js (financialFieldsFor)
+ *  so licensing deals don't render an em-dash wall of M&A-only concepts
+ *  (EV/EBITDA, Equity Sought, Structure, Target LTM Revenue). Renders '' when
+ *  fewer than 2 fields are known — caller must keep the section hidden. */
 export function renderFinancials(deal) {
-  const evRev = deal.deal_ev_revenue_x != null ? `${deal.deal_ev_revenue_x.toFixed(1)}x` : '—'
-  const evEbitda = deal.deal_ev_ebitda_x != null ? `${deal.deal_ev_ebitda_x.toFixed(1)}x` : '—'
-  // Suppress derived TTC when non-positive or computed off an implausible
-  // close date (Wikidata ingest artifacts produce "0 days" / "-2 days")
-  const ttcValid = deal.time_to_close_days != null && deal.time_to_close_days > 0 &&
-    (!deal.close_date || isPlausibleDate(deal.close_date))
-  const ttc = ttcValid ? `${deal.time_to_close_days} days` : '—'
-  const equity = deal.equity_sought_pct != null ? `${deal.equity_sought_pct}%` : '—'
-  const cashPct = deal.cash_portion_usd_mm != null ? formatValue(deal.cash_portion_usd_mm) : null
-  const stockPct = deal.stock_portion_usd_mm != null ? formatValue(deal.stock_portion_usd_mm) : null
-  let structure = deal.closing_structure || '—'
-  if (cashPct && stockPct) structure = `${cashPct} cash + ${stockPct} stock`
-  else if (cashPct) structure = `${cashPct} cash`
+  const { fields, pending } = financialFieldsFor(deal, { withMeta: true })
+  if (fields.length < 2) return ''
 
-  const metrics = [
-    { label: 'Deal Value', value: formatValue(deal.deal_value_usd_mm) },
-    { label: 'Financing', value: deal.financing_type || '—' },
-    { label: 'Close Date', value: deal.close_date ? formatDate(deal.close_date) : '—' },
-    { label: 'EV / Revenue', value: evRev },
-    { label: 'EV / EBITDA', value: evEbitda },
-    { label: 'Time to Close', value: ttc },
-    { label: 'Target LTM Revenue', value: deal.target_revenue_ltm_usd_mm != null ? formatValue(deal.target_revenue_ltm_usd_mm) : '—' },
-    { label: 'Structure', value: structure },
-    { label: 'Equity Sought', value: equity },
-  ]
-
-  const cells = metrics.map(m =>
+  const cells = fields.map(f =>
     `<div class="fin-cell">
-      <div class="fin-label">${esc(m.label)}</div>
-      <div class="fin-val">${esc(m.value)}</div>
+      <div class="fin-label">${esc(f.label)}</div>
+      <div class="fin-val">${esc(f.value)}</div>
     </div>`
   )
 
-  return `<div class="fin-grid">${cells.join('')}</div>`
+  const pendingNote = pending
+    ? `<div class="fin-pending">Pending close — financial detail populates at close.</div>`
+    : ''
+
+  return `${pendingNote}<div class="fin-grid">${cells.join('')}</div>`
 }
 
 
