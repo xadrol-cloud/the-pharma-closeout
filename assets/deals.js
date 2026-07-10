@@ -60,6 +60,19 @@ function yearOf(isoDate) {
   return isoDate.substring(0, 4)
 }
 
+/** Task 9.4: a deal shows "Score pending" (not bare "—") when it has no
+ *  critic_score yet but was announced recently enough that scoring hasn't
+ *  caught up (within the last 45 days). Older null-score deals keep "—". */
+function isScorePending(deal) {
+  if (!deal || deal.critic_score != null) return false
+  if (!deal.announcement_date || !isPlausibleDate(deal.announcement_date)) return false
+  const announced = new Date(deal.announcement_date)
+  if (isNaN(announced.getTime())) return false
+  const cutoff = new Date()
+  cutoff.setDate(cutoff.getDate() - 45)
+  return announced >= cutoff
+}
+
 /**
  * Pipeline-artifact text gate. Wikidata ingest leaves strings like
  * "Merger: Pfizer resulted in Unknown Successor (source: Wikidata Q891723
@@ -412,6 +425,21 @@ export async function fetchBiobucksIndex() {
   return { n: pcts.length, median, mean }
 }
 
+/** Task 9.3: most recent updated_at across deals_enriched, for the
+ *  "Data updated {Mon D, YYYY}" trust stamp near the search header. */
+export async function fetchLastUpdated() {
+  const { data } = await supabase
+    .from('deals_enriched')
+    .select('updated_at')
+    .order('updated_at', { ascending: false })
+    .limit(1)
+  const raw = data && data[0] && data[0].updated_at
+  if (!raw) return null
+  const d = new Date(raw)
+  if (isNaN(d.getTime())) return null
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+}
+
 /** Move 7: "Deals of the Year, in hindsight" — aged best/worst per year cohort. */
 export async function fetchHindsightCohorts(opts = {}) {
   const { data } = await supabase
@@ -739,7 +767,9 @@ export function renderPoster(deal, size = 'carousel') {
     <div class="c-scores">
       ${criticScore != null
         ? `<div class="c-sc ct"><span class="c-sc-label">CS</span>${criticScore}</div>`
-        : `<div class="c-sc lk"><span class="c-sc-label">CS</span>&mdash;</div>`}
+        : isScorePending(deal)
+          ? `<span class="c-sc pending">Score pending</span>`
+          : `<div class="c-sc lk"><span class="c-sc-label">CS</span>&mdash;</div>`}
       ${outcomeScore != null
         ? `<div class="c-sc os"><span class="c-sc-label">OS</span>${outcomeScore}</div>`
         : `<div class="c-sc lk"><span class="c-sc-label">OS</span>&mdash;</div>`}
@@ -853,7 +883,7 @@ export function renderResultRow(deal) {
           ${csLabel ? `<span class="tier-label" data-tier="${csTier}">${csLabel}</span>` : ''}
           <div class="score-chip" data-tier="${csTier}">${cs}</div>
         </div>
-      ` : ''}
+      ` : isScorePending(deal) ? `<span class="c-sc pending">Score pending</span>` : ''}
       ${os != null ? `<div class="score-chip score-chip-mini result-os" data-tier="${tierForScore(os)}" title="Outcome Score">${os}</div>` : ''}
     </div>
   </a>`
