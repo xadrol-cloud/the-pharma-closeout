@@ -14,15 +14,15 @@ import {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
-  renderComparableAged, renderGapTeaser,
-} from './scoring.js?v=20260709b'
+  renderComparableAged, renderGapTeaser, hindsightCohorts,
+} from './scoring.js?v=20260709c'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
-  renderComparableAged, renderGapTeaser,
+  renderComparableAged, renderGapTeaser, hindsightCohorts,
 }
 
 const supabase = createClient(
@@ -393,6 +393,34 @@ export async function fetchAcquirerRecords(minN = 3) {
     .not('outcome_score', 'is', null)
     .limit(2000)
   return acquirerBattingAverage(data || [], { minN })
+}
+
+/** Move 3: Biobucks Index — median/mean upfront-% across licensing deals with
+ *  a disclosed upfront. The "what the headline hides" metric no rival publishes. */
+export async function fetchBiobucksIndex() {
+  const { data } = await supabase
+    .from('deals_enriched')
+    .select('upfront_usd_mm,deal_value_usd_mm')
+    .eq('deal_type', 'Licensing/Option')
+    .not('upfront_usd_mm', 'is', null)
+    .gt('deal_value_usd_mm', 0)
+    .limit(2000)
+  const pcts = (data || []).map(biobucksPct).filter(p => p != null).sort((a, b) => a - b)
+  if (pcts.length < 10) return null
+  const median = pcts[Math.floor(pcts.length / 2)]
+  const mean = Math.round(pcts.reduce((a, b) => a + b, 0) / pcts.length)
+  return { n: pcts.length, median, mean }
+}
+
+/** Move 7: "Deals of the Year, in hindsight" — aged best/worst per year cohort. */
+export async function fetchHindsightCohorts(opts = {}) {
+  const { data } = await supabase
+    .from('deals_enriched')
+    .select('deal_id,buyer_name,target_name,outcome_score,announcement_date,close_date,deal_value_usd_mm,deal_type')
+    .neq('enrichment_status', 'archived')
+    .not('outcome_score', 'is', null)
+    .limit(2000)
+  return hindsightCohorts(data || [], opts)
 }
 
 /** Search deals by text query + optional filters. Returns { deals, total }. */

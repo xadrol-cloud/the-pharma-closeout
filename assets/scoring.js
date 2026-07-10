@@ -166,3 +166,27 @@ export function renderGapTeaser(deal) {
     <span class="gt-nums">said <b>${cs}</b> &middot; did <b>${os}</b> &middot; <span class="gt-gap">${sign}${gap}</span></span>
   </a>`
 }
+
+/* ---------- Move 7: "Deals of the Year, in hindsight" cohorts ----------
+ * Group unlocked, scored deals by announcement year; per year (>= minPerYear)
+ * return the aged-best and aged-worst. Pure over the live view. */
+export function hindsightCohorts(deals, { minPerYear = 5, topN = 3 } = {}) {
+  const byYear = new Map()
+  for (const d of deals || []) {
+    const os = displayOutcomeScore(d)
+    if (os == null) continue
+    if (!d.announcement_date || !isPlausibleDate(String(d.announcement_date).slice(0, 10))) continue
+    const y = parseInt(String(d.announcement_date).slice(0, 4), 10)
+    if (isNaN(y)) continue
+    if (!byYear.has(y)) byYear.set(y, [])
+    byYear.get(y).push({ ...d, _os: os })
+  }
+  const cohorts = []
+  for (const [year, arr] of byYear) {
+    if (arr.length < minPerYear) continue
+    const sorted = [...arr].sort((a, b) => b._os - a._os)
+    cohorts.push({ year, n: arr.length, best: sorted.slice(0, topN), worst: sorted.slice(-topN).reverse() })
+  }
+  cohorts.sort((a, b) => b.year - a.year)
+  return cohorts
+}
