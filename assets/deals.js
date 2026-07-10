@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710c'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710d'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -15,7 +15,7 @@ import {
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
-} from './scoring.js?v=20260710c'
+} from './scoring.js?v=20260710d'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -394,7 +394,8 @@ async function fetchAllPaged(buildQuery) {
       if (lastId != null) q = q.gt('deal_id', lastId)
       const { data, error } = await q
       if (!error) rows = data || []
-    } catch { /* fall through — keep accumulated rows */ }
+      else console.warn('fetchAllPaged: partial result', { page, accumulated: all.length, error })
+    } catch (error) { console.warn('fetchAllPaged: partial result', { page, accumulated: all.length, error }) }
     if (rows == null) break
     all.push(...rows)
     if (rows.length < BULK_PAGE_SIZE) break
@@ -806,7 +807,7 @@ function posterScoreChips(criticScore, outcomeScore, isPending) {
     case 'both':          return csChip + osChip
     case 'critic-locked': return csChip + osLock
     case 'outcome-only':  return osChip
-    case 'pending':       return `<span class="c-sc pending">Score pending</span>` + osLock
+    case 'pending':       return `<span class="c-sc pending">Score pending</span>`
     default:              return `<span class="chip-unscored" title="Unscored — grades open 5 yrs post-close">UNSCORED</span>`
   }
 }
