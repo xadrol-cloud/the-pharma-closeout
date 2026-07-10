@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Newsreader:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260710g">
+<link rel="stylesheet" href="assets/deals.css?v=20260710h">
 <script defer src="assets/nav.js?v=20260531a"></script>
 </head>
 <body>
@@ -300,7 +300,11 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
         <h4>Deal Alerts — free</h4>
         <p>New deals + their historical-outcome read, Monday mornings.</p>
         <div class="funnel-sub">
-          <iframe src="https://thepharmacloseout.substack.com/embed" width="100%" height="80" style="border:1px solid rgba(255,255,255,.14);border-radius:6px;background:#fff;" frameborder="0" scrolling="no" title="Subscribe to The Pharma Closeout"></iframe>
+          <form class="sub-form" action="https://thepharmacloseout.substack.com/subscribe" method="get" target="_blank" rel="noopener">
+            <input class="sub-email" type="email" name="email" required placeholder="you@firm.com" aria-label="Email address">
+            <button class="sub-btn" type="submit">Subscribe</button>
+          </form>
+          <p class="sub-note">Free. Browsing is always free — we never sell your email.</p>
         </div>
         <div class="funnel-note">Browsing is always free, no login. We never sell your email.</div>
       </div>
@@ -329,7 +333,7 @@ import {
   fetchFeaturedDeal, fetchLatestDeals, fetchTrendingDeals, fetchTopOutcomeDeals,
   renderPoster, renderFeaturedInfo, initCarousel, initSearch, initMultiSelect, searchDeals,
   fetchTopGapDeals, renderGapTeaser, fetchBiobucksIndex, fetchLastUpdated, dedupeByDealId
-} from './assets/deals.js?v=20260710g'
+} from './assets/deals.js?v=20260710h'
 
 // Task 9.3: "Data updated {Mon D, YYYY}" trust stamp near the search header
 fetchLastUpdated().then(dateStr => {

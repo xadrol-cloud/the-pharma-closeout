@@ -1261,10 +1261,25 @@ input, textarea, select {
 
 /* Milestone bar */
 .mst-bar { display: flex; height: 32px; border-radius: 4px; overflow: hidden; margin: 16px 0; }
-.mst-seg { background: var(--green); display: flex; flex-direction: column; justify-content: center; padding: 0 8px; border-right: 1px solid var(--paper); min-width: 40px; }
+.mst-seg { background: var(--green); display: flex; flex-direction: column; justify-content: center; padding: 0 8px; border-right: 1px solid var(--paper); min-width: 40px; overflow: hidden; }
 .mst-seg:last-child { background: rgba(245,158,11,0.3); }
-.mst-label { font-size: 9px; color: var(--paper); font-weight: 600; }
-.mst-val { font-size: 11px; color: var(--paper); }
+.mst-seg:nth-child(2) { background: rgba(26,138,92,0.75); }
+.mst-seg:nth-child(3) { background: rgba(26,138,92,0.5); }
+.mst-seg:nth-child(4) { background: rgba(196,147,50,0.5); }
+.mst-seg:nth-child(5) { background: rgba(196,147,50,0.35); }
+.mst-label { font-size: 9px; color: var(--paper); font-weight: 600; white-space: nowrap; }
+.mst-val { font-size: 11px; color: var(--paper); white-space: nowrap; }
+
+/* Milestone legend (thin-segment fallback, R5) */
+.mst-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: -8px 0 16px; }
+.mst-legend-item { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-muted); }
+.mst-swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: var(--green); flex-shrink: 0; }
+.mst-swatch-0 { background: var(--green); }
+.mst-swatch-1 { background: rgba(26,138,92,0.75); }
+.mst-swatch-2 { background: rgba(26,138,92,0.5); }
+.mst-swatch-3 { background: rgba(196,147,50,0.5); }
+.mst-swatch-4 { background: rgba(196,147,50,0.35); }
+.mst-swatch-5 { background: rgba(245,158,11,0.3); }
 
 /* Snapshot card */
 .snap-card { border-left: 3px solid var(--amber); }
@@ -3296,9 +3311,43 @@ html, body { overflow-x: hidden; }
 }
 .funnel-col a, .funnel-col p { display: block; color: #c8c5bd; text-decoration: none; font-size: 13.5px; line-height: 1.7; }
 .funnel-col a:hover { color: #fff; }
-.funnel-sub { margin-top: 6px; }
-.funnel-sub iframe { width: 100%; max-width: 320px; border: 1px solid rgba(255,255,255,.14); border-radius: 6px; background: #fff; }
+.funnel-sub { margin-top: 6px; max-width: 320px; }
 .funnel-note { font-size: 11.5px; color: #8b8980; margin-top: 8px; line-height: 1.5; }
+
+/* Native subscribe form (replaces Substack iframe embed, R5) */
+.sub-form { display: flex; flex-wrap: wrap; gap: 8px; }
+.sub-email {
+  flex: 1 1 160px;
+  min-width: 0;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 6px;
+  background: rgba(255,255,255,.06);
+  color: #ece9e1;
+  font-size: 13.5px;
+}
+.sub-email::placeholder { color: #8b8980; }
+.sub-email:focus { outline: 2px solid var(--gold); outline-offset: 1px; background: rgba(255,255,255,.1); }
+.sub-btn {
+  flex: 0 0 auto;
+  height: 44px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 6px;
+  background: var(--gold);
+  color: #000;
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sub-btn:hover { background: #d9a940; }
+.sub-note { font-size: 11.5px; color: #8b8980; margin: 8px 0 0; line-height: 1.5; }
+@media (max-width: 420px) {
+  .sub-form { flex-direction: column; }
+  .sub-btn { width: 100%; }
+}
 
 /* Price-context strip */
 .price-strip {

@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710g'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710h'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents,
-} from './scoring.js?v=20260710g'
+} from './scoring.js?v=20260710h'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -1283,18 +1283,27 @@ function renderPipelineTracker(rows) {
 function renderMilestoneBar(rows) {
   const total = rows.reduce((sum, r) => sum + (r.value_usd_mm || 0), 0)
 
-  const segments = rows.map(r => {
-    const pct = total > 0 ? ((r.value_usd_mm || 0) / total * 100).toFixed(1) : 0
-    return `<div class="mst-seg" style="width:${pct}%">
+  const pcts = rows.map(r => total > 0 ? ((r.value_usd_mm || 0) / total * 100) : 0)
+  const THIN_PCT = 18
+  const hasThinSegment = pcts.some(pct => pct < THIN_PCT)
+
+  const segments = rows.map((r, i) => {
+    const pct = pcts[i].toFixed(1)
+    const inline = hasThinSegment && pcts[i] < THIN_PCT ? '' : `
       <div class="mst-label">${esc(r.period_label || '')}</div>
-      <div class="mst-val">${esc(arcCellLabel(r))}</div>
-    </div>`
+      <div class="mst-val">${esc(arcCellLabel(r))}</div>`
+    return `<div class="mst-seg" style="width:${pct}%">${inline}</div>`
   })
+
+  const legend = hasThinSegment
+    ? `<div class="mst-legend">${rows.map((r, i) => `<span class="mst-legend-item"><i class="mst-swatch mst-swatch-${i % 6}"></i>${esc(r.period_label || '')}: ${esc(arcCellLabel(r))}</span>`).join('')}</div>`
+    : ''
 
   return `<div class="rev-card">
     <div class="rev-headline">Deal Value Breakdown</div>
     <div class="rev-subtitle">Milestone payments and commitments</div>
     <div class="mst-bar">${segments.join('')}</div>
+    ${legend}
     <div class="rev-stats">
       <div class="rev-stat"><div class="rev-stat-val">${formatValue(total)}</div><div class="rev-stat-label">Total Value</div></div>
       <div class="rev-stat"><div class="rev-stat-val">${rows.length}</div><div class="rev-stat-label">Components</div></div>
