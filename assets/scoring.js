@@ -220,7 +220,11 @@ export function posterScoreState(criticScore, outcomeScore, isPending) {
 const M_AND_A_ONLY = ['EV / Revenue', 'EV / EBITDA', 'Target LTM Revenue', 'Equity Sought', 'Structure']
 
 function isMAndA(dealType) {
-  return /acquisition|merger|m&a|asset/i.test(dealType || '')
+  // Take-Private is in the M&A family — keep aligned with the deal-type
+  // bucketing in deals.js (bgClass/shortType route Take-Private to bg-ma /
+  // TAKE-PRIV). Can't share code directly: deals.js has a CDN Supabase
+  // import so it isn't node-loadable from these offline tests.
+  return /acquisition|merger|m&a|asset|take.?private/i.test(dealType || '')
 }
 
 export function financialFieldsFor(deal, opts = {}) {
@@ -259,7 +263,12 @@ export function financialFieldsFor(deal, opts = {}) {
 
   if (!opts.withMeta) return fields
 
-  const pending = !deal.close_date && !/complete/i.test(deal.deal_status || '')
+  // Pending is recency-gated: a deal only reads as "pending close" when it
+  // was announced within the last 24 months. Legacy deals with no close data
+  // (1996-era Wikidata-ingest gaps) are stale-data, not pending.
+  const annT = deal.announcement_date ? Date.parse(deal.announcement_date) : NaN
+  const recent = !isNaN(annT) && (Date.now() - annT) <= 24 * 30.44 * 24 * 60 * 60 * 1000
+  const pending = recent && !deal.close_date && !/complete/i.test(deal.deal_status || '')
   return { fields, pending }
 }
 

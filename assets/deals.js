@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710h'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710i'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents,
-} from './scoring.js?v=20260710h'
+} from './scoring.js?v=20260710i'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -620,6 +620,8 @@ export async function fetchComparables(deal, limit = 5) {
   // Try comparable_deal_ids override first
   if (deal.comparable_deal_ids) {
     try {
+      // Set-dedupe directly — these are primitive id strings, not row
+      // objects, so dedupeByDealId (which keys on row.deal_id) doesn't apply
       const ids = [...new Set(JSON.parse(deal.comparable_deal_ids))]
       if (ids.length) {
         const { data } = await supabase

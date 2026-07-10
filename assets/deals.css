@@ -3343,7 +3343,6 @@ html, body { overflow-x: hidden; }
   transition: background 0.15s;
 }
 .sub-btn:hover { background: #d9a940; }
-.sub-note { font-size: 11.5px; color: #8b8980; margin: 8px 0 0; line-height: 1.5; }
 @media (max-width: 420px) {
   .sub-form { flex-direction: column; }
   .sub-btn { width: 100%; }

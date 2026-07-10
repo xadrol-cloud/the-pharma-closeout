@@ -59,9 +59,25 @@ test('financialFieldsFor: M&A deal with data shows valuation fields', () => {
   assert.ok(labels.includes('EV / EBITDA'))
   assert.ok(labels.includes('Equity Sought'))
 })
+// Recent ISO date (90 days ago) — pending is recency-gated to 24 months
+const RECENT_ANN = new Date(Date.now() - 90 * 86400000).toISOString().slice(0, 10)
+
 test('financialFieldsFor: pending flag when close_date missing and status not complete', () => {
-  const pending = { deal_type: 'Licensing/Option', deal_value_usd_mm: 500, deal_status: 'Pending' }
+  const pending = { deal_type: 'Licensing/Option', deal_value_usd_mm: 500, deal_status: 'Pending',
+    announcement_date: RECENT_ANN }
   assert.equal(financialFieldsFor(pending, { withMeta: true }).pending, true)
+})
+test('financialFieldsFor: Take-Private is in the M&A field family', () => {
+  const tp = { deal_type: 'Take-Private', deal_value_usd_mm: 8000, deal_ev_ebitda_x: 14.3 }
+  assert.ok(financialFieldsFor(tp).map(f => f.label).includes('EV / EBITDA'))
+})
+test('financialFieldsFor: recent deal with no close_date reads pending', () => {
+  const d = { deal_type: 'Acquisition/Merger', deal_value_usd_mm: 1200, announcement_date: RECENT_ANN }
+  assert.equal(financialFieldsFor(d, { withMeta: true }).pending, true)
+})
+test('financialFieldsFor: 1996 deal with no close_date/status is stale-data, not pending', () => {
+  const d = { deal_type: 'Acquisition/Merger', deal_value_usd_mm: 300, announcement_date: '1996-03-14' }
+  assert.equal(financialFieldsFor(d, { withMeta: true }).pending, false)
 })
 
 test('dedupeByDealId keeps first occurrence, drops repeats', () => {
