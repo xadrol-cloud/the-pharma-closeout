@@ -804,7 +804,7 @@ export function renderFeaturedInfo(deal) {
     ${renderScorePill('critic', criticScore, 'Industry consensus')}
     ${renderScorePill('outcome', outcomeScore, 'Measured results')}
   </div>
-  ${deal.editorial_summary ? `<div class="feat-lede">${esc(deal.editorial_summary)}</div>` : ''}
+  ${(deal.editorial_lede || deal.editorial_summary) ? `<div class="feat-lede">${esc(deal.editorial_lede || deal.editorial_summary)}</div>` : ''}
   <div class="feat-tags">
     ${tas.slice(0, 3).map(t => `<span class="feat-tag ft-blue">${esc(t)}</span>`).join('')}
     ${deal.era_tag ? `<span class="feat-tag ft-amber">${esc(deal.era_tag)}</span>` : ''}
