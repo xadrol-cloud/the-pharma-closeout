@@ -879,6 +879,34 @@ input, textarea, select {
   white-space: nowrap;
 }
 
+/* UX overhaul R1/R2: neutral "no score yet" chip — replaces the old
+   two-dash-chip treatment whenever a deal has neither a critic nor an
+   (unlocked) outcome score. Sized for a real tap target, not decorative. */
+.chip-unscored {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 40px; min-width: 40px;
+  border-radius: 6px;
+  background: var(--rule-light);
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 9px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .05em;
+  padding: 0 8px;
+  white-space: nowrap;
+}
+
+/* Result-row mono sublabel under/near the tier chip, naming the score
+   dimension explicitly (Critic Score / Outcome Score) per SCORE_VOCAB. */
+.row-score-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 8px; font-weight: 600;
+  color: var(--ink-faint);
+  text-transform: uppercase; letter-spacing: .04em;
+  text-align: center;
+  margin-top: 2px;
+}
+
 /* Score explainer bar */
 .score-explainer {
   display: flex; gap: 16px;

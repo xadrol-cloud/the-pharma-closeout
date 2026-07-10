@@ -7,22 +7,22 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260611a'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710a'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
-  renderComparableAged, renderGapTeaser, hindsightCohorts,
-} from './scoring.js?v=20260709c'
+  renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB,
+} from './scoring.js?v=20260710a'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
-  renderComparableAged, renderGapTeaser, hindsightCohorts,
+  renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB,
 }
 
 const supabase = createClient(
@@ -269,7 +269,7 @@ export function exportDealRow(deal) {
     'Buyer', 'Target', 'Announcement Date', 'Deal Type', 'Deal Value ($MM)',
     'Upfront ($MM)', 'Cash Portion ($MM)', 'Stock Portion ($MM)',
     'Close Date', 'Time To Close (days)', 'Therapeutic Areas',
-    'Announcement Sentiment', 'Outcome Score', 'Hype Gap', 'Primary Source URL',
+    SCORE_VOCAB.critic.name, SCORE_VOCAB.outcome.name, 'Hype Gap', 'Primary Source URL',
   ]
   const row = [
     deal.buyer_name, deal.target_name, deal.announcement_date,
@@ -766,13 +766,17 @@ export function renderPoster(deal, size = 'carousel') {
     </div>
     <div class="c-scores">
       ${criticScore != null
-        ? `<div class="c-sc ct"><span class="c-sc-label">CS</span>${criticScore}</div>`
+        ? `<div class="c-sc ct" title="${SCORE_VOCAB.critic.tooltip}"><span class="c-sc-label">${SCORE_VOCAB.critic.abbr}</span>${criticScore}</div>`
         : isScorePending(deal)
           ? `<span class="c-sc pending">Score pending</span>`
-          : `<div class="c-sc lk"><span class="c-sc-label">CS</span>&mdash;</div>`}
+          : (outcomeScore == null
+              ? `<span class="chip-unscored" title="Unscored — grades open 5 yrs post-close">UNSCORED</span>`
+              : `<div class="c-sc lk" title="${SCORE_VOCAB.critic.tooltip}"><span class="c-sc-label">${SCORE_VOCAB.critic.abbr}</span>&mdash;</div>`)}
       ${outcomeScore != null
-        ? `<div class="c-sc os"><span class="c-sc-label">OS</span>${outcomeScore}</div>`
-        : `<div class="c-sc lk"><span class="c-sc-label">OS</span>&mdash;</div>`}
+        ? `<div class="c-sc os" title="${SCORE_VOCAB.outcome.tooltip}"><span class="c-sc-label">${SCORE_VOCAB.outcome.abbr}</span>${outcomeScore}</div>`
+        : (criticScore == null && !isScorePending(deal)
+            ? '' /* single UNSCORED chip already rendered above covers both */
+            : `<div class="c-sc lk" title="${SCORE_VOCAB.outcome.tooltip}"><span class="c-sc-label">${SCORE_VOCAB.outcome.abbr}</span>&mdash;</div>`)}
     </div>
   </div>
 </a>`
@@ -801,7 +805,7 @@ export function renderFeaturedInfo(deal) {
     <div class="feat-meta">${esc(deal.deal_type || 'Acquisition')} &middot; <strong>${esc(val)}</strong> &middot; ${esc(formatDate(deal.announcement_date))}</div>
   </div>
   <div class="feat-scores">
-    ${renderScorePill('critic', criticScore, 'Industry consensus')}
+    ${renderScorePill('critic', criticScore, 'at announcement')}
     ${renderScorePill('outcome', outcomeScore, 'Measured results')}
   </div>
   ${deal.editorial_summary ? `<div class="feat-lede">${esc(deal.editorial_summary)}</div>` : ''}
@@ -814,8 +818,8 @@ export function renderFeaturedInfo(deal) {
     <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
   <div class="score-explainer">
-    <div class="se-item"><div class="se-dot ct"></div> Announcement Sentiment — analyst & media reaction at announcement</div>
-    <div class="se-item"><div class="se-dot os"></div> Outcome Score — post-close performance vs. thesis</div>
+    <div class="se-item"><div class="se-dot ct"></div> ${esc(SCORE_VOCAB.critic.name)} — ${esc(SCORE_VOCAB.critic.tooltip)}</div>
+    <div class="se-item"><div class="se-dot os"></div> ${esc(SCORE_VOCAB.outcome.name)} — ${esc(SCORE_VOCAB.outcome.tooltip)}</div>
   </div>
 </div>`
 }
@@ -879,12 +883,15 @@ export function renderResultRow(deal) {
     </div>
     <div class="result-scores">
       ${cs != null ? `
-        <div class="score-block">
+        <div class="score-block" title="${SCORE_VOCAB.critic.tooltip}">
           ${csLabel ? `<span class="tier-label" data-tier="${csTier}">${csLabel}</span>` : ''}
           <div class="score-chip" data-tier="${csTier}">${cs}</div>
+          <span class="row-score-label">${esc(SCORE_VOCAB.critic.name)}</span>
         </div>
-      ` : isScorePending(deal) ? `<span class="c-sc pending">Score pending</span>` : ''}
-      ${os != null ? `<div class="score-chip score-chip-mini result-os" data-tier="${tierForScore(os)}" title="Outcome Score">${os}</div>` : ''}
+      ` : isScorePending(deal)
+          ? `<span class="c-sc pending">Score pending</span>`
+          : (os == null ? `<span class="chip-unscored" title="Unscored — grades open 5 yrs post-close">UNSCORED</span>` : '')}
+      ${os != null ? `<div class="score-chip score-chip-mini result-os" data-tier="${tierForScore(os)}" title="${SCORE_VOCAB.outcome.tooltip}">${os}</div><span class="row-score-label">${esc(SCORE_VOCAB.outcome.name)}</span>` : ''}
     </div>
   </a>`
 }
@@ -937,13 +944,14 @@ export function renderCascadeBar(deal) {
  */
 export function renderScorePill(type, score, subtitle = '') {
   const dimension = type === 'outcome' ? 'outcome' : 'critic'
-  const label = type === 'critic' ? 'Announcement Sentiment' : 'Outcome Score'
+  const vocab = SCORE_VOCAB[dimension]
+  const label = vocab.name
   const tier = tierForScore(score)
   const tierLabel = tierLabelFor(score, dimension)
   const display = score != null ? score : '—'
   const meta = subtitle ? `${label} · ${esc(subtitle)}` : label
 
-  return `<div class="score-block" data-dim="${dimension}">
+  return `<div class="score-block" data-dim="${dimension}" title="${vocab.tooltip}">
   ${tierLabel ? `<span class="tier-label" data-tier="${tier}">${tierLabel}</span>` : ''}
   <div class="score-chip" data-tier="${tier}">${display}</div>
   <span class="score-meta">${meta}</span>
@@ -964,7 +972,7 @@ export function renderHypeGap(deal) {
   const cs = Math.round(deal.critic_score), os = Math.round(deal.outcome_score)
   const dir = gap > 0 ? 'over' : (gap < 0 ? 'under' : 'even')
   const sign = gap > 0 ? '+' : ''
-  return `<div class="hype-gap" data-dir="${dir}" title="Announcement Sentiment minus Outcome Score">
+  return `<div class="hype-gap" data-dir="${dir}" title="${SCORE_VOCAB.critic.name} minus ${SCORE_VOCAB.outcome.name}">
     <div class="hg-headline">The Hype Gap</div>
     <div class="hg-line">The Street said <strong>${cs}</strong> &middot; history says <strong>${os}</strong></div>
     <div class="hg-verdict"><span class="hg-num">${sign}${gap}</span> ${esc(hypeGapLabel(gap))}</div>
@@ -1483,7 +1491,7 @@ export function renderCriticReviews(sources) {
     // WS-H: per-outlet critic score chip (mini variant of WS-A chip)
     const cs = r.critic_score != null ? Math.round(r.critic_score) : null
     const chipHtml = cs != null
-      ? `<div class="score-chip score-chip-mini review-chip" data-tier="${tierForScore(cs)}">${cs}</div>`
+      ? `<div class="score-chip score-chip-mini review-chip" data-tier="${tierForScore(cs)}" title="${SCORE_VOCAB.critic.tooltip}">${cs}</div>`
       : ''
     return `<a class="review ${cls}" href="${esc(r.url || '#')}" target="_blank">
       ${chipHtml}
@@ -1742,11 +1750,11 @@ export function renderComparables(comparables, currentDealId) {
         </div>
         <div class="comp-scores">
           ${criticScore != null
-            ? `<div class="comp-sc ct"><span class="cs-label">CS</span>${criticScore}</div>`
-            : `<div class="comp-sc lk"><span class="cs-label">CS</span>—</div>`}
+            ? `<div class="comp-sc ct" title="${SCORE_VOCAB.critic.tooltip}"><span class="cs-label">${SCORE_VOCAB.critic.abbr}</span>${criticScore}</div>`
+            : `<div class="comp-sc lk" title="${SCORE_VOCAB.critic.tooltip}"><span class="cs-label">${SCORE_VOCAB.critic.abbr}</span>—</div>`}
           ${outcomeScore != null
-            ? `<div class="comp-sc os"><span class="cs-label">OS</span>${outcomeScore}</div>`
-            : `<div class="comp-sc lk"><span class="cs-label">OS</span>—</div>`}
+            ? `<div class="comp-sc os" title="${SCORE_VOCAB.outcome.tooltip}"><span class="cs-label">${SCORE_VOCAB.outcome.abbr}</span>${outcomeScore}</div>`
+            : `<div class="comp-sc lk" title="${SCORE_VOCAB.outcome.tooltip}"><span class="cs-label">${SCORE_VOCAB.outcome.abbr}</span>—</div>`}
         </div>
       </a>
       ${cmpHref ? `<a class="comp-compare-btn" href="${cmpHref}">Compare side-by-side &rarr;</a>` : ''}
@@ -1894,11 +1902,11 @@ export function renderComparison(deals) {
     row('Lead Molecules', deals.map(moleculeList)),
 
     // Score rows with color tier
-    row('Critic Score', deals.map(d => {
+    row(SCORE_VOCAB.critic.name, deals.map(d => {
       const s = score(d.critic_score); const t = scoreTierFor(d.critic_score)
       return `<span class="cmp-score ${t}">${s}</span>`
     }), { strong: true }),
-    row('Outcome Score', deals.map(d => {
+    row(SCORE_VOCAB.outcome.name, deals.map(d => {
       const gos = displayOutcomeScore(d)
       const s = score(gos); const t = scoreTierFor(gos)
       return `<span class="cmp-score ${t}">${s}</span>`
