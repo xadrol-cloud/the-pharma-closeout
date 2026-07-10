@@ -190,3 +190,22 @@ export function hindsightCohorts(deals, { minPerYear = 5, topN = 3 } = {}) {
   cohorts.sort((a, b) => b.year - a.year)
   return cohorts
 }
+
+// ---------------------------------------------------------------
+// UX overhaul R1: single source of truth for score vocabulary.
+// Every chip, pill, row and table label MUST read from this map.
+// "Announcement Sentiment", "Met Thesis", "Industry consensus" are
+// tooltip copy only — never a visible label.
+// ---------------------------------------------------------------
+export const SCORE_VOCAB = {
+  critic: {
+    abbr: 'CS',
+    name: 'Critic Score',
+    tooltip: 'Analyst & media reaction at announcement (0–100)',
+  },
+  outcome: {
+    abbr: 'OS',
+    name: 'Outcome Score',
+    tooltip: 'Post-close performance vs. the deal thesis — grades open 5 years after close',
+  },
+}
