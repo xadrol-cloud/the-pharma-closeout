@@ -85,3 +85,19 @@ test('sortTimelineEvents: missing event_date falls back to sort_order at end', (
   const ev = [{ sort_order: 2, t: 'b' }, { event_date: '2026-01-01', sort_order: 9, t: 'a' }]
   assert.deepEqual(sortTimelineEvents(ev).map(e => e.t), ['a', 'b'])
 })
+test('sortTimelineEvents: verdict pin (sort_order >= 99) stays last despite early date', () => {
+  const ev = [
+    { event_date: '2026-06-03', sort_order: 2, t: 'late' },
+    { event_type: 'verdict', event_date: '2020-01-01', sort_order: 99, t: 'pin' },
+    { event_date: '2026-05-28', sort_order: 1, t: 'early' },
+  ]
+  assert.deepEqual(sortTimelineEvents(ev).map(e => e.t), ['early', 'late', 'pin'])
+})
+test('sortTimelineEvents: milestone at sort_order 100 is NOT a pin — date-sorts among regulars', () => {
+  const ev = [
+    { event_date: '2026-06-03', sort_order: 2, t: 'late' },
+    { event_type: 'milestone', event_date: '2026-06-01', sort_order: 100, t: 'update' },
+    { event_date: '2026-05-28', sort_order: 1, t: 'early' },
+  ]
+  assert.deepEqual(sortTimelineEvents(ev).map(e => e.t), ['early', 'update', 'late'])
+})

@@ -287,10 +287,21 @@ export function dedupeByDealId(rows) {
  *  previously trusted fetch order, which is not guaranteed chronological.
  *  Sorts by event_date ascending; sort_order breaks ties (including among
  *  same-date events). Events with a missing/unparseable event_date sort
- *  after all dated events, ordered by sort_order among themselves. */
+ *  after all dated events, ordered by sort_order among themselves.
+ *  PIN CONVENTION: verdict events at sort_order >= 99 are status/assessment
+ *  notes intentionally pinned last (511 across the DB) — they are excluded
+ *  from the date sort and appended at the end in their original relative
+ *  order. Non-verdict events at sort_order 100+ (appended milestone/
+ *  regulatory/financial updates) are NOT pins and date-sort normally. */
 export function sortTimelineEvents(events) {
   if (!events) return []
-  const withKey = events.map((e, i) => {
+  const pinned = []
+  const regular = []
+  for (const e of events) {
+    if (e && e.event_type === 'verdict' && (e.sort_order ?? 0) >= 99) pinned.push(e)
+    else regular.push(e)
+  }
+  const withKey = regular.map((e, i) => {
     const t = e && e.event_date ? Date.parse(e.event_date) : NaN
     return { e, i, t: isNaN(t) ? null : t }
   })
@@ -301,7 +312,7 @@ export function sortTimelineEvents(events) {
     if (a.t !== b.t) return a.t - b.t
     return (a.e.sort_order ?? 0) - (b.e.sort_order ?? 0)
   })
-  return withKey.map(x => x.e)
+  return [...withKey.map(x => x.e), ...pinned]
 }
 
 export const SCORE_VOCAB = {
