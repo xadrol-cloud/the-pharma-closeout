@@ -395,6 +395,23 @@ export async function fetchAcquirerRecords(minN = 3) {
   return acquirerBattingAverage(data || [], { minN })
 }
 
+/** Move 3: Biobucks Index — median/mean upfront-% across licensing deals with
+ *  a disclosed upfront. The "what the headline hides" metric no rival publishes. */
+export async function fetchBiobucksIndex() {
+  const { data } = await supabase
+    .from('deals_enriched')
+    .select('upfront_usd_mm,deal_value_usd_mm')
+    .eq('deal_type', 'Licensing/Option')
+    .not('upfront_usd_mm', 'is', null)
+    .gt('deal_value_usd_mm', 0)
+    .limit(2000)
+  const pcts = (data || []).map(biobucksPct).filter(p => p != null).sort((a, b) => a - b)
+  if (pcts.length < 10) return null
+  const median = pcts[Math.floor(pcts.length / 2)]
+  const mean = Math.round(pcts.reduce((a, b) => a + b, 0) / pcts.length)
+  return { n: pcts.length, median, mean }
+}
+
 /** Move 7: "Deals of the Year, in hindsight" — aged best/worst per year cohort. */
 export async function fetchHindsightCohorts(opts = {}) {
   const { data } = await supabase

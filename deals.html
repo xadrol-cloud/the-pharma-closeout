@@ -80,12 +80,16 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   .gap-teaser .gt-nums { font-family: var(--mono,'IBM Plex Mono',monospace); font-size:12px; color: var(--ink-muted); }
   .gap-teaser .gt-nums b { color: var(--ink); }
   .gap-teaser .gt-gap { font-weight:600; color: var(--ink); }
+  .biobucks-stat { margin-top:14px; max-width:640px; font-size:13.5px; color: var(--ink-muted); line-height:1.55; }
+  .biobucks-stat .bb-num { font-family: var(--mono,'IBM Plex Mono',monospace); font-weight:700; font-size:22px; color: var(--gold); }
+  .biobucks-stat .bb-lab { color: var(--ink-light); }
 </style>
 <section class="valueprop">
   <div class="vp-eyebrow">Deal Intelligence</div>
   <h1>The only deal database that grades how deals <em>aged</em>.</h1>
   <p>Everyone records what a deal cost. We score what it was worth — the gap between what the Street said at announcement and what history actually did. Free, no login.</p>
   <div id="gap-teaser"></div>
+  <div id="biobucks-stat" class="biobucks-stat"></div>
 </section>
 
 <!-- ========== HERO: Featured Deal ========== -->
@@ -320,13 +324,21 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 import {
   fetchFeaturedDeal, fetchLatestDeals, fetchTrendingDeals, fetchTopOutcomeDeals,
   renderPoster, renderFeaturedInfo, initCarousel, initSearch, initMultiSelect, searchDeals,
-  fetchTopGapDeals, renderGapTeaser
+  fetchTopGapDeals, renderGapTeaser, fetchBiobucksIndex
 } from './assets/deals.js?v=20260709c'
 
 // Move 4: Hype Gap hero teaser — the single most over/under-rated deal
 fetchTopGapDeals(1).then(deals => {
   if (deals && deals.length) {
     document.getElementById('gap-teaser').innerHTML = renderGapTeaser(deals[0])
+  }
+}).catch(() => {})
+
+// Move 3: Biobucks Index — the median upfront hidden behind headline deal values
+fetchBiobucksIndex().then(bi => {
+  if (bi) {
+    document.getElementById('biobucks-stat').innerHTML =
+      `<span class="bb-num">${bi.median}%</span> <span class="bb-lab">median upfront across ${bi.n} licensing deals — the rest is milestones that may never pay. The headline number is rarely the real one.</span>`
   }
 }).catch(() => {})
 
