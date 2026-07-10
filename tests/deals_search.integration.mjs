@@ -96,8 +96,12 @@ test('data integrity: no values above $400B', async () => {
 })
 
 test('data integrity: CS distribution is not stuck at 100', async () => {
-  const { data } = await sb.from('deals_enriched').select('critic_score').eq('critic_score', 100)
-  const { count: total } = await sb.from('deals_enriched').select('*', { count: 'exact', head: true }).not('critic_score', 'is', null)
-  const ratio = (data?.length || 0) / (total || 1)
+  // count on a single indexed column — select('*') count on this expensive
+  // view hits the DB statement timeout (57014) and returns a null count,
+  // which the old `total || 1` fallback turned into a silent false failure
+  const { count: at100 } = await sb.from('deals_enriched').select('deal_id', { count: 'exact', head: true }).eq('critic_score', 100)
+  const { count: total } = await sb.from('deals_enriched').select('deal_id', { count: 'exact', head: true }).not('critic_score', 'is', null)
+  assert.ok(Number.isFinite(total) && total > 0, `scored-deal count query failed (got ${total})`)
+  const ratio = (at100 || 0) / total
   assert.ok(ratio < 0.15, `CS=100 is ${(ratio*100).toFixed(1)}% of scored deals (expected <15%)`)
 })
