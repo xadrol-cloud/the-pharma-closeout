@@ -1261,12 +1261,9 @@ input, textarea, select {
 
 /* Milestone bar */
 .mst-bar { display: flex; height: 32px; border-radius: 4px; overflow: hidden; margin: 16px 0; }
+/* Segment + legend-swatch colors are computed inline by renderMilestoneBar()
+   (one JS tint array keys both) — base background here is only a fallback. */
 .mst-seg { background: var(--green); display: flex; flex-direction: column; justify-content: center; padding: 0 8px; border-right: 1px solid var(--paper); min-width: 40px; overflow: hidden; }
-.mst-seg:last-child { background: rgba(245,158,11,0.3); }
-.mst-seg:nth-child(2) { background: rgba(26,138,92,0.75); }
-.mst-seg:nth-child(3) { background: rgba(26,138,92,0.5); }
-.mst-seg:nth-child(4) { background: rgba(196,147,50,0.5); }
-.mst-seg:nth-child(5) { background: rgba(196,147,50,0.35); }
 .mst-label { font-size: 9px; color: var(--paper); font-weight: 600; white-space: nowrap; }
 .mst-val { font-size: 11px; color: var(--paper); white-space: nowrap; }
 
@@ -1274,12 +1271,6 @@ input, textarea, select {
 .mst-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: -8px 0 16px; }
 .mst-legend-item { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-muted); }
 .mst-swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: var(--green); flex-shrink: 0; }
-.mst-swatch-0 { background: var(--green); }
-.mst-swatch-1 { background: rgba(26,138,92,0.75); }
-.mst-swatch-2 { background: rgba(26,138,92,0.5); }
-.mst-swatch-3 { background: rgba(196,147,50,0.5); }
-.mst-swatch-4 { background: rgba(196,147,50,0.35); }
-.mst-swatch-5 { background: rgba(245,158,11,0.3); }
 
 /* Snapshot card */
 .snap-card { border-left: 3px solid var(--amber); }

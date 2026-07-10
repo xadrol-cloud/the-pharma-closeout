@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710i'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710j'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents,
-} from './scoring.js?v=20260710i'
+} from './scoring.js?v=20260710j'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -1282,6 +1282,27 @@ function renderPipelineTracker(rows) {
   </div>`
 }
 
+/**
+ * Single source of truth for milestone-segment colors: the same computed
+ * color is applied inline to both the bar segment and its legend swatch,
+ * so they stay keyed for ANY segment count. Last segment is always amber
+ * (preserves the pre-existing :last-child convention); earlier segments
+ * walk a green-to-gold tint progression.
+ */
+const MST_SEG_TINTS = [
+  'var(--green)',
+  'rgba(26,138,92,0.75)',
+  'rgba(26,138,92,0.5)',
+  'rgba(196,147,50,0.5)',
+  'rgba(196,147,50,0.35)'
+]
+const MST_SEG_LAST = 'rgba(245,158,11,0.3)'
+
+function mstSegColor(i, count) {
+  if (i === count - 1) return MST_SEG_LAST
+  return MST_SEG_TINTS[i % MST_SEG_TINTS.length]
+}
+
 function renderMilestoneBar(rows) {
   const total = rows.reduce((sum, r) => sum + (r.value_usd_mm || 0), 0)
 
@@ -1294,11 +1315,11 @@ function renderMilestoneBar(rows) {
     const inline = hasThinSegment && pcts[i] < THIN_PCT ? '' : `
       <div class="mst-label">${esc(r.period_label || '')}</div>
       <div class="mst-val">${esc(arcCellLabel(r))}</div>`
-    return `<div class="mst-seg" style="width:${pct}%">${inline}</div>`
+    return `<div class="mst-seg" style="width:${pct}%;background:${mstSegColor(i, rows.length)}">${inline}</div>`
   })
 
   const legend = hasThinSegment
-    ? `<div class="mst-legend">${rows.map((r, i) => `<span class="mst-legend-item"><i class="mst-swatch mst-swatch-${i % 6}"></i>${esc(r.period_label || '')}: ${esc(arcCellLabel(r))}</span>`).join('')}</div>`
+    ? `<div class="mst-legend">${rows.map((r, i) => `<span class="mst-legend-item"><i class="mst-swatch" style="background:${mstSegColor(i, rows.length)}"></i>${esc(r.period_label || '')}: ${esc(arcCellLabel(r))}</span>`).join('')}</div>`
     : ''
 
   return `<div class="rev-card">
