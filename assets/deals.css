@@ -3336,6 +3336,9 @@ html, body { overflow-x: hidden; }
 .sub-btn:hover { background: #d9a940; }
 @media (max-width: 420px) {
   .sub-form { flex-direction: column; }
+  /* flex-basis 160px applies to the vertical axis once the form is a
+     column — reset it or the input renders 160px tall */
+  .sub-email { flex: 0 0 auto; width: 100%; }
   .sub-btn { width: 100%; }
 }
 
