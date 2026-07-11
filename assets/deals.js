@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710q'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710r'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents, POPULAR_SEARCHES,
-} from './scoring.js?v=20260710q'
+} from './scoring.js?v=20260710r'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -1897,84 +1897,227 @@ export function renderComparables(comparables, currentDealId) {
    ========================================================================== */
 
 const _selectedDealIds = new Set()
+// dealId -> short display name, captured at injection time from the DOM
+// so the tray can render chips without a second data fetch.
+const _selectedDealNames = new Map()
 
-/** Initialize multi-select: injects checkbox overlays on all posters + floating Compare button. */
+/** Initialize multi-select: injects select affordances on posters/rows +
+ *  a bottom selection tray (Task 2.5 / R10). Upgrades the original bare
+ *  compare-fab into a tray with per-chip remove + Clear all, but keeps the
+ *  same _selectedDealIds Set, 5-cap, and .poster-select/data-deal-id
+ *  contract so the delegated handler + MutationObserver are unchanged. */
 export function initMultiSelect() {
-  // Inject a single floating compare button if not already present
-  if (!document.getElementById('compare-fab')) {
-    const fab = document.createElement('button')
-    fab.id = 'compare-fab'
-    fab.className = 'compare-fab'
-    fab.style.display = 'none'
-    fab.innerHTML = '<span class="cf-count">0</span><span class="cf-label">Compare</span><span class="cf-arrow">&rarr;</span>'
-    fab.addEventListener('click', () => {
+  // Inject the selection tray once (replaces the old bare FAB markup).
+  if (!document.getElementById('compare-tray')) {
+    const tray = document.createElement('div')
+    tray.id = 'compare-tray'
+    tray.className = 'compare-tray'
+    tray.hidden = true
+    tray.innerHTML = `
+      <div class="ct-inner">
+        <div class="ct-chips" id="ct-chips"></div>
+        <div class="ct-actions">
+          <span class="ct-count"><span class="ct-count-n">0</span> selected</span>
+          <button type="button" class="ct-clear">Clear all</button>
+          <button type="button" class="ct-compare" disabled>Compare (<span class="ct-compare-n">0</span>) &rarr;</button>
+        </div>
+      </div>`
+    tray.querySelector('.ct-compare').addEventListener('click', () => {
       if (_selectedDealIds.size >= 2) {
         const ids = Array.from(_selectedDealIds).slice(0, 5).join(',')
         window.location.href = `compare.html?ids=${ids}`
       }
     })
-    document.body.appendChild(fab)
+    tray.querySelector('.ct-clear').addEventListener('click', () => clearSelection())
+    document.body.appendChild(tray)
   }
 
-  // Delegated click handler for poster select checkboxes
+  // Delegated click handler for poster/row select controls
   document.addEventListener('click', (e) => {
     const cb = e.target.closest('.poster-select')
     if (!cb) return
     e.preventDefault()
     e.stopPropagation()
-    const dealId = cb.dataset.dealId
-    if (!dealId) return
-    const checked = cb.classList.toggle('checked')
-    if (checked) {
-      if (_selectedDealIds.size >= 5) {
-        cb.classList.remove('checked')
-        updateFab()
-        return
-      }
-      _selectedDealIds.add(dealId)
-    } else {
-      _selectedDealIds.delete(dealId)
-    }
-    updateFab()
-  }, true) // capture phase so it fires before anchor navigation
+    toggleSelection(cb)
+  }, true) // capture phase so it fires before anchor/row navigation
 
-  // Run once to inject checkboxes on already-rendered posters
+  // Keyboard activation (Enter/Space) for the pill control
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return
+    const cb = e.target.closest('.poster-select')
+    if (!cb) return
+    e.preventDefault()
+    e.stopPropagation()
+    toggleSelection(cb)
+  }, true)
+
+  // Delegated click handler for per-chip remove (×) in the tray
+  document.getElementById('compare-tray')?.addEventListener('click', (e) => {
+    const rm = e.target.closest('.ct-chip-remove')
+    if (!rm) return
+    const dealId = rm.closest('.ct-chip')?.dataset.dealId
+    if (dealId) deselectDeal(dealId)
+  })
+
+  // Run once to inject controls on already-rendered posters/rows
   injectSelectorOnPosters()
 
-  // Re-scan when the DOM changes (carousels, search results re-render)
+  // Re-scan when the DOM changes (carousels, search results, screener re-render)
   const mo = new MutationObserver(() => injectSelectorOnPosters())
   mo.observe(document.body, { childList: true, subtree: true })
 }
 
-function injectSelectorOnPosters() {
-  document.querySelectorAll('a[href^="deal.html?id="]').forEach(anchor => {
-    // Match feat-poster or c-poster (not mini / featured-info CTAs)
-    const poster = anchor.querySelector('.feat-poster, .c-poster')
-    if (!poster) return
-    if (poster.querySelector('.poster-select')) return // already injected
-    const dealId = new URL(anchor.href).searchParams.get('id')
-    if (!dealId) return
-    const cb = document.createElement('div')
-    cb.className = 'poster-select' + (_selectedDealIds.has(dealId) ? ' checked' : '')
-    cb.dataset.dealId = dealId
+function toggleSelection(cb) {
+  const dealId = cb.dataset.dealId
+  if (!dealId) return
+  const checked = cb.classList.toggle('checked')
+  if (checked) {
+    if (_selectedDealIds.size >= 5) {
+      cb.classList.remove('checked')
+      flashMaxFeedback(cb)
+      updateTray()
+      return
+    }
+    _selectedDealIds.add(dealId)
+    if (cb.dataset.dealName) _selectedDealNames.set(dealId, cb.dataset.dealName)
+    cb.setAttribute('aria-pressed', 'true')
+    cb.title = 'Selected for comparison'
+  } else {
+    _selectedDealIds.delete(dealId)
+    cb.setAttribute('aria-pressed', 'false')
     cb.title = 'Select for comparison'
-    cb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>'
-    poster.appendChild(cb)
+  }
+  syncPillState(dealId, checked)
+  updateTray()
+}
+
+/** Brief shake/flash to signal the 5-selection cap was hit — existing
+ *  "rejects 6th" feedback, preserved. */
+function flashMaxFeedback(cb) {
+  cb.classList.add('ps-max')
+  setTimeout(() => cb.classList.remove('ps-max'), 400)
+}
+
+function deselectDeal(dealId) {
+  _selectedDealIds.delete(dealId)
+  syncPillState(dealId, false)
+  updateTray()
+}
+
+function clearSelection() {
+  const ids = Array.from(_selectedDealIds)
+  _selectedDealIds.clear()
+  ids.forEach(id => syncPillState(id, false))
+  updateTray()
+}
+
+/** Reflect selected/unselected state onto every .poster-select control for
+ *  a given dealId — a deal can appear on multiple rendered surfaces at once
+ *  (e.g. a rail poster + a search-result row for the same deal). */
+function syncPillState(dealId, checked) {
+  document.querySelectorAll(`.poster-select[data-deal-id="${cssEscape(dealId)}"]`).forEach(cb => {
+    cb.classList.toggle('checked', checked)
+    cb.setAttribute('aria-pressed', checked ? 'true' : 'false')
+    cb.title = checked ? 'Selected for comparison' : 'Select for comparison'
+    const label = cb.querySelector('.ps-label')
+    if (label) label.textContent = checked ? 'Selected' : 'Compare'
   })
 }
 
-function updateFab() {
-  const fab = document.getElementById('compare-fab')
-  if (!fab) return
-  const n = _selectedDealIds.size
-  fab.querySelector('.cf-count').textContent = n
-  if (n >= 2) {
-    fab.style.display = ''
-    fab.classList.add('active')
-  } else {
-    fab.style.display = 'none'
-    fab.classList.remove('active')
+/** Minimal CSS.escape fallback for data-deal-id selector interpolation. */
+function cssEscape(s) {
+  return window.CSS && CSS.escape ? CSS.escape(s) : String(s).replace(/["\\]/g, '\\$&')
+}
+
+/** Best-effort short display name for a deal, read from already-rendered
+ *  poster/row markup so the tray doesn't need a second data fetch. */
+function deriveDealName(container) {
+  const buyer = container.querySelector('.fp-buyer, .c-buyer, .sc-acquirer')?.textContent?.trim()
+  const target = container.querySelector('.fp-target, .c-target, .sc-target')?.textContent?.trim()
+  if (buyer && target) return `${buyer} / ${target}`
+  const pair = container.querySelector('.result-pair')?.textContent?.trim()
+  if (pair) return pair.replace(/\s*×\s*/, ' / ')
+  const title = container.querySelector('.result-title')?.textContent?.trim()
+  if (title) return title
+  return buyer || target || ''
+}
+
+function injectSelectorOnPosters() {
+  // Rail / featured posters + row-list search results (anchor wraps the poster/row)
+  document.querySelectorAll('a[href^="deal.html?id="]').forEach(anchor => {
+    const container = anchor.querySelector('.feat-poster, .c-poster') || (anchor.matches('.result-row') ? anchor : null)
+    if (!container) return
+    if (container.querySelector('.poster-select')) return // already injected
+    const dealId = new URL(anchor.href).searchParams.get('id')
+    if (!dealId) return
+    const dealName = deriveDealName(container)
+    container.appendChild(buildSelectPill(dealId, dealName))
+  })
+
+  // Screener table rows (browse.html) — leading checkbox cell
+  document.querySelectorAll('tr.screener-row').forEach(row => {
+    if (row.querySelector('.poster-select')) return // already injected
+    const dealId = row.dataset.dealId
+    if (!dealId) return
+    if (!row.querySelector('td.sc-select')) {
+      const td = document.createElement('td')
+      td.className = 'sc-select'
+      const dealName = deriveDealName(row)
+      td.appendChild(buildSelectPill(dealId, dealName, true))
+      row.insertBefore(td, row.firstChild)
+    }
+  })
+  // Add the matching header cell once
+  const headRow = document.querySelector('table.screener thead tr')
+  if (headRow && !headRow.querySelector('th.sc-select-head')) {
+    const th = document.createElement('th')
+    th.className = 'sc-select-head'
+    th.setAttribute('aria-label', 'Select for comparison')
+    headRow.insertBefore(th, headRow.firstChild)
   }
+}
+
+/** Build a .poster-select pill/checkbox control. `inTable` renders a
+ *  compact checkbox variant for screener rows; posters/rows get the
+ *  labeled "+ Compare" / "✓ Selected" pill. */
+function buildSelectPill(dealId, dealName, inTable = false) {
+  const checked = _selectedDealIds.has(dealId)
+  const cb = document.createElement('div')
+  cb.className = 'poster-select' + (checked ? ' checked' : '') + (inTable ? ' ps-table' : '')
+  cb.dataset.dealId = dealId
+  if (dealName) cb.dataset.dealName = dealName
+  cb.title = checked ? 'Selected for comparison' : 'Select for comparison'
+  cb.setAttribute('role', 'button')
+  cb.setAttribute('tabindex', '0')
+  cb.setAttribute('aria-pressed', checked ? 'true' : 'false')
+  cb.setAttribute('aria-label', dealName ? `Select ${dealName} for comparison` : 'Select for comparison')
+  if (inTable) {
+    cb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>'
+  } else {
+    cb.innerHTML = `
+      <span class="ps-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+      <span class="ps-label">${checked ? 'Selected' : 'Compare'}</span>`
+  }
+  return cb
+}
+
+function updateTray() {
+  const tray = document.getElementById('compare-tray')
+  if (!tray) return
+  const n = _selectedDealIds.size
+  tray.querySelector('.ct-count-n').textContent = n
+  tray.querySelector('.ct-compare-n').textContent = Math.min(n, 5)
+  const compareBtn = tray.querySelector('.ct-compare')
+  compareBtn.disabled = n < 2
+  const chipsEl = tray.querySelector('#ct-chips')
+  chipsEl.innerHTML = Array.from(_selectedDealIds).map(id => {
+    const name = _selectedDealNames.get(id) || id
+    return `<span class="ct-chip" data-deal-id="${esc(id)}">
+      <span class="ct-chip-name">${esc(name)}</span>
+      <button type="button" class="ct-chip-remove" aria-label="Remove ${esc(name)} from comparison">&times;</button>
+    </span>`
+  }).join('')
+  tray.hidden = n < 1
 }
 
 

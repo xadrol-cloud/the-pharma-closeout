@@ -2193,81 +2193,209 @@ input, textarea, select {
 }
 .comp-compare-btn:hover { background: rgba(196, 147, 50, 0.08); }
 
-/* Poster selection checkbox overlay */
+/* ===================================================================
+   Task 2.5 (R10) — Compare-from-anywhere: poster/row select pill +
+   bottom selection tray. Upgrades the original checkbox-overlay +
+   bare compare-fab into a labeled affordance + persistent tray, while
+   keeping the .poster-select class / data-deal-id contract so the
+   delegated click handler and MutationObserver in deals.js need no
+   surface-specific wiring.
+   =================================================================== */
+
+/* Poster/row select pill — "+ Compare" on hover/focus (desktop),
+   always-visible on touch (see hover:none override below). */
 .poster-select {
   position: absolute;
   top: 8px; right: 8px;
-  width: 22px; height: 22px;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  border-radius: 4px;
-  background: rgba(0, 0, 0, 0.3);
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 10px 5px 7px;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  background: rgba(10, 10, 10, 0.55);
+  backdrop-filter: blur(2px);
+  color: #fff;
   cursor: pointer;
   z-index: 10;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
+  opacity: 0;
+  transform: translateY(-2px);
+  transition: opacity 0.15s, transform 0.15s, border-color 0.15s, background 0.15s;
 }
-.poster-select:hover {
+.feat-poster:hover .poster-select,
+.feat-poster:focus-within .poster-select,
+.c-poster:hover .poster-select,
+.c-poster:focus-within .poster-select,
+.result-row:hover .poster-select,
+.result-row:focus-within .poster-select,
+.poster-select:focus-visible,
+.poster-select.checked {
+  opacity: 1;
+  transform: translateY(0);
+}
+.poster-select:hover,
+.poster-select:focus-visible {
   border-color: var(--gold);
-  background: rgba(196, 147, 50, 0.4);
+  background: rgba(196, 147, 50, 0.55);
 }
-.poster-select svg {
+.poster-select:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.poster-select .ps-check {
   width: 14px; height: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.poster-select .ps-check svg {
+  width: 12px; height: 12px;
   color: var(--gold);
   opacity: 0;
   transition: opacity 0.15s;
 }
+.poster-select .ps-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
 .poster-select.checked {
   border-color: var(--gold);
   background: var(--gold);
-}
-.poster-select.checked svg {
   color: #000;
-  opacity: 1;
+}
+.poster-select.checked .ps-check svg { color: #000; opacity: 1; }
+/* Max-selection (5) rejection feedback — brief shake */
+.poster-select.ps-max { animation: psMaxShake 0.4s ease; }
+@keyframes psMaxShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-3px); }
+  40%, 80% { transform: translateX(3px); }
 }
 .feat-poster, .c-poster { position: relative; }
 
-/* Floating Compare button */
-.compare-fab {
+/* Screener table checkbox variant — compact icon-only control */
+.poster-select.ps-table {
+  position: static;
+  width: 22px; height: 22px;
+  padding: 0;
+  border-radius: 4px;
+  opacity: 1;
+  transform: none;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1.5px solid var(--rule);
+}
+.poster-select.ps-table:hover { border-color: var(--gold); background: rgba(196, 147, 50, 0.12); }
+.poster-select.ps-table svg { width: 13px; height: 13px; color: var(--gold); opacity: 0; transition: opacity 0.15s; }
+.poster-select.ps-table.checked { border-color: var(--gold); background: var(--gold); }
+.poster-select.ps-table.checked svg { color: #000; opacity: 1; }
+td.sc-select, th.sc-select-head { width: 32px; padding: 6px 4px 6px 10px !important; text-align: center; }
+
+/* ---------- Selection tray (replaces the old bare compare-fab) ---------- */
+.compare-tray {
   position: fixed;
-  bottom: max(24px, env(safe-area-inset-bottom, 0px) + 12px);
-  right: max(24px, env(safe-area-inset-right, 0px) + 12px);
-  z-index: 1000;
-  display: flex; align-items: center; gap: 10px;
-  padding: 12px 20px;
+  left: 0; right: 0; bottom: 0;
+  z-index: 90; /* above content, below nav (100) / mobile export fab (200) */
+  background: var(--ink, #14161a);
+  color: #fff;
+  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.3);
+  animation: traySlide 0.22s ease-out;
+}
+.compare-tray[hidden] { display: none; }
+@keyframes traySlide {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+.ct-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 10px max(16px, env(safe-area-inset-right, 0px) + 10px) max(10px, env(safe-area-inset-bottom, 0px) + 8px) max(16px, env(safe-area-inset-left, 0px) + 10px);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.ct-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+  min-width: 180px;
+}
+.ct-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 5px 6px 5px 12px;
+  font-family: var(--sans);
+  font-size: 12px;
+  max-width: 220px;
+}
+.ct-chip-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ct-chip-remove {
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #fff;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.ct-chip-remove:hover, .ct-chip-remove:focus-visible { background: var(--gold); color: #000; outline: none; }
+.ct-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.ct-count {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.65);
+  white-space: nowrap;
+}
+.ct-clear {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.85);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+.ct-clear:hover, .ct-clear:focus-visible { border-color: #fff; background: rgba(255, 255, 255, 0.06); }
+.ct-compare {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
   background: var(--gold);
   color: #000;
   border: none;
-  border-radius: 40px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  border-radius: 999px;
   cursor: pointer;
   font-family: var(--sans);
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  transition: all 0.2s;
-  animation: fabSlide 0.3s ease-out;
-}
-.compare-fab:hover {
-  background: #d4a03a;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-}
-.compare-fab .cf-count {
-  font-family: var(--mono);
+  font-size: 13px;
   font-weight: 700;
-  font-size: 15px;
-  background: rgba(0, 0, 0, 0.2);
-  color: #000;
-  min-width: 24px; height: 24px;
-  display: inline-flex; align-items: center; justify-content: center;
-  border-radius: 12px;
-  padding: 0 6px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  transition: background 0.15s, transform 0.15s;
 }
-.compare-fab .cf-arrow { font-size: 16px; }
-@keyframes fabSlide {
-  from { transform: translateY(80px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
+.ct-compare:hover:not([disabled]) { background: #d4a03a; transform: translateY(-1px); }
+.ct-compare[disabled] { opacity: 0.4; cursor: not-allowed; }
+.ct-compare:focus-visible, .ct-clear:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 
 /* ==========================================================================
@@ -2437,8 +2565,9 @@ input, textarea, select {
      side effects when a user taps a poster
    =================================================================== */
 @media (hover: none) {
-  /* 44px tap target (P1 #6) */
-  .poster-select { width: 44px; height: 44px; }
+  /* 44px min tap target (P1 #6) — pill keeps its label, just taller/wider. */
+  .poster-select:not(.ps-table) { min-height: 44px; padding: 10px 14px 10px 10px; }
+  .poster-select.ps-table { width: 40px; height: 40px; }
   .section-arrows { display: none; }
 
   .poster:hover, .feat-poster:hover, .c-poster:hover {
@@ -2462,6 +2591,34 @@ input, textarea, select {
     opacity: 0;
     animation: none;
   }
+}
+
+/* Task 2.5 (R10) — mobile (<=600px): select pill is always visible, not
+   hover/focus-gated (there is no hover on touch, but keep this explicit
+   per spec rather than relying solely on the hover:none query above). */
+@media (max-width: 600px) {
+  .poster-select:not(.ps-table) {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Task 2.5 (R10) — compare tray sizing + Export FAB collision avoidance.
+   deal.html's mobile Export FAB (.fab, see Phase 12 override) is a fixed
+   bottom-right pill at z-index 200; the tray sits full-width beneath it
+   at z-index 90. When both are present (deal.html comparables sidebar
+   posters can feed the tray), push the Export FAB up above the tray so
+   they stack instead of overlapping. */
+@media (max-width: 899px) {
+  body:has(#compare-tray:not([hidden])) .fab {
+    bottom: calc(max(20px, env(safe-area-inset-bottom, 0px) + 12px) + 64px);
+  }
+}
+@media (max-width: 600px) {
+  .ct-inner { gap: 10px; padding-top: 8px; }
+  .ct-chips { min-width: 100%; order: 1; }
+  .ct-actions { width: 100%; order: 2; justify-content: space-between; }
+  .ct-chip { max-width: 160px; }
 }
 
 
@@ -3193,6 +3350,7 @@ html, body { overflow-x: hidden; }
   margin: 0 auto;
 }
 .result-row {
+  position: relative;
   display: flex;
   gap: 16px;
   padding: 14px;
