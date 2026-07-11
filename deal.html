@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260710w">
+<link rel="stylesheet" href="assets/deals.css?v=20260710x">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
   /* Move 9: comparable-aged panel */
@@ -222,17 +222,18 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       <div id="comparables"></div>
     </div>
 
-    <!-- Sources -->
-    <div id="sources-section" class="sidebar-card" style="display:none;">
-      <div class="sb-title">Sources</div>
+    <!-- Sources — Task 3.4 (R15): <details class="m-acc"> mobile-diet
+         pattern (see #score-section); JS below sets .open on desktop. -->
+    <details id="sources-section" class="m-acc sidebar-card" style="display:none;">
+      <summary class="sb-title">Sources</summary>
       <div id="sources"></div>
-    </div>
+    </details>
 
-    <!-- Task 41: Corporate Lineage -->
-    <div id="lineage-section" class="sidebar-card" style="display:none;">
-      <div class="sb-title">Corporate Lineage</div>
+    <!-- Task 41: Corporate Lineage — Task 3.4 (R15): same m-acc pattern. -->
+    <details id="lineage-section" class="m-acc sidebar-card" style="display:none;">
+      <summary class="sb-title">Corporate Lineage</summary>
       <div id="lineage"></div>
-    </div>
+    </details>
 
     <!-- Task 43: Companion Deals -->
     <div id="companions-section" class="sidebar-card" style="display:none;">
@@ -316,7 +317,7 @@ import {
   displayOutcomeScore,
   comparableOutcomeSummary, renderComparableAged,
   renderVerdictBar, esc
-} from './assets/deals.js?v=20260710w'
+} from './assets/deals.js?v=20260710x'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -518,7 +519,10 @@ if (!dealId) {
       // ── Sidebar: Sources (+ Move 2c provenance stamp) ──
       const sourcesHtml = renderSources(sources)
       document.getElementById('sources').innerHTML = sourcesHtml + renderProvenance(deal)
-      document.getElementById('sources-section').style.display = ''
+      const sourcesSectionEl = document.getElementById('sources-section')
+      sourcesSectionEl.style.display = ''
+      // Task 3.4 (R15): m-acc pattern — collapsed on mobile, open on desktop.
+      sourcesSectionEl.open = window.innerWidth >= 900
 
       // ── Task 39: Copy Deal Row binding ──
       window.__copyDealRow = () => exportDealRow(deal)
@@ -529,7 +533,10 @@ if (!dealId) {
         const lineageHtml = renderCorporateLineage(lineage, deal)
         if (lineageHtml) {
           document.getElementById('lineage').innerHTML = lineageHtml
-          document.getElementById('lineage-section').style.display = ''
+          const lineageSectionEl = document.getElementById('lineage-section')
+          lineageSectionEl.style.display = ''
+          // Task 3.4 (R15): m-acc pattern — collapsed on mobile, open on desktop.
+          lineageSectionEl.open = window.innerWidth >= 900
         }
       } catch (e) { console.warn('lineage fetch failed', e) }
 

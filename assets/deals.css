@@ -996,12 +996,11 @@ input, textarea, select {
 /* Task 2.6 (R11): Score Breakdown moved hero-adjacent (was 9th screen down
    in the sidebar). Rendered as <details class="m-acc"> — collapsed by
    default on mobile, JS opens it on desktop widths (>=900px) after render.
-   This is the first use of the .m-acc pattern; Task 3.4 reuses it. */
-.m-acc.score-card-hero {
-  margin-top: 18px;
-  max-width: 620px;
-}
-.m-acc.score-card-hero > summary {
+   This is the first use of the .m-acc pattern; Task 3.4 (R15) reuses it
+   for the Sources / Corporate Lineage sidebar cards and the >2-review
+   tail of Announcement Reaction — the base summary/chevron rule below is
+   shared by all variants so the collapse affordance reads identically. */
+.m-acc > summary {
   cursor: pointer;
   list-style: none;
   display: flex;
@@ -1009,8 +1008,8 @@ input, textarea, select {
   justify-content: space-between;
   margin-bottom: 0;
 }
-.m-acc.score-card-hero > summary::-webkit-details-marker { display: none; }
-.m-acc.score-card-hero > summary::after {
+.m-acc > summary::-webkit-details-marker { display: none; }
+.m-acc > summary::after {
   content: '';
   width: 9px; height: 9px;
   border-right: 2px solid var(--ink-faint);
@@ -1019,8 +1018,13 @@ input, textarea, select {
   transition: transform 0.2s;
   flex: none;
 }
-.m-acc.score-card-hero[open] > summary::after { transform: rotate(-135deg); }
-.m-acc.score-card-hero[open] > summary { margin-bottom: 16px; }
+.m-acc[open] > summary::after { transform: rotate(-135deg); }
+.m-acc[open] > summary { margin-bottom: 16px; }
+
+.m-acc.score-card-hero {
+  margin-top: 18px;
+  max-width: 620px;
+}
 
 /* Compact single-row dimension layout: label+bar+weight+score collapse
    toward one line instead of the taller sidebar-card spacing. */
@@ -1032,6 +1036,36 @@ input, textarea, select {
 @media (max-width: 600px) {
   .m-acc.score-card-hero { padding: 16px 18px; }
 }
+
+/* Task 3.4 (R15): Sources / Corporate Lineage sidebar cards as <details
+   class="m-acc sidebar-card"> — .sidebar-card supplies the card chrome,
+   .m-acc supplies the collapse/chevron behavior via the shared rules above. */
+.m-acc.sidebar-card > .sb-title { margin-bottom: 0; }
+.m-acc.sidebar-card[open] > .sb-title { margin-bottom: 16px; }
+.m-acc.sidebar-card > div:not(.sb-title) { margin-top: 0; }
+
+/* Task 3.4 (R15): >2-review tail of Announcement Reaction. Compact trigger
+   (not a full sidebar-card) so it reads as an inline "show more", matching
+   the old acc-toggle's visual weight while using the native <details>
+   mechanism instead of a JS show/hide button. */
+.m-acc.reviews-tail {
+  margin-top: 4px;
+}
+.m-acc.reviews-tail > summary.sb-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--gold);
+  padding: 10px 6px;
+  border: 1px dashed var(--rule);
+  border-radius: 3px;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+.m-acc.reviews-tail > summary.sb-title:hover { background: rgba(196, 147, 50, 0.08); }
+.m-acc.reviews-tail[open] > summary.sb-title { margin-bottom: 10px; border-style: solid; }
+.reviews-tail-body { display: flex; flex-direction: column; gap: 10px; }
 
 
 /* ==========================================================================

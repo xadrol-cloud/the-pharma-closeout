@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710w'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710x'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents, POPULAR_SEARCHES,
-} from './scoring.js?v=20260710w'
+} from './scoring.js?v=20260710x'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -1645,14 +1645,19 @@ export function renderCriticReviews(sources) {
     </a>`
   })
 
-  // Expand at whole-review boundaries: first 3 visible, rest behind toggle
-  const CAP = 3
+  // Task 3.4 (R15): mobile detail diet — first 2 reviews render expanded,
+  // the >2-review tail sits behind a native <details class="m-acc"> (same
+  // collapse-on-mobile/open-on-desktop pattern as #score-section) instead
+  // of the old always-in-DOM acc-hidden-wrap + JS-toggle button.
+  const CAP = 2
   const visible = cards.slice(0, CAP)
   const hidden = cards.slice(CAP)
   let body = visible.join('')
   if (hidden.length) {
-    body += `<div class="acc-hidden-wrap" data-collapsed="true">${hidden.map(c => `<div class="acc-hidden collapsed">${c}</div>`).join('')}</div>` +
-      `<button class="acc-toggle" type="button" onclick="const w=this.previousElementSibling;w.setAttribute('data-collapsed','false');this.remove()">Show all ${reviews.length} reviews &rarr;</button>`
+    body += `<details class="m-acc reviews-tail">
+      <summary class="sb-title">Show ${hidden.length} more review${hidden.length === 1 ? '' : 's'} &rarr;</summary>
+      <div class="reviews-tail-body">${hidden.join('')}</div>
+    </details>`
   }
 
   return `<div class="card-head">
