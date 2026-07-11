@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710m'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710n'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents,
-} from './scoring.js?v=20260710m'
+} from './scoring.js?v=20260710n'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -2500,8 +2500,10 @@ export function initScreener(rootEl, filtersEl, inputEl, opts = {}) {
 })()
 
 // =====================================================================
-// FAB drawer toggle — left-side collapsible action bar on deal.html
-// Tab handle always visible; click expands the drawer to the right.
+// Export kit drawer toggle (Task 2.3 / R8) — labeled "Export ▾" button
+// in the hero title-row on desktop, labeled bottom-right pill FAB on
+// mobile (CSS-only restyle, see deals.css section 19 + 899px override).
+// Same #deal-fab / .fab-tab element and toggle logic at every width.
 // =====================================================================
 ;(function () {
   const fab = document.getElementById('deal-fab')
@@ -2511,7 +2513,7 @@ export function initScreener(rootEl, filtersEl, inputEl, opts = {}) {
   function setCollapsed(collapsed) {
     fab.setAttribute('data-collapsed', collapsed ? 'true' : 'false')
     tab.setAttribute('aria-expanded', collapsed ? 'false' : 'true')
-    tab.setAttribute('title', collapsed ? 'Show actions' : 'Hide actions')
+    tab.setAttribute('title', collapsed ? 'Show export options' : 'Hide export options')
   }
 
   tab.addEventListener('click', (e) => {

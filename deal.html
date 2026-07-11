@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260710m">
+<link rel="stylesheet" href="assets/deals.css?v=20260710n">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
   /* Move 9: comparable-aged panel */
@@ -108,6 +108,39 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     <div class="title-row">
       <h1 class="deal-title" id="hero-title"></h1>
       <span id="hero-status"></span>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           EXPORT KIT (Task 2.3 / R8) — desktop: labeled dropdown button
+           anchored in the hero title row. Mobile: restyled via CSS into
+           a fixed bottom-right labeled pill FAB. Same element, same
+           #deal-fab id / .fab-tab class the toggle IIFE already wires up
+           (deals.js ~2506) — restyle only, do not rewire.
+           ═══════════════════════════════════════════════════════════ -->
+      <div id="deal-fab" class="fab" data-collapsed="true" style="display:none;">
+        <button class="fab-tab" type="button" aria-expanded="false" aria-controls="deal-fab-actions" aria-label="Toggle deal export actions" title="Export">
+          <svg class="fab-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span class="fab-tab-label">Export</span>
+          <svg class="fab-tab-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="deal-fab-actions" class="fab-actions">
+          <button class="fab-btn" title="Copy deal row to clipboard (tab-separated, paste into Excel)" onclick="window.__copyDealRow && window.__copyDealRow()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span>Copy Row</span>
+          </button>
+          <button class="fab-btn" title="Export to PowerPoint (coming soon)" disabled>
+            <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg>
+            <span>PowerPoint</span>
+          </button>
+          <button class="fab-btn primary" title="Generate Deal Sheet (coming soon)" disabled>
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <span>Deal Sheet</span>
+          </button>
+          <button class="fab-btn" id="fab-share" title="Share this deal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            <span>Share</span>
+          </button>
+        </div>
+      </div>
     </div>
     <div id="hero-consensus"></div>
     <div id="hero-scores" class="feat-scores" style="margin-top:16px;"></div>
@@ -204,34 +237,6 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════════
-     FLOATING ACTION BAR
-     ═══════════════════════════════════════════════════════════════════ -->
-<div id="deal-fab" class="fab" data-collapsed="true" style="display:none;">
-  <button class="fab-tab" type="button" aria-expanded="false" aria-controls="deal-fab-actions" aria-label="Toggle deal actions" title="Show actions">
-    <svg class="fab-tab-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-    <span class="fab-tab-label">Actions</span>
-  </button>
-  <div id="deal-fab-actions" class="fab-actions">
-    <button class="fab-btn" title="Copy deal row to clipboard (tab-separated, paste into Excel)" onclick="window.__copyDealRow && window.__copyDealRow()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      <span>Copy Row</span>
-    </button>
-    <button class="fab-btn" title="Export to PowerPoint (coming soon)" disabled>
-      <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg>
-      <span>PowerPoint</span>
-    </button>
-    <button class="fab-btn primary" title="Generate Deal Sheet (coming soon)" disabled>
-      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-      <span>Deal Sheet</span>
-    </button>
-    <button class="fab-btn" id="fab-share" title="Share this deal">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-      <span>Share</span>
-    </button>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════════
      FOOTER
      ═══════════════════════════════════════════════════════════════════ -->
 <!-- ========== FUNNEL BAND (Move 1) ========== -->
@@ -303,7 +308,7 @@ import {
   displayOutcomeScore,
   comparableOutcomeSummary, renderComparableAged,
   renderVerdictBar, esc
-} from './assets/deals.js?v=20260710m'
+} from './assets/deals.js?v=20260710n'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 

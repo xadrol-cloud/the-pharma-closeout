@@ -1744,6 +1744,10 @@ input, textarea, select {
 }
 .hero-content { flex: 1; }
 .title-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+/* Task 2.3 (R8) — Export kit button pins to the far right of the title
+   row on desktop; wraps onto its own line gracefully on narrower hero
+   widths rather than crowding the title. */
+.title-row #deal-fab { margin-left: auto; }
 .deal-title {
   font-family: var(--serif);
   font-size: 32px; font-weight: 700;
@@ -1894,67 +1898,61 @@ input, textarea, select {
 
 
 /* ==========================================================================
-   19. FLOATING ACTION BAR (FAB)
+   19. EXPORT KIT (Task 2.3 — R8)
+   Same #deal-fab element/IIFE at every width — only presentation changes.
+   Desktop (>=900px): sits inline in the hero title-row as a labeled
+   "Export ▾" button; drawer opens as a dropdown anchored underneath it.
+   Mobile (<900px, see Phase 12 override below): restyled into a fixed
+   bottom-right labeled pill FAB. Toggle IIFE (deals.js ~2506) reads
+   [data-collapsed] / aria-expanded only — untouched by this restyle.
    ========================================================================== */
-
-/* Left-side collapsible drawer. Tab handle always visible at the
-   left edge; click expands the .fab-actions panel to the right.
-   Position: vertically centered on the viewport. */
 .fab {
-  position: fixed;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  position: relative;
   z-index: 200;
-  display: flex;
-  align-items: stretch;
-  background: var(--ink);
-  border-radius: 0 12px 12px 0;
-  box-shadow: 6px 4px 20px rgba(0, 0, 0, 0.25);
-  transition: max-width 0.28s cubic-bezier(0.19, 1, 0.22, 1);
-  overflow: hidden;
-  max-width: 240px; /* expanded width cap */
+  display: inline-flex;
+  align-items: flex-start;
 }
-.fab[data-collapsed='true'] { max-width: 36px; }
 .fab[data-collapsed='true'] .fab-actions { display: none; }
 
 .fab-tab {
-  flex: 0 0 36px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   background: var(--ink);
   border: none;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
   color: #fff;
   cursor: pointer;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
+  padding: 9px 14px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
   transition: background 0.15s;
 }
 .fab-tab:hover { background: #2d2f36; }
+.fab-tab-icon { width: 15px; height: 15px; flex-shrink: 0; opacity: 0.9; }
+.fab-tab-label { font-family: var(--sans); }
 .fab-tab-chevron {
-  width: 14px; height: 14px;
-  transition: transform 0.28s cubic-bezier(0.19, 1, 0.22, 1);
-  opacity: 0.85;
+  width: 13px; height: 13px;
+  transition: transform 0.2s ease;
+  opacity: 0.8;
 }
 .fab[data-collapsed='false'] .fab-tab-chevron { transform: rotate(180deg); }
-.fab-tab-label {
-  font-family: var(--sans);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1.4px;
-  text-transform: uppercase;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  opacity: 0.7;
-}
 
 .fab-actions {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
   display: flex;
   flex-direction: column;
-  min-width: 0;
+  min-width: 200px;
+  background: var(--ink);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+  z-index: 201;
+  animation: fadeUp 0.16s ease;
 }
 .fab-btn {
   padding: 12px 16px;
@@ -2331,10 +2329,11 @@ input, textarea, select {
 /* ===================================================================
    Phase 5 mobile experience (deal.html, 2026-05-02)
    - Hero inner padding tightened on phone
-   - FAB labels wrap then stack
    - Body + prose font bumps for legibility
    - Multi-col grids collapse to 1-col on tightest band
    - Footer becomes column on phone
+   (FAB two-column wrap rules removed under Task 2.3/R8 — the drawer is
+   now a fixed-width dropdown/pill menu at every width, not a wrapping row.)
    =================================================================== */
 @media (max-width: 600px) {
   body { font-size: 15px; }
@@ -2350,12 +2349,6 @@ input, textarea, select {
   }
   .rev-stats { flex-wrap: wrap; }
   .rev-stat { min-width: 80px; }
-  .fab { flex-wrap: wrap; }
-  .fab-btn {
-    flex: 1 1 calc(50% - 4px);
-    min-width: 0;
-    white-space: normal;
-  }
   .footer {
     flex-direction: column;
     align-items: flex-start;
@@ -2367,7 +2360,6 @@ input, textarea, select {
   }
 }
 @media (max-width: 480px) {
-  .fab-btn { flex: 1 1 100%; }
   .mkt-row { grid-template-columns: 1fr; }
 }
 
@@ -2724,56 +2716,36 @@ input, textarea, select {
    Combined with min-width:0 fix on .am-row flex children below. */
 html, body { overflow-x: hidden; }
 
-/* P0 #2 + Bin's FAB feedback — Mobile FAB becomes a bottom-right
-   circular button. Tap opens vertical menu of the 4 actions above it.
-   Side-tab pattern stays at >=600px (desktop/tablet). */
-@media (max-width: 599px) {
+/* Task 2.3 (R8) — Mobile Export kit becomes a fixed bottom-right labeled
+   pill FAB (icon + "Export" text, >=44px tall). Tap opens the same drawer
+   as a menu stacked above it. Inline hero dropdown pattern stays at
+   >=900px (desktop/tablet) — see section 19 above. */
+@media (max-width: 899px) {
   .fab {
+    position: fixed;
     top: auto;
     bottom: max(20px, env(safe-area-inset-bottom, 0px) + 12px);
     left: auto;
     right: max(16px, env(safe-area-inset-right, 0px) + 12px);
-    transform: none;
     flex-direction: column-reverse;
     align-items: flex-end;
-    background: transparent;
-    box-shadow: none;
-    border-radius: 0;
-    max-width: none;
-    overflow: visible;
   }
-  .fab[data-collapsed='true'] { max-width: none; }
   .fab-tab {
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    background: var(--ink);
-    border: none;
+    height: 48px;
+    min-height: 44px;
+    padding: 0 18px 0 16px;
+    border-radius: 999px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-    flex: none;
-    color: #fff;
-    transition: transform 0.18s ease, background 0.15s;
+    font-size: 14px;
   }
-  .fab-tab:hover { background: #2d2f36; }
-  .fab[data-collapsed='false'] .fab-tab { transform: rotate(45deg); }
-  .fab[data-collapsed='false'] .fab-tab .fab-tab-chevron { display: none; }
-  .fab-tab::after {
-    content: '+';
-    font-size: 28px;
-    font-weight: 300;
-    line-height: 1;
-  }
-  .fab-tab .fab-tab-chevron { display: none; }
-  .fab-tab .fab-tab-label { display: none; }
   .fab-actions {
-    background: var(--ink);
-    border-radius: 12px;
+    top: auto;
+    bottom: calc(100% + 10px);
+    right: 0;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    margin-bottom: 10px;
-    overflow: hidden;
     min-width: 200px;
     animation: fadeUp 0.18s ease;
   }
-  .fab[data-collapsed='true'] .fab-actions { display: none; }
   .fab-btn { padding: 14px 18px; font-size: 13px; }
 }
 
@@ -3337,10 +3309,10 @@ html, body { overflow-x: hidden; }
   .mkt-row { grid-template-columns: 1fr; }
 }
 
-/* P1 #9 — Mobile FAB: stays fixed bottom-right (599px block above);
-   give the page bottom clearance so the last content scrolls clear of
-   the button instead of sitting under it. */
-@media (max-width: 599px) {
+/* P1 #9 — Mobile Export FAB: stays fixed bottom-right (899px block
+   above); give the page bottom clearance so the last content scrolls
+   clear of the button instead of sitting under it. */
+@media (max-width: 899px) {
   #deal-body { padding-bottom: 96px; }
 }
 
