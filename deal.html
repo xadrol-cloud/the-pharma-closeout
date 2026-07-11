@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260710y">
+<link rel="stylesheet" href="assets/deals.css?v=20260710z">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
   /* Move 9: comparable-aged panel */
@@ -317,9 +317,20 @@ import {
   displayOutcomeScore,
   comparableOutcomeSummary, renderComparableAged,
   renderVerdictBar, esc
-} from './assets/deals.js?v=20260710y'
+} from './assets/deals.js?v=20260710z'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
+
+// Task 3.4 (R15): shared m-acc open-on-desktop rule. <details class="m-acc">
+// is collapsed by default (mobile diet); on desktop widths (>=900px) open
+// every accordion under rootEl — including rootEl itself when it IS the
+// details element. One helper for all call sites so the pattern can't drift.
+function openAccordionsForDesktop(rootEl) {
+  if (!rootEl) return
+  const open = window.innerWidth >= 900
+  if (rootEl.matches && rootEl.matches('details.m-acc')) rootEl.open = open
+  rootEl.querySelectorAll('details.m-acc').forEach(d => { d.open = open })
+}
 
 if (!dealId) {
   document.getElementById('loading').innerHTML =
@@ -469,6 +480,9 @@ if (!dealId) {
       const reviewsHtml = renderCriticReviews(sources)
       document.getElementById('critic-reviews').innerHTML = reviewsHtml
       document.getElementById('reviews-section').style.display = ''
+      // Task 3.4 (R15): the >2-review tail is a <details class="m-acc"> —
+      // open it on desktop like the other accordions.
+      openAccordionsForDesktop(document.getElementById('critic-reviews'))
 
       // ── Key Assets ──
       const assetsHtml = renderKeyAssets(diseaseAssets)
@@ -481,10 +495,7 @@ if (!dealId) {
         document.getElementById('score-breakdown').innerHTML = scoreHtml
         const scoreSectionEl = document.getElementById('score-section')
         scoreSectionEl.style.display = ''
-        // Reusable pattern (see also Task 3.4): <details class="m-acc"> is
-        // collapsed by default for mobile; open it programmatically on
-        // desktop widths so the breakdown reads expanded without a tap.
-        scoreSectionEl.open = window.innerWidth >= 900
+        openAccordionsForDesktop(scoreSectionEl)
       }
 
       // ── Sidebar: Comparables (fetch wider so the "aged" summary has ≥3 unlocked) ──
@@ -521,8 +532,7 @@ if (!dealId) {
       document.getElementById('sources').innerHTML = sourcesHtml + renderProvenance(deal)
       const sourcesSectionEl = document.getElementById('sources-section')
       sourcesSectionEl.style.display = ''
-      // Task 3.4 (R15): m-acc pattern — collapsed on mobile, open on desktop.
-      sourcesSectionEl.open = window.innerWidth >= 900
+      openAccordionsForDesktop(sourcesSectionEl)
 
       // ── Task 39: Copy Deal Row binding ──
       window.__copyDealRow = () => exportDealRow(deal)
@@ -535,8 +545,7 @@ if (!dealId) {
           document.getElementById('lineage').innerHTML = lineageHtml
           const lineageSectionEl = document.getElementById('lineage-section')
           lineageSectionEl.style.display = ''
-          // Task 3.4 (R15): m-acc pattern — collapsed on mobile, open on desktop.
-          lineageSectionEl.open = window.innerWidth >= 900
+          openAccordionsForDesktop(lineageSectionEl)
         }
       } catch (e) { console.warn('lineage fetch failed', e) }
 
