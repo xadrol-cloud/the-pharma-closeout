@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260711g'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260711j'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents, POPULAR_SEARCHES,
-} from './scoring.js?v=20260711g'
+} from './scoring.js?v=20260711j'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -446,6 +446,7 @@ export async function fetchBiobucksIndex() {
   const data = await fetchAllPaged(() => supabase
     .from('deals_enriched')
     .select('deal_id,upfront_usd_mm,deal_value_usd_mm') // deal_id: keyset cursor
+    .neq('enrichment_status', 'archived')
     .eq('deal_type', 'Licensing/Option')
     .not('upfront_usd_mm', 'is', null)
     .gt('deal_value_usd_mm', 0))
@@ -462,6 +463,7 @@ export async function fetchLastUpdated() {
   const { data } = await supabase
     .from('deals_enriched')
     .select('updated_at')
+    .neq('enrichment_status', 'archived')
     .order('updated_at', { ascending: false })
     .limit(1)
   const raw = data && data[0] && data[0].updated_at

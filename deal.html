@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260711g">
+<link rel="stylesheet" href="assets/deals.css?v=20260711j">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
   /* Move 9: comparable-aged panel */
@@ -318,7 +318,7 @@ import {
   comparableOutcomeSummary, renderComparableAged,
   renderVerdictBar, esc, JUMP_NAV_SECTIONS,
   dedupeByDealId
-} from './assets/deals.js?v=20260711g'
+} from './assets/deals.js?v=20260711j'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -354,10 +354,39 @@ function openAccordionsForDesktop(rootEl) {
 // 'jump-nav:before-scroll' event).
 const _lazySections = new Map() // sectionId -> { render: () => void, done: boolean }
 
-function registerLazySection(sectionId, render) {
+// Task WS-E1: content-aware placeholder heights. Row-height/chrome
+// constants derived from the actual CSS each renderer emits (deals.css
+// .comp/.comp-compare-btn, .lin-row/.lin-section-label, .src-item) —
+// see comment above the `.lazy-pending` rules in deals.css for the
+// measured basis. `rows` is the count of items that will actually be
+// visible after each renderer's own internal cap (comparables: none,
+// sources: SHOW_LIMIT=5, lineage/companions: 4-per-section preview).
+const LAZY_ROW_ESTIMATE = {
+  comparables: { perRow: 114, chrome: 16, cap: 5 },
+  sources: { perRow: 58, chrome: 40, cap: 5 },
+  lineage: { perRow: 48, chrome: 24, cap: 4 }, // caller multiplies chrome by section count
+  companions: { perRow: 48, chrome: 24, cap: 4 },
+}
+
+/** Estimate a placeholder height in px from a row count for one of the
+ *  known section types. `sections` (default 1) lets Corporate Lineage
+ *  account for its up-to-2 `.lin-section` groups (buyer chain + target
+ *  chain), each with its own header chrome. Returns null when `rows` is
+ *  not a usable number (caller should fall back to the CSS default). */
+function estimateLazyHeight(type, rows, sections = 1) {
+  const spec = LAZY_ROW_ESTIMATE[type]
+  if (!spec || typeof rows !== 'number' || !Number.isFinite(rows) || rows < 0) return null
+  const visible = Math.min(rows, spec.cap * sections)
+  return Math.round(visible * spec.perRow + spec.chrome * sections)
+}
+
+function registerLazySection(sectionId, render, estimatedHeightPx) {
   const el = document.getElementById(sectionId)
   if (!el) return
   el.classList.add('lazy-pending')
+  if (typeof estimatedHeightPx === 'number' && Number.isFinite(estimatedHeightPx) && estimatedHeightPx > 0) {
+    el.style.setProperty('--lazy-est-h', `${Math.round(estimatedHeightPx)}px`)
+  }
   _lazySections.set(sectionId, { render, done: false })
 }
 
@@ -402,19 +431,39 @@ if (!dealId) {
     '<div style="text-align:center;padding:100px;font-family:var(--sans);color:var(--ink-muted);">Deal not found. <a href="deals.html" style="color:var(--gold);text-decoration:none;font-weight:600;">Browse deals &rarr;</a></div>'
 } else {
   try {
-    const [deal, sources, outcomes] = await Promise.all([
-      fetchDeal(dealId),
-      fetchDealSources(dealId),
-      fetchDealOutcomes(dealId),
-    ])
-
-    document.getElementById('loading').style.display = 'none'
+    // WS-E2 fast-path: fetch the deal row ALONE first, so archived (and
+    // missing) deals gate before ANY companion fetch fires — previously
+    // fetchDealSources/fetchDealOutcomes ran in the same Promise.all and
+    // archived pages still cost 2 wasted Supabase calls.
+    const deal = await fetchDeal(dealId)
 
     if (!deal) {
-      document.getElementById('loading').style.display = ''
       document.getElementById('loading').innerHTML =
         '<div style="text-align:center;padding:100px;font-family:var(--sans);color:var(--ink-muted);">Deal not found. <a href="deals.html" style="color:var(--gold);text-decoration:none;font-weight:600;">Browse deals &rarr;</a></div>'
+    } else if (deal.enrichment_status === 'archived') {
+      // WS-E2: archived deals stay resolvable at their URL (soft-delete
+      // semantics, no 404) but render a compact notice instead of the full
+      // page — hero area only, no fetches for timeline/financials/sources/
+      // outcomes/comparables/lineage/companions. Breadcrumb back-link
+      // (outside this block) stays intact.
+      document.getElementById('loading').style.display = 'none'
+      document.title = `${deal.buyer_name} / ${deal.target_name} | Deal Intelligence`
+      document.getElementById('deal-hero').style.display = ''
+      document.getElementById('hero-title').textContent = `${deal.buyer_name} / ${deal.target_name}`
+      document.getElementById('hero-consensus').innerHTML =
+        `<div class="deal-consensus" style="padding:14px 16px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);">` +
+        `This deal has been archived from the database. ` +
+        `<a href="deals.html" style="color:var(--gold);font-weight:600;text-decoration:none;">Browse active deals &rarr;</a>` +
+        `</div>`
     } else {
+      // Past the archived gate: sources + outcomes fetch in parallel, and
+      // the loading indicator clears once they land (same as before).
+      const [sources, outcomes] = await Promise.all([
+        fetchDealSources(dealId),
+        fetchDealOutcomes(dealId),
+      ])
+      document.getElementById('loading').style.display = 'none'
+
       // ── Page title ──
       document.title = `${deal.buyer_name} / ${deal.target_name} | Deal Intelligence`
 
@@ -580,12 +629,17 @@ if (!dealId) {
       // Task 6c: fetch stays eager; DOM injection is deferred to when the
       // placeholder nears the viewport (registerLazySection below).
       const comparables = await fetchComparables(deal, 20)
-      const compsHtml = renderComps(comparables.slice(0, 5), dealId)
+      const compsSlice = comparables.slice(0, 5)
+      const compsHtml = renderComps(compsSlice, dealId)
       if (compsHtml) {
         document.getElementById('comparables-section').style.display = ''
+        // WS-E1: dedupeByDealId mirrors what renderComparables applies
+        // internally, so the row count used for the estimate matches what
+        // actually renders.
+        const compsEstH = estimateLazyHeight('comparables', dedupeByDealId(compsSlice).length)
         registerLazySection('comparables-section', () => {
           document.getElementById('comparables').innerHTML = compsHtml
-        })
+        }, compsEstH)
       }
 
       // ── Move 9 / Task 2.1 (R6): "How deals like this aged" — only when
@@ -619,9 +673,13 @@ if (!dealId) {
       // ORDERING: register BEFORE openAccordionsForDesktop — on desktop the
       // open call force-renders a lazy-pending section so the accordion
       // never opens empty (mobile stays lazy: open=false skips the render).
+      // WS-E1: provenanceHtml is a fixed small addendum (0 when the deal
+      // has no verified/confidence/tier fields) — folded into the base
+      // `sources` chrome constant rather than sized separately.
+      const sourcesEstH = estimateLazyHeight('sources', sources ? sources.length : 0)
       registerLazySection('sources-section', () => {
         document.getElementById('sources').innerHTML = sourcesHtml + provenanceHtml
-      })
+      }, sourcesEstH)
       openAccordionsForDesktop(sourcesSectionEl)
 
       // ── Task 6d: Sources teaser — count + top source name, from the
@@ -656,10 +714,19 @@ if (!dealId) {
         if (lineageHtml) {
           const lineageSectionEl = document.getElementById('lineage-section')
           lineageSectionEl.style.display = ''
+          // WS-E1: mirror renderCorporateLineage's own buyer/target-chain
+          // partition so the section count (1 or 2 `.lin-section` blocks,
+          // each with its own header chrome) matches what actually renders.
+          const _buyer = deal.buyer_name
+          const _target = deal.target_name
+          const _buyerChain = (lineage || []).filter(d => d.buyer_name === _buyer || d.target_name === _buyer)
+          const _targetChain = (lineage || []).filter(d => (d.buyer_name === _target || d.target_name === _target) && !_buyerChain.includes(d))
+          const lineageSectionCount = (_buyerChain.length ? 1 : 0) + (_targetChain.length ? 1 : 0) || 1
+          const lineageEstH = estimateLazyHeight('lineage', dedupeByDealId(lineage).length, lineageSectionCount)
           // ORDERING: register BEFORE openAccordionsForDesktop (see Sources).
           registerLazySection('lineage-section', () => {
             document.getElementById('lineage').innerHTML = lineageHtml
-          })
+          }, lineageEstH)
           openAccordionsForDesktop(lineageSectionEl)
           // Task 6d: teaser — deduped count, matching what
           // renderCorporateLineage actually lists (dedupeByDealId is the
@@ -679,9 +746,10 @@ if (!dealId) {
         const companionsHtml = renderCompanionDeals(companions, deal)
         if (companionsHtml) {
           document.getElementById('companions-section').style.display = ''
+          const companionsEstH = estimateLazyHeight('companions', dedupeByDealId(companions).length)
           registerLazySection('companions-section', () => {
             document.getElementById('companions').innerHTML = companionsHtml
-          })
+          }, companionsEstH)
         }
       } catch (e) { console.warn('companions fetch failed', e) }
 

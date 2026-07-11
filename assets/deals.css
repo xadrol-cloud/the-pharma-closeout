@@ -1359,23 +1359,33 @@ input, textarea, select {
   margin-bottom: 16px;
 }
 
-/* Task 6c: lazy-render placeholders. Reserve roughly the height the real
-   content will occupy once it materializes so popping it in doesn't shift
-   the layout (CLS). Measured against real deals (Playwright, 390w/1440w):
-   comparables ~660-750px at every width (not an accordion, always full);
-   sources/lineage are <details class="m-acc"> — collapsed to ~90px on
-   mobile (<900px, closed by default) but opened to ~350-470px on desktop
-   (>=900px, opened by openAccordionsForDesktop). Companion deals card is
-   the shortest and least common (often absent entirely). */
-#comparables-section.lazy-pending { min-height: 700px; }
+/* Task 6c / WS-E1: lazy-render placeholders. Reserve roughly the height the
+   real content will occupy once it materializes so popping it in doesn't
+   shift the layout (CLS). deal.html's registerLazySection() now computes a
+   content-aware estimate (row count x per-type row height, clamped to each
+   renderer's own visible-row cap — see estimateLazyHeight()) and sets it as
+   the `--lazy-est-h` custom property on the placeholder element itself; the
+   px constants below are the FALLBACK for when the count is unavailable
+   (e.g. no comparables/sources fetched yet) and also the multiplier base a
+   breakpoint applies to the variable.
+
+   comparables: not an accordion, always fully visible at every width — the
+   variable (already row-derived) is used directly.
+   sources/lineage are <details class="m-acc"> — collapsed to a small fixed
+   height on mobile (<900px, closed by default, so its real content height
+   is irrelevant) but opened to the full estimate on desktop (>=900px,
+   force-opened by openAccordionsForDesktop). Companion deals card is the
+   shortest and least common (often absent entirely) and is never an
+   accordion, so it also uses the variable directly. */
+#comparables-section.lazy-pending { min-height: var(--lazy-est-h, 700px); }
 #sources-section.lazy-pending,
 #lineage-section.lazy-pending {
-  min-height: 90px;
+  min-height: 90px; /* mobile: collapsed accordion, content height doesn't apply */
 }
-#companions-section.lazy-pending { min-height: 160px; }
+#companions-section.lazy-pending { min-height: var(--lazy-est-h, 160px); }
 @media (min-width: 900px) {
-  #sources-section.lazy-pending { min-height: 420px; }
-  #lineage-section.lazy-pending { min-height: 330px; }
+  #sources-section.lazy-pending { min-height: var(--lazy-est-h, 420px); }
+  #lineage-section.lazy-pending { min-height: var(--lazy-est-h, 330px); }
 }
 
 

@@ -35,7 +35,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260711g">
+<link rel="stylesheet" href="assets/deals.css?v=20260711j">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
 /* ── Page-local overrides (compare.html only) ── */
@@ -87,6 +87,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   <h1 class="deal-title" style="margin-bottom:8px;">Deal Comparison</h1>
   <p style="color:var(--ink-muted);font-size:14px;margin-bottom:24px;">Side-by-side analysis of selected deals.</p>
   <div id="loading" style="text-align:center;padding:80px 40px;color:var(--ink-faint);font-size:14px;">Loading deals...</div>
+  <div id="archived-note" style="display:none;padding:10px 14px;margin-bottom:16px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);color:var(--ink-muted);font-size:13px;"></div>
   <div id="comparison-root" style="display:none;"></div>
   <div id="export-nudge" class="sub-nudge" style="display:none;">
     Want this as a <strong>memo-ready, cited comparison pack</strong>? Subscribe to <a href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener">Deal Alerts</a> — export tooling ships to subscribers first. Browsing &amp; comparing stay free, always.
@@ -149,7 +150,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </footer>
 
 <script type="module">
-import { fetchDeal, fetchDealOutcomes, renderComparison } from './assets/deals.js?v=20260711g'
+import { fetchDeal, fetchDealOutcomes, renderComparison, esc } from './assets/deals.js?v=20260711j'
 
 const params = new URLSearchParams(window.location.search)
 const idsRaw = params.get('ids') || ''
@@ -169,6 +170,9 @@ if (ids.length < 2) {
     const results = await Promise.all(keep.map(async (id) => {
       const [deal, outcomes] = await Promise.all([fetchDeal(id), fetchDealOutcomes(id)])
       if (!deal) return null
+      // WS-E2: archived deals are excluded from comparison, not rendered —
+      // flag them here so the caller can skip + note instead of comparing.
+      if (deal.enrichment_status === 'archived') return { archived: true, deal }
       // Pick latest-window outcome with populated dimension scores (same logic as deal.html score breakdown)
       const sorted = (outcomes || []).slice().sort((a, b) => {
         const order = { '15yr': 0, '10yr': 1, '5yr': 2 }
@@ -182,14 +186,24 @@ if (ids.length < 2) {
       }
       return deal
     }))
-    const valid = results.filter(Boolean)
+    const archived = results.filter(r => r && r.archived).map(r => `${r.deal.buyer_name} / ${r.deal.target_name}`)
+    const valid = results.filter(r => r && !r.archived)
     loadingEl.style.display = 'none'
     if (valid.length < 2) {
       emptyEl.style.display = ''
+      const missingCount = ids.length - valid.length - archived.length
+      const notes = []
+      if (missingCount > 0) notes.push(`Could not find ${missingCount} of the requested deal(s).`)
+      if (archived.length > 0) notes.push(`Skipped archived deal(s): ${archived.map(esc).join(', ')}.`)
       emptyEl.querySelector('p').innerHTML =
-        `Could not find ${ids.length - valid.length} of the requested deal(s). ` +
+        `${notes.join(' ')} ` +
         `<a href="deals.html" style="color:var(--gold);font-weight:600;">Browse the Deal Database &rarr;</a>`
     } else {
+      if (archived.length > 0) {
+        const noteEl = document.getElementById('archived-note')
+        noteEl.textContent = `Skipped archived deal(s): ${archived.join(', ')}.`
+        noteEl.style.display = ''
+      }
       rootEl.innerHTML = renderComparison(valid)
       // Hide metric rows where every compared deal is null (rendered as em-dash)
       rootEl.querySelectorAll('.cmp-row').forEach(tr => {
