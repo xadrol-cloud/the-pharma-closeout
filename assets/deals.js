@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260711f'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260711g'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents, POPULAR_SEARCHES,
-} from './scoring.js?v=20260711f'
+} from './scoring.js?v=20260711g'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -1094,12 +1094,16 @@ function renderJumpNav(sections) {
  * #verdict-bar; the caller controls visibility via the IntersectionObserver
  * and passes the subset of JUMP_NAV_SECTIONS that actually render.
  */
-export function renderVerdictBar(deal, jumpSections) {
+export function renderVerdictBar(deal, jumpSections = []) {
   if (!deal) return ''
   const criticScore = deal.critic_score != null ? Math.round(deal.critic_score) : null
   const os = displayOutcomeScore(deal)
   const outcomeScore = os != null ? Math.round(os) : null
   const title = `${esc(deal.buyer_name || '')} / ${esc(deal.target_name || '')}`
+  // No jump sections (e.g. the pre-filter first render) → no nav row at
+  // all, not an empty container in the DOM.
+  const navRow = jumpSections.length ? `
+  ${renderJumpNav(jumpSections)}` : ''
   return `<div class="vb-inner">
     <span class="vb-title">${title}</span>
     <span class="vb-chips">
@@ -1107,8 +1111,7 @@ export function renderVerdictBar(deal, jumpSections) {
       ${verdictBarChip('outcome', outcomeScore)}
     </span>
     <span class="vb-status">${renderDealStatus(deal.deal_outcome_status, deal)}</span>
-  </div>
-  ${renderJumpNav(jumpSections)}`
+  </div>${navRow}`
 }
 
 

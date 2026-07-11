@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260711f">
+<link rel="stylesheet" href="assets/deals.css?v=20260711g">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
   /* Move 9: comparable-aged panel */
@@ -318,7 +318,7 @@ import {
   comparableOutcomeSummary, renderComparableAged,
   renderVerdictBar, esc, JUMP_NAV_SECTIONS,
   dedupeByDealId
-} from './assets/deals.js?v=20260711f'
+} from './assets/deals.js?v=20260711g'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -329,8 +329,18 @@ const dealId = new URLSearchParams(window.location.search).get('id')
 function openAccordionsForDesktop(rootEl) {
   if (!rootEl) return
   const open = window.innerWidth >= 900
-  if (rootEl.matches && rootEl.matches('details.m-acc')) rootEl.open = open
-  rootEl.querySelectorAll('details.m-acc').forEach(d => { d.open = open })
+  const setOpen = (d) => {
+    // Task 6c fix: if this accordion's section is lazy-pending, inject its
+    // content BEFORE opening so desktop never shows an open-but-empty card.
+    // ORDERING DEPENDENCY: for lazy sections, registerLazySection(...) must
+    // run before this helper at the call site (see Sources / Corporate
+    // Lineage below) — otherwise the lazy-pending class isn't set yet and
+    // this guard can't fire.
+    if (open && d.id && d.classList.contains('lazy-pending')) runLazySection(d.id)
+    d.open = open
+  }
+  if (rootEl.matches && rootEl.matches('details.m-acc')) setOpen(rootEl)
+  rootEl.querySelectorAll('details.m-acc').forEach(setOpen)
 }
 
 // ── Task 6c: lazy-render below-fold sections ──────────────────────────
@@ -494,6 +504,11 @@ if (!dealId) {
       if (deal.deal_summary && !isPipelineArtifact(deal.deal_summary)) {
         document.getElementById('hero-summary').textContent = cleanProse(deal.deal_summary)
         document.getElementById('hero-summary').style.display = ''
+      } else {
+        // Task 6a fix: explicitly hide the empty div — the jump-nav filter
+        // reads style.display, and an empty-but-visible #hero-summary would
+        // let a "Summary" pill render that scrolls to nothing.
+        document.getElementById('hero-summary').style.display = 'none'
       }
 
       // Editorial lede now renders as the consensus line above (Move 2 +
@@ -601,10 +616,13 @@ if (!dealId) {
       const provenanceHtml = renderProvenance(deal)
       const sourcesSectionEl = document.getElementById('sources-section')
       sourcesSectionEl.style.display = ''
-      openAccordionsForDesktop(sourcesSectionEl)
+      // ORDERING: register BEFORE openAccordionsForDesktop — on desktop the
+      // open call force-renders a lazy-pending section so the accordion
+      // never opens empty (mobile stays lazy: open=false skips the render).
       registerLazySection('sources-section', () => {
         document.getElementById('sources').innerHTML = sourcesHtml + provenanceHtml
       })
+      openAccordionsForDesktop(sourcesSectionEl)
 
       // ── Task 6d: Sources teaser — count + top source name, from the
       //    already-fetched `sources` array (no new fetch). "Top" mirrors
@@ -638,10 +656,11 @@ if (!dealId) {
         if (lineageHtml) {
           const lineageSectionEl = document.getElementById('lineage-section')
           lineageSectionEl.style.display = ''
-          openAccordionsForDesktop(lineageSectionEl)
+          // ORDERING: register BEFORE openAccordionsForDesktop (see Sources).
           registerLazySection('lineage-section', () => {
             document.getElementById('lineage').innerHTML = lineageHtml
           })
+          openAccordionsForDesktop(lineageSectionEl)
           // Task 6d: teaser — deduped count, matching what
           // renderCorporateLineage actually lists (dedupeByDealId is the
           // same dedup renderLineageList applies internally).
