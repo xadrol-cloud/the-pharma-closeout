@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- charset must be first in <head> (within the first 1024 bytes) or the
+     parser can fall back to windows-1252 and mojibake accented names -->
+<meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K6XEWCK7W4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K6XEWCK7W4');
+</script>
+<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "521570287";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script>
+<script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=521570287&fmt=gif" />
+</noscript>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Browse the Deal Database | The Pharma Closeout</title>
+<meta name="description" content="Every graded pharma BD deal — sortable, filterable. Announced date, acquirer, target, deal type, therapeutic area, value, Critic Score, and Outcome Score.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0a'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23c49332'/%3E%3C/svg%3E">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Newsreader:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/deals.css?v=20260711a">
+<script defer src="assets/nav.js?v=20260531a"></script>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav class="nav" aria-label="Main navigation">
+  <span class="nav-brand">The Pharma <em>Closeout</em></span>
+  <div class="nav-sep"></div>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+    <span class="nav-toggle-bars"></span>
+  </button>
+  <ul id="nav-links" class="nav-links" data-collapsed="true">
+    <li><a href="index.html">Podcast</a></li>
+    <li><a href="ai-research.html">Research</a></li>
+    <li><a href="deals.html">Deal Intelligence</a></li>
+    <li><a href="browse.html" class="active">Browse</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a class="nav-cta" href="ai-research.html#briefing">Get the Briefing <span aria-hidden="true">&rarr;</span></a>
+  <div class="nav-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="nav-search-input" type="text" placeholder="Search deals..." aria-label="Search deals">
+  </div>
+</nav>
+
+<div class="section" style="padding-top:32px;">
+  <h1 class="deal-title" style="margin-bottom:6px;">Browse the Deal Database</h1>
+  <p id="browse-subline" style="color:var(--ink-muted);font-size:14px;margin-bottom:24px;">All 1,300+ graded deals — sortable, filterable</p>
+
+  <div class="search-inner" style="padding:0;margin-bottom:20px;">
+    <div class="search-bar-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="search-input" class="search-bar" type="text" placeholder="Company, molecule, therapeutic area, indication...">
+    </div>
+    <button type="button" class="filter-toggle" aria-expanded="false" aria-controls="filters">
+      <span class="filter-toggle-label">Filters</span>
+      <span class="filter-toggle-count" data-active="0"></span>
+      <span class="filter-toggle-chevron" aria-hidden="true">▾</span>
+    </button>
+    <div class="deal-type-toggles" role="group" aria-label="Deal type filter">
+      <button type="button" class="dt-toggle active" data-dt="" data-type="">All</button>
+      <button type="button" class="dt-toggle" data-dt="Acquisition/Merger" data-type="ma">M&amp;A</button>
+      <button type="button" class="dt-toggle" data-dt="Licensing/Option" data-type="licensing">Licensing</button>
+      <button type="button" class="dt-toggle" data-dt="Co-Development" data-type="codev">Co-Dev</button>
+      <button type="button" class="dt-toggle" data-dt="Asset Purchase" data-type="asset">Asset</button>
+    </div>
+    <div id="filters" class="filters filter-row" data-collapsed="true">
+      <select name="deal_type" class="f-chip dt-select-hidden" aria-label="Deal Type" hidden>
+        <option value="">All Deal Types</option>
+        <option value="Acquisition/Merger">Acquisition / M&amp;A</option>
+        <option value="Licensing/Option">Licensing / Option</option>
+        <option value="Co-Development">Co-Dev / Collaboration</option>
+        <option value="Asset Purchase">Asset Purchase</option>
+      </select>
+      <select name="era" class="f-chip" aria-label="Era">
+        <option value="">All Eras</option>
+        <option value="2020s">2020s</option>
+        <option value="2010s">2010s</option>
+        <option value="2000s">2000s</option>
+        <option value="1990s">1990s</option>
+      </select>
+      <select name="therapeutic_area" class="f-chip" aria-label="Therapeutic Area">
+        <option value="">All Therapeutic Areas</option>
+        <option value="Oncology">Oncology</option>
+        <option value="Neurology">Neurology</option>
+        <option value="Immunology">Immunology</option>
+        <option value="Cardiovascular">Cardiovascular</option>
+        <option value="Metabolic">Metabolic</option>
+        <option value="Infectious Disease">Infectious Disease</option>
+        <option value="Respiratory">Respiratory</option>
+        <option value="Vaccines">Vaccines</option>
+        <option value="Rare Disease">Rare Disease</option>
+        <option value="Gene Therapy">Gene Therapy</option>
+        <option value="Dermatology">Dermatology</option>
+        <option value="Ophthalmology">Ophthalmology</option>
+        <option value="Hematology">Hematology</option>
+        <option value="Gastroenterology">Gastroenterology</option>
+        <option value="Nephrology">Nephrology</option>
+        <option value="Women's Health">Women's Health</option>
+      </select>
+      <select name="min_value" class="f-chip" aria-label="Min Value">
+        <option value="">Any Value</option>
+        <option value="500">$500M+</option>
+        <option value="1000">$1B+</option>
+        <option value="5000">$5B+</option>
+        <option value="10000">$10B+</option>
+        <option value="50000">$50B+</option>
+      </select>
+      <select name="sort" class="f-chip" aria-label="Sort">
+        <option value="date_desc">Newest First</option>
+        <option value="date_asc">Oldest First</option>
+        <option value="value_desc">Highest Value</option>
+        <option value="value_asc">Lowest Value</option>
+        <option value="critic_desc">Highest Critic Score</option>
+        <option value="outcome_desc">Highest Outcome Score</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="screener-root"></div>
+</div>
+
+<!-- ========== FUNNEL BAND (Move 1) ========== -->
+<section class="funnel-band">
+  <div class="funnel-inner">
+    <div class="funnel-grid">
+      <div class="funnel-col">
+        <h4>Listen</h4>
+        <a href="index.html">The daily podcast &rarr;</a>
+        <a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" rel="noopener">On Spotify &rarr;</a>
+      </div>
+      <div class="funnel-col">
+        <h4>Read</h4>
+        <a href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener">The newsletter &rarr;</a>
+        <a href="ai-research.html">AI-in-Pharma research &rarr;</a>
+        <a href="hype-gap.html">The Hype Gap index &rarr;</a>
+      </div>
+      <div class="funnel-col">
+        <h4>Go deeper</h4>
+        <a href="ai-research.html#compendium">The Compendium — $149 &rarr;</a>
+        <a href="about.html">Advisory &rarr;</a>
+        <a href="methodology.html">Methodology &amp; sources &rarr;</a>
+      </div>
+      <div class="funnel-col">
+        <h4>Deal Alerts — free</h4>
+        <p>New deals + their historical-outcome read, Monday mornings.</p>
+        <div class="funnel-sub">
+          <form class="sub-form" action="https://thepharmacloseout.substack.com/subscribe" method="get" target="_blank" rel="noopener">
+            <input class="sub-email" type="email" name="email" required placeholder="you@firm.com" aria-label="Email address">
+            <button class="sub-btn" type="submit">Subscribe</button>
+          </form>
+        </div>
+        <div class="funnel-note">Browsing is always free, no login. We never sell your email.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer-brand">The Pharma <em>Closeout</em></span>
+  <div class="footer-links">
+    <a href="index.html">Podcast</a>
+    <a href="ai-research.html">Research</a>
+    <a href="deals.html">Deal Intelligence</a>
+    <a href="hype-gap.html">Hype Gap</a>
+    <a href="methodology.html">Methodology</a>
+    <a href="about.html">About</a>
+    <span>&copy; 2026 The Pharma Closeout</span>
+  </div>
+</footer>
+<div class="coverage-footnote">Comprehensive daily coverage since April 2026; earlier eras curated to major transactions.</div>
+
+
+<!-- ========== JS WIRING ========== -->
+<script type="module">
+import { fetchDealCount, initScreener, initMultiSelect } from './assets/deals.js?v=20260711a'
+
+const searchInput = document.getElementById('search-input')
+const filtersEl = document.getElementById('filters')
+const screenerRoot = document.getElementById('screener-root')
+
+// Prefill from ?q= query string (allows nav search / other pages to land here)
+const params = new URLSearchParams(window.location.search)
+const qPrefill = params.get('q')
+if (qPrefill) searchInput.value = qPrefill
+
+// Database count for the sub-line (fallback string already in the markup)
+fetchDealCount().then(n => {
+  if (n != null) {
+    document.getElementById('browse-subline').textContent =
+      `All ${n.toLocaleString('en-US')} graded deals — sortable, filterable`
+  }
+}).catch(() => {})
+
+initScreener(screenerRoot, filtersEl, searchInput, { pageSize: 100 })
+
+// Multi-select compare: injects select controls on screener rows + selection tray
+initMultiSelect()
+
+// Wire nav search input: Enter re-runs the browse search
+const navInput = document.getElementById('nav-search-input')
+if (navInput) {
+  navInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && navInput.value.trim()) {
+      searchInput.value = navInput.value.trim()
+      searchInput.dispatchEvent(new Event('input'))
+      searchInput.focus()
+      searchInput.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  })
+}
+</script>
+
+</body>
+</html>

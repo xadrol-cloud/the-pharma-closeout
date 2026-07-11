@@ -7,22 +7,24 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260611a'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260711a'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
-  renderComparableAged, renderGapTeaser, hindsightCohorts,
-} from './scoring.js?v=20260709c'
+  renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
+  financialFieldsFor, dedupeByDealId, sortTimelineEvents, POPULAR_SEARCHES,
+} from './scoring.js?v=20260711a'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
   OUTCOME_UNLOCK_YEARS, outcomeUnlockYear, isOutcomeUnlocked, displayOutcomeScore,
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
-  renderComparableAged, renderGapTeaser, hindsightCohorts,
+  renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
+  dedupeByDealId,
 }
 
 const supabase = createClient(
@@ -142,7 +144,7 @@ function initials(name) {
 }
 
 /** HTML-escape a string */
-function esc(s) {
+export function esc(s) {
   if (!s) return ''
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')
 }
@@ -269,7 +271,7 @@ export function exportDealRow(deal) {
     'Buyer', 'Target', 'Announcement Date', 'Deal Type', 'Deal Value ($MM)',
     'Upfront ($MM)', 'Cash Portion ($MM)', 'Stock Portion ($MM)',
     'Close Date', 'Time To Close (days)', 'Therapeutic Areas',
-    'Announcement Sentiment', 'Outcome Score', 'Hype Gap', 'Primary Source URL',
+    SCORE_VOCAB.critic.name, SCORE_VOCAB.outcome.name, 'Hype Gap', 'Primary Source URL',
   ]
   const row = [
     deal.buyer_name, deal.target_name, deal.announcement_date,
@@ -372,16 +374,47 @@ export async function fetchTopOutcomeDeals(limit = 20) {
   return (data || []).filter(isOutcomeUnlocked).slice(0, limit)
 }
 
+/** Bulk-scan pager: a single limit(2000) scan of the heavy deals_enriched
+ *  view 500s with a Postgres statement timeout (57014). Offset paging
+ *  (.range) ALSO times out past the first page — the view recomputes every
+ *  skipped row — so this pages by KEYSET: order by deal_id, then
+ *  deal_id > last-seen each page (verified live: 500-row keyset pages
+ *  return in ~2s; offset=500 deterministically 57014s).
+ *  buildQuery must return a FRESH query each call and its select MUST
+ *  include deal_id. Pages concatenate until a short page arrives.
+ *  Defensive: if a chunk errors, return what we already have — degrade,
+ *  never render nothing. */
+const BULK_PAGE_SIZE = 500
+const BULK_MAX_PAGES = 20 // 10k-row ceiling — guard against runaway loops
+async function fetchAllPaged(buildQuery) {
+  const all = []
+  let lastId = null
+  for (let page = 0; page < BULK_MAX_PAGES; page++) {
+    let rows = null
+    try {
+      let q = buildQuery().order('deal_id', { ascending: true }).limit(BULK_PAGE_SIZE)
+      if (lastId != null) q = q.gt('deal_id', lastId)
+      const { data, error } = await q
+      if (!error) rows = data || []
+      else console.warn('fetchAllPaged: partial result', { page, accumulated: all.length, error })
+    } catch (error) { console.warn('fetchAllPaged: partial result', { page, accumulated: all.length, error }) }
+    if (rows == null) break
+    all.push(...rows)
+    if (rows.length < BULK_PAGE_SIZE) break
+    lastId = rows[rows.length - 1].deal_id
+  }
+  return all
+}
+
 /** Move 4: highest-|HypeGap| unlocked dual-scored deals, for the hero teaser.
  *  Two-step (light score scan, then display fields) — the enriched view is
  *  heavy and filtering computed critic_score 500s. */
 export async function fetchTopGapDeals(n = 1) {
-  const { data: light } = await supabase
+  const light = await fetchAllPaged(() => supabase
     .from('deals_enriched')
     .select('deal_id,critic_score,outcome_score,announcement_date,close_date')
     .neq('enrichment_status', 'archived')
-    .not('outcome_score', 'is', null)
-    .limit(2000)
+    .not('outcome_score', 'is', null))
   const scored = (light || [])
     .map(d => ({ d, gap: hypeGap(d) }))
     .filter(x => x.gap != null)
@@ -399,25 +432,23 @@ export async function fetchTopGapDeals(n = 1) {
 
 /** Move 6: acquirer track records — batting average over unlocked scored deals. */
 export async function fetchAcquirerRecords(minN = 3) {
-  const { data } = await supabase
+  const data = await fetchAllPaged(() => supabase
     .from('deals_enriched')
     .select('buyer_name,target_name,deal_id,outcome_score,announcement_date,close_date,deal_value_usd_mm')
     .neq('enrichment_status', 'archived')
-    .not('outcome_score', 'is', null)
-    .limit(2000)
+    .not('outcome_score', 'is', null))
   return acquirerBattingAverage(data || [], { minN })
 }
 
 /** Move 3: Biobucks Index — median/mean upfront-% across licensing deals with
  *  a disclosed upfront. The "what the headline hides" metric no rival publishes. */
 export async function fetchBiobucksIndex() {
-  const { data } = await supabase
+  const data = await fetchAllPaged(() => supabase
     .from('deals_enriched')
-    .select('upfront_usd_mm,deal_value_usd_mm')
+    .select('deal_id,upfront_usd_mm,deal_value_usd_mm') // deal_id: keyset cursor
     .eq('deal_type', 'Licensing/Option')
     .not('upfront_usd_mm', 'is', null)
-    .gt('deal_value_usd_mm', 0)
-    .limit(2000)
+    .gt('deal_value_usd_mm', 0))
   const pcts = (data || []).map(biobucksPct).filter(p => p != null).sort((a, b) => a - b)
   if (pcts.length < 10) return null
   const median = pcts[Math.floor(pcts.length / 2)]
@@ -442,12 +473,11 @@ export async function fetchLastUpdated() {
 
 /** Move 7: "Deals of the Year, in hindsight" — aged best/worst per year cohort. */
 export async function fetchHindsightCohorts(opts = {}) {
-  const { data } = await supabase
+  const data = await fetchAllPaged(() => supabase
     .from('deals_enriched')
     .select('deal_id,buyer_name,target_name,outcome_score,announcement_date,close_date,deal_value_usd_mm,deal_type')
     .neq('enrichment_status', 'archived')
-    .not('outcome_score', 'is', null)
-    .limit(2000)
+    .not('outcome_score', 'is', null))
   return hindsightCohorts(data || [], opts)
 }
 
@@ -479,13 +509,40 @@ export async function searchDeals(query, filters = {}, { limit = 25, offset = 0 
 function applySortClause(q, sortKey) {
   const primary = {
     value_desc:   ['deal_value_usd_mm', false],
+    value_asc:    ['deal_value_usd_mm', true],
     critic_desc:  ['critic_score',      false],
     outcome_desc: ['outcome_score',     false],
     date_desc:    ['announcement_date', false],
+    date_asc:     ['announcement_date', true],
   }[sortKey] || ['announcement_date', false]
   // deal_id as stable tie-breaker — ensures paginated offset returns disjoint rows
   return q.order(primary[0], { ascending: primary[1], nullsFirst: false })
           .order('deal_id',  { ascending: true })
+}
+
+/** Task 2.2: exact count of all graded deals (no filters), for the browse
+ *  page subhead and deals.html hero line. Excludes archived rows — same
+ *  `.neq('enrichment_status','archived')` gate as searchDeals, so the hero
+ *  count and the screener's "Showing X of Y" total always agree. CAUTION:
+ *  exact counts on deals_enriched can hit the statement timeout under load
+ *  and resolve to a null count — callers must fall back to a static string,
+ *  never render "null deals". */
+export async function fetchDealCount() {
+  const { count, error } = await supabase
+    .from('deals_enriched')
+    .select('deal_id', { count: 'exact', head: true })
+    .neq('enrichment_status', 'archived')
+  if (error || count == null) {
+    // Retry once with a no-op filter hint in case the plain count timed out
+    const retry = await supabase
+      .from('deals_enriched')
+      .select('deal_id', { count: 'exact', head: true })
+      .neq('enrichment_status', 'archived')
+      .not('deal_id', 'is', null)
+    if (retry.error || retry.count == null) return null
+    return retry.count
+  }
+  return count
 }
 
 /** Fetch disease indications for a deal (ordered by US patients desc) */
@@ -590,7 +647,9 @@ export async function fetchComparables(deal, limit = 5) {
   // Try comparable_deal_ids override first
   if (deal.comparable_deal_ids) {
     try {
-      const ids = JSON.parse(deal.comparable_deal_ids)
+      // Set-dedupe directly — these are primitive id strings, not row
+      // objects, so dedupeByDealId (which keys on row.deal_id) doesn't apply
+      const ids = [...new Set(JSON.parse(deal.comparable_deal_ids))]
       if (ids.length) {
         const { data } = await supabase
           .from('deals_enriched').select('*')
@@ -764,18 +823,24 @@ export function renderPoster(deal, size = 'carousel') {
         <span class="c-value">${esc(val)}</span>
       </div>
     </div>
-    <div class="c-scores">
-      ${criticScore != null
-        ? `<div class="c-sc ct"><span class="c-sc-label">CS</span>${criticScore}</div>`
-        : isScorePending(deal)
-          ? `<span class="c-sc pending">Score pending</span>`
-          : `<div class="c-sc lk"><span class="c-sc-label">CS</span>&mdash;</div>`}
-      ${outcomeScore != null
-        ? `<div class="c-sc os"><span class="c-sc-label">OS</span>${outcomeScore}</div>`
-        : `<div class="c-sc lk"><span class="c-sc-label">OS</span>&mdash;</div>`}
-    </div>
+    <div class="c-scores">${posterScoreChips(criticScore, outcomeScore, isScorePending(deal))}</div>
   </div>
 </a>`
+}
+
+/** Chip strip for carousel posters — one branch point via posterScoreState()
+ *  (scoring.js), so renderPoster and renderResultRow can't drift apart. */
+function posterScoreChips(criticScore, outcomeScore, isPending) {
+  const csChip = `<div class="c-sc ct" title="${esc(SCORE_VOCAB.critic.tooltip)}"><span class="c-sc-label">${esc(SCORE_VOCAB.critic.abbr)}</span>${criticScore}</div>`
+  const osChip = `<div class="c-sc os" title="${esc(SCORE_VOCAB.outcome.tooltip)}"><span class="c-sc-label">${esc(SCORE_VOCAB.outcome.abbr)}</span>${outcomeScore}</div>`
+  const osLock = `<div class="c-sc lk" title="${esc(SCORE_VOCAB.outcome.tooltip)}"><span class="c-sc-label">${esc(SCORE_VOCAB.outcome.abbr)}</span>&mdash;</div>`
+  switch (posterScoreState(criticScore, outcomeScore, isPending)) {
+    case 'both':          return csChip + osChip
+    case 'critic-locked': return csChip + osLock
+    case 'outcome-only':  return osChip
+    case 'pending':       return `<span class="c-sc pending">Score pending</span>`
+    default:              return `<span class="chip-unscored" title="Unscored — grades open 5 yrs post-close">UNSCORED</span>`
+  }
 }
 
 /** Mini poster for comparables sidebar (36x50) */
@@ -801,10 +866,10 @@ export function renderFeaturedInfo(deal) {
     <div class="feat-meta">${esc(deal.deal_type || 'Acquisition')} &middot; <strong>${esc(val)}</strong> &middot; ${esc(formatDate(deal.announcement_date))}</div>
   </div>
   <div class="feat-scores">
-    ${renderScorePill('critic', criticScore, 'Industry consensus')}
+    ${renderScorePill('critic', criticScore, 'at announcement')}
     ${renderScorePill('outcome', outcomeScore, 'Measured results')}
   </div>
-  ${(deal.editorial_lede || deal.editorial_summary) ? `<div class="feat-lede">${esc(deal.editorial_lede || deal.editorial_summary)}</div>` : ''}
+  ${deal.editorial_summary ? `<div class="feat-lede">${esc(deal.editorial_summary)}</div>` : ''}
   <div class="feat-tags">
     ${tas.slice(0, 3).map(t => `<span class="feat-tag ft-blue">${esc(t)}</span>`).join('')}
     ${deal.era_tag ? `<span class="feat-tag ft-amber">${esc(deal.era_tag)}</span>` : ''}
@@ -814,8 +879,8 @@ export function renderFeaturedInfo(deal) {
     <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
   <div class="score-explainer">
-    <div class="se-item"><div class="se-dot ct"></div> Announcement Sentiment — analyst & media reaction at announcement</div>
-    <div class="se-item"><div class="se-dot os"></div> Outcome Score — post-close performance vs. thesis</div>
+    <div class="se-item"><div class="se-dot ct"></div> ${esc(SCORE_VOCAB.critic.name)} — ${esc(SCORE_VOCAB.critic.tooltip)}</div>
+    <div class="se-item"><div class="se-dot os"></div> ${esc(SCORE_VOCAB.outcome.name)} — ${esc(SCORE_VOCAB.outcome.tooltip)}</div>
   </div>
 </div>`
 }
@@ -862,10 +927,25 @@ export function renderResultRow(deal) {
   const titleText = deal.deal_title
     || `${deal.buyer_name || ''} / ${deal.target_name || ''}`.trim()
 
+  // Task 3.2 (R13): logo-pair thumb replaces the old mini dark poster —
+  // the type-color background at ~90px read as an unreadable dark card
+  // with no legible identity. Reuse the same logoHtml()/bgClass() helpers
+  // renderPoster uses so a missing logo falls back to the type badge
+  // instead of a blank circle.
+  const buyerLogo = logoHtml(deal.buyer_logo_local_path, deal.buyer_domain, deal.buyer_name, 'rp')
+  const targetLogo = logoHtml(deal.target_logo_local_path, deal.target_domain, deal.target_name, 'rp')
+  const hasLogos = Boolean(logoUrl(deal.buyer_logo_local_path, deal.buyer_domain) || logoUrl(deal.target_logo_local_path, deal.target_domain))
+
   return `<a class="result-row" href="deal.html?id=${esc(deal.deal_id)}">
     <div class="result-poster ${bgClass(deal.deal_type)}">
-      <span class="rp-type">${esc(dsLabel)}</span>
       <span class="rp-year">${esc(yearOf(deal.announcement_date))}</span>
+      ${hasLogos
+        ? `<div class="rp-logos">
+            <div class="rp-logo">${buyerLogo}</div>
+            <span class="rp-x">&times;</span>
+            <div class="rp-logo">${targetLogo}</div>
+          </div>`
+        : `<span class="rp-type-badge">${esc(dsLabel)}</span>`}
     </div>
     <div class="result-body">
       <div class="result-title">${esc(titleText)}</div>
@@ -877,16 +957,32 @@ export function renderResultRow(deal) {
       </div>
       <div class="result-meta">${val ? `<strong>${esc(val)}</strong>` : ''}${date ? ` · ${esc(date)}` : ''}</div>
     </div>
-    <div class="result-scores">
-      ${cs != null ? `
-        <div class="score-block">
+    <div class="result-scores">${resultRowScoreChips(cs, os, csTier, csLabel, isScorePending(deal))}</div>
+  </a>`
+}
+
+/** Score column for result rows — branches on posterScoreState() (scoring.js),
+ *  same decision table as posterScoreChips so the two surfaces can't drift.
+ *  CS and OS each get the same score-block wrapper (chip + mono sublabel). */
+function resultRowScoreChips(cs, os, csTier, csLabel, isPending) {
+  const csBlock = `
+        <div class="score-block" title="${esc(SCORE_VOCAB.critic.tooltip)}">
           ${csLabel ? `<span class="tier-label" data-tier="${csTier}">${csLabel}</span>` : ''}
           <div class="score-chip" data-tier="${csTier}">${cs}</div>
+          <span class="row-score-label">${esc(SCORE_VOCAB.critic.name)}</span>
         </div>
-      ` : isScorePending(deal) ? `<span class="c-sc pending">Score pending</span>` : ''}
-      ${os != null ? `<div class="score-chip score-chip-mini result-os" data-tier="${tierForScore(os)}" title="Outcome Score">${os}</div>` : ''}
-    </div>
-  </a>`
+      `
+  const osBlock = `<div class="score-block" title="${esc(SCORE_VOCAB.outcome.tooltip)}">
+          <div class="score-chip score-chip-mini result-os" data-tier="${tierForScore(os)}">${os}</div>
+          <span class="row-score-label">${esc(SCORE_VOCAB.outcome.name)}</span>
+        </div>`
+  switch (posterScoreState(cs, os, isPending)) {
+    case 'both':          return csBlock + osBlock
+    case 'critic-locked': return csBlock
+    case 'outcome-only':  return osBlock
+    case 'pending':       return `<span class="c-sc pending">Score pending</span>`
+    default:              return `<span class="chip-unscored" title="Unscored — grades open 5 yrs post-close">UNSCORED</span>`
+  }
 }
 
 
@@ -937,17 +1033,53 @@ export function renderCascadeBar(deal) {
  */
 export function renderScorePill(type, score, subtitle = '') {
   const dimension = type === 'outcome' ? 'outcome' : 'critic'
-  const label = type === 'critic' ? 'Announcement Sentiment' : 'Outcome Score'
+  const vocab = SCORE_VOCAB[dimension]
+  const label = vocab.name
   const tier = tierForScore(score)
   const tierLabel = tierLabelFor(score, dimension)
   const display = score != null ? score : '—'
-  const meta = subtitle ? `${label} · ${esc(subtitle)}` : label
+  const meta = subtitle ? `${esc(label)} · ${esc(subtitle)}` : esc(label)
 
-  return `<div class="score-block" data-dim="${dimension}">
+  return `<div class="score-block" data-dim="${dimension}" title="${esc(vocab.tooltip)}">
   ${tierLabel ? `<span class="tier-label" data-tier="${tier}">${tierLabel}</span>` : ''}
   <div class="score-chip" data-tier="${tier}">${display}</div>
   <span class="score-meta">${meta}</span>
 </div>`
+}
+
+
+/* ---------- 3c.1 Sticky Verdict Bar (Task 2.1 — R6) ----------
+ * Compact chip variant of the hero score pills for the sticky bar that
+ * appears once the hero score row scrolls out of view. Reuses SCORE_VOCAB
+ * abbreviations and tier colors so the bar can't drift from the hero. */
+function verdictBarChip(dimension, score) {
+  const vocab = SCORE_VOCAB[dimension]
+  const tier = tierForScore(score)
+  const display = score != null ? score : '—'
+  return `<span class="vb-chip" data-tier="${tier}" title="${esc(vocab.tooltip)}">
+    <span class="vb-chip-abbr">${esc(vocab.abbr)}</span>${display}
+  </span>`
+}
+
+/**
+ * Sticky verdict-bar content: short title (buyer / target), compact CS/OS
+ * chips, and deal status. Returns an HTML string for #verdict-bar; the
+ * caller controls visibility via the IntersectionObserver.
+ */
+export function renderVerdictBar(deal) {
+  if (!deal) return ''
+  const criticScore = deal.critic_score != null ? Math.round(deal.critic_score) : null
+  const os = displayOutcomeScore(deal)
+  const outcomeScore = os != null ? Math.round(os) : null
+  const title = `${esc(deal.buyer_name || '')} / ${esc(deal.target_name || '')}`
+  return `<div class="vb-inner">
+    <span class="vb-title">${title}</span>
+    <span class="vb-chips">
+      ${verdictBarChip('critic', criticScore)}
+      ${verdictBarChip('outcome', outcomeScore)}
+    </span>
+    <span class="vb-status">${renderDealStatus(deal.deal_outcome_status, deal)}</span>
+  </div>`
 }
 
 
@@ -964,7 +1096,7 @@ export function renderHypeGap(deal) {
   const cs = Math.round(deal.critic_score), os = Math.round(deal.outcome_score)
   const dir = gap > 0 ? 'over' : (gap < 0 ? 'under' : 'even')
   const sign = gap > 0 ? '+' : ''
-  return `<div class="hype-gap" data-dir="${dir}" title="Announcement Sentiment minus Outcome Score">
+  return `<div class="hype-gap" data-dir="${dir}" title="${esc(SCORE_VOCAB.critic.name)} minus ${esc(SCORE_VOCAB.outcome.name)}">
     <div class="hg-headline">The Hype Gap</div>
     <div class="hg-line">The Street said <strong>${cs}</strong> &middot; history says <strong>${os}</strong></div>
     <div class="hg-verdict"><span class="hg-num">${sign}${gap}</span> ${esc(hypeGapLabel(gap))}</div>
@@ -1008,9 +1140,10 @@ export function renderProvenance(deal) {
  * Verdict events can link to score breakdown via outcome_id.
  */
 export function renderTimeline(events, outcomes, dealSummary) {
-  // Gate pipeline artifacts (Wikidata ingest strings) before rendering
-  const cleanEvents = (events || []).filter(e =>
-    !isPipelineArtifact(e.headline) && !isPipelineArtifact(e.summary))
+  // Gate pipeline artifacts (Wikidata ingest strings) before rendering, then
+  // enforce chronological order — fetch order is not guaranteed sorted.
+  const cleanEvents = sortTimelineEvents((events || []).filter(e =>
+    !isPipelineArtifact(e.headline) && !isPipelineArtifact(e.summary)))
   if (!cleanEvents.length) {
     // One-line note — the hero summary already covers the deal overview,
     // so don't repeat it here.
@@ -1226,21 +1359,51 @@ function renderPipelineTracker(rows) {
   </div>`
 }
 
+/**
+ * Single source of truth for milestone-segment colors: the same computed
+ * color is applied inline to both the bar segment and its legend swatch,
+ * so they stay keyed for ANY segment count. Last segment is always amber
+ * (preserves the pre-existing :last-child convention); earlier segments
+ * walk a green-to-gold tint progression.
+ */
+const MST_SEG_TINTS = [
+  'var(--green)',
+  'rgba(26,138,92,0.75)',
+  'rgba(26,138,92,0.5)',
+  'rgba(196,147,50,0.5)',
+  'rgba(196,147,50,0.35)'
+]
+const MST_SEG_LAST = 'rgba(245,158,11,0.3)'
+
+function mstSegColor(i, count) {
+  if (i === count - 1) return MST_SEG_LAST
+  return MST_SEG_TINTS[i % MST_SEG_TINTS.length]
+}
+
 function renderMilestoneBar(rows) {
   const total = rows.reduce((sum, r) => sum + (r.value_usd_mm || 0), 0)
 
-  const segments = rows.map(r => {
-    const pct = total > 0 ? ((r.value_usd_mm || 0) / total * 100).toFixed(1) : 0
-    return `<div class="mst-seg" style="width:${pct}%">
+  const pcts = rows.map(r => total > 0 ? ((r.value_usd_mm || 0) / total * 100) : 0)
+  const THIN_PCT = 18
+  const hasThinSegment = pcts.some(pct => pct < THIN_PCT)
+
+  const segments = rows.map((r, i) => {
+    const pct = pcts[i].toFixed(1)
+    const inline = hasThinSegment && pcts[i] < THIN_PCT ? '' : `
       <div class="mst-label">${esc(r.period_label || '')}</div>
-      <div class="mst-val">${esc(arcCellLabel(r))}</div>
-    </div>`
+      <div class="mst-val">${esc(arcCellLabel(r))}</div>`
+    return `<div class="mst-seg" style="width:${pct}%;background:${mstSegColor(i, rows.length)}">${inline}</div>`
   })
+
+  const legend = hasThinSegment
+    ? `<div class="mst-legend">${rows.map((r, i) => `<span class="mst-legend-item"><i class="mst-swatch" style="background:${mstSegColor(i, rows.length)}"></i>${esc(r.period_label || '')}: ${esc(arcCellLabel(r))}</span>`).join('')}</div>`
+    : ''
 
   return `<div class="rev-card">
     <div class="rev-headline">Deal Value Breakdown</div>
     <div class="rev-subtitle">Milestone payments and commitments</div>
     <div class="mst-bar">${segments.join('')}</div>
+    ${legend}
     <div class="rev-stats">
       <div class="rev-stat"><div class="rev-stat-val">${formatValue(total)}</div><div class="rev-stat-label">Total Value</div></div>
       <div class="rev-stat"><div class="rev-stat-val">${rows.length}</div><div class="rev-stat-label">Components</div></div>
@@ -1417,41 +1580,26 @@ export function renderDiseaseContext(indications, assets) {
 
 /* ---------- 3g. Financials Grid ---------- */
 
+/** UX overhaul R3: field applicability lives in scoring.js (financialFieldsFor)
+ *  so licensing deals don't render an em-dash wall of M&A-only concepts
+ *  (EV/EBITDA, Equity Sought, Structure, Target LTM Revenue). Renders '' when
+ *  fewer than 2 fields are known — caller must keep the section hidden. */
 export function renderFinancials(deal) {
-  const evRev = deal.deal_ev_revenue_x != null ? `${deal.deal_ev_revenue_x.toFixed(1)}x` : '—'
-  const evEbitda = deal.deal_ev_ebitda_x != null ? `${deal.deal_ev_ebitda_x.toFixed(1)}x` : '—'
-  // Suppress derived TTC when non-positive or computed off an implausible
-  // close date (Wikidata ingest artifacts produce "0 days" / "-2 days")
-  const ttcValid = deal.time_to_close_days != null && deal.time_to_close_days > 0 &&
-    (!deal.close_date || isPlausibleDate(deal.close_date))
-  const ttc = ttcValid ? `${deal.time_to_close_days} days` : '—'
-  const equity = deal.equity_sought_pct != null ? `${deal.equity_sought_pct}%` : '—'
-  const cashPct = deal.cash_portion_usd_mm != null ? formatValue(deal.cash_portion_usd_mm) : null
-  const stockPct = deal.stock_portion_usd_mm != null ? formatValue(deal.stock_portion_usd_mm) : null
-  let structure = deal.closing_structure || '—'
-  if (cashPct && stockPct) structure = `${cashPct} cash + ${stockPct} stock`
-  else if (cashPct) structure = `${cashPct} cash`
+  const { fields, pending } = financialFieldsFor(deal, { withMeta: true })
+  if (fields.length < 2) return ''
 
-  const metrics = [
-    { label: 'Deal Value', value: formatValue(deal.deal_value_usd_mm) },
-    { label: 'Financing', value: deal.financing_type || '—' },
-    { label: 'Close Date', value: deal.close_date ? formatDate(deal.close_date) : '—' },
-    { label: 'EV / Revenue', value: evRev },
-    { label: 'EV / EBITDA', value: evEbitda },
-    { label: 'Time to Close', value: ttc },
-    { label: 'Target LTM Revenue', value: deal.target_revenue_ltm_usd_mm != null ? formatValue(deal.target_revenue_ltm_usd_mm) : '—' },
-    { label: 'Structure', value: structure },
-    { label: 'Equity Sought', value: equity },
-  ]
-
-  const cells = metrics.map(m =>
+  const cells = fields.map(f =>
     `<div class="fin-cell">
-      <div class="fin-label">${esc(m.label)}</div>
-      <div class="fin-val">${esc(m.value)}</div>
+      <div class="fin-label">${esc(f.label)}</div>
+      <div class="fin-val">${esc(f.value)}</div>
     </div>`
   )
 
-  return `<div class="fin-grid">${cells.join('')}</div>`
+  const pendingNote = pending
+    ? `<div class="fin-pending">Pending close — financial detail populates at close.</div>`
+    : ''
+
+  return `${pendingNote}<div class="fin-grid">${cells.join('')}</div>`
 }
 
 
@@ -1483,7 +1631,7 @@ export function renderCriticReviews(sources) {
     // WS-H: per-outlet critic score chip (mini variant of WS-A chip)
     const cs = r.critic_score != null ? Math.round(r.critic_score) : null
     const chipHtml = cs != null
-      ? `<div class="score-chip score-chip-mini review-chip" data-tier="${tierForScore(cs)}">${cs}</div>`
+      ? `<div class="score-chip score-chip-mini review-chip" data-tier="${tierForScore(cs)}" title="${esc(SCORE_VOCAB.critic.tooltip)}">${cs}</div>`
       : ''
     return `<a class="review ${cls}" href="${esc(r.url || '#')}" target="_blank">
       ${chipHtml}
@@ -1497,14 +1645,19 @@ export function renderCriticReviews(sources) {
     </a>`
   })
 
-  // Expand at whole-review boundaries: first 3 visible, rest behind toggle
-  const CAP = 3
+  // Task 3.4 (R15): mobile detail diet — first 2 reviews render expanded,
+  // the >2-review tail sits behind a native <details class="m-acc"> (same
+  // collapse-on-mobile/open-on-desktop pattern as #score-section) instead
+  // of the old always-in-DOM acc-hidden-wrap + JS-toggle button.
+  const CAP = 2
   const visible = cards.slice(0, CAP)
   const hidden = cards.slice(CAP)
   let body = visible.join('')
   if (hidden.length) {
-    body += `<div class="acc-hidden-wrap" data-collapsed="true">${hidden.map(c => `<div class="acc-hidden collapsed">${c}</div>`).join('')}</div>` +
-      `<button class="acc-toggle" type="button" onclick="const w=this.previousElementSibling;w.setAttribute('data-collapsed','false');this.remove()">Show all ${reviews.length} reviews &rarr;</button>`
+    body += `<details class="m-acc reviews-tail">
+      <summary class="sb-title">Show ${hidden.length} more review${hidden.length === 1 ? '' : 's'} &rarr;</summary>
+      <div class="reviews-tail-body">${hidden.join('')}</div>
+    </details>`
   }
 
   return `<div class="card-head">
@@ -1653,9 +1806,10 @@ export function renderScoreBreakdown(outcomes, deal) {
 
 /** Shared mini-list renderer for sidebar cards that show 2-4 linked deals. */
 function renderLineageList(deals, emptyMsg) {
-  if (!deals || !deals.length) return `<div class="lin-empty">${emptyMsg}</div>`
-  const preview = deals.slice(0, 4)
-  const overflow = deals.slice(4)
+  const deduped = dedupeByDealId(deals)
+  if (!deduped.length) return `<div class="lin-empty">${emptyMsg}</div>`
+  const preview = deduped.slice(0, 4)
+  const overflow = deduped.slice(4)
   const row = d => {
     const val = formatValue(d.deal_value_usd_mm)
     const y = yearOf(d.announcement_date) // blank for implausible years (ingest artifacts)
@@ -1673,7 +1827,7 @@ function renderLineageList(deals, emptyMsg) {
   const overflowHtml = overflow.map(row).join('')
   return `${previewHtml}
     <details class="lin-more">
-      <summary>See full chain (${deals.length})</summary>
+      <summary>See full chain (${deduped.length})</summary>
       ${overflowHtml}
     </details>`
 }
@@ -1723,9 +1877,10 @@ export function renderCompanionDeals(deals, currentDeal) {
 /* ---------- 3k. Comparables Sidebar ---------- */
 
 export function renderComparables(comparables, currentDealId) {
-  if (!comparables || !comparables.length) return ''
+  const deduped = dedupeByDealId(comparables)
+  if (!deduped.length) return ''
 
-  const items = comparables.map(deal => {
+  const items = deduped.map(deal => {
     const bg = bgClass(deal.deal_type)
     const criticScore = deal.critic_score != null ? Math.round(deal.critic_score) : null
     const _os = displayOutcomeScore(deal)
@@ -1742,11 +1897,11 @@ export function renderComparables(comparables, currentDealId) {
         </div>
         <div class="comp-scores">
           ${criticScore != null
-            ? `<div class="comp-sc ct"><span class="cs-label">CS</span>${criticScore}</div>`
-            : `<div class="comp-sc lk"><span class="cs-label">CS</span>—</div>`}
+            ? `<div class="comp-sc ct" title="${esc(SCORE_VOCAB.critic.tooltip)}"><span class="cs-label">${esc(SCORE_VOCAB.critic.abbr)}</span>${criticScore}</div>`
+            : `<div class="comp-sc lk" title="${esc(SCORE_VOCAB.critic.tooltip)}"><span class="cs-label">${esc(SCORE_VOCAB.critic.abbr)}</span>—</div>`}
           ${outcomeScore != null
-            ? `<div class="comp-sc os"><span class="cs-label">OS</span>${outcomeScore}</div>`
-            : `<div class="comp-sc lk"><span class="cs-label">OS</span>—</div>`}
+            ? `<div class="comp-sc os" title="${esc(SCORE_VOCAB.outcome.tooltip)}"><span class="cs-label">${esc(SCORE_VOCAB.outcome.abbr)}</span>${outcomeScore}</div>`
+            : `<div class="comp-sc lk" title="${esc(SCORE_VOCAB.outcome.tooltip)}"><span class="cs-label">${esc(SCORE_VOCAB.outcome.abbr)}</span>—</div>`}
         </div>
       </a>
       ${cmpHref ? `<a class="comp-compare-btn" href="${cmpHref}">Compare side-by-side &rarr;</a>` : ''}
@@ -1762,84 +1917,227 @@ export function renderComparables(comparables, currentDealId) {
    ========================================================================== */
 
 const _selectedDealIds = new Set()
+// dealId -> short display name, captured at injection time from the DOM
+// so the tray can render chips without a second data fetch.
+const _selectedDealNames = new Map()
 
-/** Initialize multi-select: injects checkbox overlays on all posters + floating Compare button. */
+/** Initialize multi-select: injects select affordances on posters/rows +
+ *  a bottom selection tray (Task 2.5 / R10). Upgrades the original bare
+ *  compare-fab into a tray with per-chip remove + Clear all, but keeps the
+ *  same _selectedDealIds Set, 5-cap, and .poster-select/data-deal-id
+ *  contract so the delegated handler + MutationObserver are unchanged. */
 export function initMultiSelect() {
-  // Inject a single floating compare button if not already present
-  if (!document.getElementById('compare-fab')) {
-    const fab = document.createElement('button')
-    fab.id = 'compare-fab'
-    fab.className = 'compare-fab'
-    fab.style.display = 'none'
-    fab.innerHTML = '<span class="cf-count">0</span><span class="cf-label">Compare</span><span class="cf-arrow">&rarr;</span>'
-    fab.addEventListener('click', () => {
+  // Inject the selection tray once (replaces the old bare FAB markup).
+  if (!document.getElementById('compare-tray')) {
+    const tray = document.createElement('div')
+    tray.id = 'compare-tray'
+    tray.className = 'compare-tray'
+    tray.hidden = true
+    tray.innerHTML = `
+      <div class="ct-inner">
+        <div class="ct-chips" id="ct-chips"></div>
+        <div class="ct-actions">
+          <span class="ct-count"><span class="ct-count-n">0</span> selected</span>
+          <button type="button" class="ct-clear">Clear all</button>
+          <button type="button" class="ct-compare" disabled>Compare (<span class="ct-compare-n">0</span>) &rarr;</button>
+        </div>
+      </div>`
+    tray.querySelector('.ct-compare').addEventListener('click', () => {
       if (_selectedDealIds.size >= 2) {
         const ids = Array.from(_selectedDealIds).slice(0, 5).join(',')
         window.location.href = `compare.html?ids=${ids}`
       }
     })
-    document.body.appendChild(fab)
+    tray.querySelector('.ct-clear').addEventListener('click', () => clearSelection())
+    document.body.appendChild(tray)
   }
 
-  // Delegated click handler for poster select checkboxes
+  // Delegated click handler for poster/row select controls
   document.addEventListener('click', (e) => {
     const cb = e.target.closest('.poster-select')
     if (!cb) return
     e.preventDefault()
     e.stopPropagation()
-    const dealId = cb.dataset.dealId
-    if (!dealId) return
-    const checked = cb.classList.toggle('checked')
-    if (checked) {
-      if (_selectedDealIds.size >= 5) {
-        cb.classList.remove('checked')
-        updateFab()
-        return
-      }
-      _selectedDealIds.add(dealId)
-    } else {
-      _selectedDealIds.delete(dealId)
-    }
-    updateFab()
-  }, true) // capture phase so it fires before anchor navigation
+    toggleSelection(cb)
+  }, true) // capture phase so it fires before anchor/row navigation
 
-  // Run once to inject checkboxes on already-rendered posters
+  // Keyboard activation (Enter/Space) for the pill control
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return
+    const cb = e.target.closest('.poster-select')
+    if (!cb) return
+    e.preventDefault()
+    e.stopPropagation()
+    toggleSelection(cb)
+  }, true)
+
+  // Delegated click handler for per-chip remove (×) in the tray
+  document.getElementById('compare-tray')?.addEventListener('click', (e) => {
+    const rm = e.target.closest('.ct-chip-remove')
+    if (!rm) return
+    const dealId = rm.closest('.ct-chip')?.dataset.dealId
+    if (dealId) deselectDeal(dealId)
+  })
+
+  // Run once to inject controls on already-rendered posters/rows
   injectSelectorOnPosters()
 
-  // Re-scan when the DOM changes (carousels, search results re-render)
+  // Re-scan when the DOM changes (carousels, search results, screener re-render)
   const mo = new MutationObserver(() => injectSelectorOnPosters())
   mo.observe(document.body, { childList: true, subtree: true })
 }
 
-function injectSelectorOnPosters() {
-  document.querySelectorAll('a[href^="deal.html?id="]').forEach(anchor => {
-    // Match feat-poster or c-poster (not mini / featured-info CTAs)
-    const poster = anchor.querySelector('.feat-poster, .c-poster')
-    if (!poster) return
-    if (poster.querySelector('.poster-select')) return // already injected
-    const dealId = new URL(anchor.href).searchParams.get('id')
-    if (!dealId) return
-    const cb = document.createElement('div')
-    cb.className = 'poster-select' + (_selectedDealIds.has(dealId) ? ' checked' : '')
-    cb.dataset.dealId = dealId
+function toggleSelection(cb) {
+  const dealId = cb.dataset.dealId
+  if (!dealId) return
+  const checked = cb.classList.toggle('checked')
+  if (checked) {
+    if (_selectedDealIds.size >= 5) {
+      cb.classList.remove('checked')
+      flashMaxFeedback(cb)
+      updateTray()
+      return
+    }
+    _selectedDealIds.add(dealId)
+    if (cb.dataset.dealName) _selectedDealNames.set(dealId, cb.dataset.dealName)
+    cb.setAttribute('aria-pressed', 'true')
+    cb.title = 'Selected for comparison'
+  } else {
+    _selectedDealIds.delete(dealId)
+    cb.setAttribute('aria-pressed', 'false')
     cb.title = 'Select for comparison'
-    cb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>'
-    poster.appendChild(cb)
+  }
+  syncPillState(dealId, checked)
+  updateTray()
+}
+
+/** Brief shake/flash to signal the 5-selection cap was hit — existing
+ *  "rejects 6th" feedback, preserved. */
+function flashMaxFeedback(cb) {
+  cb.classList.add('ps-max')
+  setTimeout(() => cb.classList.remove('ps-max'), 400)
+}
+
+function deselectDeal(dealId) {
+  _selectedDealIds.delete(dealId)
+  syncPillState(dealId, false)
+  updateTray()
+}
+
+function clearSelection() {
+  const ids = Array.from(_selectedDealIds)
+  _selectedDealIds.clear()
+  ids.forEach(id => syncPillState(id, false))
+  updateTray()
+}
+
+/** Reflect selected/unselected state onto every .poster-select control for
+ *  a given dealId — a deal can appear on multiple rendered surfaces at once
+ *  (e.g. a rail poster + a search-result row for the same deal). */
+function syncPillState(dealId, checked) {
+  document.querySelectorAll(`.poster-select[data-deal-id="${cssEscape(dealId)}"]`).forEach(cb => {
+    cb.classList.toggle('checked', checked)
+    cb.setAttribute('aria-pressed', checked ? 'true' : 'false')
+    cb.title = checked ? 'Selected for comparison' : 'Select for comparison'
+    const label = cb.querySelector('.ps-label')
+    if (label) label.textContent = checked ? 'Selected' : 'Compare'
   })
 }
 
-function updateFab() {
-  const fab = document.getElementById('compare-fab')
-  if (!fab) return
-  const n = _selectedDealIds.size
-  fab.querySelector('.cf-count').textContent = n
-  if (n >= 2) {
-    fab.style.display = ''
-    fab.classList.add('active')
-  } else {
-    fab.style.display = 'none'
-    fab.classList.remove('active')
+/** Minimal CSS.escape fallback for data-deal-id selector interpolation. */
+function cssEscape(s) {
+  return window.CSS && CSS.escape ? CSS.escape(s) : String(s).replace(/["\\]/g, '\\$&')
+}
+
+/** Best-effort short display name for a deal, read from already-rendered
+ *  poster/row markup so the tray doesn't need a second data fetch. */
+function deriveDealName(container) {
+  const buyer = container.querySelector('.fp-buyer, .c-buyer, .sc-acquirer')?.textContent?.trim()
+  const target = container.querySelector('.fp-target, .c-target, .sc-target')?.textContent?.trim()
+  if (buyer && target) return `${buyer} / ${target}`
+  const pair = container.querySelector('.result-pair')?.textContent?.trim()
+  if (pair) return pair.replace(/\s*×\s*/, ' / ')
+  const title = container.querySelector('.result-title')?.textContent?.trim()
+  if (title) return title
+  return buyer || target || ''
+}
+
+function injectSelectorOnPosters() {
+  // Rail / featured posters + row-list search results (anchor wraps the poster/row)
+  document.querySelectorAll('a[href^="deal.html?id="]').forEach(anchor => {
+    const container = anchor.querySelector('.feat-poster, .c-poster') || (anchor.matches('.result-row') ? anchor : null)
+    if (!container) return
+    if (container.querySelector('.poster-select')) return // already injected
+    const dealId = new URL(anchor.href).searchParams.get('id')
+    if (!dealId) return
+    const dealName = deriveDealName(container)
+    container.appendChild(buildSelectPill(dealId, dealName))
+  })
+
+  // Screener table rows (browse.html) — leading checkbox cell
+  document.querySelectorAll('tr.screener-row').forEach(row => {
+    if (row.querySelector('.poster-select')) return // already injected
+    const dealId = row.dataset.dealId
+    if (!dealId) return
+    if (!row.querySelector('td.sc-select')) {
+      const td = document.createElement('td')
+      td.className = 'sc-select'
+      const dealName = deriveDealName(row)
+      td.appendChild(buildSelectPill(dealId, dealName, true))
+      row.insertBefore(td, row.firstChild)
+    }
+  })
+  // Add the matching header cell once
+  const headRow = document.querySelector('table.screener thead tr')
+  if (headRow && !headRow.querySelector('th.sc-select-head')) {
+    const th = document.createElement('th')
+    th.className = 'sc-select-head'
+    th.setAttribute('aria-label', 'Select for comparison')
+    headRow.insertBefore(th, headRow.firstChild)
   }
+}
+
+/** Build a .poster-select pill/checkbox control. `inTable` renders a
+ *  compact checkbox variant for screener rows; posters/rows get the
+ *  labeled "+ Compare" / "✓ Selected" pill. */
+function buildSelectPill(dealId, dealName, inTable = false) {
+  const checked = _selectedDealIds.has(dealId)
+  const cb = document.createElement('div')
+  cb.className = 'poster-select' + (checked ? ' checked' : '') + (inTable ? ' ps-table' : '')
+  cb.dataset.dealId = dealId
+  if (dealName) cb.dataset.dealName = dealName
+  cb.title = checked ? 'Selected for comparison' : 'Select for comparison'
+  cb.setAttribute('role', 'button')
+  cb.setAttribute('tabindex', '0')
+  cb.setAttribute('aria-pressed', checked ? 'true' : 'false')
+  cb.setAttribute('aria-label', dealName ? `Select ${dealName} for comparison` : 'Select for comparison')
+  if (inTable) {
+    cb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>'
+  } else {
+    cb.innerHTML = `
+      <span class="ps-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+      <span class="ps-label">${checked ? 'Selected' : 'Compare'}</span>`
+  }
+  return cb
+}
+
+function updateTray() {
+  const tray = document.getElementById('compare-tray')
+  if (!tray) return
+  const n = _selectedDealIds.size
+  tray.querySelector('.ct-count-n').textContent = n
+  tray.querySelector('.ct-compare-n').textContent = Math.min(n, 5)
+  const compareBtn = tray.querySelector('.ct-compare')
+  compareBtn.disabled = n < 2
+  const chipsEl = tray.querySelector('#ct-chips')
+  chipsEl.innerHTML = Array.from(_selectedDealIds).map(id => {
+    const name = _selectedDealNames.get(id) || id
+    return `<span class="ct-chip" data-deal-id="${esc(id)}">
+      <span class="ct-chip-name">${esc(name)}</span>
+      <button type="button" class="ct-chip-remove" aria-label="Remove ${esc(name)} from comparison">&times;</button>
+    </span>`
+  }).join('')
+  tray.hidden = n < 1
 }
 
 
@@ -1894,11 +2192,11 @@ export function renderComparison(deals) {
     row('Lead Molecules', deals.map(moleculeList)),
 
     // Score rows with color tier
-    row('Critic Score', deals.map(d => {
+    row(SCORE_VOCAB.critic.name, deals.map(d => {
       const s = score(d.critic_score); const t = scoreTierFor(d.critic_score)
       return `<span class="cmp-score ${t}">${s}</span>`
     }), { strong: true }),
-    row('Outcome Score', deals.map(d => {
+    row(SCORE_VOCAB.outcome.name, deals.map(d => {
       const gos = displayOutcomeScore(d)
       const s = score(gos); const t = scoreTierFor(gos)
       return `<span class="cmp-score ${t}">${s}</span>`
@@ -2064,6 +2362,10 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
   let debounceTimer = null
   let loadedCount = 0
   let totalCount = 0
+  // Request-token race guard: overlapping searchDeals responses would land
+  // last-write-wins (e.g. a stale append after a filter change corrupting
+  // the list). Only the response matching the latest issued token renders.
+  let requestToken = 0
 
   function readFilters() {
     const f = {}
@@ -2073,7 +2375,47 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
     return f
   }
 
+  /** Task 2.4 (R9) — reset the search input, every filter select, and the
+   *  deal-type pills back to "All", then re-run so the recovery UI's
+   *  "Clear filters" action always lands on the full unfiltered result set. */
+  function clearFiltersAndSearch() {
+    inputEl.value = ''
+    filtersEl?.querySelectorAll('select').forEach(sel => { sel.selectedIndex = 0 })
+    const toggles = filtersEl?.querySelectorAll('.dt-toggle')
+    const hiddenSelect = filtersEl?.querySelector('.dt-select-hidden')
+    if (toggles?.length) {
+      toggles.forEach(b => b.classList.remove('active'))
+      const allBtn = filtersEl.querySelector('.dt-toggle[data-dt=""]')
+      allBtn?.classList.add('active')
+    }
+    if (hiddenSelect) hiddenSelect.value = ''
+    runSearch({ append: false })
+  }
+
+  /** Task 2.4 (R9) — empty-search recovery block: explains the miss,
+   *  offers a one-click reset, and surfaces curated popular searches so
+   *  a dead-end search never strands the user. */
+  function renderEmptyState(term) {
+    const chips = POPULAR_SEARCHES.map(p =>
+      `<button type="button" class="se-chip" data-query="${esc(p.query)}">${esc(p.label)}</button>`
+    ).join('')
+    resultsEl.innerHTML = `
+      <div class="search-empty">
+        <p class="se-message">No deals match "${esc(term)}" — try a company, molecule, or therapeutic area.</p>
+        <button type="button" class="se-clear">Clear filters</button>
+        <div class="se-chips">${chips}</div>
+      </div>`
+    resultsEl.querySelector('.se-clear')?.addEventListener('click', clearFiltersAndSearch)
+    resultsEl.querySelectorAll('.se-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        inputEl.value = btn.dataset.query
+        runSearch({ append: false })
+      })
+    })
+  }
+
   async function runSearch({ append = false } = {}) {
+    const token = ++requestToken
     const query = inputEl.value.trim()
     const filters = readFilters()
     const hasNonSortFilter = Object.keys(filters).filter(k => k !== 'sort').length > 0
@@ -2085,11 +2427,13 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
     if (!append) resultsEl.innerHTML = '<p class="search-status">Searching...</p>'
     try {
       const { deals, total } = await searchDeals(query, filters, { limit: 25, offset })
+      if (token !== requestToken) return // superseded by a newer request
       if (!append) loadedCount = 0
       loadedCount += deals.length
       totalCount = total
       renderResults(deals, append)
     } catch (e) {
+      if (token !== requestToken) return
       resultsEl.innerHTML = '<p class="search-status error">Search is temporarily unavailable. Try again.</p>'
       console.error('searchDeals error', e)
     }
@@ -2102,7 +2446,7 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
     if (append) {
       resultsEl.querySelector('.row-list')?.insertAdjacentHTML('beforeend', rowsHtml)
     } else if (!deals.length) {
-      resultsEl.innerHTML = '<p class="search-status">No deals found.</p>'
+      renderEmptyState(inputEl.value.trim())
       return
     } else {
       resultsEl.innerHTML = `
@@ -2132,6 +2476,275 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
   filtersEl?.addEventListener('change', () => runSearch({ append: false }))
 }
 
+/* ---------- Task 2.2 (R7+R17) — Browse-all screener table ---------- */
+
+/** Header column -> sort key toggle map. Clicking a header toggles between
+ *  the two states listed (or just re-applies the single state for CS/OS,
+ *  which have no asc variant defined by the spec). */
+const SCREENER_SORT_TOGGLE = {
+  announced: ['date_desc', 'date_asc'],
+  value:     ['value_desc', 'value_asc'],
+  cs:        ['critic_desc', 'critic_desc'],
+  os:        ['outcome_desc', 'outcome_desc'],
+}
+
+const SCREENER_COLUMNS = [
+  { key: 'announced', label: 'Announced' },
+  { key: 'acquirer',  label: 'Acquirer' },
+  { key: 'target',    label: 'Target' },
+  { key: 'type',      label: 'Type' },
+  { key: 'ta',        label: 'TA' },
+  { key: 'value',     label: 'Value' },
+  { key: 'cs',        label: 'CS' },
+  { key: 'os',        label: 'OS' },
+]
+
+/** Score chip for a single dimension cell in the screener table — same
+ *  chip component/classes as resultRowScoreChips (SCORE_VOCAB abbrs, tier
+ *  colors, UNSCORED via posterScoreState) so the visual language matches
+ *  the row-list search results. */
+function screenerScoreCell(deal) {
+  const cs = deal.critic_score != null ? Math.round(deal.critic_score) : null
+  const _os = displayOutcomeScore(deal)
+  const os = _os != null ? Math.round(_os) : null
+  const csTier = tierForScore(cs)
+  const osTier = tierForScore(os)
+  const state = posterScoreState(cs, os, isScorePending(deal))
+  // 'pending' = CRITIC scoring queued (isScorePending) — it belongs in the
+  // CS cell; a missing OS is locked/ungraded, never "pending"
+  const csCell = cs != null
+    ? `<div class="score-chip score-chip-mini" data-tier="${csTier}" title="${esc(SCORE_VOCAB.critic.tooltip)}">${cs}</div>`
+    : (state === 'pending'
+        ? `<span class="c-sc pending" title="${esc(SCORE_VOCAB.critic.tooltip)}">Pending</span>`
+        : '<span class="screener-dash">—</span>')
+  const osCell = os != null
+    ? `<div class="score-chip score-chip-mini" data-tier="${osTier}" title="${esc(SCORE_VOCAB.outcome.tooltip)}">${os}</div>`
+    : '<span class="screener-dash">—</span>'
+  return { csCell, osCell }
+}
+
+function screenerRowHtml(deal) {
+  const ds = dealTypeSlug(deal.deal_type)
+  const dsLabel = shortType(deal.deal_type)
+  const ta = parseTAs(deal.therapeutic_areas)[0] || ''
+  const val = formatValue(deal.deal_value_usd_mm)
+  const date = formatDate(deal.announcement_date)
+  const { csCell, osCell } = screenerScoreCell(deal)
+  return `<tr class="screener-row" data-deal-id="${esc(deal.deal_id)}" tabindex="0">
+    <td class="sc-date">${date ? esc(date) : '—'}</td>
+    <td class="sc-acquirer">${esc(deal.buyer_name || '—')}</td>
+    <td class="sc-target">${esc(deal.target_name || '—')}</td>
+    <td class="sc-type"><span class="deal-type-pill" data-type="${ds}">${esc(dsLabel)}</span></td>
+    <td class="sc-ta">${ta ? esc(ta) : '—'}</td>
+    <td class="sc-value">${val ? esc(val) : '—'}</td>
+    <td class="sc-cs">${csCell}</td>
+    <td class="sc-os">${osCell}</td>
+  </tr>`
+}
+
+/** Task 2.2 (R7+R17): browse-all screener — sortable table backed by
+ *  searchDeals (filtered/ordered query, not a bulk view scan). Reads
+ *  ?sort= and ?q= for initial state; header clicks toggle sort and
+ *  re-query; Load more appends via offset pagination. Reuses the
+ *  filter-change -> re-query wiring pattern from initSearch. */
+export function initScreener(rootEl, filtersEl, inputEl, opts = {}) {
+  if (!rootEl) return
+  const pageSize = opts.pageSize || 100
+  const params = new URLSearchParams(window.location.search)
+  let currentSort = params.get('sort') || 'date_desc'
+  let loadedCount = 0
+  let totalCount = 0
+  // Request-token race guard — see runQuery
+  let requestToken = 0
+
+  // Seed the visible sort <select> (if present in filtersEl) so filter
+  // read-back stays consistent with the header-driven sort state.
+  function syncSortSelect() {
+    const sel = filtersEl?.querySelector('select[name="sort"]')
+    if (sel && sel.value !== currentSort) sel.value = currentSort
+  }
+
+  function readFilters() {
+    const f = {}
+    filtersEl?.querySelectorAll('select').forEach(sel => {
+      if (sel.name === 'sort') return
+      if (sel.value) f[sel.name] = sel.value
+    })
+    f.sort = currentSort
+    return f
+  }
+
+  rootEl.innerHTML = `
+    <div class="screener-note" id="screener-note" hidden></div>
+    <p class="search-count" id="screener-count"></p>
+    <div class="screener-scroll">
+      <table class="screener">
+        <thead>
+          <tr>
+            ${SCREENER_COLUMNS.map(c => `<th class="sc-h" data-col="${c.key}" ${SCREENER_SORT_TOGGLE[c.key] ? 'tabindex="0" role="button"' : ''}>${esc(c.label)}${SCREENER_SORT_TOGGLE[c.key] ? '<span class="sc-sort-arrow"></span>' : ''}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody id="screener-tbody"></tbody>
+      </table>
+    </div>
+  `
+
+  const tbody = rootEl.querySelector('#screener-tbody')
+  const countEl = rootEl.querySelector('#screener-count')
+  const noteEl = rootEl.querySelector('#screener-note')
+
+  function updateHeaderIndicators() {
+    rootEl.querySelectorAll('.sc-h').forEach(th => {
+      th.removeAttribute('data-active')
+      th.removeAttribute('data-dir')
+      th.removeAttribute('aria-sort')
+    })
+    const activeCol = Object.entries(SCREENER_SORT_TOGGLE)
+      .find(([, states]) => states.includes(currentSort))?.[0]
+    if (activeCol) {
+      const th = rootEl.querySelector(`.sc-h[data-col="${activeCol}"]`)
+      if (th) {
+        const asc = currentSort.endsWith('_asc')
+        th.setAttribute('data-active', 'true')
+        th.setAttribute('data-dir', asc ? 'asc' : 'desc')
+        th.setAttribute('aria-sort', asc ? 'ascending' : 'descending')
+      }
+    }
+    noteEl.hidden = currentSort !== 'outcome_desc'
+    if (!noteEl.hidden) {
+      noteEl.textContent = 'Sorted by Outcome Score — showing graded deals only'
+    }
+  }
+
+  function updateLoadMore() {
+    rootEl.querySelector('.load-more-btn')?.remove()
+    if (loadedCount < totalCount) {
+      const btn = document.createElement('button')
+      btn.className = 'load-more-btn'
+      btn.textContent = `Load more (${totalCount - loadedCount} remaining)`
+      btn.onclick = () => runQuery({ append: true })
+      rootEl.appendChild(btn)
+    }
+    countEl.textContent = `Showing ${loadedCount} of ${totalCount} deals`
+  }
+
+  /** Task 2.4 (R9) — same reset behavior as initSearch's clearFiltersAndSearch,
+   *  adapted to the screener's inputEl/filtersEl/pill wiring. */
+  function clearFiltersAndSearch() {
+    if (inputEl) inputEl.value = ''
+    filtersEl?.querySelectorAll('select').forEach(sel => { sel.selectedIndex = 0 })
+    const toggles = filtersEl?.querySelectorAll('.dt-toggle')
+    const hiddenSelect = filtersEl?.querySelector('.dt-select-hidden')
+    if (toggles?.length) {
+      toggles.forEach(b => b.classList.remove('active'))
+      const allBtn = filtersEl.querySelector('.dt-toggle[data-dt=""]')
+      allBtn?.classList.add('active')
+    }
+    if (hiddenSelect) hiddenSelect.value = ''
+    currentSort = 'date_desc'
+    syncSortSelect()
+    runQuery({ append: false })
+  }
+
+  /** Task 2.4 (R9) — empty-search recovery for the screener table. Rendered
+   *  as a single wide row (table markup requires td/tr, not a bare div). */
+  function renderEmptyState(term) {
+    const chips = POPULAR_SEARCHES.map(p =>
+      `<button type="button" class="se-chip" data-query="${esc(p.query)}">${esc(p.label)}</button>`
+    ).join('')
+    tbody.innerHTML = `<tr><td colspan="${SCREENER_COLUMNS.length}">
+      <div class="search-empty">
+        <p class="se-message">No deals match "${esc(term)}" — try a company, molecule, or therapeutic area.</p>
+        <button type="button" class="se-clear">Clear filters</button>
+        <div class="se-chips">${chips}</div>
+      </div>
+    </td></tr>`
+    tbody.querySelector('.se-clear')?.addEventListener('click', clearFiltersAndSearch)
+    tbody.querySelectorAll('.se-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (inputEl) inputEl.value = btn.dataset.query
+        runQuery({ append: false })
+      })
+    })
+  }
+
+  async function runQuery({ append = false } = {}) {
+    // Request-token race guard: a stale response (e.g. an append issued
+    // before a sort change resolves) must never land over newer rows.
+    const token = ++requestToken
+    const query = (inputEl?.value || '').trim()
+    const filters = readFilters()
+    const offset = append ? loadedCount : 0
+    if (!append) {
+      tbody.innerHTML = `<tr><td colspan="${SCREENER_COLUMNS.length}" class="search-status">Loading...</td></tr>`
+    }
+    try {
+      const { deals, total } = await searchDeals(query, filters, { limit: pageSize, offset })
+      if (token !== requestToken) return // superseded by a newer request
+      if (!append) loadedCount = 0
+      loadedCount += deals.length
+      totalCount = total
+      const rowsHtml = deals.map(screenerRowHtml).join('')
+      if (append) {
+        tbody.insertAdjacentHTML('beforeend', rowsHtml)
+      } else if (!deals.length) {
+        renderEmptyState(query)
+        return
+      } else {
+        tbody.innerHTML = rowsHtml
+      }
+      updateHeaderIndicators()
+      updateLoadMore()
+    } catch (e) {
+      if (token !== requestToken) return
+      tbody.innerHTML = `<tr><td colspan="${SCREENER_COLUMNS.length}" class="search-status error">Screener is temporarily unavailable. Try again.</td></tr>`
+      console.error('initScreener searchDeals error', e)
+    }
+  }
+
+  // Row click / Enter navigates to the deal detail page
+  tbody.addEventListener('click', (e) => {
+    const row = e.target.closest('.screener-row')
+    if (row) window.location.href = `deal.html?id=${encodeURIComponent(row.dataset.dealId)}`
+  })
+  tbody.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return
+    const row = e.target.closest('.screener-row')
+    if (row) window.location.href = `deal.html?id=${encodeURIComponent(row.dataset.dealId)}`
+  })
+
+  // Header click/Enter toggles sort direction (or single-state jump for CS/OS)
+  rootEl.querySelectorAll('.sc-h[data-col]').forEach(th => {
+    const col = th.dataset.col
+    const states = SCREENER_SORT_TOGGLE[col]
+    if (!states) return
+    const toggle = () => {
+      currentSort = currentSort === states[0] ? states[1] : states[0]
+      syncSortSelect()
+      runQuery({ append: false })
+    }
+    th.addEventListener('click', toggle)
+    th.addEventListener('keydown', (e) => { if (e.key === 'Enter') toggle() })
+  })
+
+  // Search input + filter row re-query (same wiring pattern as initSearch)
+  let debounceTimer = null
+  inputEl?.addEventListener('input', () => {
+    clearTimeout(debounceTimer)
+    debounceTimer = setTimeout(() => runQuery({ append: false }), 350)
+  })
+  filtersEl?.addEventListener('change', () => {
+    // A manual sort-select change (if the select is visible) takes priority
+    // over the header-driven currentSort state.
+    const sel = filtersEl.querySelector('select[name="sort"]')
+    if (sel && sel.value) currentSort = sel.value
+    runQuery({ append: false })
+  })
+
+  syncSortSelect()
+  runQuery({ append: false })
+}
+
 // =====================================================================
 // Phase 11 WS-D — Deal-type pill toggles. Pills drive a hidden
 // <select name="deal_type"> so the existing initSearch change-handler
@@ -2153,8 +2766,10 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
 })()
 
 // =====================================================================
-// FAB drawer toggle — left-side collapsible action bar on deal.html
-// Tab handle always visible; click expands the drawer to the right.
+// Export kit drawer toggle (Task 2.3 / R8) — labeled "Export ▾" button
+// in the hero title-row on desktop, labeled bottom-right pill FAB on
+// mobile (CSS-only restyle, see deals.css section 19 + 899px override).
+// Same #deal-fab / .fab-tab element and toggle logic at every width.
 // =====================================================================
 ;(function () {
   const fab = document.getElementById('deal-fab')
@@ -2164,7 +2779,7 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
   function setCollapsed(collapsed) {
     fab.setAttribute('data-collapsed', collapsed ? 'true' : 'false')
     tab.setAttribute('aria-expanded', collapsed ? 'false' : 'true')
-    tab.setAttribute('title', collapsed ? 'Show actions' : 'Hide actions')
+    tab.setAttribute('title', collapsed ? 'Show export options' : 'Hide export options')
   }
 
   tab.addEventListener('click', (e) => {

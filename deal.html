@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260611c">
+<link rel="stylesheet" href="assets/deals.css?v=20260711a">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
   /* Move 9: comparable-aged panel */
@@ -51,6 +51,10 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   .comp-aged .ca-num[data-tier="exceptional"], .comp-aged .ca-num[data-tier="strong"] { color: var(--green, #6fa07b); }
   .comp-aged .ca-num[data-tier="weak"], .comp-aged .ca-num[data-tier="failed"] { color: var(--red, #cf6048); }
   .comp-aged .ca-lab { font-size: 12.5px; color: var(--ink-muted); }
+
+  /* Task 2.1 (R6): cohort panel moved into the hero — give it breathing
+     room above/below when it renders (empty div collapses to 0 otherwise). */
+  #cohort-panel:not(:empty) { margin-top: 18px; max-width: 620px; }
 </style>
 </head>
 <body>
@@ -68,6 +72,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     <li><a href="index.html">Podcast</a></li>
     <li><a href="ai-research.html">Research</a></li>
     <li><a href="deals.html" class="active">Deal Intelligence</a></li>
+    <li><a href="browse.html">Browse</a></li>
     <li><a href="about.html">About</a></li>
   </ul>
   <a class="nav-cta" href="ai-research.html#briefing">Get the Briefing <span aria-hidden="true">&rarr;</span></a>
@@ -76,6 +81,13 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     <input type="text" placeholder="Search deals..." id="nav-search-input">
   </div>
 </nav>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     STICKY VERDICT BAR (Task 2.1 — R6)
+     Hidden by default; JS unhides it once the hero score-pill row
+     scrolls out of view, and hides it again when the row is back.
+     ═══════════════════════════════════════════════════════════════════ -->
+<div id="verdict-bar" class="verdict-bar" hidden></div>
 
 <!-- ═══════════════════════════════════════════════════════════════════
      LOADING STATE
@@ -96,8 +108,57 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     <div class="title-row">
       <h1 class="deal-title" id="hero-title"></h1>
       <span id="hero-status"></span>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           EXPORT KIT (Task 2.3 / R8) — desktop: labeled dropdown button
+           anchored in the hero title row. Mobile: restyled via CSS into
+           a fixed bottom-right labeled pill FAB. Same element, same
+           #deal-fab id / .fab-tab class the toggle IIFE already wires up
+           (deals.js ~2506) — restyle only, do not rewire.
+           ═══════════════════════════════════════════════════════════ -->
+      <div id="deal-fab" class="fab" data-collapsed="true" style="display:none;">
+        <button class="fab-tab" type="button" aria-expanded="false" aria-controls="deal-fab-actions" aria-label="Toggle deal export actions" title="Export">
+          <svg class="fab-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span class="fab-tab-label">Export</span>
+          <svg class="fab-tab-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="deal-fab-actions" class="fab-actions">
+          <button class="fab-btn" title="Copy deal row to clipboard (tab-separated, paste into Excel)" onclick="window.__copyDealRow && window.__copyDealRow()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span>Copy Row</span>
+          </button>
+          <button class="fab-btn" title="Export to PowerPoint (coming soon)" disabled>
+            <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg>
+            <span>PowerPoint</span>
+          </button>
+          <button class="fab-btn primary" title="Generate Deal Sheet (coming soon)" disabled>
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <span>Deal Sheet</span>
+          </button>
+          <button class="fab-btn" id="fab-share" title="Share this deal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            <span>Share</span>
+          </button>
+        </div>
+      </div>
     </div>
+    <div id="hero-consensus"></div>
     <div id="hero-scores" class="feat-scores" style="margin-top:16px;"></div>
+    <div id="cohort-panel"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SCORE BREAKDOWN (Task 2.6 / R11) — moved hero-adjacent from the
+         sidebar (was the 9th screen down). Wrapped in <details class="m-acc">
+         so it collapses on mobile by default; deals.js sets .open based on
+         viewport width after render (>=900px opens it). Same #score-section
+         / #score-breakdown ids the populate call already targets — only the
+         wrapper + position changed, not the JS contract.
+         ═══════════════════════════════════════════════════════════════ -->
+    <details id="score-section" class="m-acc sidebar-card score-card-hero" style="display:none;">
+      <summary class="sb-title">Score Breakdown</summary>
+      <div id="score-breakdown"></div>
+    </details>
+
     <div id="hero-hypegap"></div>
     <div id="hero-cascade" style="margin-top:14px;"></div>
     <div class="hero-meta" id="hero-meta"></div>
@@ -155,29 +216,24 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   <!-- ─── Sidebar Column (360px) ─── -->
   <div>
 
-    <!-- Score Breakdown -->
-    <div id="score-section" class="sidebar-card" style="display:none;">
-      <div class="sb-title">Score Breakdown</div>
-      <div id="score-breakdown"></div>
-    </div>
-
     <!-- Comparable Deals -->
     <div id="comparables-section" class="sidebar-card" style="display:none;">
       <div class="sb-title">Comparable Deals</div>
       <div id="comparables"></div>
     </div>
 
-    <!-- Sources -->
-    <div id="sources-section" class="sidebar-card" style="display:none;">
-      <div class="sb-title">Sources</div>
+    <!-- Sources — Task 3.4 (R15): <details class="m-acc"> mobile-diet
+         pattern (see #score-section); JS below sets .open on desktop. -->
+    <details id="sources-section" class="m-acc sidebar-card" style="display:none;">
+      <summary class="sb-title">Sources</summary>
       <div id="sources"></div>
-    </div>
+    </details>
 
-    <!-- Task 41: Corporate Lineage -->
-    <div id="lineage-section" class="sidebar-card" style="display:none;">
-      <div class="sb-title">Corporate Lineage</div>
+    <!-- Task 41: Corporate Lineage — Task 3.4 (R15): same m-acc pattern. -->
+    <details id="lineage-section" class="m-acc sidebar-card" style="display:none;">
+      <summary class="sb-title">Corporate Lineage</summary>
       <div id="lineage"></div>
-    </div>
+    </details>
 
     <!-- Task 43: Companion Deals -->
     <div id="companions-section" class="sidebar-card" style="display:none;">
@@ -187,34 +243,6 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 
   </div>
 
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════════
-     FLOATING ACTION BAR
-     ═══════════════════════════════════════════════════════════════════ -->
-<div id="deal-fab" class="fab" data-collapsed="true" style="display:none;">
-  <button class="fab-tab" type="button" aria-expanded="false" aria-controls="deal-fab-actions" aria-label="Toggle deal actions" title="Show actions">
-    <svg class="fab-tab-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-    <span class="fab-tab-label">Actions</span>
-  </button>
-  <div id="deal-fab-actions" class="fab-actions">
-    <button class="fab-btn" title="Copy deal row to clipboard (tab-separated, paste into Excel)" onclick="window.__copyDealRow && window.__copyDealRow()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      <span>Copy Row</span>
-    </button>
-    <button class="fab-btn" title="Export to PowerPoint (coming soon)" disabled>
-      <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg>
-      <span>PowerPoint</span>
-    </button>
-    <button class="fab-btn primary" title="Generate Deal Sheet (coming soon)" disabled>
-      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-      <span>Deal Sheet</span>
-    </button>
-    <button class="fab-btn" id="fab-share" title="Share this deal">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-      <span>Share</span>
-    </button>
-  </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════════
@@ -244,7 +272,10 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
         <h4>Deal Alerts — free</h4>
         <p>This deal's outcome + every new deal's historical read, Mondays.</p>
         <div class="funnel-sub">
-          <iframe src="https://thepharmacloseout.substack.com/embed" width="100%" height="80" style="border:1px solid rgba(255,255,255,.14);border-radius:6px;background:#fff;" frameborder="0" scrolling="no" title="Subscribe to The Pharma Closeout"></iframe>
+          <form class="sub-form" action="https://thepharmacloseout.substack.com/subscribe" method="get" target="_blank" rel="noopener">
+            <input class="sub-email" type="email" name="email" required placeholder="you@firm.com" aria-label="Email address">
+            <button class="sub-btn" type="submit">Subscribe</button>
+          </form>
         </div>
         <div class="funnel-note">Browsing is always free. We never sell your email.</div>
       </div>
@@ -284,10 +315,22 @@ import {
   criticReviewCount, isPipelineArtifact, cleanProse, isPlausibleDate,
   renderHypeGap, renderProvenance,
   displayOutcomeScore,
-  comparableOutcomeSummary, renderComparableAged
-} from './assets/deals.js?v=20260710a'
+  comparableOutcomeSummary, renderComparableAged,
+  renderVerdictBar, esc
+} from './assets/deals.js?v=20260711a'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
+
+// Task 3.4 (R15): shared m-acc open-on-desktop rule. <details class="m-acc">
+// is collapsed by default (mobile diet); on desktop widths (>=900px) open
+// every accordion under rootEl — including rootEl itself when it IS the
+// details element. One helper for all call sites so the pattern can't drift.
+function openAccordionsForDesktop(rootEl) {
+  if (!rootEl) return
+  const open = window.innerWidth >= 900
+  if (rootEl.matches && rootEl.matches('details.m-acc')) rootEl.open = open
+  rootEl.querySelectorAll('details.m-acc').forEach(d => { d.open = open })
+}
 
 if (!dealId) {
   document.getElementById('loading').innerHTML =
@@ -319,11 +362,19 @@ if (!dealId) {
       // terminated deals get a dated pill even without outcome status)
       document.getElementById('hero-status').innerHTML = renderDealStatus(deal.deal_outcome_status, deal)
 
+      // Task 2.1 (R6): consensus line — editorial_summary is thin-coverage
+      // (see methodology), so this renders nothing when the field is null.
+      // Never fabricate a stand-in.
+      if (deal.editorial_summary) {
+        document.getElementById('hero-consensus').innerHTML =
+          `<p class="deal-consensus">${esc(deal.editorial_summary)}</p>`
+      }
+
       // Score pills — when reviews exist but the score needs >=4, say so
       const reviewCount = criticReviewCount(sources)
       const criticSubtitle = deal.critic_score == null && reviewCount > 0
         ? (reviewCount < 4 ? `Score pending — ${reviewCount} of 4 reviews` : 'Score pending')
-        : 'Market consensus'
+        : 'at announcement'
       // Date sanity guard: never derive "Unlocks" from implausible years.
       // Outcome only displays once its 5-year window has elapsed (methodology
       // §03); a stored-but-locked score is suppressed and shown as "Unlocks YYYY".
@@ -335,6 +386,23 @@ if (!dealId) {
       document.getElementById('hero-scores').innerHTML =
         renderScorePill('critic', deal.critic_score != null ? Math.round(deal.critic_score) : null, criticSubtitle) +
         renderScorePill('outcome', gatedOutcome != null ? Math.round(gatedOutcome) : null, outcomeSubtitle)
+
+      // Task 2.1 (R6): sticky verdict bar — populated now that scores are
+      // known; visibility is toggled by the IntersectionObserver below once
+      // the hero score-pill row itself is in the DOM.
+      const verdictBarEl = document.getElementById('verdict-bar')
+      if (verdictBarEl) {
+        verdictBarEl.innerHTML = renderVerdictBar(deal)
+        const heroScoresEl = document.getElementById('hero-scores')
+        if (heroScoresEl && 'IntersectionObserver' in window) {
+          const verdictObserver = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+              verdictBarEl.hidden = entry.isIntersecting
+            }
+          }, { threshold: 0 })
+          verdictObserver.observe(heroScoresEl)
+        }
+      }
 
       // Move 4: Hype Gap callout (renders only when both scores exist)
       document.getElementById('hero-hypegap').innerHTML = renderHypeGap(deal)
@@ -404,24 +472,30 @@ if (!dealId) {
       document.getElementById('disease-section').style.display = ''
 
       // ── Deal Financials ──
-      document.getElementById('financials').innerHTML = renderFinancials(deal)
-      document.getElementById('financials-section').style.display = ''
+      const financialsHtml = renderFinancials(deal)
+      document.getElementById('financials').innerHTML = financialsHtml
+      document.getElementById('financials-section').style.display = financialsHtml ? '' : 'none'
 
       // ── Critic Reviews ──
       const reviewsHtml = renderCriticReviews(sources)
       document.getElementById('critic-reviews').innerHTML = reviewsHtml
       document.getElementById('reviews-section').style.display = ''
+      // Task 3.4 (R15): the >2-review tail is a <details class="m-acc"> —
+      // open it on desktop like the other accordions.
+      openAccordionsForDesktop(document.getElementById('critic-reviews'))
 
       // ── Key Assets ──
       const assetsHtml = renderKeyAssets(diseaseAssets)
       document.getElementById('key-assets').innerHTML = assetsHtml
       document.getElementById('assets-section').style.display = ''
 
-      // ── Sidebar: Score Breakdown ──
+      // ── Hero: Score Breakdown (Task 2.6 / R11 — moved from sidebar) ──
       const scoreHtml = renderScoreBreakdown(outcomes, deal)
       if (scoreHtml) {
         document.getElementById('score-breakdown').innerHTML = scoreHtml
-        document.getElementById('score-section').style.display = ''
+        const scoreSectionEl = document.getElementById('score-section')
+        scoreSectionEl.style.display = ''
+        openAccordionsForDesktop(scoreSectionEl)
       }
 
       // ── Sidebar: Comparables (fetch wider so the "aged" summary has ≥3 unlocked) ──
@@ -432,17 +506,33 @@ if (!dealId) {
         document.getElementById('comparables-section').style.display = ''
       }
 
-      // ── Move 9: "How deals like this aged" — only when this deal's own
-      //    outcome is still locked (avoids fabricating its ungraded outcome) ──
+      // ── Move 9 / Task 2.1 (R6): "How deals like this aged" — only when
+      //    this deal's own outcome is still locked (avoids fabricating its
+      //    ungraded outcome). Now rendered INTO the hero (#cohort-panel)
+      //    instead of ahead of the Outcome Timeline card, so the verdict
+      //    reads top-of-page instead of ~90 lines down. ──
       if (displayOutcomeScore(deal) == null) {
-        const aged = renderComparableAged(comparableOutcomeSummary(comparables))
-        if (aged) document.getElementById('timeline-section').insertAdjacentHTML('beforebegin', aged)
+        const compSummary = comparableOutcomeSummary(comparables)
+        const aged = renderComparableAged(compSummary)
+        if (aged) document.getElementById('cohort-panel').innerHTML = aged
+
+        // Task 2.1: patch the (locked) outcome pill's subtitle with the
+        // cohort median when we have enough unlocked comps (>=3). When
+        // compSummary is null (thin comps), leave "Unlocks YYYY" as-is.
+        if (compSummary) {
+          const outcomePillMeta = document.querySelector('#hero-scores .score-block[data-dim="outcome"] .score-meta')
+          if (outcomePillMeta) {
+            outcomePillMeta.textContent = `Deals like this aged ${compSummary.median}`
+          }
+        }
       }
 
       // ── Sidebar: Sources (+ Move 2c provenance stamp) ──
       const sourcesHtml = renderSources(sources)
       document.getElementById('sources').innerHTML = sourcesHtml + renderProvenance(deal)
-      document.getElementById('sources-section').style.display = ''
+      const sourcesSectionEl = document.getElementById('sources-section')
+      sourcesSectionEl.style.display = ''
+      openAccordionsForDesktop(sourcesSectionEl)
 
       // ── Task 39: Copy Deal Row binding ──
       window.__copyDealRow = () => exportDealRow(deal)
@@ -453,7 +543,9 @@ if (!dealId) {
         const lineageHtml = renderCorporateLineage(lineage, deal)
         if (lineageHtml) {
           document.getElementById('lineage').innerHTML = lineageHtml
-          document.getElementById('lineage-section').style.display = ''
+          const lineageSectionEl = document.getElementById('lineage-section')
+          lineageSectionEl.style.display = ''
+          openAccordionsForDesktop(lineageSectionEl)
         }
       } catch (e) { console.warn('lineage fetch failed', e) }
 

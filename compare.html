@@ -35,7 +35,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260611c">
+<link rel="stylesheet" href="assets/deals.css?v=20260711a">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
 /* ── Page-local overrides (compare.html only) ── */
@@ -73,6 +73,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     <li><a href="index.html">Podcast</a></li>
     <li><a href="ai-research.html">Research</a></li>
     <li><a href="deals.html" class="active">Deal Intelligence</a></li>
+    <li><a href="browse.html">Browse</a></li>
     <li><a href="about.html">About</a></li>
   </ul>
   <a class="nav-cta" href="ai-research.html#briefing">Get the Briefing <span aria-hidden="true">&rarr;</span></a>
@@ -123,7 +124,10 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
         <h4>Deal Alerts — free</h4>
         <p>New deals + their historical-outcome read, Monday mornings.</p>
         <div class="funnel-sub">
-          <iframe src="https://thepharmacloseout.substack.com/embed" width="100%" height="80" style="border:1px solid rgba(255,255,255,.14);border-radius:6px;background:#fff;" frameborder="0" scrolling="no" title="Subscribe to The Pharma Closeout"></iframe>
+          <form class="sub-form" action="https://thepharmacloseout.substack.com/subscribe" method="get" target="_blank" rel="noopener">
+            <input class="sub-email" type="email" name="email" required placeholder="you@firm.com" aria-label="Email address">
+            <button class="sub-btn" type="submit">Subscribe</button>
+          </form>
         </div>
         <div class="funnel-note">Browsing is always free. We never sell your email.</div>
       </div>
@@ -145,7 +149,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </footer>
 
 <script type="module">
-import { fetchDeal, fetchDealOutcomes, renderComparison } from './assets/deals.js?v=20260710a'
+import { fetchDeal, fetchDealOutcomes, renderComparison } from './assets/deals.js?v=20260711a'
 
 const params = new URLSearchParams(window.location.search)
 const idsRaw = params.get('ids') || ''

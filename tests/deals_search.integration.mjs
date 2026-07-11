@@ -96,8 +96,13 @@ test('data integrity: no values above $400B', async () => {
 })
 
 test('data integrity: CS distribution is not stuck at 100', async () => {
-  const { data } = await sb.from('deals_enriched').select('critic_score').eq('critic_score', 100)
-  const { count: total } = await sb.from('deals_enriched').select('*', { count: 'exact', head: true }).not('critic_score', 'is', null)
-  const ratio = (data?.length || 0) / (total || 1)
-  assert.ok(ratio < 0.15, `CS=100 is ${(ratio*100).toFixed(1)}% of scored deals (expected <15%)`)
+  // exact counts on this expensive view hit the DB statement timeout
+  // (57014) and return null — sample the distribution instead: 1,000
+  // scored rows is the full population minus a tail, ample for a canary
+  const { data, error } = await sb.from('deals_enriched').select('critic_score')
+    .not('critic_score', 'is', null).limit(1000)
+  assert.ok(!error && data?.length > 100, `scored-deal sample failed (${error?.message || data?.length})`)
+  const at100 = data.filter(r => r.critic_score === 100).length
+  const ratio = at100 / data.length
+  assert.ok(ratio < 0.15, `CS=100 is ${(ratio*100).toFixed(1)}% of sampled scored deals (expected <15%)`)
 })

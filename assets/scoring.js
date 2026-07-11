@@ -2,7 +2,7 @@
 // CDN-FREE by contract: imports ONLY ./format.js (no ?v= query string) so that
 // `node --test` can import this module offline. deals.js re-exports everything
 // here for the browser. Do not add CDN or Supabase imports to this file.
-import { isPlausibleDate } from './format.js'
+import { isPlausibleDate, formatValue, formatDate } from './format.js'
 
 /* ---------- Outcome-unlock gate (Move 1) ----------
  * Methodology (methodology.html §03): the Outcome Score "unlocks five years
@@ -160,10 +160,15 @@ export function renderGapTeaser(deal) {
   const cs = Math.round(deal.critic_score), os = Math.round(deal.outcome_score)
   const dir = gap > 0 ? 'over' : (gap < 0 ? 'under' : 'even')
   const sign = gap > 0 ? '+' : ''
-  return `<a class="gap-teaser" data-dir="${dir}" href="deal.html?id=${escHtml(deal.deal_id)}">
+  // Task 3.3 (R14): bare "+80" read as an unlabeled number with no context —
+  // label it "hype gap +80" and add a title tooltip spelling out the metric.
+  // Links to the Hype Gap index (not the single deal) since this is a hero
+  // teaser promoting the feature, not a deal drill-down.
+  const tooltip = 'Hype Gap = Critic Score − Outcome Score; positive = the Street over-hyped it'
+  return `<a class="gap-teaser" data-dir="${dir}" href="hype-gap.html" title="${escHtml(tooltip)}">
     <span class="gt-label">${escHtml(hypeGapLabel(gap))}</span>
     <span class="gt-pair">${escHtml(deal.buyer_name)} / ${escHtml(deal.target_name)}</span>
-    <span class="gt-nums">said <b>${cs}</b> &middot; did <b>${os}</b> &middot; <span class="gt-gap">${sign}${gap}</span></span>
+    <span class="gt-nums">said <b>${cs}</b> &middot; did <b>${os}</b> &middot; <span class="gt-gap">hype gap ${sign}${gap}</span></span>
   </a>`
 }
 
@@ -190,3 +195,157 @@ export function hindsightCohorts(deals, { minPerYear = 5, topN = 3 } = {}) {
   cohorts.sort((a, b) => b.year - a.year)
   return cohorts
 }
+
+// ---------------------------------------------------------------
+// UX overhaul R1: single source of truth for score vocabulary.
+// Every chip, pill, row and table label MUST read from this map.
+// "Announcement Sentiment", "Met Thesis", "Industry consensus" are
+// tooltip copy only — never a visible label.
+// ---------------------------------------------------------------
+/** UX overhaul R2: single decision point for poster/result-row score chips.
+ *  Both renderPoster and renderResultRow branch on this — never duplicate the
+ *  ternary chain in a renderer. States:
+ *    'both'          — critic and (unlocked) outcome scored
+ *    'critic-locked' — critic scored, outcome still locked/absent
+ *    'outcome-only'  — outcome scored but critic never was (OS chip stands alone)
+ *    'pending'       — no critic yet, announced recently (scoring catching up)
+ *    'unscored'      — neither score, not pending → one neutral UNSCORED chip */
+export function posterScoreState(criticScore, outcomeScore, isPending) {
+  if (criticScore != null) return outcomeScore != null ? 'both' : 'critic-locked'
+  if (outcomeScore != null) return 'outcome-only'
+  return isPending ? 'pending' : 'unscored'
+}
+
+/** UX overhaul R3: field applicability for the Deal Financials grid.
+ *  M&A-only concepts (valuation multiples, equity sought, closing structure,
+ *  target LTM revenue) never apply to licensing/option/co-dev deals — they
+ *  render only when the deal is actually an acquisition/merger/asset deal.
+ *  Fields whose value would be a bare em-dash are dropped entirely (except
+ *  Deal Value, which always anchors the grid even when null). */
+const M_AND_A_ONLY = ['EV / Revenue', 'EV / EBITDA', 'Target LTM Revenue', 'Equity Sought', 'Structure']
+
+function isMAndA(dealType) {
+  // Take-Private is in the M&A family — keep aligned with the deal-type
+  // bucketing in deals.js (bgClass/shortType route Take-Private to bg-ma /
+  // TAKE-PRIV). Can't share code directly: deals.js has a CDN Supabase
+  // import so it isn't node-loadable from these offline tests.
+  return /acquisition|merger|m&a|asset|take.?private/i.test(dealType || '')
+}
+
+export function financialFieldsFor(deal, opts = {}) {
+  const mAndA = isMAndA(deal.deal_type)
+
+  const evRev = deal.deal_ev_revenue_x != null ? `${deal.deal_ev_revenue_x.toFixed(1)}x` : null
+  const evEbitda = deal.deal_ev_ebitda_x != null ? `${deal.deal_ev_ebitda_x.toFixed(1)}x` : null
+  // Suppress derived TTC when non-positive or computed off an implausible
+  // close date (Wikidata ingest artifacts produce "0 days" / "-2 days")
+  const ttcValid = deal.time_to_close_days != null && deal.time_to_close_days > 0 &&
+    (!deal.close_date || isPlausibleDate(deal.close_date))
+  const ttc = ttcValid ? `${deal.time_to_close_days} days` : null
+  const equity = deal.equity_sought_pct != null ? `${deal.equity_sought_pct}%` : null
+  const cashPct = deal.cash_portion_usd_mm != null ? formatValue(deal.cash_portion_usd_mm) : null
+  const stockPct = deal.stock_portion_usd_mm != null ? formatValue(deal.stock_portion_usd_mm) : null
+  let structure = deal.closing_structure || null
+  if (cashPct && stockPct) structure = `${cashPct} cash + ${stockPct} stock`
+  else if (cashPct) structure = `${cashPct} cash`
+
+  const candidates = [
+    { label: 'Deal Value', value: formatValue(deal.deal_value_usd_mm), always: true },
+    { label: 'Financing', value: deal.financing_type || null },
+    { label: 'Close Date', value: deal.close_date ? formatDate(deal.close_date) : null },
+    { label: 'EV / Revenue', value: evRev },
+    { label: 'EV / EBITDA', value: evEbitda },
+    { label: 'Time to Close', value: ttc },
+    { label: 'Target LTM Revenue', value: deal.target_revenue_ltm_usd_mm != null ? formatValue(deal.target_revenue_ltm_usd_mm) : null },
+    { label: 'Structure', value: structure },
+    { label: 'Equity Sought', value: equity },
+  ]
+
+  const fields = candidates
+    .filter(f => mAndA || !M_AND_A_ONLY.includes(f.label))
+    .filter(f => f.always || (f.value != null && f.value !== '—'))
+    .map(f => ({ label: f.label, value: f.value }))
+
+  if (!opts.withMeta) return fields
+
+  // Pending is recency-gated: a deal only reads as "pending close" when it
+  // was announced within the last 24 months. Legacy deals with no close data
+  // (1996-era Wikidata-ingest gaps) are stale-data, not pending.
+  const annT = deal.announcement_date ? Date.parse(deal.announcement_date) : NaN
+  const recent = !isNaN(annT) && (Date.now() - annT) <= 24 * 30.44 * 24 * 60 * 60 * 1000
+  const pending = recent && !deal.close_date && !/complete/i.test(deal.deal_status || '')
+  return { fields, pending }
+}
+
+/** UX overhaul R4: defensive same-id dedupe for any list keyed by deal_id
+ *  (comparables, lineage, companion deals, carousel rails). First occurrence
+ *  wins. Null/undefined input degrades to an empty array rather than throwing —
+ *  callers that fetch defensively (fetchAllPaged et al.) may hand back
+ *  partial/empty results. Does NOT dedupe distinct deals that merely look
+ *  alike (e.g. two different Sanofi/Regeneron deal_ids) — that's a data-side
+ *  concern, not this function's job. */
+export function dedupeByDealId(rows) {
+  if (!rows) return []
+  const seen = new Set()
+  const out = []
+  for (const row of rows) {
+    const id = row && row.deal_id
+    if (seen.has(id)) continue
+    seen.add(id)
+    out.push(row)
+  }
+  return out
+}
+
+/** UX overhaul R4: chronological ordering for the Outcome Timeline — it
+ *  previously trusted fetch order, which is not guaranteed chronological.
+ *  Sorts by event_date ascending; sort_order breaks ties (including among
+ *  same-date events). Events with a missing/unparseable event_date sort
+ *  after all dated events, ordered by sort_order among themselves.
+ *  PIN CONVENTION: verdict events at sort_order >= 99 are status/assessment
+ *  notes intentionally pinned last (511 across the DB) — they are excluded
+ *  from the date sort and appended at the end in their original relative
+ *  order. Non-verdict events at sort_order 100+ (appended milestone/
+ *  regulatory/financial updates) are NOT pins and date-sort normally. */
+export function sortTimelineEvents(events) {
+  if (!events) return []
+  const pinned = []
+  const regular = []
+  for (const e of events) {
+    if (e && e.event_type === 'verdict' && (e.sort_order ?? 0) >= 99) pinned.push(e)
+    else regular.push(e)
+  }
+  const withKey = regular.map((e, i) => {
+    const t = e && e.event_date ? Date.parse(e.event_date) : NaN
+    return { e, i, t: isNaN(t) ? null : t }
+  })
+  withKey.sort((a, b) => {
+    if (a.t == null && b.t == null) return (a.e.sort_order ?? 0) - (b.e.sort_order ?? 0)
+    if (a.t == null) return 1
+    if (b.t == null) return -1
+    if (a.t !== b.t) return a.t - b.t
+    return (a.e.sort_order ?? 0) - (b.e.sort_order ?? 0)
+  })
+  return [...withKey.map(x => x.e), ...pinned]
+}
+
+export const SCORE_VOCAB = {
+  critic: {
+    abbr: 'CS',
+    name: 'Critic Score',
+    tooltip: 'Analyst & media reaction at announcement (0–100)',
+  },
+  outcome: {
+    abbr: 'OS',
+    name: 'Outcome Score',
+    tooltip: 'Post-close performance vs. the deal thesis — grades open 5 years after close',
+  },
+}
+
+/** Task 2.4 (R9) — suggested searches shown in the empty-search recovery
+ *  block (deals.js initSearch/initScreener). Small, curated, high-hit-rate. */
+export const POPULAR_SEARCHES = [
+  { label: 'Pfizer', query: 'Pfizer' },
+  { label: 'Oncology', query: 'Oncology' },
+  { label: 'ADC platforms', query: 'antibody-drug conjugate' },
+]
