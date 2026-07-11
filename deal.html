@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260711i">
+<link rel="stylesheet" href="assets/deals.css?v=20260711j">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
   /* Move 9: comparable-aged panel */
@@ -318,7 +318,7 @@ import {
   comparableOutcomeSummary, renderComparableAged,
   renderVerdictBar, esc, JUMP_NAV_SECTIONS,
   dedupeByDealId
-} from './assets/deals.js?v=20260711i'
+} from './assets/deals.js?v=20260711j'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -431,24 +431,22 @@ if (!dealId) {
     '<div style="text-align:center;padding:100px;font-family:var(--sans);color:var(--ink-muted);">Deal not found. <a href="deals.html" style="color:var(--gold);text-decoration:none;font-weight:600;">Browse deals &rarr;</a></div>'
 } else {
   try {
-    const [deal, sources, outcomes] = await Promise.all([
-      fetchDeal(dealId),
-      fetchDealSources(dealId),
-      fetchDealOutcomes(dealId),
-    ])
-
-    document.getElementById('loading').style.display = 'none'
+    // WS-E2 fast-path: fetch the deal row ALONE first, so archived (and
+    // missing) deals gate before ANY companion fetch fires — previously
+    // fetchDealSources/fetchDealOutcomes ran in the same Promise.all and
+    // archived pages still cost 2 wasted Supabase calls.
+    const deal = await fetchDeal(dealId)
 
     if (!deal) {
-      document.getElementById('loading').style.display = ''
       document.getElementById('loading').innerHTML =
         '<div style="text-align:center;padding:100px;font-family:var(--sans);color:var(--ink-muted);">Deal not found. <a href="deals.html" style="color:var(--gold);text-decoration:none;font-weight:600;">Browse deals &rarr;</a></div>'
     } else if (deal.enrichment_status === 'archived') {
       // WS-E2: archived deals stay resolvable at their URL (soft-delete
       // semantics, no 404) but render a compact notice instead of the full
       // page — hero area only, no fetches for timeline/financials/sources/
-      // comparables/lineage/companions. Breadcrumb back-link (outside this
-      // block) stays intact.
+      // outcomes/comparables/lineage/companions. Breadcrumb back-link
+      // (outside this block) stays intact.
+      document.getElementById('loading').style.display = 'none'
       document.title = `${deal.buyer_name} / ${deal.target_name} | Deal Intelligence`
       document.getElementById('deal-hero').style.display = ''
       document.getElementById('hero-title').textContent = `${deal.buyer_name} / ${deal.target_name}`
@@ -458,6 +456,14 @@ if (!dealId) {
         `<a href="deals.html" style="color:var(--gold);font-weight:600;text-decoration:none;">Browse active deals &rarr;</a>` +
         `</div>`
     } else {
+      // Past the archived gate: sources + outcomes fetch in parallel, and
+      // the loading indicator clears once they land (same as before).
+      const [sources, outcomes] = await Promise.all([
+        fetchDealSources(dealId),
+        fetchDealOutcomes(dealId),
+      ])
+      document.getElementById('loading').style.display = 'none'
+
       // ── Page title ──
       document.title = `${deal.buyer_name} / ${deal.target_name} | Deal Intelligence`
 
