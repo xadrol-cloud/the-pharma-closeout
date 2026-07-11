@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260711b">
+<link rel="stylesheet" href="assets/deals.css?v=20260711g">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
   /* Move 9: comparable-aged panel */
@@ -155,7 +155,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
          wrapper + position changed, not the JS contract.
          ═══════════════════════════════════════════════════════════════ -->
     <details id="score-section" class="m-acc sidebar-card score-card-hero" style="display:none;">
-      <summary class="sb-title">Score Breakdown</summary>
+      <summary class="sb-title"><span>Score Breakdown<span id="score-summary-teaser" class="acc-teaser"></span></span></summary>
       <div id="score-breakdown"></div>
     </details>
 
@@ -225,13 +225,13 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     <!-- Sources — Task 3.4 (R15): <details class="m-acc"> mobile-diet
          pattern (see #score-section); JS below sets .open on desktop. -->
     <details id="sources-section" class="m-acc sidebar-card" style="display:none;">
-      <summary class="sb-title">Sources</summary>
+      <summary class="sb-title"><span>Sources<span id="sources-summary-teaser" class="acc-teaser"></span></span></summary>
       <div id="sources"></div>
     </details>
 
     <!-- Task 41: Corporate Lineage — Task 3.4 (R15): same m-acc pattern. -->
     <details id="lineage-section" class="m-acc sidebar-card" style="display:none;">
-      <summary class="sb-title">Corporate Lineage</summary>
+      <summary class="sb-title"><span>Corporate Lineage<span id="lineage-summary-teaser" class="acc-teaser"></span></span></summary>
       <div id="lineage"></div>
     </details>
 
@@ -316,8 +316,9 @@ import {
   renderHypeGap, renderProvenance,
   displayOutcomeScore,
   comparableOutcomeSummary, renderComparableAged,
-  renderVerdictBar, esc
-} from './assets/deals.js?v=20260711b'
+  renderVerdictBar, esc, JUMP_NAV_SECTIONS,
+  dedupeByDealId
+} from './assets/deals.js?v=20260711g'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -328,9 +329,73 @@ const dealId = new URLSearchParams(window.location.search).get('id')
 function openAccordionsForDesktop(rootEl) {
   if (!rootEl) return
   const open = window.innerWidth >= 900
-  if (rootEl.matches && rootEl.matches('details.m-acc')) rootEl.open = open
-  rootEl.querySelectorAll('details.m-acc').forEach(d => { d.open = open })
+  const setOpen = (d) => {
+    // Task 6c fix: if this accordion's section is lazy-pending, inject its
+    // content BEFORE opening so desktop never shows an open-but-empty card.
+    // ORDERING DEPENDENCY: for lazy sections, registerLazySection(...) must
+    // run before this helper at the call site (see Sources / Corporate
+    // Lineage below) — otherwise the lazy-pending class isn't set yet and
+    // this guard can't fire.
+    if (open && d.id && d.classList.contains('lazy-pending')) runLazySection(d.id)
+    d.open = open
+  }
+  if (rootEl.matches && rootEl.matches('details.m-acc')) setOpen(rootEl)
+  rootEl.querySelectorAll('details.m-acc').forEach(setOpen)
 }
+
+// ── Task 6c: lazy-render below-fold sections ──────────────────────────
+// Comparables / Sources / Corporate Lineage / Companion deals: data
+// fetches still run eagerly (unchanged), but DOM injection (the expensive
+// part — dozens of poster/lineage-row elements) is deferred until the
+// section's placeholder nears the viewport. Placeholders reserve
+// min-height (via .lazy-pending in deals.css) so nothing shifts (CLS)
+// when content pops in. Registered sections can also be force-rendered
+// synchronously (jump-nav instant-tap case, Task 6a's
+// 'jump-nav:before-scroll' event).
+const _lazySections = new Map() // sectionId -> { render: () => void, done: boolean }
+
+function registerLazySection(sectionId, render) {
+  const el = document.getElementById(sectionId)
+  if (!el) return
+  el.classList.add('lazy-pending')
+  _lazySections.set(sectionId, { render, done: false })
+}
+
+function runLazySection(sectionId) {
+  const entry = _lazySections.get(sectionId)
+  if (!entry || entry.done) return
+  entry.done = true
+  entry.render()
+  const el = document.getElementById(sectionId)
+  if (el) el.classList.remove('lazy-pending')
+}
+
+let _lazyObserver = null
+function observeLazySections() {
+  if (!('IntersectionObserver' in window)) {
+    // No IO support: render everything now rather than never.
+    for (const id of _lazySections.keys()) runLazySection(id)
+    return
+  }
+  _lazyObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue
+      runLazySection(entry.target.id)
+      _lazyObserver.unobserve(entry.target)
+    }
+  }, { rootMargin: '600px 0px' })
+  for (const id of _lazySections.keys()) {
+    const el = document.getElementById(id)
+    if (el) _lazyObserver.observe(el)
+  }
+}
+
+// Jump-nav (Task 6a) taps a not-yet-rendered section: render it
+// synchronously before the scroll happens — the observer's rootMargin
+// alone isn't fast enough for an instant tap.
+document.addEventListener('jump-nav:before-scroll', (e) => {
+  runLazySection(e.detail.targetId)
+})
 
 if (!dealId) {
   document.getElementById('loading').innerHTML =
@@ -390,9 +455,11 @@ if (!dealId) {
         renderScorePill('critic', deal.critic_score != null ? Math.round(deal.critic_score) : null, criticSubtitle) +
         renderScorePill('outcome', gatedOutcome != null ? Math.round(gatedOutcome) : null, outcomeSubtitle)
 
-      // Task 2.1 (R6): sticky verdict bar — populated now that scores are
-      // known; visibility is toggled by the IntersectionObserver below once
-      // the hero score-pill row itself is in the DOM.
+      // Task 2.1 (R6) + Task 6a: sticky verdict bar — populated now that
+      // scores are known (jump-nav pills are added later, once section
+      // visibility is settled — see bottom of the try block); visibility
+      // is toggled by the IntersectionObserver below once the hero
+      // score-pill row itself is in the DOM.
       const verdictBarEl = document.getElementById('verdict-bar')
       if (verdictBarEl) {
         verdictBarEl.innerHTML = renderVerdictBar(deal)
@@ -437,6 +504,11 @@ if (!dealId) {
       if (deal.deal_summary && !isPipelineArtifact(deal.deal_summary)) {
         document.getElementById('hero-summary').textContent = cleanProse(deal.deal_summary)
         document.getElementById('hero-summary').style.display = ''
+      } else {
+        // Task 6a fix: explicitly hide the empty div — the jump-nav filter
+        // reads style.display, and an empty-but-visible #hero-summary would
+        // let a "Summary" pill render that scrolls to nothing.
+        document.getElementById('hero-summary').style.display = 'none'
       }
 
       // Editorial lede now renders as the consensus line above (Move 2 +
@@ -494,14 +566,26 @@ if (!dealId) {
         const scoreSectionEl = document.getElementById('score-section')
         scoreSectionEl.style.display = ''
         openAccordionsForDesktop(scoreSectionEl)
+        // Task 6d: teaser — the 4 dimension names, so a collapsed accordion
+        // signals what's inside instead of a bare title. Fixed set (same 4
+        // dims renderScoreBreakdown always scores), so no data dependency
+        // beyond scoreHtml existing.
+        const scoreTeaser = document.getElementById('score-summary-teaser')
+        if (scoreTeaser) {
+          scoreTeaser.textContent = 'Strategic Fit, Financial Return, Asset Performance, Value Realization'
+        }
       }
 
       // ── Sidebar: Comparables (fetch wider so the "aged" summary has ≥3 unlocked) ──
+      // Task 6c: fetch stays eager; DOM injection is deferred to when the
+      // placeholder nears the viewport (registerLazySection below).
       const comparables = await fetchComparables(deal, 20)
       const compsHtml = renderComps(comparables.slice(0, 5), dealId)
       if (compsHtml) {
-        document.getElementById('comparables').innerHTML = compsHtml
         document.getElementById('comparables-section').style.display = ''
+        registerLazySection('comparables-section', () => {
+          document.getElementById('comparables').innerHTML = compsHtml
+        })
       }
 
       // ── Move 9 / Task 2.1 (R6): "How deals like this aged" — only when
@@ -526,36 +610,84 @@ if (!dealId) {
       }
 
       // ── Sidebar: Sources (+ Move 2c provenance stamp) ──
+      // Task 6c: DOM injection deferred; the <details> itself still opens
+      // on desktop immediately (cheap, no content-dependent layout cost).
       const sourcesHtml = renderSources(sources)
-      document.getElementById('sources').innerHTML = sourcesHtml + renderProvenance(deal)
+      const provenanceHtml = renderProvenance(deal)
       const sourcesSectionEl = document.getElementById('sources-section')
       sourcesSectionEl.style.display = ''
+      // ORDERING: register BEFORE openAccordionsForDesktop — on desktop the
+      // open call force-renders a lazy-pending section so the accordion
+      // never opens empty (mobile stays lazy: open=false skips the render).
+      registerLazySection('sources-section', () => {
+        document.getElementById('sources').innerHTML = sourcesHtml + provenanceHtml
+      })
       openAccordionsForDesktop(sourcesSectionEl)
+
+      // ── Task 6d: Sources teaser — count + top source name, from the
+      //    already-fetched `sources` array (no new fetch). "Top" mirrors
+      //    renderSources' own ordering: healthy links (2xx-3xx) first. ──
+      if (sources && sources.length) {
+        const sourcesTeaser = document.getElementById('sources-summary-teaser')
+        if (sourcesTeaser) {
+          const healthyFirst = [...sources].sort((a, b) => {
+            const ok = (s) => s.link_status != null && s.link_status >= 200 && s.link_status < 400
+            if (ok(a) && !ok(b)) return -1
+            if (!ok(a) && ok(b)) return 1
+            return 0
+          })
+          const names = healthyFirst.map(s => s.source_name).filter(Boolean)
+          const topNames = names.slice(0, 2)
+          const teaserText = topNames.length
+            ? `${sources.length} — ${topNames.join(', ')}${names.length > topNames.length ? ', …' : ''}`
+            : `${sources.length}`
+          sourcesTeaser.textContent = teaserText
+        }
+      }
 
       // ── Task 39: Copy Deal Row binding ──
       window.__copyDealRow = () => exportDealRow(deal)
 
       // ── Task 41: Corporate Lineage sidebar ──
+      // Task 6c: fetch stays eager; DOM injection deferred.
       try {
         const lineage = await fetchCorporateLineage(deal)
         const lineageHtml = renderCorporateLineage(lineage, deal)
         if (lineageHtml) {
-          document.getElementById('lineage').innerHTML = lineageHtml
           const lineageSectionEl = document.getElementById('lineage-section')
           lineageSectionEl.style.display = ''
+          // ORDERING: register BEFORE openAccordionsForDesktop (see Sources).
+          registerLazySection('lineage-section', () => {
+            document.getElementById('lineage').innerHTML = lineageHtml
+          })
           openAccordionsForDesktop(lineageSectionEl)
+          // Task 6d: teaser — deduped count, matching what
+          // renderCorporateLineage actually lists (dedupeByDealId is the
+          // same dedup renderLineageList applies internally).
+          const lineageTeaser = document.getElementById('lineage-summary-teaser')
+          if (lineageTeaser) {
+            const n = dedupeByDealId(lineage).length
+            lineageTeaser.textContent = `${n} deal${n === 1 ? '' : 's'}`
+          }
         }
       } catch (e) { console.warn('lineage fetch failed', e) }
 
       // ── Task 43: Companion (same-parties) Deals sidebar ──
+      // Task 6c: fetch stays eager; DOM injection deferred.
       try {
         const companions = await fetchCompanionDeals(deal)
         const companionsHtml = renderCompanionDeals(companions, deal)
         if (companionsHtml) {
-          document.getElementById('companions').innerHTML = companionsHtml
           document.getElementById('companions-section').style.display = ''
+          registerLazySection('companions-section', () => {
+            document.getElementById('companions').innerHTML = companionsHtml
+          })
         }
       } catch (e) { console.warn('companions fetch failed', e) }
+
+      // ── Task 6c: start observing every registered lazy section now that
+      //    all four are registered (or skipped, if their data was empty). ──
+      observeLazySections()
 
       // ── Task 26: Historical deal variant (pre-1990) ──
       if (isHistoricalDeal(deal)) {
@@ -571,6 +703,46 @@ if (!dealId) {
           sb.insertAdjacentHTML('afterbegin',
             '<div class="sc-method" style="color:var(--ink-faint);font-style:italic">Default scoring: insufficient historical data</div>')
         }
+      }
+
+      // ── Task 6a: jump-nav — now that every section's final visibility is
+      //    settled, filter JUMP_NAV_SECTIONS down to ones that actually
+      //    rendered for this deal (a pill must never scroll to nothing,
+      //    e.g. Financials hidden on licensing deals) and re-render the
+      //    verdict bar with the pill row appended. ──
+      if (verdictBarEl) {
+        const visibleJumpSections = JUMP_NAV_SECTIONS.filter(s => {
+          const el = document.getElementById(s.id)
+          if (!el) return false
+          // #hero-summary has no wrapping "-section" div and is only set
+          // to display:'' when deal.deal_summary exists (see above) —
+          // style.display defaults to '' (visible) for every other target.
+          return el.style.display !== 'none'
+        })
+        verdictBarEl.innerHTML = renderVerdictBar(deal, visibleJumpSections)
+
+        // Smooth-scroll with offset compensation for the fixed nav +
+        // verdict bar (which may now be one or two rows tall). Opens
+        // collapsed <details> targets (Sources) before scrolling, and
+        // — Task 6c hook — dispatches a 'jump-nav:before-scroll' event so
+        // a not-yet-rendered lazy section can materialize synchronously
+        // before the scroll happens (observer alone isn't fast enough for
+        // an instant tap).
+        verdictBarEl.addEventListener('click', (e) => {
+          const pill = e.target.closest('[data-jump-target]')
+          if (!pill) return
+          e.preventDefault()
+          const targetId = pill.getAttribute('data-jump-target')
+          document.dispatchEvent(new CustomEvent('jump-nav:before-scroll', { detail: { targetId } }))
+          const target = document.getElementById(targetId)
+          if (!target) return
+          if (target.tagName === 'DETAILS') target.open = true
+          const barHeight = document.getElementById('verdict-bar').getBoundingClientRect().height
+          const navHeight = 52 // .nav height, see deals.css
+          const offset = navHeight + barHeight + 12
+          const top = target.getBoundingClientRect().top + window.scrollY - offset
+          window.scrollTo({ top, behavior: 'smooth' })
+        })
       }
     }
   } catch (err) {

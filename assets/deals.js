@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260711b'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260711g'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents, POPULAR_SEARCHES,
-} from './scoring.js?v=20260711b'
+} from './scoring.js?v=20260711g'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -1062,16 +1062,48 @@ function verdictBarChip(dimension, score) {
 }
 
 /**
- * Sticky verdict-bar content: short title (buyer / target), compact CS/OS
- * chips, and deal status. Returns an HTML string for #verdict-bar; the
- * caller controls visibility via the IntersectionObserver.
+ * Task 6a: jump-nav pill definitions for the verdict bar's second row.
+ * `id` matches the target section's element id; `check` (given the deal)
+ * decides whether the section will actually render for this deal so a
+ * pill never scrolls to nothing (e.g. Financials hidden on licensing
+ * deals). Exported so deal.html can filter without duplicating the list.
  */
-export function renderVerdictBar(deal) {
+export const JUMP_NAV_SECTIONS = [
+  { id: 'hero-summary', label: 'Summary' },
+  { id: 'financials-section', label: 'Financials' },
+  { id: 'timeline-section', label: 'Timeline' },
+  { id: 'reviews-section', label: 'Reactions' },
+  { id: 'comparables-section', label: 'Comparables' },
+  { id: 'sources-section', label: 'Sources' },
+]
+
+/**
+ * Task 6a: renders the jump-nav pill row. Caller (deal.html) filters
+ * `sections` down to ones actually visible for this deal before calling.
+ */
+function renderJumpNav(sections) {
+  if (!sections || !sections.length) return ''
+  const pills = sections.map(s =>
+    `<a class="vb-pill" href="#${esc(s.id)}" data-jump-target="${esc(s.id)}">${esc(s.label)}</a>`).join('')
+  return `<nav class="vb-jumpnav" aria-label="Jump to section">${pills}</nav>`
+}
+
+/**
+ * Sticky verdict-bar content: short title (buyer / target), compact CS/OS
+ * chips, deal status, and a jump-nav pill row. Returns an HTML string for
+ * #verdict-bar; the caller controls visibility via the IntersectionObserver
+ * and passes the subset of JUMP_NAV_SECTIONS that actually render.
+ */
+export function renderVerdictBar(deal, jumpSections = []) {
   if (!deal) return ''
   const criticScore = deal.critic_score != null ? Math.round(deal.critic_score) : null
   const os = displayOutcomeScore(deal)
   const outcomeScore = os != null ? Math.round(os) : null
   const title = `${esc(deal.buyer_name || '')} / ${esc(deal.target_name || '')}`
+  // No jump sections (e.g. the pre-filter first render) → no nav row at
+  // all, not an empty container in the DOM.
+  const navRow = jumpSections.length ? `
+  ${renderJumpNav(jumpSections)}` : ''
   return `<div class="vb-inner">
     <span class="vb-title">${title}</span>
     <span class="vb-chips">
@@ -1079,7 +1111,7 @@ export function renderVerdictBar(deal) {
       ${verdictBarChip('outcome', outcomeScore)}
     </span>
     <span class="vb-status">${renderDealStatus(deal.deal_outcome_status, deal)}</span>
-  </div>`
+  </div>${navRow}`
 }
 
 

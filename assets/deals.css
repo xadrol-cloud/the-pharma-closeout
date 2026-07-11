@@ -1022,6 +1022,24 @@ input, textarea, select {
 .m-acc[open] > summary::after { transform: rotate(-135deg); }
 .m-acc[open] > summary { margin-bottom: 16px; }
 
+/* Task 6d: predictability teasers — collapsed accordions signal what's
+   inside (count + top item) instead of a bare title (Baymard
+   predictability rule). Muted, appended after the title text inside the
+   same flex item so justify-content:space-between still only sees two
+   children (title+teaser, chevron). Hidden while open — the real content
+   is visible then, the teaser would be redundant. */
+.acc-teaser {
+  display: block;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--ink-faint);
+  margin-top: 2px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.m-acc[open] > summary .acc-teaser { display: none; }
+
 .m-acc.score-card-hero {
   margin-top: 18px;
   max-width: 620px;
@@ -1339,6 +1357,25 @@ input, textarea, select {
   font-family: var(--serif);
   font-size: 15px; font-weight: 600;
   margin-bottom: 16px;
+}
+
+/* Task 6c: lazy-render placeholders. Reserve roughly the height the real
+   content will occupy once it materializes so popping it in doesn't shift
+   the layout (CLS). Measured against real deals (Playwright, 390w/1440w):
+   comparables ~660-750px at every width (not an accordion, always full);
+   sources/lineage are <details class="m-acc"> — collapsed to ~90px on
+   mobile (<900px, closed by default) but opened to ~350-470px on desktop
+   (>=900px, opened by openAccordionsForDesktop). Companion deals card is
+   the shortest and least common (often absent entirely). */
+#comparables-section.lazy-pending { min-height: 700px; }
+#sources-section.lazy-pending,
+#lineage-section.lazy-pending {
+  min-height: 90px;
+}
+#companions-section.lazy-pending { min-height: 160px; }
+@media (min-width: 900px) {
+  #sources-section.lazy-pending { min-height: 420px; }
+  #lineage-section.lazy-pending { min-height: 330px; }
 }
 
 
@@ -2027,7 +2064,10 @@ input, textarea, select {
   top: 52px; /* nav height */
   left: 0; right: 0;
   z-index: 40;
-  height: 48px;
+  min-height: 48px; /* Task 6a: was fixed height:48px — a second (jump-nav)
+                        row would get clipped. min-height + auto lets the
+                        bar grow; it overlays content (position:fixed), so
+                        no body padding needs to change either way. */
   background: var(--bg);
   border-bottom: 1px solid rgba(196,147,50,0.35);
   box-shadow: 0 6px 16px rgba(0,0,0,0.3);
@@ -2035,12 +2075,60 @@ input, textarea, select {
 .verdict-bar[hidden] { display: none; }
 .vb-inner {
   max-width: 1160px;
-  height: 100%;
+  min-height: 48px;
   margin: 0 auto;
   padding: 0 40px;
   display: flex;
   align-items: center;
   gap: 16px;
+}
+/* Task 6a: jump-nav second row. Mobile (<900px): always its own row,
+   horizontally scrollable. Desktop (>=900px): tries to sit inline to the
+   right of .vb-inner's content; falls to its own row via flex-wrap when
+   the title+chips+status don't leave room (no JS measurement needed). */
+.verdict-bar {
+  display: flex;
+  flex-wrap: wrap;
+}
+.vb-jumpnav {
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 40px 6px;
+}
+.vb-jumpnav::-webkit-scrollbar { display: none; }
+.vb-pill {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px; /* R12/a11y: tap targets are >=44px (padding-driven, not font size) */
+  box-sizing: border-box;
+  padding: 4px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.75);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.vb-pill:hover, .vb-pill:focus-visible {
+  background: rgba(196,147,50,0.18);
+  color: #e8e4de;
+}
+@media (min-width: 900px) {
+  .vb-inner { flex: 1 1 auto; }
+  .vb-jumpnav { flex: 0 1 auto; width: auto; padding: 0 40px; max-width: 45%; }
+  .verdict-bar { padding-top: 0; }
 }
 .vb-title {
   font-family: var(--sans);
@@ -3324,6 +3412,31 @@ html, body { overflow-x: hidden; }
 }
 @media (max-width: 375px) {
   .score-chip { width: 56px; height: 56px; font-size: 22px; }
+}
+
+/* Task 6b: mobile-only hero compression (<=600px). Score pills are already
+   2-up at this width (rule above); this tightens their internal spacing
+   further and condenses the cohort panel ("How deals like this aged",
+   .comp-aged, rendered into #cohort-panel) from a full card down to one
+   compact stat line. Desktop is untouched — every rule here is scoped to
+   the same <=600px query the existing 2-up rule uses. */
+@media (max-width: 600px) {
+  .score-block { gap: 4px; }
+  #hero-scores.feat-scores,
+  .featured .feat-scores { gap: 8px; margin-bottom: 12px; }
+
+  #cohort-panel .comp-aged {
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+  /* Drop the card-head title and the explanatory lede — the stat line
+     alone ("92 · median outcome, 20 deals") carries the verdict; the full
+     sentence is still available on desktop where vertical space is cheap. */
+  #cohort-panel .comp-aged .card-head,
+  #cohort-panel .comp-aged .ca-lede { display: none; }
+  #cohort-panel .comp-aged .ca-stat { gap: 8px; }
+  #cohort-panel .comp-aged .ca-num { font-size: 26px; }
+  #cohort-panel .comp-aged .ca-lab { font-size: 11.5px; line-height: 1.3; }
 }
 
 /* WS-C — Semantic deal-type pill palette */
