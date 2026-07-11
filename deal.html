@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260711d">
+<link rel="stylesheet" href="assets/deals.css?v=20260711e">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
   /* Move 9: comparable-aged panel */
@@ -317,7 +317,7 @@ import {
   displayOutcomeScore,
   comparableOutcomeSummary, renderComparableAged,
   renderVerdictBar, esc, JUMP_NAV_SECTIONS
-} from './assets/deals.js?v=20260711d'
+} from './assets/deals.js?v=20260711e'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -331,6 +331,60 @@ function openAccordionsForDesktop(rootEl) {
   if (rootEl.matches && rootEl.matches('details.m-acc')) rootEl.open = open
   rootEl.querySelectorAll('details.m-acc').forEach(d => { d.open = open })
 }
+
+// ── Task 6c: lazy-render below-fold sections ──────────────────────────
+// Comparables / Sources / Corporate Lineage / Companion deals: data
+// fetches still run eagerly (unchanged), but DOM injection (the expensive
+// part — dozens of poster/lineage-row elements) is deferred until the
+// section's placeholder nears the viewport. Placeholders reserve
+// min-height (via .lazy-pending in deals.css) so nothing shifts (CLS)
+// when content pops in. Registered sections can also be force-rendered
+// synchronously (jump-nav instant-tap case, Task 6a's
+// 'jump-nav:before-scroll' event).
+const _lazySections = new Map() // sectionId -> { render: () => void, done: boolean }
+
+function registerLazySection(sectionId, render) {
+  const el = document.getElementById(sectionId)
+  if (!el) return
+  el.classList.add('lazy-pending')
+  _lazySections.set(sectionId, { render, done: false })
+}
+
+function runLazySection(sectionId) {
+  const entry = _lazySections.get(sectionId)
+  if (!entry || entry.done) return
+  entry.done = true
+  entry.render()
+  const el = document.getElementById(sectionId)
+  if (el) el.classList.remove('lazy-pending')
+}
+
+let _lazyObserver = null
+function observeLazySections() {
+  if (!('IntersectionObserver' in window)) {
+    // No IO support: render everything now rather than never.
+    for (const id of _lazySections.keys()) runLazySection(id)
+    return
+  }
+  _lazyObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue
+      runLazySection(entry.target.id)
+      _lazyObserver.unobserve(entry.target)
+    }
+  }, { rootMargin: '600px 0px' })
+  for (const id of _lazySections.keys()) {
+    const el = document.getElementById(id)
+    if (el) _lazyObserver.observe(el)
+  }
+}
+
+// Jump-nav (Task 6a) taps a not-yet-rendered section: render it
+// synchronously before the scroll happens — the observer's rootMargin
+// alone isn't fast enough for an instant tap.
+document.addEventListener('jump-nav:before-scroll', (e) => {
+  runLazySection(e.detail.targetId)
+})
 
 if (!dealId) {
   document.getElementById('loading').innerHTML =
@@ -499,11 +553,15 @@ if (!dealId) {
       }
 
       // ── Sidebar: Comparables (fetch wider so the "aged" summary has ≥3 unlocked) ──
+      // Task 6c: fetch stays eager; DOM injection is deferred to when the
+      // placeholder nears the viewport (registerLazySection below).
       const comparables = await fetchComparables(deal, 20)
       const compsHtml = renderComps(comparables.slice(0, 5), dealId)
       if (compsHtml) {
-        document.getElementById('comparables').innerHTML = compsHtml
         document.getElementById('comparables-section').style.display = ''
+        registerLazySection('comparables-section', () => {
+          document.getElementById('comparables').innerHTML = compsHtml
+        })
       }
 
       // ── Move 9 / Task 2.1 (R6): "How deals like this aged" — only when
@@ -528,36 +586,51 @@ if (!dealId) {
       }
 
       // ── Sidebar: Sources (+ Move 2c provenance stamp) ──
+      // Task 6c: DOM injection deferred; the <details> itself still opens
+      // on desktop immediately (cheap, no content-dependent layout cost).
       const sourcesHtml = renderSources(sources)
-      document.getElementById('sources').innerHTML = sourcesHtml + renderProvenance(deal)
+      const provenanceHtml = renderProvenance(deal)
       const sourcesSectionEl = document.getElementById('sources-section')
       sourcesSectionEl.style.display = ''
       openAccordionsForDesktop(sourcesSectionEl)
+      registerLazySection('sources-section', () => {
+        document.getElementById('sources').innerHTML = sourcesHtml + provenanceHtml
+      })
 
       // ── Task 39: Copy Deal Row binding ──
       window.__copyDealRow = () => exportDealRow(deal)
 
       // ── Task 41: Corporate Lineage sidebar ──
+      // Task 6c: fetch stays eager; DOM injection deferred.
       try {
         const lineage = await fetchCorporateLineage(deal)
         const lineageHtml = renderCorporateLineage(lineage, deal)
         if (lineageHtml) {
-          document.getElementById('lineage').innerHTML = lineageHtml
           const lineageSectionEl = document.getElementById('lineage-section')
           lineageSectionEl.style.display = ''
           openAccordionsForDesktop(lineageSectionEl)
+          registerLazySection('lineage-section', () => {
+            document.getElementById('lineage').innerHTML = lineageHtml
+          })
         }
       } catch (e) { console.warn('lineage fetch failed', e) }
 
       // ── Task 43: Companion (same-parties) Deals sidebar ──
+      // Task 6c: fetch stays eager; DOM injection deferred.
       try {
         const companions = await fetchCompanionDeals(deal)
         const companionsHtml = renderCompanionDeals(companions, deal)
         if (companionsHtml) {
-          document.getElementById('companions').innerHTML = companionsHtml
           document.getElementById('companions-section').style.display = ''
+          registerLazySection('companions-section', () => {
+            document.getElementById('companions').innerHTML = companionsHtml
+          })
         }
       } catch (e) { console.warn('companions fetch failed', e) }
+
+      // ── Task 6c: start observing every registered lazy section now that
+      //    all four are registered (or skipped, if their data was empty). ──
+      observeLazySections()
 
       // ── Task 26: Historical deal variant (pre-1990) ──
       if (isHistoricalDeal(deal)) {
