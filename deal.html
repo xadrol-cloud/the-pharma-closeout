@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260711b">
+<link rel="stylesheet" href="assets/deals.css?v=20260711c">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
   /* Move 9: comparable-aged panel */
@@ -316,8 +316,8 @@ import {
   renderHypeGap, renderProvenance,
   displayOutcomeScore,
   comparableOutcomeSummary, renderComparableAged,
-  renderVerdictBar, esc
-} from './assets/deals.js?v=20260711b'
+  renderVerdictBar, esc, JUMP_NAV_SECTIONS
+} from './assets/deals.js?v=20260711c'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -390,9 +390,11 @@ if (!dealId) {
         renderScorePill('critic', deal.critic_score != null ? Math.round(deal.critic_score) : null, criticSubtitle) +
         renderScorePill('outcome', gatedOutcome != null ? Math.round(gatedOutcome) : null, outcomeSubtitle)
 
-      // Task 2.1 (R6): sticky verdict bar — populated now that scores are
-      // known; visibility is toggled by the IntersectionObserver below once
-      // the hero score-pill row itself is in the DOM.
+      // Task 2.1 (R6) + Task 6a: sticky verdict bar — populated now that
+      // scores are known (jump-nav pills are added later, once section
+      // visibility is settled — see bottom of the try block); visibility
+      // is toggled by the IntersectionObserver below once the hero
+      // score-pill row itself is in the DOM.
       const verdictBarEl = document.getElementById('verdict-bar')
       if (verdictBarEl) {
         verdictBarEl.innerHTML = renderVerdictBar(deal)
@@ -571,6 +573,46 @@ if (!dealId) {
           sb.insertAdjacentHTML('afterbegin',
             '<div class="sc-method" style="color:var(--ink-faint);font-style:italic">Default scoring: insufficient historical data</div>')
         }
+      }
+
+      // ── Task 6a: jump-nav — now that every section's final visibility is
+      //    settled, filter JUMP_NAV_SECTIONS down to ones that actually
+      //    rendered for this deal (a pill must never scroll to nothing,
+      //    e.g. Financials hidden on licensing deals) and re-render the
+      //    verdict bar with the pill row appended. ──
+      if (verdictBarEl) {
+        const visibleJumpSections = JUMP_NAV_SECTIONS.filter(s => {
+          const el = document.getElementById(s.id)
+          if (!el) return false
+          // #hero-summary has no wrapping "-section" div and is only set
+          // to display:'' when deal.deal_summary exists (see above) —
+          // style.display defaults to '' (visible) for every other target.
+          return el.style.display !== 'none'
+        })
+        verdictBarEl.innerHTML = renderVerdictBar(deal, visibleJumpSections)
+
+        // Smooth-scroll with offset compensation for the fixed nav +
+        // verdict bar (which may now be one or two rows tall). Opens
+        // collapsed <details> targets (Sources) before scrolling, and
+        // — Task 6c hook — dispatches a 'jump-nav:before-scroll' event so
+        // a not-yet-rendered lazy section can materialize synchronously
+        // before the scroll happens (observer alone isn't fast enough for
+        // an instant tap).
+        verdictBarEl.addEventListener('click', (e) => {
+          const pill = e.target.closest('[data-jump-target]')
+          if (!pill) return
+          e.preventDefault()
+          const targetId = pill.getAttribute('data-jump-target')
+          document.dispatchEvent(new CustomEvent('jump-nav:before-scroll', { detail: { targetId } }))
+          const target = document.getElementById(targetId)
+          if (!target) return
+          if (target.tagName === 'DETAILS') target.open = true
+          const barHeight = document.getElementById('verdict-bar').getBoundingClientRect().height
+          const navHeight = 52 // .nav height, see deals.css
+          const offset = navHeight + barHeight + 12
+          const top = target.getBoundingClientRect().top + window.scrollY - offset
+          window.scrollTo({ top, behavior: 'smooth' })
+        })
       }
     }
   } catch (err) {

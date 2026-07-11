@@ -2027,7 +2027,10 @@ input, textarea, select {
   top: 52px; /* nav height */
   left: 0; right: 0;
   z-index: 40;
-  height: 48px;
+  min-height: 48px; /* Task 6a: was fixed height:48px — a second (jump-nav)
+                        row would get clipped. min-height + auto lets the
+                        bar grow; it overlays content (position:fixed), so
+                        no body padding needs to change either way. */
   background: var(--bg);
   border-bottom: 1px solid rgba(196,147,50,0.35);
   box-shadow: 0 6px 16px rgba(0,0,0,0.3);
@@ -2035,12 +2038,60 @@ input, textarea, select {
 .verdict-bar[hidden] { display: none; }
 .vb-inner {
   max-width: 1160px;
-  height: 100%;
+  min-height: 48px;
   margin: 0 auto;
   padding: 0 40px;
   display: flex;
   align-items: center;
   gap: 16px;
+}
+/* Task 6a: jump-nav second row. Mobile (<900px): always its own row,
+   horizontally scrollable. Desktop (>=900px): tries to sit inline to the
+   right of .vb-inner's content; falls to its own row via flex-wrap when
+   the title+chips+status don't leave room (no JS measurement needed). */
+.verdict-bar {
+  display: flex;
+  flex-wrap: wrap;
+}
+.vb-jumpnav {
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 40px 6px;
+}
+.vb-jumpnav::-webkit-scrollbar { display: none; }
+.vb-pill {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px; /* R12/a11y: tap targets are >=44px (padding-driven, not font size) */
+  box-sizing: border-box;
+  padding: 4px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.75);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.vb-pill:hover, .vb-pill:focus-visible {
+  background: rgba(196,147,50,0.18);
+  color: #e8e4de;
+}
+@media (min-width: 900px) {
+  .vb-inner { flex: 1 1 auto; }
+  .vb-jumpnav { flex: 0 1 auto; width: auto; padding: 0 40px; max-width: 45%; }
+  .verdict-bar { padding-top: 0; }
 }
 .vb-title {
   font-family: var(--sans);
