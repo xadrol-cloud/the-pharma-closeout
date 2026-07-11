@@ -336,3 +336,11 @@ export const SCORE_VOCAB = {
     tooltip: 'Post-close performance vs. the deal thesis — grades open 5 years after close',
   },
 }
+
+/** Task 2.4 (R9) — suggested searches shown in the empty-search recovery
+ *  block (deals.js initSearch/initScreener). Small, curated, high-hit-rate. */
+export const POPULAR_SEARCHES = [
+  { label: 'Pfizer', query: 'Pfizer' },
+  { label: 'Oncology', query: 'Oncology' },
+  { label: 'ADC platforms', query: 'antibody-drug conjugate' },
+]

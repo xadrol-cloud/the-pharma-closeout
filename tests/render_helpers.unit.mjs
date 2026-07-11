@@ -1,7 +1,7 @@
 // Unit tests for pure render helpers in assets/scoring.js (offline, node --test)
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { SCORE_VOCAB, posterScoreState, financialFieldsFor, dedupeByDealId, sortTimelineEvents } from '../assets/scoring.js'
+import { SCORE_VOCAB, posterScoreState, financialFieldsFor, dedupeByDealId, sortTimelineEvents, POPULAR_SEARCHES } from '../assets/scoring.js'
 
 test('SCORE_VOCAB: canonical names and tooltips for both dimensions', () => {
   assert.equal(SCORE_VOCAB.critic.name, 'Critic Score')
@@ -116,4 +116,9 @@ test('sortTimelineEvents: milestone at sort_order 100 is NOT a pin — date-sort
     { event_date: '2026-05-28', sort_order: 1, t: 'early' },
   ]
   assert.deepEqual(sortTimelineEvents(ev).map(e => e.t), ['early', 'update', 'late'])
+})
+
+test('POPULAR_SEARCHES: at least 3 entries with label and query', () => {
+  assert.ok(POPULAR_SEARCHES.length >= 3)
+  for (const p of POPULAR_SEARCHES) { assert.ok(p.label && p.query) }
 })

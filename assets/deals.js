@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710p'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710q'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -15,8 +15,8 @@ import {
   tierForScore, tierLabelFor, hypeGap, hypeGapLabel,
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
-  financialFieldsFor, dedupeByDealId, sortTimelineEvents,
-} from './scoring.js?v=20260710p'
+  financialFieldsFor, dedupeByDealId, sortTimelineEvents, POPULAR_SEARCHES,
+} from './scoring.js?v=20260710q'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -2212,6 +2212,45 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
     return f
   }
 
+  /** Task 2.4 (R9) — reset the search input, every filter select, and the
+   *  deal-type pills back to "All", then re-run so the recovery UI's
+   *  "Clear filters" action always lands on the full unfiltered result set. */
+  function clearFiltersAndSearch() {
+    inputEl.value = ''
+    filtersEl?.querySelectorAll('select').forEach(sel => { sel.selectedIndex = 0 })
+    const toggles = filtersEl?.querySelectorAll('.dt-toggle')
+    const hiddenSelect = filtersEl?.querySelector('.dt-select-hidden')
+    if (toggles?.length) {
+      toggles.forEach(b => b.classList.remove('active'))
+      const allBtn = filtersEl.querySelector('.dt-toggle[data-dt=""]')
+      allBtn?.classList.add('active')
+    }
+    if (hiddenSelect) hiddenSelect.value = ''
+    runSearch({ append: false })
+  }
+
+  /** Task 2.4 (R9) — empty-search recovery block: explains the miss,
+   *  offers a one-click reset, and surfaces curated popular searches so
+   *  a dead-end search never strands the user. */
+  function renderEmptyState(term) {
+    const chips = POPULAR_SEARCHES.map(p =>
+      `<button type="button" class="se-chip" data-query="${esc(p.query)}">${esc(p.label)}</button>`
+    ).join('')
+    resultsEl.innerHTML = `
+      <div class="search-empty">
+        <p class="se-message">No deals match "${esc(term)}" — try a company, molecule, or therapeutic area.</p>
+        <button type="button" class="se-clear">Clear filters</button>
+        <div class="se-chips">${chips}</div>
+      </div>`
+    resultsEl.querySelector('.se-clear')?.addEventListener('click', clearFiltersAndSearch)
+    resultsEl.querySelectorAll('.se-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        inputEl.value = btn.dataset.query
+        runSearch({ append: false })
+      })
+    })
+  }
+
   async function runSearch({ append = false } = {}) {
     const token = ++requestToken
     const query = inputEl.value.trim()
@@ -2244,7 +2283,7 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
     if (append) {
       resultsEl.querySelector('.row-list')?.insertAdjacentHTML('beforeend', rowsHtml)
     } else if (!deals.length) {
-      resultsEl.innerHTML = '<p class="search-status">No deals found.</p>'
+      renderEmptyState(inputEl.value.trim())
       return
     } else {
       resultsEl.innerHTML = `
@@ -2424,6 +2463,46 @@ export function initScreener(rootEl, filtersEl, inputEl, opts = {}) {
     countEl.textContent = `Showing ${loadedCount} of ${totalCount} deals`
   }
 
+  /** Task 2.4 (R9) — same reset behavior as initSearch's clearFiltersAndSearch,
+   *  adapted to the screener's inputEl/filtersEl/pill wiring. */
+  function clearFiltersAndSearch() {
+    if (inputEl) inputEl.value = ''
+    filtersEl?.querySelectorAll('select').forEach(sel => { sel.selectedIndex = 0 })
+    const toggles = filtersEl?.querySelectorAll('.dt-toggle')
+    const hiddenSelect = filtersEl?.querySelector('.dt-select-hidden')
+    if (toggles?.length) {
+      toggles.forEach(b => b.classList.remove('active'))
+      const allBtn = filtersEl.querySelector('.dt-toggle[data-dt=""]')
+      allBtn?.classList.add('active')
+    }
+    if (hiddenSelect) hiddenSelect.value = ''
+    currentSort = 'date_desc'
+    syncSortSelect()
+    runQuery({ append: false })
+  }
+
+  /** Task 2.4 (R9) — empty-search recovery for the screener table. Rendered
+   *  as a single wide row (table markup requires td/tr, not a bare div). */
+  function renderEmptyState(term) {
+    const chips = POPULAR_SEARCHES.map(p =>
+      `<button type="button" class="se-chip" data-query="${esc(p.query)}">${esc(p.label)}</button>`
+    ).join('')
+    tbody.innerHTML = `<tr><td colspan="${SCREENER_COLUMNS.length}">
+      <div class="search-empty">
+        <p class="se-message">No deals match "${esc(term)}" — try a company, molecule, or therapeutic area.</p>
+        <button type="button" class="se-clear">Clear filters</button>
+        <div class="se-chips">${chips}</div>
+      </div>
+    </td></tr>`
+    tbody.querySelector('.se-clear')?.addEventListener('click', clearFiltersAndSearch)
+    tbody.querySelectorAll('.se-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (inputEl) inputEl.value = btn.dataset.query
+        runQuery({ append: false })
+      })
+    })
+  }
+
   async function runQuery({ append = false } = {}) {
     // Request-token race guard: a stale response (e.g. an append issued
     // before a sort change resolves) must never land over newer rows.
@@ -2444,7 +2523,8 @@ export function initScreener(rootEl, filtersEl, inputEl, opts = {}) {
       if (append) {
         tbody.insertAdjacentHTML('beforeend', rowsHtml)
       } else if (!deals.length) {
-        tbody.innerHTML = `<tr><td colspan="${SCREENER_COLUMNS.length}" class="search-status">No deals found.</td></tr>`
+        renderEmptyState(query)
+        return
       } else {
         tbody.innerHTML = rowsHtml
       }

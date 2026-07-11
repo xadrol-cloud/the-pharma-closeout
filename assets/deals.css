@@ -1122,6 +1122,63 @@ input, textarea, select {
 }
 .load-more-btn:hover { opacity: 0.85; }
 
+/* Task 2.4 (R9) — Empty-search recovery block: replaces the bare
+   "No deals found." message with an explanation, a one-click filter
+   reset, and curated popular-search chips so a dead-end search never
+   strands the user. Used by both initSearch (deals.html/deal search)
+   and initScreener (browse.html table, wrapped in a td/tr by caller). */
+.search-empty {
+  text-align: center;
+  padding: 48px 16px;
+}
+.se-message {
+  color: var(--ink-light);
+  font-size: 14px;
+  margin: 0 0 20px 0;
+}
+.se-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 24px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: opacity 0.15s;
+  margin-bottom: 20px;
+}
+.se-clear:hover { opacity: 0.85; }
+.se-clear:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.se-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.se-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 16px;
+  background: var(--surface);
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.se-chip:hover { background: var(--amber-bg, var(--paper)); }
+.se-chip:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
 
 /* ==========================================================================
    8. TAGS
