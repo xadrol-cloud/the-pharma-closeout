@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710n'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710o'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents,
-} from './scoring.js?v=20260710n'
+} from './scoring.js?v=20260710o'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -521,19 +521,23 @@ function applySortClause(q, sortKey) {
 }
 
 /** Task 2.2: exact count of all graded deals (no filters), for the browse
- *  page subhead and deals.html hero line. CAUTION: exact counts on
- *  deals_enriched can hit the statement timeout under load and resolve to a
- *  null count — callers must fall back to a static string, never render
- *  "null deals". */
+ *  page subhead and deals.html hero line. Excludes archived rows — same
+ *  `.neq('enrichment_status','archived')` gate as searchDeals, so the hero
+ *  count and the screener's "Showing X of Y" total always agree. CAUTION:
+ *  exact counts on deals_enriched can hit the statement timeout under load
+ *  and resolve to a null count — callers must fall back to a static string,
+ *  never render "null deals". */
 export async function fetchDealCount() {
   const { count, error } = await supabase
     .from('deals_enriched')
     .select('deal_id', { count: 'exact', head: true })
+    .neq('enrichment_status', 'archived')
   if (error || count == null) {
     // Retry once with a no-op filter hint in case the plain count timed out
     const retry = await supabase
       .from('deals_enriched')
       .select('deal_id', { count: 'exact', head: true })
+      .neq('enrichment_status', 'archived')
       .not('deal_id', 'is', null)
     if (retry.error || retry.count == null) return null
     return retry.count
@@ -2195,6 +2199,10 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
   let debounceTimer = null
   let loadedCount = 0
   let totalCount = 0
+  // Request-token race guard: overlapping searchDeals responses would land
+  // last-write-wins (e.g. a stale append after a filter change corrupting
+  // the list). Only the response matching the latest issued token renders.
+  let requestToken = 0
 
   function readFilters() {
     const f = {}
@@ -2205,6 +2213,7 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
   }
 
   async function runSearch({ append = false } = {}) {
+    const token = ++requestToken
     const query = inputEl.value.trim()
     const filters = readFilters()
     const hasNonSortFilter = Object.keys(filters).filter(k => k !== 'sort').length > 0
@@ -2216,11 +2225,13 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
     if (!append) resultsEl.innerHTML = '<p class="search-status">Searching...</p>'
     try {
       const { deals, total } = await searchDeals(query, filters, { limit: 25, offset })
+      if (token !== requestToken) return // superseded by a newer request
       if (!append) loadedCount = 0
       loadedCount += deals.length
       totalCount = total
       renderResults(deals, append)
     } catch (e) {
+      if (token !== requestToken) return
       resultsEl.innerHTML = '<p class="search-status error">Search is temporarily unavailable. Try again.</p>'
       console.error('searchDeals error', e)
     }
@@ -2339,6 +2350,8 @@ export function initScreener(rootEl, filtersEl, inputEl, opts = {}) {
   let currentSort = params.get('sort') || 'date_desc'
   let loadedCount = 0
   let totalCount = 0
+  // Request-token race guard — see runQuery
+  let requestToken = 0
 
   // Seed the visible sort <select> (if present in filtersEl) so filter
   // read-back stays consistent with the header-driven sort state.
@@ -2380,14 +2393,17 @@ export function initScreener(rootEl, filtersEl, inputEl, opts = {}) {
     rootEl.querySelectorAll('.sc-h').forEach(th => {
       th.removeAttribute('data-active')
       th.removeAttribute('data-dir')
+      th.removeAttribute('aria-sort')
     })
     const activeCol = Object.entries(SCREENER_SORT_TOGGLE)
       .find(([, states]) => states.includes(currentSort))?.[0]
     if (activeCol) {
       const th = rootEl.querySelector(`.sc-h[data-col="${activeCol}"]`)
       if (th) {
+        const asc = currentSort.endsWith('_asc')
         th.setAttribute('data-active', 'true')
-        th.setAttribute('data-dir', currentSort.endsWith('_asc') ? 'asc' : 'desc')
+        th.setAttribute('data-dir', asc ? 'asc' : 'desc')
+        th.setAttribute('aria-sort', asc ? 'ascending' : 'descending')
       }
     }
     noteEl.hidden = currentSort !== 'outcome_desc'
@@ -2409,6 +2425,9 @@ export function initScreener(rootEl, filtersEl, inputEl, opts = {}) {
   }
 
   async function runQuery({ append = false } = {}) {
+    // Request-token race guard: a stale response (e.g. an append issued
+    // before a sort change resolves) must never land over newer rows.
+    const token = ++requestToken
     const query = (inputEl?.value || '').trim()
     const filters = readFilters()
     const offset = append ? loadedCount : 0
@@ -2417,6 +2436,7 @@ export function initScreener(rootEl, filtersEl, inputEl, opts = {}) {
     }
     try {
       const { deals, total } = await searchDeals(query, filters, { limit: pageSize, offset })
+      if (token !== requestToken) return // superseded by a newer request
       if (!append) loadedCount = 0
       loadedCount += deals.length
       totalCount = total
@@ -2431,6 +2451,7 @@ export function initScreener(rootEl, filtersEl, inputEl, opts = {}) {
       updateHeaderIndicators()
       updateLoadMore()
     } catch (e) {
+      if (token !== requestToken) return
       tbody.innerHTML = `<tr><td colspan="${SCREENER_COLUMNS.length}" class="search-status error">Screener is temporarily unavailable. Try again.</td></tr>`
       console.error('initScreener searchDeals error', e)
     }
