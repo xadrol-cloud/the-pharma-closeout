@@ -1908,11 +1908,19 @@ input, textarea, select {
    ========================================================================== */
 .fab {
   position: relative;
-  z-index: 200;
+  z-index: 30; /* desktop: in-flow in hero title-row, must stay below
+                  the nav (100) and verdict bar (40); mobile override
+                  below restores it to a top-layer fixed FAB (200). */
   display: inline-flex;
   align-items: flex-start;
 }
 .fab[data-collapsed='true'] .fab-actions { display: none; }
+
+.fab-tab:focus-visible,
+.fab-btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
 
 .fab-tab {
   display: flex;
@@ -2723,6 +2731,7 @@ html, body { overflow-x: hidden; }
 @media (max-width: 899px) {
   .fab {
     position: fixed;
+    z-index: 200; /* fixed overlay above nav/verdict-bar on mobile */
     top: auto;
     bottom: max(20px, env(safe-area-inset-bottom, 0px) + 12px);
     left: auto;
