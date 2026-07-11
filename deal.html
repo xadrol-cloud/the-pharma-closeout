@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260711e">
+<link rel="stylesheet" href="assets/deals.css?v=20260711f">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
   /* Move 9: comparable-aged panel */
@@ -155,7 +155,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
          wrapper + position changed, not the JS contract.
          ═══════════════════════════════════════════════════════════════ -->
     <details id="score-section" class="m-acc sidebar-card score-card-hero" style="display:none;">
-      <summary class="sb-title">Score Breakdown</summary>
+      <summary class="sb-title"><span>Score Breakdown<span id="score-summary-teaser" class="acc-teaser"></span></span></summary>
       <div id="score-breakdown"></div>
     </details>
 
@@ -225,13 +225,13 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     <!-- Sources — Task 3.4 (R15): <details class="m-acc"> mobile-diet
          pattern (see #score-section); JS below sets .open on desktop. -->
     <details id="sources-section" class="m-acc sidebar-card" style="display:none;">
-      <summary class="sb-title">Sources</summary>
+      <summary class="sb-title"><span>Sources<span id="sources-summary-teaser" class="acc-teaser"></span></span></summary>
       <div id="sources"></div>
     </details>
 
     <!-- Task 41: Corporate Lineage — Task 3.4 (R15): same m-acc pattern. -->
     <details id="lineage-section" class="m-acc sidebar-card" style="display:none;">
-      <summary class="sb-title">Corporate Lineage</summary>
+      <summary class="sb-title"><span>Corporate Lineage<span id="lineage-summary-teaser" class="acc-teaser"></span></span></summary>
       <div id="lineage"></div>
     </details>
 
@@ -316,8 +316,9 @@ import {
   renderHypeGap, renderProvenance,
   displayOutcomeScore,
   comparableOutcomeSummary, renderComparableAged,
-  renderVerdictBar, esc, JUMP_NAV_SECTIONS
-} from './assets/deals.js?v=20260711e'
+  renderVerdictBar, esc, JUMP_NAV_SECTIONS,
+  dedupeByDealId
+} from './assets/deals.js?v=20260711f'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -550,6 +551,14 @@ if (!dealId) {
         const scoreSectionEl = document.getElementById('score-section')
         scoreSectionEl.style.display = ''
         openAccordionsForDesktop(scoreSectionEl)
+        // Task 6d: teaser — the 4 dimension names, so a collapsed accordion
+        // signals what's inside instead of a bare title. Fixed set (same 4
+        // dims renderScoreBreakdown always scores), so no data dependency
+        // beyond scoreHtml existing.
+        const scoreTeaser = document.getElementById('score-summary-teaser')
+        if (scoreTeaser) {
+          scoreTeaser.textContent = 'Strategic Fit, Financial Return, Asset Performance, Value Realization'
+        }
       }
 
       // ── Sidebar: Comparables (fetch wider so the "aged" summary has ≥3 unlocked) ──
@@ -597,6 +606,27 @@ if (!dealId) {
         document.getElementById('sources').innerHTML = sourcesHtml + provenanceHtml
       })
 
+      // ── Task 6d: Sources teaser — count + top source name, from the
+      //    already-fetched `sources` array (no new fetch). "Top" mirrors
+      //    renderSources' own ordering: healthy links (2xx-3xx) first. ──
+      if (sources && sources.length) {
+        const sourcesTeaser = document.getElementById('sources-summary-teaser')
+        if (sourcesTeaser) {
+          const healthyFirst = [...sources].sort((a, b) => {
+            const ok = (s) => s.link_status != null && s.link_status >= 200 && s.link_status < 400
+            if (ok(a) && !ok(b)) return -1
+            if (!ok(a) && ok(b)) return 1
+            return 0
+          })
+          const names = healthyFirst.map(s => s.source_name).filter(Boolean)
+          const topNames = names.slice(0, 2)
+          const teaserText = topNames.length
+            ? `${sources.length} — ${topNames.join(', ')}${names.length > topNames.length ? ', …' : ''}`
+            : `${sources.length}`
+          sourcesTeaser.textContent = teaserText
+        }
+      }
+
       // ── Task 39: Copy Deal Row binding ──
       window.__copyDealRow = () => exportDealRow(deal)
 
@@ -612,6 +642,14 @@ if (!dealId) {
           registerLazySection('lineage-section', () => {
             document.getElementById('lineage').innerHTML = lineageHtml
           })
+          // Task 6d: teaser — deduped count, matching what
+          // renderCorporateLineage actually lists (dedupeByDealId is the
+          // same dedup renderLineageList applies internally).
+          const lineageTeaser = document.getElementById('lineage-summary-teaser')
+          if (lineageTeaser) {
+            const n = dedupeByDealId(lineage).length
+            lineageTeaser.textContent = `${n} deal${n === 1 ? '' : 's'}`
+          }
         }
       } catch (e) { console.warn('lineage fetch failed', e) }
 

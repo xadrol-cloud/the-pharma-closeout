@@ -1022,6 +1022,24 @@ input, textarea, select {
 .m-acc[open] > summary::after { transform: rotate(-135deg); }
 .m-acc[open] > summary { margin-bottom: 16px; }
 
+/* Task 6d: predictability teasers — collapsed accordions signal what's
+   inside (count + top item) instead of a bare title (Baymard
+   predictability rule). Muted, appended after the title text inside the
+   same flex item so justify-content:space-between still only sees two
+   children (title+teaser, chevron). Hidden while open — the real content
+   is visible then, the teaser would be redundant. */
+.acc-teaser {
+  display: block;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--ink-faint);
+  margin-top: 2px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.m-acc[open] > summary .acc-teaser { display: none; }
+
 .m-acc.score-card-hero {
   margin-top: 18px;
   max-width: 620px;
