@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710u'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710v'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents, POPULAR_SEARCHES,
-} from './scoring.js?v=20260710u'
+} from './scoring.js?v=20260710v'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -927,10 +927,25 @@ export function renderResultRow(deal) {
   const titleText = deal.deal_title
     || `${deal.buyer_name || ''} / ${deal.target_name || ''}`.trim()
 
+  // Task 3.2 (R13): logo-pair thumb replaces the old mini dark poster —
+  // the type-color background at ~90px read as an unreadable dark card
+  // with no legible identity. Reuse the same logoHtml()/bgClass() helpers
+  // renderPoster uses so a missing logo falls back to the type badge
+  // instead of a blank circle.
+  const buyerLogo = logoHtml(deal.buyer_logo_local_path, deal.buyer_domain, deal.buyer_name, 'rp')
+  const targetLogo = logoHtml(deal.target_logo_local_path, deal.target_domain, deal.target_name, 'rp')
+  const hasLogos = Boolean(logoUrl(deal.buyer_logo_local_path, deal.buyer_domain) || logoUrl(deal.target_logo_local_path, deal.target_domain))
+
   return `<a class="result-row" href="deal.html?id=${esc(deal.deal_id)}">
     <div class="result-poster ${bgClass(deal.deal_type)}">
-      <span class="rp-type">${esc(dsLabel)}</span>
       <span class="rp-year">${esc(yearOf(deal.announcement_date))}</span>
+      ${hasLogos
+        ? `<div class="rp-logos">
+            <div class="rp-logo">${buyerLogo}</div>
+            <span class="rp-x">&times;</span>
+            <div class="rp-logo">${targetLogo}</div>
+          </div>`
+        : `<span class="rp-type-badge">${esc(dsLabel)}</span>`}
     </div>
     <div class="result-body">
       <div class="result-title">${esc(titleText)}</div>
