@@ -1722,12 +1722,29 @@ input, textarea, select {
   display: flex; gap: 18px;
   overflow-x: auto;
   padding-bottom: 8px;
-  scroll-snap-type: x proximity;
+  /* Task 3.5 (R16): proximity snap let swipes drift past card boundaries —
+     mandatory guarantees the rail always settles on a card (cards already
+     carry scroll-snap-align: start via .c-poster). */
+  scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   padding-right: 60px;
 }
 .carousel::-webkit-scrollbar { display: none; }
+
+/* Task 3.5 (R16): right-edge fade instead of a hard clip at the container
+   boundary. pointer-events:none so it never blocks clicks on the last
+   card (the .carousel's own padding-right:60px already keeps that card
+   reachable past the fade). Uses a mask on the wrap rather than an ::after
+   overlay so it fades the actual card pixels, not just paints over them. */
+.carousel-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 8px;
+  width: 56px;
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--paper) 92%);
+}
 
 
 /* ==========================================================================
