@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260711a">
+<link rel="stylesheet" href="assets/deals.css?v=20260711b">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
   /* Move 9: comparable-aged panel */
@@ -317,7 +317,7 @@ import {
   displayOutcomeScore,
   comparableOutcomeSummary, renderComparableAged,
   renderVerdictBar, esc
-} from './assets/deals.js?v=20260711a'
+} from './assets/deals.js?v=20260711b'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -362,12 +362,15 @@ if (!dealId) {
       // terminated deals get a dated pill even without outcome status)
       document.getElementById('hero-status').innerHTML = renderDealStatus(deal.deal_outcome_status, deal)
 
-      // Task 2.1 (R6): consensus line — editorial_summary is thin-coverage
-      // (see methodology), so this renders nothing when the field is null.
-      // Never fabricate a stand-in.
-      if (deal.editorial_summary) {
+      // Task 2.1 (R6) + Move 2 unification: consensus line prefers the
+      // canonical editorial_lede, falls back to legacy editorial_summary.
+      // Renders nothing when both are null — never fabricate a stand-in.
+      const consensusTake = deal.editorial_lede && !isPipelineArtifact(deal.editorial_lede)
+        ? cleanProse(deal.editorial_lede)
+        : (deal.editorial_summary || null)
+      if (consensusTake) {
         document.getElementById('hero-consensus').innerHTML =
-          `<p class="deal-consensus">${esc(deal.editorial_summary)}</p>`
+          `<p class="deal-consensus">${esc(consensusTake)}</p>`
       }
 
       // Score pills — when reviews exist but the score needs >=4, say so
@@ -436,13 +439,8 @@ if (!dealId) {
         document.getElementById('hero-summary').style.display = ''
       }
 
-      // Editorial lede
-      if (deal.editorial_lede && !isPipelineArtifact(deal.editorial_lede)) {
-        const ledeEl = document.createElement('div')
-        ledeEl.className = 'feat-lede'
-        ledeEl.textContent = cleanProse(deal.editorial_lede)
-        document.getElementById('hero-summary').after(ledeEl)
-      }
+      // Editorial lede now renders as the consensus line above (Move 2 +
+      // R6 unification) — the duplicate below-summary insertion is gone.
 
       // ── Show body and footer ──
       document.getElementById('deal-body').style.display = ''

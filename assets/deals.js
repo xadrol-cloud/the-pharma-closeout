@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260711a'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260711b'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents, POPULAR_SEARCHES,
-} from './scoring.js?v=20260711a'
+} from './scoring.js?v=20260711b'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -869,7 +869,7 @@ export function renderFeaturedInfo(deal) {
     ${renderScorePill('critic', criticScore, 'at announcement')}
     ${renderScorePill('outcome', outcomeScore, 'Measured results')}
   </div>
-  ${deal.editorial_summary ? `<div class="feat-lede">${esc(deal.editorial_summary)}</div>` : ''}
+  ${(deal.editorial_lede || deal.editorial_summary) ? `<div class="feat-lede">${esc(deal.editorial_lede || deal.editorial_summary)}</div>` : ''}
   <div class="feat-tags">
     ${tas.slice(0, 3).map(t => `<span class="feat-tag ft-blue">${esc(t)}</span>`).join('')}
     ${deal.era_tag ? `<span class="feat-tag ft-amber">${esc(deal.era_tag)}</span>` : ''}
