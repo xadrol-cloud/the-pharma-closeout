@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710l'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710m'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents,
-} from './scoring.js?v=20260710l'
+} from './scoring.js?v=20260710m'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -509,13 +509,36 @@ export async function searchDeals(query, filters = {}, { limit = 25, offset = 0 
 function applySortClause(q, sortKey) {
   const primary = {
     value_desc:   ['deal_value_usd_mm', false],
+    value_asc:    ['deal_value_usd_mm', true],
     critic_desc:  ['critic_score',      false],
     outcome_desc: ['outcome_score',     false],
     date_desc:    ['announcement_date', false],
+    date_asc:     ['announcement_date', true],
   }[sortKey] || ['announcement_date', false]
   // deal_id as stable tie-breaker — ensures paginated offset returns disjoint rows
   return q.order(primary[0], { ascending: primary[1], nullsFirst: false })
           .order('deal_id',  { ascending: true })
+}
+
+/** Task 2.2: exact count of all graded deals (no filters), for the browse
+ *  page subhead and deals.html hero line. CAUTION: exact counts on
+ *  deals_enriched can hit the statement timeout under load and resolve to a
+ *  null count — callers must fall back to a static string, never render
+ *  "null deals". */
+export async function fetchDealCount() {
+  const { count, error } = await supabase
+    .from('deals_enriched')
+    .select('deal_id', { count: 'exact', head: true })
+  if (error || count == null) {
+    // Retry once with a no-op filter hint in case the plain count timed out
+    const retry = await supabase
+      .from('deals_enriched')
+      .select('deal_id', { count: 'exact', head: true })
+      .not('deal_id', 'is', null)
+    if (retry.error || retry.count == null) return null
+    return retry.count
+  }
+  return count
 }
 
 /** Fetch disease indications for a deal (ordered by US patients desc) */
@@ -2238,6 +2261,222 @@ export function initSearch(inputEl, filtersEl, resultsEl, opts = {}) {
     debounceTimer = setTimeout(() => runSearch({ append: false }), 350)
   })
   filtersEl?.addEventListener('change', () => runSearch({ append: false }))
+}
+
+/* ---------- Task 2.2 (R7+R17) — Browse-all screener table ---------- */
+
+/** Header column -> sort key toggle map. Clicking a header toggles between
+ *  the two states listed (or just re-applies the single state for CS/OS,
+ *  which have no asc variant defined by the spec). */
+const SCREENER_SORT_TOGGLE = {
+  announced: ['date_desc', 'date_asc'],
+  value:     ['value_desc', 'value_asc'],
+  cs:        ['critic_desc', 'critic_desc'],
+  os:        ['outcome_desc', 'outcome_desc'],
+}
+
+const SCREENER_COLUMNS = [
+  { key: 'announced', label: 'Announced' },
+  { key: 'acquirer',  label: 'Acquirer' },
+  { key: 'target',    label: 'Target' },
+  { key: 'type',      label: 'Type' },
+  { key: 'ta',        label: 'TA' },
+  { key: 'value',     label: 'Value' },
+  { key: 'cs',        label: 'CS' },
+  { key: 'os',        label: 'OS' },
+]
+
+/** Score chip for a single dimension cell in the screener table — same
+ *  chip component/classes as resultRowScoreChips (SCORE_VOCAB abbrs, tier
+ *  colors, UNSCORED via posterScoreState) so the visual language matches
+ *  the row-list search results. */
+function screenerScoreCell(deal) {
+  const cs = deal.critic_score != null ? Math.round(deal.critic_score) : null
+  const _os = displayOutcomeScore(deal)
+  const os = _os != null ? Math.round(_os) : null
+  const csTier = tierForScore(cs)
+  const osTier = tierForScore(os)
+  const state = posterScoreState(cs, os, isScorePending(deal))
+  const csCell = cs != null
+    ? `<div class="score-chip score-chip-mini" data-tier="${csTier}" title="${esc(SCORE_VOCAB.critic.tooltip)}">${cs}</div>`
+    : '<span class="screener-dash">—</span>'
+  const osCell = os != null
+    ? `<div class="score-chip score-chip-mini" data-tier="${osTier}" title="${esc(SCORE_VOCAB.outcome.tooltip)}">${os}</div>`
+    : (state === 'pending'
+        ? '<span class="c-sc pending">Pending</span>'
+        : '<span class="screener-dash">—</span>')
+  return { csCell, osCell }
+}
+
+function screenerRowHtml(deal) {
+  const ds = dealTypeSlug(deal.deal_type)
+  const dsLabel = shortType(deal.deal_type)
+  const ta = parseTAs(deal.therapeutic_areas)[0] || ''
+  const val = formatValue(deal.deal_value_usd_mm)
+  const date = formatDate(deal.announcement_date)
+  const { csCell, osCell } = screenerScoreCell(deal)
+  return `<tr class="screener-row" data-deal-id="${esc(deal.deal_id)}" tabindex="0">
+    <td class="sc-date">${date ? esc(date) : '—'}</td>
+    <td class="sc-acquirer">${esc(deal.buyer_name || '—')}</td>
+    <td class="sc-target">${esc(deal.target_name || '—')}</td>
+    <td class="sc-type"><span class="deal-type-pill" data-type="${ds}">${esc(dsLabel)}</span></td>
+    <td class="sc-ta">${ta ? esc(ta) : '—'}</td>
+    <td class="sc-value">${val ? esc(val) : '—'}</td>
+    <td class="sc-cs">${csCell}</td>
+    <td class="sc-os">${osCell}</td>
+  </tr>`
+}
+
+/** Task 2.2 (R7+R17): browse-all screener — sortable table backed by
+ *  searchDeals (filtered/ordered query, not a bulk view scan). Reads
+ *  ?sort= and ?q= for initial state; header clicks toggle sort and
+ *  re-query; Load more appends via offset pagination. Reuses the
+ *  filter-change -> re-query wiring pattern from initSearch. */
+export function initScreener(rootEl, filtersEl, inputEl, opts = {}) {
+  if (!rootEl) return
+  const pageSize = opts.pageSize || 100
+  const params = new URLSearchParams(window.location.search)
+  let currentSort = params.get('sort') || 'date_desc'
+  let loadedCount = 0
+  let totalCount = 0
+
+  // Seed the visible sort <select> (if present in filtersEl) so filter
+  // read-back stays consistent with the header-driven sort state.
+  function syncSortSelect() {
+    const sel = filtersEl?.querySelector('select[name="sort"]')
+    if (sel && sel.value !== currentSort) sel.value = currentSort
+  }
+
+  function readFilters() {
+    const f = {}
+    filtersEl?.querySelectorAll('select').forEach(sel => {
+      if (sel.name === 'sort') return
+      if (sel.value) f[sel.name] = sel.value
+    })
+    f.sort = currentSort
+    return f
+  }
+
+  rootEl.innerHTML = `
+    <div class="screener-note" id="screener-note" hidden></div>
+    <p class="search-count" id="screener-count"></p>
+    <div class="screener-scroll">
+      <table class="screener">
+        <thead>
+          <tr>
+            ${SCREENER_COLUMNS.map(c => `<th class="sc-h" data-col="${c.key}" ${SCREENER_SORT_TOGGLE[c.key] ? 'tabindex="0" role="button"' : ''}>${esc(c.label)}${SCREENER_SORT_TOGGLE[c.key] ? '<span class="sc-sort-arrow"></span>' : ''}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody id="screener-tbody"></tbody>
+      </table>
+    </div>
+  `
+
+  const tbody = rootEl.querySelector('#screener-tbody')
+  const countEl = rootEl.querySelector('#screener-count')
+  const noteEl = rootEl.querySelector('#screener-note')
+
+  function updateHeaderIndicators() {
+    rootEl.querySelectorAll('.sc-h').forEach(th => {
+      th.removeAttribute('data-active')
+      th.removeAttribute('data-dir')
+    })
+    const activeCol = Object.entries(SCREENER_SORT_TOGGLE)
+      .find(([, states]) => states.includes(currentSort))?.[0]
+    if (activeCol) {
+      const th = rootEl.querySelector(`.sc-h[data-col="${activeCol}"]`)
+      if (th) {
+        th.setAttribute('data-active', 'true')
+        th.setAttribute('data-dir', currentSort.endsWith('_asc') ? 'asc' : 'desc')
+      }
+    }
+    noteEl.hidden = currentSort !== 'outcome_desc'
+    if (!noteEl.hidden) {
+      noteEl.textContent = 'Sorted by Outcome Score — showing graded deals only'
+    }
+  }
+
+  function updateLoadMore() {
+    rootEl.querySelector('.load-more-btn')?.remove()
+    if (loadedCount < totalCount) {
+      const btn = document.createElement('button')
+      btn.className = 'load-more-btn'
+      btn.textContent = `Load more (${totalCount - loadedCount} remaining)`
+      btn.onclick = () => runQuery({ append: true })
+      rootEl.appendChild(btn)
+    }
+    countEl.textContent = `Showing ${loadedCount} of ${totalCount} deals`
+  }
+
+  async function runQuery({ append = false } = {}) {
+    const query = (inputEl?.value || '').trim()
+    const filters = readFilters()
+    const offset = append ? loadedCount : 0
+    if (!append) {
+      tbody.innerHTML = `<tr><td colspan="${SCREENER_COLUMNS.length}" class="search-status">Loading...</td></tr>`
+    }
+    try {
+      const { deals, total } = await searchDeals(query, filters, { limit: pageSize, offset })
+      if (!append) loadedCount = 0
+      loadedCount += deals.length
+      totalCount = total
+      const rowsHtml = deals.map(screenerRowHtml).join('')
+      if (append) {
+        tbody.insertAdjacentHTML('beforeend', rowsHtml)
+      } else if (!deals.length) {
+        tbody.innerHTML = `<tr><td colspan="${SCREENER_COLUMNS.length}" class="search-status">No deals found.</td></tr>`
+      } else {
+        tbody.innerHTML = rowsHtml
+      }
+      updateHeaderIndicators()
+      updateLoadMore()
+    } catch (e) {
+      tbody.innerHTML = `<tr><td colspan="${SCREENER_COLUMNS.length}" class="search-status error">Screener is temporarily unavailable. Try again.</td></tr>`
+      console.error('initScreener searchDeals error', e)
+    }
+  }
+
+  // Row click / Enter navigates to the deal detail page
+  tbody.addEventListener('click', (e) => {
+    const row = e.target.closest('.screener-row')
+    if (row) window.location.href = `deal.html?id=${encodeURIComponent(row.dataset.dealId)}`
+  })
+  tbody.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return
+    const row = e.target.closest('.screener-row')
+    if (row) window.location.href = `deal.html?id=${encodeURIComponent(row.dataset.dealId)}`
+  })
+
+  // Header click/Enter toggles sort direction (or single-state jump for CS/OS)
+  rootEl.querySelectorAll('.sc-h[data-col]').forEach(th => {
+    const col = th.dataset.col
+    const states = SCREENER_SORT_TOGGLE[col]
+    if (!states) return
+    const toggle = () => {
+      currentSort = currentSort === states[0] ? states[1] : states[0]
+      syncSortSelect()
+      runQuery({ append: false })
+    }
+    th.addEventListener('click', toggle)
+    th.addEventListener('keydown', (e) => { if (e.key === 'Enter') toggle() })
+  })
+
+  // Search input + filter row re-query (same wiring pattern as initSearch)
+  let debounceTimer = null
+  inputEl?.addEventListener('input', () => {
+    clearTimeout(debounceTimer)
+    debounceTimer = setTimeout(() => runQuery({ append: false }), 350)
+  })
+  filtersEl?.addEventListener('change', () => {
+    // A manual sort-select change (if the select is visible) takes priority
+    // over the header-driven currentSort state.
+    const sel = filtersEl.querySelector('select[name="sort"]')
+    if (sel && sel.value) currentSort = sel.value
+    runQuery({ append: false })
+  })
+
+  syncSortSelect()
+  runQuery({ append: false })
 }
 
 // =====================================================================

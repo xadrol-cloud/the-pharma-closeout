@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Newsreader:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260710l">
+<link rel="stylesheet" href="assets/deals.css?v=20260710m">
 <script defer src="assets/nav.js?v=20260531a"></script>
 </head>
 <body>
@@ -57,6 +57,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     <li><a href="index.html">Podcast</a></li>
     <li><a href="ai-research.html">Research</a></li>
     <li><a href="deals.html" class="active">Deal Intelligence</a></li>
+    <li><a href="browse.html">Browse</a></li>
     <li><a href="about.html">About</a></li>
   </ul>
   <a class="nav-cta" href="ai-research.html#briefing">Get the Briefing <span aria-hidden="true">&rarr;</span></a>
@@ -85,11 +86,15 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   .biobucks-stat { margin-top:14px; max-width:640px; font-size:13.5px; color: var(--ink-muted); line-height:1.55; }
   .biobucks-stat .bb-num { font-family: var(--mono,'IBM Plex Mono',monospace); font-weight:700; font-size:22px; color: var(--gold); }
   .biobucks-stat .bb-lab { color: var(--ink-light); }
+  .browse-subline { margin-top:12px; font-size:13.5px; color: var(--ink-muted); }
+  .browse-subline a { color: var(--gold); font-weight:600; text-decoration:none; }
+  .browse-subline a:hover { text-decoration:underline; }
 </style>
 <section class="valueprop">
   <div class="vp-eyebrow">Deal Intelligence</div>
   <h1>The only deal database that grades how deals <em>aged</em>.</h1>
   <p>Everyone records what a deal cost. We score what it was worth — the gap between what the Street said at announcement and what history actually did. Free, no login.</p>
+  <p id="browse-subline" class="browse-subline">Search 1,300+ graded deals — or <a href="browse.html">browse the full database &rarr;</a></p>
   <div id="gap-teaser"></div>
   <div id="biobucks-stat" class="biobucks-stat"></div>
 </section>
@@ -216,6 +221,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       <span class="section-desc">Most recently announced</span>
     </div>
     <div class="section-arrows">
+      <a href="browse.html?sort=date_desc" class="view-all-link">View all &rarr;</a>
       <button class="arrow-btn" aria-label="Scroll left">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
@@ -238,6 +244,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       <span class="section-desc">Highest-value and most-discussed</span>
     </div>
     <div class="section-arrows">
+      <a href="browse.html?sort=value_desc" class="view-all-link">View all &rarr;</a>
       <button class="arrow-btn" aria-label="Scroll left">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
@@ -260,6 +267,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       <span class="section-desc">Best post-close performance</span>
     </div>
     <div class="section-arrows">
+      <a href="browse.html?sort=outcome_desc" class="view-all-link">View all &rarr;</a>
       <button class="arrow-btn" aria-label="Scroll left">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
@@ -331,13 +339,25 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 import {
   fetchFeaturedDeal, fetchLatestDeals, fetchTrendingDeals, fetchTopOutcomeDeals,
   renderPoster, renderFeaturedInfo, initCarousel, initSearch, initMultiSelect, searchDeals,
-  fetchTopGapDeals, renderGapTeaser, fetchBiobucksIndex, fetchLastUpdated, dedupeByDealId
-} from './assets/deals.js?v=20260710l'
+  fetchTopGapDeals, renderGapTeaser, fetchBiobucksIndex, fetchLastUpdated, dedupeByDealId,
+  fetchDealCount
+} from './assets/deals.js?v=20260710m'
 
 // Task 9.3: "Data updated {Mon D, YYYY}" trust stamp near the search header
 fetchLastUpdated().then(dateStr => {
   if (dateStr) {
     document.getElementById('data-updated-stamp').textContent = `Data updated ${dateStr}`
+  }
+}).catch(() => {})
+
+// Task 2.2: database count in the hero "browse the full database" sub-line
+// (markup already has the "1,300+" static fallback baked in)
+fetchDealCount().then(n => {
+  if (n != null) {
+    const el = document.getElementById('browse-subline')
+    if (el) {
+      el.innerHTML = `Search ${n.toLocaleString('en-US')} graded deals — or <a href="browse.html">browse the full database &rarr;</a>`
+    }
   }
 }).catch(() => {})
 
