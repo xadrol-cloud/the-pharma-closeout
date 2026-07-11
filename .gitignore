@@ -3,3 +3,7 @@ node_modules/
 
 # Claude worktrees
 .worktrees/
+
+# Claude tooling — never publish
+.claude/
+.claude-plugin/
