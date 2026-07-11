@@ -120,6 +120,14 @@ test('renderGapTeaser: empty unless unlocked dual-scored; contains said/did', ()
   assert.ok(html.includes('+80'))
 })
 
+/* ---------- Task 3.3 (R14): labeled hype-gap ticker ---------- */
+test('renderGapTeaser: delta is labeled "hype gap", links to the index, and has a tooltip', () => {
+  const html = renderGapTeaser({ deal_id: 'x', buyer_name: 'A', target_name: 'B', critic_score: 88, outcome_score: 8, announcement_date: '2018-01-01' })
+  assert.ok(html.includes('hype gap +80'))
+  assert.ok(html.includes('href="hype-gap.html"'))
+  assert.ok(html.includes('Critic Score'))
+})
+
 /* ---------- Move 7: hindsight cohorts ---------- */
 import { hindsightCohorts } from '../assets/scoring.js'
 test('hindsightCohorts: group unlocked by year, min-per-year guard, best/worst', () => {

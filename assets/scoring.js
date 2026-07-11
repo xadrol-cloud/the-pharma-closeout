@@ -160,10 +160,15 @@ export function renderGapTeaser(deal) {
   const cs = Math.round(deal.critic_score), os = Math.round(deal.outcome_score)
   const dir = gap > 0 ? 'over' : (gap < 0 ? 'under' : 'even')
   const sign = gap > 0 ? '+' : ''
-  return `<a class="gap-teaser" data-dir="${dir}" href="deal.html?id=${escHtml(deal.deal_id)}">
+  // Task 3.3 (R14): bare "+80" read as an unlabeled number with no context —
+  // label it "hype gap +80" and add a title tooltip spelling out the metric.
+  // Links to the Hype Gap index (not the single deal) since this is a hero
+  // teaser promoting the feature, not a deal drill-down.
+  const tooltip = 'Hype Gap = Critic Score − Outcome Score; positive = the Street over-hyped it'
+  return `<a class="gap-teaser" data-dir="${dir}" href="hype-gap.html" title="${escHtml(tooltip)}">
     <span class="gt-label">${escHtml(hypeGapLabel(gap))}</span>
     <span class="gt-pair">${escHtml(deal.buyer_name)} / ${escHtml(deal.target_name)}</span>
-    <span class="gt-nums">said <b>${cs}</b> &middot; did <b>${os}</b> &middot; <span class="gt-gap">${sign}${gap}</span></span>
+    <span class="gt-nums">said <b>${cs}</b> &middot; did <b>${os}</b> &middot; <span class="gt-gap">hype gap ${sign}${gap}</span></span>
   </a>`
 }
 
