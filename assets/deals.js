@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710s'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710t'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents, POPULAR_SEARCHES,
-} from './scoring.js?v=20260710s'
+} from './scoring.js?v=20260710t'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {
@@ -2490,14 +2490,16 @@ function screenerScoreCell(deal) {
   const csTier = tierForScore(cs)
   const osTier = tierForScore(os)
   const state = posterScoreState(cs, os, isScorePending(deal))
+  // 'pending' = CRITIC scoring queued (isScorePending) — it belongs in the
+  // CS cell; a missing OS is locked/ungraded, never "pending"
   const csCell = cs != null
     ? `<div class="score-chip score-chip-mini" data-tier="${csTier}" title="${esc(SCORE_VOCAB.critic.tooltip)}">${cs}</div>`
-    : '<span class="screener-dash">—</span>'
+    : (state === 'pending'
+        ? `<span class="c-sc pending" title="${esc(SCORE_VOCAB.critic.tooltip)}">Pending</span>`
+        : '<span class="screener-dash">—</span>')
   const osCell = os != null
     ? `<div class="score-chip score-chip-mini" data-tier="${osTier}" title="${esc(SCORE_VOCAB.outcome.tooltip)}">${os}</div>`
-    : (state === 'pending'
-        ? '<span class="c-sc pending">Pending</span>'
-        : '<span class="screener-dash">—</span>')
+    : '<span class="screener-dash">—</span>'
   return { csCell, osCell }
 }
 
