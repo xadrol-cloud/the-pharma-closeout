@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710r'
+import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260710s'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -16,7 +16,7 @@ import {
   biobucksPct, canonicalBuyer, acquirerBattingAverage, comparableOutcomeSummary,
   renderComparableAged, renderGapTeaser, hindsightCohorts, SCORE_VOCAB, posterScoreState,
   financialFieldsFor, dedupeByDealId, sortTimelineEvents, POPULAR_SEARCHES,
-} from './scoring.js?v=20260710r'
+} from './scoring.js?v=20260710s'
 
 export { formatValue, formatDate, isPlausibleDate }
 export {

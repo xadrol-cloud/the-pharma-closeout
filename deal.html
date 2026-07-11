@@ -41,7 +41,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&family=Newsreader:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deals.css?v=20260710r">
+<link rel="stylesheet" href="assets/deals.css?v=20260710s">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
   /* Move 9: comparable-aged panel */
@@ -145,6 +145,20 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     <div id="hero-consensus"></div>
     <div id="hero-scores" class="feat-scores" style="margin-top:16px;"></div>
     <div id="cohort-panel"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SCORE BREAKDOWN (Task 2.6 / R11) — moved hero-adjacent from the
+         sidebar (was the 9th screen down). Wrapped in <details class="m-acc">
+         so it collapses on mobile by default; deals.js sets .open based on
+         viewport width after render (>=900px opens it). Same #score-section
+         / #score-breakdown ids the populate call already targets — only the
+         wrapper + position changed, not the JS contract.
+         ═══════════════════════════════════════════════════════════════ -->
+    <details id="score-section" class="m-acc sidebar-card score-card-hero" style="display:none;">
+      <summary class="sb-title">Score Breakdown</summary>
+      <div id="score-breakdown"></div>
+    </details>
+
     <div id="hero-hypegap"></div>
     <div id="hero-cascade" style="margin-top:14px;"></div>
     <div class="hero-meta" id="hero-meta"></div>
@@ -201,12 +215,6 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 
   <!-- ─── Sidebar Column (360px) ─── -->
   <div>
-
-    <!-- Score Breakdown -->
-    <div id="score-section" class="sidebar-card" style="display:none;">
-      <div class="sb-title">Score Breakdown</div>
-      <div id="score-breakdown"></div>
-    </div>
 
     <!-- Comparable Deals -->
     <div id="comparables-section" class="sidebar-card" style="display:none;">
@@ -308,7 +316,7 @@ import {
   displayOutcomeScore,
   comparableOutcomeSummary, renderComparableAged,
   renderVerdictBar, esc
-} from './assets/deals.js?v=20260710r'
+} from './assets/deals.js?v=20260710s'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
 
@@ -466,11 +474,16 @@ if (!dealId) {
       document.getElementById('key-assets').innerHTML = assetsHtml
       document.getElementById('assets-section').style.display = ''
 
-      // ── Sidebar: Score Breakdown ──
+      // ── Hero: Score Breakdown (Task 2.6 / R11 — moved from sidebar) ──
       const scoreHtml = renderScoreBreakdown(outcomes, deal)
       if (scoreHtml) {
         document.getElementById('score-breakdown').innerHTML = scoreHtml
-        document.getElementById('score-section').style.display = ''
+        const scoreSectionEl = document.getElementById('score-section')
+        scoreSectionEl.style.display = ''
+        // Reusable pattern (see also Task 3.4): <details class="m-acc"> is
+        // collapsed by default for mobile; open it programmatically on
+        // desktop widths so the breakdown reads expanded without a tap.
+        scoreSectionEl.open = window.innerWidth >= 900
       }
 
       // ── Sidebar: Comparables (fetch wider so the "aged" summary has ≥3 unlocked) ──

@@ -993,6 +993,46 @@ input, textarea, select {
 }
 .sc-method a { color: var(--blue); text-decoration: none; }
 
+/* Task 2.6 (R11): Score Breakdown moved hero-adjacent (was 9th screen down
+   in the sidebar). Rendered as <details class="m-acc"> — collapsed by
+   default on mobile, JS opens it on desktop widths (>=900px) after render.
+   This is the first use of the .m-acc pattern; Task 3.4 reuses it. */
+.m-acc.score-card-hero {
+  margin-top: 18px;
+  max-width: 620px;
+}
+.m-acc.score-card-hero > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+.m-acc.score-card-hero > summary::-webkit-details-marker { display: none; }
+.m-acc.score-card-hero > summary::after {
+  content: '';
+  width: 9px; height: 9px;
+  border-right: 2px solid var(--ink-faint);
+  border-bottom: 2px solid var(--ink-faint);
+  transform: rotate(45deg);
+  transition: transform 0.2s;
+  flex: none;
+}
+.m-acc.score-card-hero[open] > summary::after { transform: rotate(-135deg); }
+.m-acc.score-card-hero[open] > summary { margin-bottom: 16px; }
+
+/* Compact single-row dimension layout: label+bar+weight+score collapse
+   toward one line instead of the taller sidebar-card spacing. */
+.m-acc.score-card-hero .sc-row { margin-bottom: 10px; }
+.m-acc.score-card-hero .sc-row:last-child { margin-bottom: 0; }
+.m-acc.score-card-hero .sc-bar { margin-top: 4px; height: 8px; }
+.m-acc.score-card-hero .sc-method { padding: 8px 12px; font-size: 10.5px; }
+
+@media (max-width: 600px) {
+  .m-acc.score-card-hero { padding: 16px 18px; }
+}
+
 
 /* ==========================================================================
    7. FILTER CHIPS
