@@ -1066,6 +1066,11 @@ input, textarea, select {
   cursor: pointer;
   padding: 6px 10px;
   border: none; background: none;
+  /* R12: 26px tall — pad to a 44px effective tap target. */
+  min-height: 44px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* ===================================================================
@@ -1333,9 +1338,19 @@ input, textarea, select {
 .tl-date  { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); }
 .tl-title { font-family: var(--serif); font-size: 15px; font-weight: 600; margin-top: 3px; }
 .tl-body  { font-size: 13px; color: var(--ink-muted); margin-top: 5px; line-height: 1.6; }
-.tl-src   { font-size: 11px; color: var(--ink-faint); margin-top: 6px; }
+.tl-src   { position: relative; font-size: 11px; color: var(--ink-faint); margin-top: 6px; }
 .tl-src a { color: var(--blue); text-decoration: none; }
 .tl-src a:hover { text-decoration: underline; }
+/* R12: timeline source link is a single ~14px text line — expand the tap
+   target to 44px tall without changing the visible row. */
+.tl-src a::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 44px;
+}
 
 /* Verdict timeline items */
 .tl-dot-verdict { width: 12px; height: 12px; left: -21px; }
@@ -1714,6 +1729,7 @@ input, textarea, select {
 /* Arrow buttons for carousel */
 .section-arrows { display: flex; gap: 12px; align-items: center; }
 .view-all-link {
+  position: relative;
   font-family: var(--sans);
   font-size: 12.5px;
   font-weight: 600;
@@ -1722,6 +1738,17 @@ input, textarea, select {
   white-space: nowrap;
 }
 .view-all-link:hover { text-decoration: underline; }
+/* R12: text link is only ~19px tall — expand the hit area to 44px with an
+   invisible ::after overlay rather than changing the visible line height. */
+.view-all-link::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 44px;
+  min-width: 44px;
+}
 .arrow-btn {
   width: 34px; height: 34px;
   border-radius: 50%;
@@ -1730,9 +1757,19 @@ input, textarea, select {
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   transition: all 0.15s;
+  position: relative;
 }
 .arrow-btn:hover { border-color: var(--gold); background: var(--amber-bg); }
 .arrow-btn svg   { width: 16px; height: 16px; color: var(--ink-light); }
+/* R12: 34px circle is under the 44px target — grow the hit area only,
+   keep the visible 34px circle so the carousel row doesn't get taller. */
+.arrow-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 44px; height: 44px;
+  transform: translate(-50%, -50%);
+}
 
 /* Poster grid section label (poster_polished) */
 .section-label {
@@ -2101,7 +2138,7 @@ input, textarea, select {
    21. SOURCES (sidebar)
    ========================================================================== */
 
-.src-item { padding: 8px 0; border-bottom: 1px solid var(--rule-light); }
+.src-item { position: relative; padding: 8px 0; border-bottom: 1px solid var(--rule-light); }
 .src-item:last-child { border-bottom: none; }
 .src-type {
   font-family: var(--mono);
@@ -2111,6 +2148,14 @@ input, textarea, select {
 .src-headline { font-size: 12px; font-weight: 600; margin-top: 2px; }
 .src-headline a { color: var(--ink); text-decoration: none; }
 .src-headline a:hover { color: var(--blue); }
+/* R12: single-line 12px source link is well under 44px — expand the tap
+   target to cover the whole row (padding stays visually unchanged). */
+.src-headline a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  min-height: 44px;
+}
 .src-date { font-size: 10px; color: var(--ink-faint); margin-top: 1px; }
 
 /* Source link-health badges */
@@ -2230,6 +2275,10 @@ input, textarea, select {
   border-radius: 3px;
   text-decoration: none;
   transition: background 0.15s;
+  /* R12: 24px tall — pad to a 44px effective tap target. */
+  min-height: 44px;
+  box-sizing: border-box;
+  display: flex; align-items: center; justify-content: center;
 }
 .comp-compare-btn:hover { background: rgba(196, 147, 50, 0.08); }
 
@@ -2457,8 +2506,17 @@ td.sc-select, th.sc-select-head { width: 32px; padding: 6px 4px 6px 10px !import
 }
 .footer-brand em { font-style: normal; color: var(--gold); }
 .footer-links { display: flex; gap: 20px; font-size: 12px; color: var(--ink-faint); }
-.footer-links a { color: var(--ink-faint); text-decoration: none; }
+.footer-links a { position: relative; color: var(--ink-faint); text-decoration: none; }
 .footer-links a:hover { color: var(--ink); }
+/* R12: footer nav links (Home/Deals/etc — real navigation, not legalese)
+   render ~19px tall — expand the tap target without changing the row height. */
+.footer-links a::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 50%;
+  width: max(100%, 44px); height: 44px;
+  transform: translate(-50%, -50%);
+}
 .coverage-footnote {
   max-width: 1300px; margin: 0 auto;
   padding: 0 40px 24px;
@@ -2517,7 +2575,8 @@ td.sc-select, th.sc-select-head { width: 32px; padding: 6px 4px 6px 10px !import
   padding: 12px 40px 0;
 }
 .breadcrumb-back {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   padding: 8px 0;
   font-family: var(--sans);
   font-size: 13px;
@@ -2529,6 +2588,8 @@ td.sc-select, th.sc-select-head { width: 32px; padding: 6px 4px 6px 10px !import
 .breadcrumb-back:hover { color: var(--gold); }
 @media (max-width: 600px) {
   .breadcrumb-nav { padding: 12px 16px 0; }
+  /* R12: 36px tall on phone — pad up to a 44px effective tap target. */
+  .breadcrumb-back { min-height: 44px; box-sizing: border-box; padding: 14px 0; }
 }
 
 
@@ -2835,6 +2896,10 @@ td.sc-select, th.sc-select-head { width: 32px; padding: 6px 4px 6px 10px !import
   cursor: pointer;
   border-radius: 3px;
   letter-spacing: 0.05em;
+  /* R12: 28px tall — pad to a 44px effective tap target (full-width button,
+     padding alone accounts for the shortfall without changing the border look). */
+  min-height: 44px;
+  box-sizing: border-box;
 }
 .acc-toggle:hover { background: rgba(196, 147, 50, 0.08); }
 
@@ -3268,6 +3333,9 @@ html, body { overflow-x: hidden; }
     padding: 6px 12px;
     font-size: 11px;
     margin-right: 8px;
+    /* R12: pill was 29px tall on phone — pad to a 44px effective tap target. */
+    min-height: 44px;
+    box-sizing: border-box;
   }
   /* On phone, hide the search input to make room for the CTA */
   .nav-cta + .nav-search { display: none; }
@@ -3309,7 +3377,9 @@ html, body { overflow-x: hidden; }
 .dt-select-hidden { display: none !important; }
 @media (max-width: 600px) {
   .deal-type-toggles { gap: 5px; margin: 12px auto 8px; padding: 0 12px; }
-  .dt-toggle { padding: 5px 12px; font-size: 11px; }
+  /* R12: pill height was 26px and the "All" chip's width was 39px on phone
+     — pad to a 44px effective tap target on both axes. */
+  .dt-toggle { padding: 12px 14px; font-size: 11px; min-height: 44px; min-width: 44px; box-sizing: border-box; }
 }
 
 
@@ -3632,7 +3702,18 @@ html, body { overflow-x: hidden; }
   color: var(--gold); margin: 0 0 8px;
 }
 .funnel-col a, .funnel-col p { display: block; color: #c8c5bd; text-decoration: none; font-size: 13.5px; line-height: 1.7; }
+.funnel-col a { position: relative; }
 .funnel-col a:hover { color: #fff; }
+/* R12: funnel-band links (Listen/Read/Go deeper columns) render ~23px
+   tall — expand the tap target to 44px without changing the visible row. */
+.funnel-col a::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 44px;
+}
 .funnel-sub { margin-top: 6px; max-width: 320px; }
 .funnel-note { font-size: 11.5px; color: #8b8980; margin-top: 8px; line-height: 1.5; }
 
@@ -3704,7 +3785,17 @@ html, body { overflow-x: hidden; }
 .provenance .pv-k { color: var(--ink-faint); font-family: var(--mono, 'IBM Plex Mono', monospace); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; min-width: 84px; }
 .provenance .pv-v { color: var(--ink-light); }
 .provenance .pv-badge { display: inline-block; padding: 1px 7px; border-radius: 9px; font-size: 10.5px; background: var(--surface); border: 1px solid var(--rule); }
-.provenance a { color: var(--gold); text-decoration: none; }
+.provenance a { position: relative; color: var(--gold); text-decoration: none; }
+/* R12: "How scores & sources work" is a single ~15px text line — expand
+   the tap target to 44px tall without changing the visible row. */
+.provenance a::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 44px;
+}
 
 
 /* ==========================================================================
