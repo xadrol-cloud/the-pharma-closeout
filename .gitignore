@@ -7,3 +7,8 @@ node_modules/
 # Claude tooling — never publish
 .claude/
 .claude-plugin/
+
+# Secrets — NEVER publish (contain sb_secret_ admin key / DB creds)
+.env
+*.env
+enrich_disease_context.py
