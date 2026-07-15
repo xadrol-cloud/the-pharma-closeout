@@ -23,7 +23,7 @@
 - Newsletter: https://thepharmacloseout.substack.com/
 
 ## Deal Intelligence Database
-The Pharma Closeout maintains a database of ~1,268 pharmaceutical and
+The Pharma Closeout maintains a database of ~1,271 pharmaceutical and
 biotech business-development deals spanning the 1990s through 2026 — acquisitions,
 mergers, licensing, and partnerships. Each deal carries a **Critic Score**
 (how the deal was received at announcement) and, where assessable, an **Outcome
