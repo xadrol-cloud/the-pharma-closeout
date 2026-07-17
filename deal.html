@@ -319,8 +319,32 @@ import {
   renderVerdictBar, esc, JUMP_NAV_SECTIONS,
   dedupeByDealId
 } from './assets/deals.js?v=20260711j'
+import { loadSlugMap, dealUrl } from './assets/deal-links.mjs'
 
 const dealId = new URLSearchParams(window.location.search).get('id')
+
+// Task 8 (SEO): when a deal has a static SEO twin (deals/<slug>.html),
+// declare it canonical from the interactive page so Google consolidates
+// the duplicate deal.html?id= URL into the static one. No-ops (leaves
+// existing <head> tags untouched) when the slug map is missing or the
+// deal has no slug yet — dealUrl() falls back to deal.html?id= in that
+// case, which is not a static page and must not be injected as canonical.
+function setCanonical(url) {
+  let link = document.querySelector('link[rel="canonical"]')
+  if (!link) {
+    link = document.createElement('link')
+    link.setAttribute('rel', 'canonical')
+    document.head.appendChild(link)
+  }
+  link.setAttribute('href', url)
+  let ogUrl = document.querySelector('meta[property="og:url"]')
+  if (!ogUrl) {
+    ogUrl = document.createElement('meta')
+    ogUrl.setAttribute('property', 'og:url')
+    document.head.appendChild(ogUrl)
+  }
+  ogUrl.setAttribute('content', url)
+}
 
 // Task 3.4 (R15): shared m-acc open-on-desktop rule. <details class="m-acc">
 // is collapsed by default (mobile diet); on desktop widths (>=900px) open
@@ -466,6 +490,13 @@ if (!dealId) {
 
       // ── Page title ──
       document.title = `${deal.buyer_name} / ${deal.target_name} | Deal Intelligence`
+
+      // ── Task 8 (SEO): canonical + og:url -> static twin, when known ──
+      await loadSlugMap()
+      const canonicalHref = dealUrl(dealId)
+      if (canonicalHref.startsWith('deals/')) {
+        setCanonical(`https://thepharmacloseout.com/${canonicalHref}`)
+      }
 
       // ── Hero ──
       document.getElementById('deal-hero').style.display = ''

@@ -8,6 +8,7 @@
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
 import { formatValue, formatDate, isPlausibleDate } from './format.js?v=20260711j'
+import { loadSlugMap, dealUrl } from './deal-links.mjs'
 // Pure, CDN-free scoring/gating logic lives in scoring.js so node --test can
 // import it offline. Re-exported below for existing browser importers.
 import {
@@ -31,6 +32,13 @@ const supabase = createClient(
   'https://nuqhlvlslwroupedduog.supabase.co',
   'sb_publishable_amtSGMKyQTDPPjkUHcoquw_uoSZfipS'
 )
+
+// Load the deal-slug map before module evaluation completes (top-level
+// await) so every importer's first render — including Googlebot's rendered
+// DOM — already has static deals/<slug>.html links. Same-origin static
+// fetch; loadSlugMap swallows all errors, so worst case it resolves fast
+// with an empty map and dealUrl() falls back to deal.html?id= links.
+await loadSlugMap()
 
 
 /* ==========================================================================
@@ -766,7 +774,7 @@ export function renderPoster(deal, size = 'carousel') {
   const ring = ringClass(deal.deal_type)
 
   if (size === 'featured') {
-    return `<a href="deal.html?id=${deal.deal_id}" style="text-decoration:none">
+    return `<a href="${dealUrl(deal.deal_id)}" data-deal-id="${esc(deal.deal_id)}" style="text-decoration:none">
   <div class="feat-poster ${ring}">
     <div class="fp-bg ${bg}"></div>
     <div class="fp-grain"></div>
@@ -800,7 +808,7 @@ export function renderPoster(deal, size = 'carousel') {
   const _os = displayOutcomeScore(deal)
   const outcomeScore = _os != null ? Math.round(_os) : null
 
-  return `<a href="deal.html?id=${deal.deal_id}" style="text-decoration:none">
+  return `<a href="${dealUrl(deal.deal_id)}" data-deal-id="${esc(deal.deal_id)}" style="text-decoration:none">
   <div class="c-poster ${ring}">
     <div class="c-bg ${bg}"></div>
     <div class="c-grain"></div>
@@ -876,7 +884,7 @@ export function renderFeaturedInfo(deal) {
     ${tas.slice(0, 3).map(t => `<span class="feat-tag ft-blue">${esc(t)}</span>`).join('')}
     ${deal.era_tag ? `<span class="feat-tag ft-amber">${esc(deal.era_tag)}</span>` : ''}
   </div>
-  <a href="deal.html?id=${deal.deal_id}" class="feat-cta">
+  <a href="${dealUrl(deal.deal_id)}" data-deal-id="${esc(deal.deal_id)}" class="feat-cta">
     Full Analysis
     <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
@@ -938,7 +946,7 @@ export function renderResultRow(deal) {
   const targetLogo = logoHtml(deal.target_logo_local_path, deal.target_domain, deal.target_name, 'rp')
   const hasLogos = Boolean(logoUrl(deal.buyer_logo_local_path, deal.buyer_domain) || logoUrl(deal.target_logo_local_path, deal.target_domain))
 
-  return `<a class="result-row" href="deal.html?id=${esc(deal.deal_id)}">
+  return `<a class="result-row" href="${dealUrl(deal.deal_id)}" data-deal-id="${esc(deal.deal_id)}">
     <div class="result-poster ${bgClass(deal.deal_type)}">
       <span class="rp-year">${esc(yearOf(deal.announcement_date))}</span>
       ${hasLogos
@@ -1848,7 +1856,7 @@ function renderLineageList(deals, emptyMsg) {
     const val = formatValue(d.deal_value_usd_mm)
     const y = yearOf(d.announcement_date) // blank for implausible years (ingest artifacts)
     const type = shortType(d.deal_type) || 'Deal'
-    return `<a class="lin-row" href="deal.html?id=${encodeURIComponent(d.deal_id)}">
+    return `<a class="lin-row" href="${dealUrl(d.deal_id)}" data-deal-id="${esc(d.deal_id)}">
       <div class="lin-year">${esc(y || '—')}</div>
       <div class="lin-body">
         <div class="lin-name">${esc(d.buyer_name || '')} / ${esc(d.target_name || '')}</div>
@@ -1923,7 +1931,7 @@ export function renderComparables(comparables, currentDealId) {
     const cmpHref = currentDealId ? `compare.html?ids=${currentDealId},${deal.deal_id}` : null
 
     return `<div class="comp-wrap">
-      <a class="comp" href="deal.html?id=${deal.deal_id}">
+      <a class="comp" href="${dealUrl(deal.deal_id)}" data-deal-id="${esc(deal.deal_id)}">
         <div class="comp-poster ${bg}"><span>${esc(deal.target_name || '')}</span></div>
         <div class="comp-body">
           <div class="comp-name">${esc(deal.buyer_name)} / ${esc(deal.target_name)}</div>
@@ -2098,11 +2106,11 @@ function deriveDealName(container) {
 
 function injectSelectorOnPosters() {
   // Rail / featured posters + row-list search results (anchor wraps the poster/row)
-  document.querySelectorAll('a[href^="deal.html?id="]').forEach(anchor => {
+  document.querySelectorAll('a[href^="deal.html?id="], a[data-deal-id]').forEach(anchor => {
     const container = anchor.querySelector('.feat-poster, .c-poster') || (anchor.matches('.result-row') ? anchor : null)
     if (!container) return
     if (container.querySelector('.poster-select')) return // already injected
-    const dealId = new URL(anchor.href).searchParams.get('id')
+    const dealId = anchor.dataset.dealId || new URL(anchor.href, location.href).searchParams.get('id')
     if (!dealId) return
     const dealName = deriveDealName(container)
     container.appendChild(buildSelectPill(dealId, dealName))
@@ -2203,7 +2211,7 @@ export function renderComparison(deals) {
   // Column headers — each deal is a poster + name
   const headerCells = deals.map(d => `
     <th class="cmp-head">
-      <a href="deal.html?id=${d.deal_id}" class="cmp-head-link">
+      <a href="${dealUrl(d.deal_id)}" data-deal-id="${esc(d.deal_id)}" class="cmp-head-link">
         ${renderPoster(d, 'carousel')}
       </a>
     </th>`).join('')
