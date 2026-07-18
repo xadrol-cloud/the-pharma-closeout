@@ -69,6 +69,84 @@ footer{margin-top:46px;padding-top:18px;border-top:1px solid #2a3344;
 font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7a8392}
 footer a{color:#9aa3b3}
 .summary{font-size:18px;color:#e7e3d8}
+.projected-note{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+margin:6px 0 0;font-style:italic}
+
+/* ---- VERDICT HERO (Task B3: gate-passed sample is the spec) ---- */
+.hero{margin:18px 0 8px}
+.verdict-panels{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0 0;align-items:stretch}
+.vpanel{flex:1 1 220px;min-width:0;background:#16202f;border:1px solid #2a3344;
+border-radius:12px;padding:18px 18px 16px;display:block;color:inherit;text-decoration:none;
+transition:border-color .15s ease}
+a.vpanel:hover{border-color:#c9a84c;text-decoration:none}
+.vpanel .plbl{font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.14em;
+text-transform:uppercase;color:#8a93a3;margin-bottom:8px}
+.vpanel .pnum{font-family:Georgia,serif;font-size:46px;color:#c9a84c;font-weight:700;line-height:1}
+.vpanel .pverdict{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#cdd3dd;margin-top:8px}
+.vpanel.street .pnum{color:#9aa3b3}
+.delta-row{display:flex;justify-content:center;margin:14px 0 2px}
+.delta-chip{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:13px;
+letter-spacing:.04em;border-radius:999px;padding:7px 18px;text-align:center}
+.delta-chip.under{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.delta-chip.over{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.delta-chip.aligned{color:#c9a84c;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4)}
+.verdict-line{font-family:Georgia,serif;font-size:19px;color:#f3ead0;text-align:center;
+margin:14px 0 4px;line-height:1.4}
+.hero-cta{display:block;background:#c9a84c;color:#0f1622 !important;font-family:Arial,Helvetica,sans-serif;
+font-weight:700;font-size:16px;text-align:center;padding:16px 18px;border-radius:10px;
+margin:20px 0 4px;text-decoration:none !important;max-width:100%}
+.hero-cta:hover{background:#d8b95c}
+
+/* ---- RANK BADGES ---- */
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 2px}
+.badge{font-family:Arial,Helvetica,sans-serif;font-size:12.5px;font-weight:600;
+color:#f3ead0;background:#1c2942;border:1px solid #3a4a6b;border-radius:7px;
+padding:7px 12px;text-decoration:none !important;display:inline-block}
+.badge:hover{border-color:#c9a84c}
+.badge-note{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:#6d7688;margin:6px 0 0}
+
+/* ---- RECEIPTS / COVERAGE ARC ---- */
+.receipt{background:#16202f;border:1px solid #2a3344;border-radius:10px;
+padding:14px 16px;margin:0 0 12px}
+.receipt-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px}
+.receipt-date{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+letter-spacing:.03em}
+.receipt-source{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#f3ead0;
+font-weight:600}
+.chip{font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;
+letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;
+margin-left:auto}
+.chip-bullish{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.chip-bearish{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.chip-neutral{color:#9aa3b3;background:rgba(154,163,179,.12);border:1px solid rgba(154,163,179,.3)}
+.receipt-excerpt{font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#cdd3dd;
+line-height:1.55;margin:0}
+.disclosure{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6d7688;
+margin:8px 0 4px;line-height:1.5}
+.arc-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:4px 0 0}
+
+/* ---- COMPARABLES TABLE ---- */
+.comp-table{width:100%;border-collapse:collapse;margin:10px 0;font-family:Arial,Helvetica,sans-serif}
+.comp-table th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+color:#8a93a3;padding:8px 10px;border-bottom:1px solid #2a3344}
+.comp-table td{font-size:14px;color:#cdd3dd;padding:10px;border-bottom:1px solid #1e2735;
+vertical-align:top}
+.comp-table td.num{font-family:Georgia,serif;color:#c9a84c;font-weight:700;white-space:nowrap}
+.comp-table tr.self td{color:#f3ead0;font-weight:600}
+.comp-table td.dealname a{display:block}
+.comp-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:10px 0 0}
+
+/* ---- UNGRADED (T4) NOTE ---- */
+.ungraded-note{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#8a93a3;
+background:#16202f;border:1px solid #2a3344;border-radius:10px;padding:14px 16px;
+margin:16px 0 4px;line-height:1.55}
+.ungraded-note b{color:#c9a84c}
+
+@media (max-width:420px){
+  .vpanel .pnum{font-size:38px}
+  .comp-table{font-size:12.5px}
+  .comp-table th,.comp-table td{padding:7px 6px}
+}
 </style>
 </head>
 <body>
@@ -76,9 +154,53 @@ footer a{color:#9aa3b3}
 <p class="kicker">Pharma BD Deal Intelligence</p>
 <h1>BioNTech SE / Biotheus Inc. (Pumai Biotechnology)</h1>
 <p class="meta">2024 · Acquisition/Merger · $950M · Complete</p>
-<div class="scores"><div class="score"><div class="lbl">Critic Score</div><div class="num">100</div><div class="verdict">Strongly positive</div></div></div>
-<div class="score-note">Critic Score — analyst &amp; media reaction at announcement. Outcome Score — post-close performance vs. thesis; grades open 5 years after close.</div>
+<div class="hero">
+  <div class="verdict-panels">
+    <a class="vpanel street" href="https://thepharmacloseout.com/deal.html?id=7eee9219f8dd48e28df0cdae80f5be82">
+      <div class="plbl">The Street Said</div>
+      <div class="pnum">100</div>
+      <div class="pverdict">Strongly positive — critic reaction at announcement</div>
+    </a>
+  </div>
+  <p class="projected-note">Outcome grade pending — assessed 5 years post-close.</p>
+  <a class="hero-cta" href="https://thepharmacloseout.com/deal.html?id=7eee9219f8dd48e28df0cdae80f5be82">Full analysis, sources &amp; comparables →</a>
+</div>
+
+<h2>The coverage arc</h2>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Nov 13, 2024</span>
+    <span class="receipt-source">BioPharma Dive</span>
+    <span class="chip chip-bullish">Bullish</span>
+  </div>
+  <p class="receipt-excerpt">BioNTech will buy Biotheus, gaining control of a cancer bispecific antibody that aims to improve on checkpoint inhibitors like Keytruda. The deal values…</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Feb 03, 2025</span>
+    <span class="receipt-source">BioNTech Investors</span>
+    <span class="chip chip-bullish">Bullish</span>
+  </div>
+  <p class="receipt-excerpt">BioNTech SE announced the completion of the acquisition of Biotheus, finalizing full global rights to BNT327/PM8002. The closing follows the November 13,…</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">May 30, 2026</span>
+    <span class="receipt-source">BioNTech Investors</span>
+    <span class="chip chip-bullish">Bullish</span>
+  </div>
+  <p class="receipt-excerpt">May 30, 2026 (ASCO 2026): Global interim Phase 2 data from ROSETTA Lung-02 (NCT06712316) for pumitamig (BNT327/BMS-986545) plus chemotherapy in first-line…</p>
+</div>
+
+<p class="disclosure">Source summaries from our enrichment pipeline; follow links for originals.</p>
+<p class="arc-closer"><a href="https://thepharmacloseout.com/deal.html?id=7eee9219f8dd48e28df0cdae80f5be82">All 10 sources with sentiment breakdown →</a></p>
+
+
 <p class="summary">BioNTech announced agreement to acquire Biotheus for $800M upfront (cash + small portion ADS) plus up to $150M in contingent milestones, total up to $950M. Deal deepens BNT327 program, a PD-L1/VEGF-A bispecific antibody being tested in 700+ patients across multiple tumor types as a pan-tumor platform for combinations. BNT327/PM8002 has since received the INN/generic name pumitamig (BMS code BMS-986545); in June 2025 BioNTech partnered it with Bristol Myers Squibb in a global 50/50 co-development/co-commercialization deal ($1.5B upfront, up to ~$11.1B total). As of mid-2026 pumitamig is in a pivotal global Phase 3 program — ROSETTA Lung-01 (first-line extensive-stage SCLC vs atezolizumab+chemo) and ROSETTA Lung-02 (first-line NSCLC vs pembrolizumab+chemo, 1500 mg Q3W dose selected) — with 2026 Phase 2 NSCLC data showing confirmed ORR up to 63.6% (non-squamous) and 72.7% (squamous).</p>
+
 
 <h2>Key facts</h2>
 <ul class="facts">
@@ -91,15 +213,20 @@ footer a{color:#9aa3b3}
 <li><b>Key assets</b> <span>BNT327/PM8002 (PD-L1 x VEGF-A bispecific antibody)</span></li>
 <li><b>Mechanism</b> <span>PD-L1 / VEGF-A bispecific antibody (checkpoint inhibitor + anti-angiogenesis)</span></li>
 </ul>
-<h2>Related deals</h2>
-<ul class="facts">
-<li><a href="https://thepharmacloseout.com/deals/biontech-se-duality-biologics-suzhou-2023.html">BioNTech SE / Duality Biologics (Suzhou) Co. Ltd. (2023)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/biontech-se-kite-gilead-sciences-2021.html">BioNTech SE / Kite Pharma (Gilead Sciences) (2021)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/biontech-se-curevac-n-v-2025.html">BioNTech SE / CureVac N.V. (2025)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/astrazeneca-daiichi-sankyo-2019.html">AstraZeneca PLC / Daiichi Sankyo Company, Limited (2019)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/novartis-endocyte-2018.html">Novartis AG / Endocyte, Inc. (2018)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/astellas-seagen-2009.html">Astellas Pharma Inc. / Seagen Inc. (2009)</a></li>
-</ul>
+<h2>Related deals — scored</h2>
+<table class="comp-table">
+<thead><tr><th>Deal</th><th>Year</th><th>Value</th><th>Outcome</th></tr></thead>
+<tbody>
+<tr class="self"><td class="dealname">BioNTech SE / Biotheus Inc. (Pumai Biotechnology) <span class="body-sans" style="font-size:11px;color:#8a93a3">(this deal)</span></td><td>2024</td><td class="num">$950M</td><td class="num">—</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/biontech-se-duality-biologics-suzhou-2023.html">BioNTech SE / Duality Biologics (Suzhou) Co. Ltd.</a></td><td>2023</td><td class="num">$1.7B</td><td class="num">—</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/biontech-se-kite-gilead-sciences-2021.html">BioNTech SE / Kite Pharma (Gilead Sciences)</a></td><td>2021</td><td class="num">$250M</td><td class="num">—</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/biontech-se-curevac-n-v-2025.html">BioNTech SE / CureVac N.V.</a></td><td>2025</td><td class="num">$1.2B</td><td class="num">—</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/astrazeneca-daiichi-sankyo-2019.html">AstraZeneca PLC / Daiichi Sankyo Company, Limited</a></td><td>2019</td><td class="num">$6.9B</td><td class="num">100</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/novartis-endocyte-2018.html">Novartis AG / Endocyte, Inc.</a></td><td>2018</td><td class="num">$2.1B</td><td class="num">96</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/astellas-seagen-2009.html">Astellas Pharma Inc. / Seagen Inc.</a></td><td>2009</td><td class="num">$4.5B</td><td class="num">95</td></tr>
+</tbody>
+</table>
+<p class="comp-closer"><a href="https://thepharmacloseout.com/compare.html">Compare all 7 side-by-side →</a></p>
 <a class="cta" href="https://thepharmacloseout.com/deal.html?id=7eee9219f8dd48e28df0cdae80f5be82">See the full interactive analysis, sources &amp; comparables →</a>
 <p class="sublinks">
 <a href="https://thepharmacloseout.com/deals.html">← Browse all deals</a> &nbsp;·&nbsp;

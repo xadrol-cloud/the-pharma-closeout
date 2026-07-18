@@ -69,6 +69,84 @@ footer{margin-top:46px;padding-top:18px;border-top:1px solid #2a3344;
 font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7a8392}
 footer a{color:#9aa3b3}
 .summary{font-size:18px;color:#e7e3d8}
+.projected-note{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+margin:6px 0 0;font-style:italic}
+
+/* ---- VERDICT HERO (Task B3: gate-passed sample is the spec) ---- */
+.hero{margin:18px 0 8px}
+.verdict-panels{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0 0;align-items:stretch}
+.vpanel{flex:1 1 220px;min-width:0;background:#16202f;border:1px solid #2a3344;
+border-radius:12px;padding:18px 18px 16px;display:block;color:inherit;text-decoration:none;
+transition:border-color .15s ease}
+a.vpanel:hover{border-color:#c9a84c;text-decoration:none}
+.vpanel .plbl{font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.14em;
+text-transform:uppercase;color:#8a93a3;margin-bottom:8px}
+.vpanel .pnum{font-family:Georgia,serif;font-size:46px;color:#c9a84c;font-weight:700;line-height:1}
+.vpanel .pverdict{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#cdd3dd;margin-top:8px}
+.vpanel.street .pnum{color:#9aa3b3}
+.delta-row{display:flex;justify-content:center;margin:14px 0 2px}
+.delta-chip{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:13px;
+letter-spacing:.04em;border-radius:999px;padding:7px 18px;text-align:center}
+.delta-chip.under{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.delta-chip.over{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.delta-chip.aligned{color:#c9a84c;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4)}
+.verdict-line{font-family:Georgia,serif;font-size:19px;color:#f3ead0;text-align:center;
+margin:14px 0 4px;line-height:1.4}
+.hero-cta{display:block;background:#c9a84c;color:#0f1622 !important;font-family:Arial,Helvetica,sans-serif;
+font-weight:700;font-size:16px;text-align:center;padding:16px 18px;border-radius:10px;
+margin:20px 0 4px;text-decoration:none !important;max-width:100%}
+.hero-cta:hover{background:#d8b95c}
+
+/* ---- RANK BADGES ---- */
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 2px}
+.badge{font-family:Arial,Helvetica,sans-serif;font-size:12.5px;font-weight:600;
+color:#f3ead0;background:#1c2942;border:1px solid #3a4a6b;border-radius:7px;
+padding:7px 12px;text-decoration:none !important;display:inline-block}
+.badge:hover{border-color:#c9a84c}
+.badge-note{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:#6d7688;margin:6px 0 0}
+
+/* ---- RECEIPTS / COVERAGE ARC ---- */
+.receipt{background:#16202f;border:1px solid #2a3344;border-radius:10px;
+padding:14px 16px;margin:0 0 12px}
+.receipt-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px}
+.receipt-date{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+letter-spacing:.03em}
+.receipt-source{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#f3ead0;
+font-weight:600}
+.chip{font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;
+letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;
+margin-left:auto}
+.chip-bullish{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.chip-bearish{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.chip-neutral{color:#9aa3b3;background:rgba(154,163,179,.12);border:1px solid rgba(154,163,179,.3)}
+.receipt-excerpt{font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#cdd3dd;
+line-height:1.55;margin:0}
+.disclosure{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6d7688;
+margin:8px 0 4px;line-height:1.5}
+.arc-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:4px 0 0}
+
+/* ---- COMPARABLES TABLE ---- */
+.comp-table{width:100%;border-collapse:collapse;margin:10px 0;font-family:Arial,Helvetica,sans-serif}
+.comp-table th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+color:#8a93a3;padding:8px 10px;border-bottom:1px solid #2a3344}
+.comp-table td{font-size:14px;color:#cdd3dd;padding:10px;border-bottom:1px solid #1e2735;
+vertical-align:top}
+.comp-table td.num{font-family:Georgia,serif;color:#c9a84c;font-weight:700;white-space:nowrap}
+.comp-table tr.self td{color:#f3ead0;font-weight:600}
+.comp-table td.dealname a{display:block}
+.comp-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:10px 0 0}
+
+/* ---- UNGRADED (T4) NOTE ---- */
+.ungraded-note{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#8a93a3;
+background:#16202f;border:1px solid #2a3344;border-radius:10px;padding:14px 16px;
+margin:16px 0 4px;line-height:1.55}
+.ungraded-note b{color:#c9a84c}
+
+@media (max-width:420px){
+  .vpanel .pnum{font-size:38px}
+  .comp-table{font-size:12.5px}
+  .comp-table th,.comp-table td{padding:7px 6px}
+}
 </style>
 </head>
 <body>
@@ -76,9 +154,23 @@ footer a{color:#9aa3b3}
 <p class="kicker">Pharma BD Deal Intelligence</p>
 <h1>Novartis AG / Chai Discovery, Inc.</h1>
 <p class="meta">2026 · Co-Development · Complete</p>
-<div class="scores"><div class="score"><div class="lbl">Outcome Score</div><div class="num">59</div><div class="verdict">Mixed — partial payoff, real shortfalls.</div></div></div>
-<div class="score-note">Critic Score — analyst &amp; media reaction at announcement. Outcome Score — post-close performance vs. thesis; grades open 5 years after close.</div>
+<div class="hero">
+  <div class="verdict-panels">
+    <a class="vpanel history" href="https://thepharmacloseout.com/deal.html?id=1ccb99c4d5034c4496b576c07a57871c">
+      <div class="plbl">History Says</div>
+      <div class="pnum">59</div>
+      <div class="pverdict">Mixed — partial payoff, real shortfalls</div>
+    </a>
+  </div>
+<p class="verdict-line">Platform access to AI antibody design; discovery-stage optionality</p>
+  <a class="hero-cta" href="https://thepharmacloseout.com/deal.html?id=1ccb99c4d5034c4496b576c07a57871c">Full analysis, sources &amp; comparables →</a>
+</div>
+
+
+
+
 <p class="summary">Chai Discovery, an AI drug-design company, entered a collaboration with Novartis to apply its latest AI models — including Chai-3 — to therapeutic antibody discovery across multiple biological targets and programs. The agreement follows more than a year of technical engagement in which Novartis had early access to Chai&#x27;s next-generation protein-folding model. Chai-3 materially improves target success rates and binding affinity versus its predecessor. Financial terms and specific disease areas were not disclosed. The pact adds Novartis to Chai&#x27;s pharma customer base alongside Pfizer and Eli Lilly.</p>
+
 
 <h2>Key facts</h2>
 <ul class="facts">
@@ -89,15 +181,20 @@ footer a{color:#9aa3b3}
 <li><b>Key assets</b> <span>AI-designed therapeutic antibodies (Chai-3 platform)</span></li>
 <li><b>Mechanism</b> <span>AI-driven de novo therapeutic antibody discovery (Chai-3 generative model)</span></li>
 </ul>
-<h2>Related deals</h2>
-<ul class="facts">
-<li><a href="https://thepharmacloseout.com/deals/novartis-advanced-accelerator-applications-s-a-2017.html">Novartis AG / Advanced Accelerator Applications S.A. (2017)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/novartis-endocyte-2018.html">Novartis AG / Endocyte, Inc. (2018)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/novartis-glaxosmithkline-2014.html">Novartis AG / GlaxoSmithKline plc (2014)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/novartis-ptc-2024.html">Novartis AG / PTC Therapeutics Inc. (2024)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/novartis-chinook-2023.html">Novartis AG / Chinook Therapeutics Inc. (2023)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/novartis-hexal-2002.html">Novartis AG / Hexal AG (2002)</a></li>
-</ul>
+<h2>Related deals — scored</h2>
+<table class="comp-table">
+<thead><tr><th>Deal</th><th>Year</th><th>Value</th><th>Outcome</th></tr></thead>
+<tbody>
+<tr class="self"><td class="dealname">Novartis AG / Chai Discovery, Inc. <span class="body-sans" style="font-size:11px;color:#8a93a3">(this deal)</span></td><td>2026</td><td class="num">—</td><td class="num">59</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/novartis-advanced-accelerator-applications-s-a-2017.html">Novartis AG / Advanced Accelerator Applications S.A.</a></td><td>2017</td><td class="num">$3.9B</td><td class="num">98</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/novartis-endocyte-2018.html">Novartis AG / Endocyte, Inc.</a></td><td>2018</td><td class="num">$2.1B</td><td class="num">96</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/novartis-glaxosmithkline-2014.html">Novartis AG / GlaxoSmithKline plc</a></td><td>2014</td><td class="num">$16.0B</td><td class="num">81</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/novartis-ptc-2024.html">Novartis AG / PTC Therapeutics Inc.</a></td><td>2024</td><td class="num">$2.9B</td><td class="num">80</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/novartis-chinook-2023.html">Novartis AG / Chinook Therapeutics Inc.</a></td><td>2023</td><td class="num">$3.5B</td><td class="num">78</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/novartis-hexal-2002.html">Novartis AG / Hexal AG</a></td><td>2002</td><td class="num">$8.3B</td><td class="num">75</td></tr>
+</tbody>
+</table>
+<p class="comp-closer"><a href="https://thepharmacloseout.com/compare.html">Compare all 7 side-by-side →</a></p>
 <a class="cta" href="https://thepharmacloseout.com/deal.html?id=1ccb99c4d5034c4496b576c07a57871c">See the full interactive analysis, sources &amp; comparables →</a>
 <p class="sublinks">
 <a href="https://thepharmacloseout.com/deals.html">← Browse all deals</a> &nbsp;·&nbsp;

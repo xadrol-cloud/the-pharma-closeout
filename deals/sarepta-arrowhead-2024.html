@@ -69,6 +69,84 @@ footer{margin-top:46px;padding-top:18px;border-top:1px solid #2a3344;
 font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7a8392}
 footer a{color:#9aa3b3}
 .summary{font-size:18px;color:#e7e3d8}
+.projected-note{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+margin:6px 0 0;font-style:italic}
+
+/* ---- VERDICT HERO (Task B3: gate-passed sample is the spec) ---- */
+.hero{margin:18px 0 8px}
+.verdict-panels{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0 0;align-items:stretch}
+.vpanel{flex:1 1 220px;min-width:0;background:#16202f;border:1px solid #2a3344;
+border-radius:12px;padding:18px 18px 16px;display:block;color:inherit;text-decoration:none;
+transition:border-color .15s ease}
+a.vpanel:hover{border-color:#c9a84c;text-decoration:none}
+.vpanel .plbl{font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.14em;
+text-transform:uppercase;color:#8a93a3;margin-bottom:8px}
+.vpanel .pnum{font-family:Georgia,serif;font-size:46px;color:#c9a84c;font-weight:700;line-height:1}
+.vpanel .pverdict{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#cdd3dd;margin-top:8px}
+.vpanel.street .pnum{color:#9aa3b3}
+.delta-row{display:flex;justify-content:center;margin:14px 0 2px}
+.delta-chip{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:13px;
+letter-spacing:.04em;border-radius:999px;padding:7px 18px;text-align:center}
+.delta-chip.under{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.delta-chip.over{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.delta-chip.aligned{color:#c9a84c;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4)}
+.verdict-line{font-family:Georgia,serif;font-size:19px;color:#f3ead0;text-align:center;
+margin:14px 0 4px;line-height:1.4}
+.hero-cta{display:block;background:#c9a84c;color:#0f1622 !important;font-family:Arial,Helvetica,sans-serif;
+font-weight:700;font-size:16px;text-align:center;padding:16px 18px;border-radius:10px;
+margin:20px 0 4px;text-decoration:none !important;max-width:100%}
+.hero-cta:hover{background:#d8b95c}
+
+/* ---- RANK BADGES ---- */
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 2px}
+.badge{font-family:Arial,Helvetica,sans-serif;font-size:12.5px;font-weight:600;
+color:#f3ead0;background:#1c2942;border:1px solid #3a4a6b;border-radius:7px;
+padding:7px 12px;text-decoration:none !important;display:inline-block}
+.badge:hover{border-color:#c9a84c}
+.badge-note{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:#6d7688;margin:6px 0 0}
+
+/* ---- RECEIPTS / COVERAGE ARC ---- */
+.receipt{background:#16202f;border:1px solid #2a3344;border-radius:10px;
+padding:14px 16px;margin:0 0 12px}
+.receipt-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px}
+.receipt-date{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+letter-spacing:.03em}
+.receipt-source{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#f3ead0;
+font-weight:600}
+.chip{font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;
+letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;
+margin-left:auto}
+.chip-bullish{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.chip-bearish{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.chip-neutral{color:#9aa3b3;background:rgba(154,163,179,.12);border:1px solid rgba(154,163,179,.3)}
+.receipt-excerpt{font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#cdd3dd;
+line-height:1.55;margin:0}
+.disclosure{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6d7688;
+margin:8px 0 4px;line-height:1.5}
+.arc-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:4px 0 0}
+
+/* ---- COMPARABLES TABLE ---- */
+.comp-table{width:100%;border-collapse:collapse;margin:10px 0;font-family:Arial,Helvetica,sans-serif}
+.comp-table th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+color:#8a93a3;padding:8px 10px;border-bottom:1px solid #2a3344}
+.comp-table td{font-size:14px;color:#cdd3dd;padding:10px;border-bottom:1px solid #1e2735;
+vertical-align:top}
+.comp-table td.num{font-family:Georgia,serif;color:#c9a84c;font-weight:700;white-space:nowrap}
+.comp-table tr.self td{color:#f3ead0;font-weight:600}
+.comp-table td.dealname a{display:block}
+.comp-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:10px 0 0}
+
+/* ---- UNGRADED (T4) NOTE ---- */
+.ungraded-note{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#8a93a3;
+background:#16202f;border:1px solid #2a3344;border-radius:10px;padding:14px 16px;
+margin:16px 0 4px;line-height:1.55}
+.ungraded-note b{color:#c9a84c}
+
+@media (max-width:420px){
+  .vpanel .pnum{font-size:38px}
+  .comp-table{font-size:12.5px}
+  .comp-table th,.comp-table td{padding:7px 6px}
+}
 </style>
 </head>
 <body>
@@ -76,9 +154,58 @@ footer a{color:#9aa3b3}
 <p class="kicker">Pharma BD Deal Intelligence</p>
 <h1>Sarepta Therapeutics Inc. / Arrowhead Pharmaceuticals Inc.</h1>
 <p class="meta">2024 · Licensing/Option · $1.1B · Complete</p>
-<div class="scores"><div class="score"><div class="lbl">Critic Score</div><div class="num">93</div><div class="verdict">Strongly positive</div></div><div class="score"><div class="lbl">Outcome Score</div><div class="num">72</div><div class="verdict">Largely worked — most objectives met.</div></div></div>
-<div class="score-note">Critic Score — analyst &amp; media reaction at announcement. Outcome Score — post-close performance vs. thesis; grades open 5 years after close.</div>
+<div class="hero">
+  <div class="verdict-panels">
+    <a class="vpanel street" href="https://thepharmacloseout.com/deal.html?id=b68edb389a8a451e86a0ce1b54cdb05f">
+      <div class="plbl">The Street Said</div>
+      <div class="pnum">93</div>
+      <div class="pverdict">Strongly positive — critic reaction at announcement</div>
+    </a>
+    <a class="vpanel history" href="https://thepharmacloseout.com/deal.html?id=b68edb389a8a451e86a0ce1b54cdb05f">
+      <div class="plbl">History Says</div>
+      <div class="pnum">72</div>
+      <div class="pverdict">Largely worked — most objectives met</div>
+    </a>
+  </div>
+  <div class="delta-row"><span class="delta-chip aligned">CALLED IT — OFF BY 21</span></div>
+  <a class="hero-cta" href="https://thepharmacloseout.com/deal.html?id=b68edb389a8a451e86a0ce1b54cdb05f">Full analysis, sources &amp; comparables →</a>
+</div>
+
+<h2>The coverage arc</h2>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Nov 26, 2024</span>
+    <span class="receipt-source">STAT News</span>
+    <span class="chip chip-bullish">Bullish</span>
+  </div>
+  <p class="receipt-excerpt">Sarepta and Arrowhead partner to advance RNA-based drugs in rare diseases with $825M upfront and up to $10B in milestones</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Jul 28, 2025</span>
+    <span class="receipt-source">Arrowhead Pharmaceuticals</span>
+    <span class="chip chip-bullish">Bullish</span>
+  </div>
+  <p class="receipt-excerpt">Arrowhead earns $100M milestone on first ARO-DM1 Phase 1/2 enrollment target.</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Mar 25, 2026</span>
+    <span class="receipt-source">Sarepta Therapeutics</span>
+    <span class="chip chip-bullish">Bullish</span>
+  </div>
+  <p class="receipt-excerpt">First Ph1/2 data for SRP-1001 (FSHD1) and SRP-1003 (DM1): dose-dependent muscle exposure, early biomarker effects, favorable tolerability.</p>
+</div>
+
+<p class="disclosure">Source summaries from our enrichment pipeline; follow links for originals.</p>
+<p class="arc-closer"><a href="https://thepharmacloseout.com/deal.html?id=b68edb389a8a451e86a0ce1b54cdb05f">All 8 sources with sentiment breakdown →</a></p>
+
+
 <p class="summary">In November 2024 Sarepta Therapeutics entered a global license and collaboration agreement for Arrowhead Pharmaceuticals&#x27; clinical and preclinical siRNA/RNAi programs in rare genetic diseases (including FSHD1, myotonic dystrophy type 1, IPF and CNS indications). The deal closed February 10, 2025, with Arrowhead receiving $500M upfront, a $325M equity investment (stock purchased at $27.25/share) and $250M in installment payments ($50M/yr over five years), plus contingent milestones. The agreement weathered Sarepta&#x27;s mid-2025 corporate restructuring: on July 23, 2025 Arrowhead confirmed the collaboration remained in effect and that Sarepta had prioritized the licensed RNAi programs as central to its future. Arrowhead subsequently earned two ARO-DM1 enrollment milestones -- $100M (July 28, 2025) and $200M (November 24, 2025). On March 25, 2026 Sarepta reported the first Phase 1/2 clinical data for SRP-1001 (ARO-DUX4, FSHD1) and SRP-1003 (ARO-DM1, DM1), showing dose-dependent muscle exposure, early biomarker effects and favorable tolerability.</p>
+
 
 <h2>Key facts</h2>
 <ul class="facts">
@@ -91,15 +218,20 @@ footer a{color:#9aa3b3}
 <li><b>Key assets</b> <span>ARO-DUX4, ARO-DM1, ARO-MMP7, ARO-ATXN2</span></li>
 <li><b>Mechanism</b> <span>RNA interference (RNAi)</span></li>
 </ul>
-<h2>Related deals</h2>
-<ul class="facts">
-<li><a href="https://thepharmacloseout.com/deals/novartis-advanced-accelerator-applications-s-a-2017.html">Novartis AG / Advanced Accelerator Applications S.A. (2017)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/allergan-merck-cgrp-receptor-antagonist-program-2015.html">Allergan plc / Merck &amp; Co., Inc. (CGRP receptor antagonist program) (2015)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/cephalon-laboratoire-l-lafon-s-a-lafon-2000.html">Cephalon Inc. / Laboratoire L. Lafon S.A. (Group Lafon) (2000)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/teva-pharmaceutical-industries-auspex-2015.html">Teva Pharmaceutical Industries Ltd. / Auspex Pharmaceuticals (2015)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/teva-pharmaceutical-industries-biogal-pharmaceutical-1995.html">Teva Pharmaceutical Industries Ltd. / Biogal Pharmaceutical (1995)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/novartis-ptc-2024.html">Novartis AG / PTC Therapeutics Inc. (2024)</a></li>
-</ul>
+<h2>Related deals — scored</h2>
+<table class="comp-table">
+<thead><tr><th>Deal</th><th>Year</th><th>Value</th><th>Outcome</th></tr></thead>
+<tbody>
+<tr class="self"><td class="dealname">Sarepta Therapeutics Inc. / Arrowhead Pharmaceuticals Inc. <span class="body-sans" style="font-size:11px;color:#8a93a3">(this deal)</span></td><td>2024</td><td class="num">$1.1B</td><td class="num">72</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/novartis-advanced-accelerator-applications-s-a-2017.html">Novartis AG / Advanced Accelerator Applications S.A.</a></td><td>2017</td><td class="num">$3.9B</td><td class="num">98</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/allergan-merck-cgrp-receptor-antagonist-program-2015.html">Allergan plc / Merck &amp; Co., Inc. (CGRP receptor antagonist program)</a></td><td>2015</td><td class="num">$250M</td><td class="num">91</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/cephalon-laboratoire-l-lafon-s-a-lafon-2000.html">Cephalon Inc. / Laboratoire L. Lafon S.A. (Group Lafon)</a></td><td>2000</td><td class="num">$450M</td><td class="num">89</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/teva-pharmaceutical-industries-auspex-2015.html">Teva Pharmaceutical Industries Ltd. / Auspex Pharmaceuticals</a></td><td>2015</td><td class="num">$3.5B</td><td class="num">86</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/teva-pharmaceutical-industries-biogal-pharmaceutical-1995.html">Teva Pharmaceutical Industries Ltd. / Biogal Pharmaceutical</a></td><td>1995</td><td class="num">—</td><td class="num">82</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/novartis-ptc-2024.html">Novartis AG / PTC Therapeutics Inc.</a></td><td>2024</td><td class="num">$2.9B</td><td class="num">80</td></tr>
+</tbody>
+</table>
+<p class="comp-closer"><a href="https://thepharmacloseout.com/compare.html">Compare all 7 side-by-side →</a></p>
 <a class="cta" href="https://thepharmacloseout.com/deal.html?id=b68edb389a8a451e86a0ce1b54cdb05f">See the full interactive analysis, sources &amp; comparables →</a>
 <p class="sublinks">
 <a href="https://thepharmacloseout.com/deals.html">← Browse all deals</a> &nbsp;·&nbsp;

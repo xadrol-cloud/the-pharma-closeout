@@ -69,6 +69,84 @@ footer{margin-top:46px;padding-top:18px;border-top:1px solid #2a3344;
 font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7a8392}
 footer a{color:#9aa3b3}
 .summary{font-size:18px;color:#e7e3d8}
+.projected-note{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+margin:6px 0 0;font-style:italic}
+
+/* ---- VERDICT HERO (Task B3: gate-passed sample is the spec) ---- */
+.hero{margin:18px 0 8px}
+.verdict-panels{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0 0;align-items:stretch}
+.vpanel{flex:1 1 220px;min-width:0;background:#16202f;border:1px solid #2a3344;
+border-radius:12px;padding:18px 18px 16px;display:block;color:inherit;text-decoration:none;
+transition:border-color .15s ease}
+a.vpanel:hover{border-color:#c9a84c;text-decoration:none}
+.vpanel .plbl{font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.14em;
+text-transform:uppercase;color:#8a93a3;margin-bottom:8px}
+.vpanel .pnum{font-family:Georgia,serif;font-size:46px;color:#c9a84c;font-weight:700;line-height:1}
+.vpanel .pverdict{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#cdd3dd;margin-top:8px}
+.vpanel.street .pnum{color:#9aa3b3}
+.delta-row{display:flex;justify-content:center;margin:14px 0 2px}
+.delta-chip{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:13px;
+letter-spacing:.04em;border-radius:999px;padding:7px 18px;text-align:center}
+.delta-chip.under{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.delta-chip.over{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.delta-chip.aligned{color:#c9a84c;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4)}
+.verdict-line{font-family:Georgia,serif;font-size:19px;color:#f3ead0;text-align:center;
+margin:14px 0 4px;line-height:1.4}
+.hero-cta{display:block;background:#c9a84c;color:#0f1622 !important;font-family:Arial,Helvetica,sans-serif;
+font-weight:700;font-size:16px;text-align:center;padding:16px 18px;border-radius:10px;
+margin:20px 0 4px;text-decoration:none !important;max-width:100%}
+.hero-cta:hover{background:#d8b95c}
+
+/* ---- RANK BADGES ---- */
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 2px}
+.badge{font-family:Arial,Helvetica,sans-serif;font-size:12.5px;font-weight:600;
+color:#f3ead0;background:#1c2942;border:1px solid #3a4a6b;border-radius:7px;
+padding:7px 12px;text-decoration:none !important;display:inline-block}
+.badge:hover{border-color:#c9a84c}
+.badge-note{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:#6d7688;margin:6px 0 0}
+
+/* ---- RECEIPTS / COVERAGE ARC ---- */
+.receipt{background:#16202f;border:1px solid #2a3344;border-radius:10px;
+padding:14px 16px;margin:0 0 12px}
+.receipt-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px}
+.receipt-date{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+letter-spacing:.03em}
+.receipt-source{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#f3ead0;
+font-weight:600}
+.chip{font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;
+letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;
+margin-left:auto}
+.chip-bullish{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.chip-bearish{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.chip-neutral{color:#9aa3b3;background:rgba(154,163,179,.12);border:1px solid rgba(154,163,179,.3)}
+.receipt-excerpt{font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#cdd3dd;
+line-height:1.55;margin:0}
+.disclosure{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6d7688;
+margin:8px 0 4px;line-height:1.5}
+.arc-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:4px 0 0}
+
+/* ---- COMPARABLES TABLE ---- */
+.comp-table{width:100%;border-collapse:collapse;margin:10px 0;font-family:Arial,Helvetica,sans-serif}
+.comp-table th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+color:#8a93a3;padding:8px 10px;border-bottom:1px solid #2a3344}
+.comp-table td{font-size:14px;color:#cdd3dd;padding:10px;border-bottom:1px solid #1e2735;
+vertical-align:top}
+.comp-table td.num{font-family:Georgia,serif;color:#c9a84c;font-weight:700;white-space:nowrap}
+.comp-table tr.self td{color:#f3ead0;font-weight:600}
+.comp-table td.dealname a{display:block}
+.comp-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:10px 0 0}
+
+/* ---- UNGRADED (T4) NOTE ---- */
+.ungraded-note{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#8a93a3;
+background:#16202f;border:1px solid #2a3344;border-radius:10px;padding:14px 16px;
+margin:16px 0 4px;line-height:1.55}
+.ungraded-note b{color:#c9a84c}
+
+@media (max-width:420px){
+  .vpanel .pnum{font-size:38px}
+  .comp-table{font-size:12.5px}
+  .comp-table th,.comp-table td{padding:7px 6px}
+}
 </style>
 </head>
 <body>
@@ -76,9 +154,53 @@ footer a{color:#9aa3b3}
 <p class="kicker">Pharma BD Deal Intelligence</p>
 <h1>Catalent, Inc. / Bettera Holdings, LLC</h1>
 <p class="meta">2021 · Acquisition/Merger · $1.0B · Complete</p>
-<div class="scores"><div class="score"><div class="lbl">Critic Score</div><div class="num">67</div><div class="verdict">Positive</div></div></div>
-<div class="score-note">Critic Score — analyst &amp; media reaction at announcement. Outcome Score — post-close performance vs. thesis; grades open 5 years after close.</div>
+<div class="hero">
+  <div class="verdict-panels">
+    <a class="vpanel street" href="https://thepharmacloseout.com/deal.html?id=3b2a9c6aba1f42b7b2cab590ebbdbae2">
+      <div class="plbl">The Street Said</div>
+      <div class="pnum">67</div>
+      <div class="pverdict">Positive — critic reaction at announcement</div>
+    </a>
+  </div>
+  <p class="projected-note">Outcome grade pending — assessed 5 years post-close.</p>
+  <a class="hero-cta" href="https://thepharmacloseout.com/deal.html?id=3b2a9c6aba1f42b7b2cab590ebbdbae2">Full analysis, sources &amp; comparables →</a>
+</div>
+
+<h2>The coverage arc</h2>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Jun 15, 2021</span>
+    <span class="receipt-source">Nutritional Outlook</span>
+    <span class="chip chip-neutral">Neutral</span>
+  </div>
+  <p class="receipt-excerpt">The gummy supplement category continues its meteoric rise, with retail sales growing more than 30% annually since 2018 and reaching $5 billion in 2021. Drivers…</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Oct 04, 2021</span>
+    <span class="receipt-source">BioProcess Online</span>
+    <span class="chip chip-bullish">Bullish</span>
+  </div>
+  <p class="receipt-excerpt">Catalent, Inc. has completed its $1 billion acquisition of Bettera Holdings, LLC, expanding its consumer health offerings into gummy, soft chew, and lozenge…</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Dec 18, 2024</span>
+    <span class="receipt-source">SEC EDGAR — Catalent 8-K (Novo Holdings close)</span>
+    <span class="chip chip-neutral">Neutral</span>
+  </div>
+  <p class="receipt-excerpt">Form 8-K exhibit: completion of Novo Holdings acquisition of Catalent, Dec 18, 2024, $63.50/share, ~$16.5B enterprise value; Novo Nordisk concurrently acquired…</p>
+</div>
+
+<p class="disclosure">Source summaries from our enrichment pipeline; follow links for originals.</p>
+<p class="arc-closer"><a href="https://thepharmacloseout.com/deal.html?id=3b2a9c6aba1f42b7b2cab590ebbdbae2">All 16 sources with sentiment breakdown →</a></p>
+
+
 <p class="summary">Catalent agreed to acquire Bettera Holdings, a Plano, TX-based manufacturer of gummy, soft chew, and lozenge consumer health products, for $1B. The acquisition expanded Catalent&#x27;s consumer health and nutraceuticals manufacturing platform. Post-close arc (added 2026-06-07): the deal underperformed against its original accretion thesis — in FY2023 Catalent recorded a non-cash goodwill impairment of more than $200M in its Consumer Health business tied primarily to the Bettera acquisition (part of a broader ~$700M / $689M Q1 FY2024 impairment). Catalent itself was subsequently acquired by Novo Holdings (completed Dec 18, 2024; $63.50/share; ~$16.5B enterprise value), with Bettera/Consumer Health passing into Novo Holdings ownership rather than being separately divested.</p>
+
 
 <h2>Key facts</h2>
 <ul class="facts">
@@ -91,15 +213,20 @@ footer a{color:#9aa3b3}
 <li><b>Key assets</b> <span>Gummy, soft chew, and lozenge consumer health products</span></li>
 <li><b>Mechanism</b> <span>Contract manufacturing of consumer health dosage forms</span></li>
 </ul>
-<h2>Related deals</h2>
-<ul class="facts">
-<li><a href="https://thepharmacloseout.com/deals/catalent-paragon-bioservices-2019.html">Catalent, Inc. / Paragon Bioservices, Inc. (2019)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/watson-actavis-2012.html">Watson Pharmaceuticals, Inc. / Actavis Group (2012)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/kohlberg-kravis-roberts-pra-international-genstar-capital-2013.html">Kohlberg Kravis Roberts &amp; Co. / PRA International (Genstar Capital) (2013)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/stryker-mako-surgical-2013.html">Stryker Corporation / MAKO Surgical Corp. (2013)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/quintiles-transnational-ims-health-2016.html">Quintiles Transnational Holdings Inc. / IMS Health Holdings, Inc. (2016)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/dpx-b-v-jll-partners-51-royal-dsm-49-patheon-dsm-pharmaceutical-products-2013.html">DPx Holdings B.V. (JLL Partners 51% / Royal DSM 49%) / Patheon Inc. + DSM Pharmaceutical Products (2013)</a></li>
-</ul>
+<h2>Related deals — scored</h2>
+<table class="comp-table">
+<thead><tr><th>Deal</th><th>Year</th><th>Value</th><th>Outcome</th></tr></thead>
+<tbody>
+<tr class="self"><td class="dealname">Catalent, Inc. / Bettera Holdings, LLC <span class="body-sans" style="font-size:11px;color:#8a93a3">(this deal)</span></td><td>2021</td><td class="num">$1.0B</td><td class="num">—</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/catalent-paragon-bioservices-2019.html">Catalent, Inc. / Paragon Bioservices, Inc.</a></td><td>2019</td><td class="num">$1.2B</td><td class="num">—</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/watson-actavis-2012.html">Watson Pharmaceuticals, Inc. / Actavis Group</a></td><td>2012</td><td class="num">$5.9B</td><td class="num">97</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/kohlberg-kravis-roberts-pra-international-genstar-capital-2013.html">Kohlberg Kravis Roberts &amp; Co. / PRA International (Genstar Capital)</a></td><td>2013</td><td class="num">$1.3B</td><td class="num">91</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/stryker-mako-surgical-2013.html">Stryker Corporation / MAKO Surgical Corp.</a></td><td>2013</td><td class="num">$1.6B</td><td class="num">91</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/quintiles-transnational-ims-health-2016.html">Quintiles Transnational Holdings Inc. / IMS Health Holdings, Inc.</a></td><td>2016</td><td class="num">$17.6B</td><td class="num">91</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/dpx-b-v-jll-partners-51-royal-dsm-49-patheon-dsm-pharmaceutical-products-2013.html">DPx Holdings B.V. (JLL Partners 51% / Royal DSM 49%) / Patheon Inc. + DSM Pharmaceutical Products</a></td><td>2013</td><td class="num">$2.6B</td><td class="num">90</td></tr>
+</tbody>
+</table>
+<p class="comp-closer"><a href="https://thepharmacloseout.com/compare.html">Compare all 7 side-by-side →</a></p>
 <a class="cta" href="https://thepharmacloseout.com/deal.html?id=3b2a9c6aba1f42b7b2cab590ebbdbae2">See the full interactive analysis, sources &amp; comparables →</a>
 <p class="sublinks">
 <a href="https://thepharmacloseout.com/deals.html">← Browse all deals</a> &nbsp;·&nbsp;

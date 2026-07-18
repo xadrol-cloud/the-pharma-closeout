@@ -69,6 +69,84 @@ footer{margin-top:46px;padding-top:18px;border-top:1px solid #2a3344;
 font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7a8392}
 footer a{color:#9aa3b3}
 .summary{font-size:18px;color:#e7e3d8}
+.projected-note{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+margin:6px 0 0;font-style:italic}
+
+/* ---- VERDICT HERO (Task B3: gate-passed sample is the spec) ---- */
+.hero{margin:18px 0 8px}
+.verdict-panels{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0 0;align-items:stretch}
+.vpanel{flex:1 1 220px;min-width:0;background:#16202f;border:1px solid #2a3344;
+border-radius:12px;padding:18px 18px 16px;display:block;color:inherit;text-decoration:none;
+transition:border-color .15s ease}
+a.vpanel:hover{border-color:#c9a84c;text-decoration:none}
+.vpanel .plbl{font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.14em;
+text-transform:uppercase;color:#8a93a3;margin-bottom:8px}
+.vpanel .pnum{font-family:Georgia,serif;font-size:46px;color:#c9a84c;font-weight:700;line-height:1}
+.vpanel .pverdict{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#cdd3dd;margin-top:8px}
+.vpanel.street .pnum{color:#9aa3b3}
+.delta-row{display:flex;justify-content:center;margin:14px 0 2px}
+.delta-chip{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:13px;
+letter-spacing:.04em;border-radius:999px;padding:7px 18px;text-align:center}
+.delta-chip.under{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.delta-chip.over{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.delta-chip.aligned{color:#c9a84c;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4)}
+.verdict-line{font-family:Georgia,serif;font-size:19px;color:#f3ead0;text-align:center;
+margin:14px 0 4px;line-height:1.4}
+.hero-cta{display:block;background:#c9a84c;color:#0f1622 !important;font-family:Arial,Helvetica,sans-serif;
+font-weight:700;font-size:16px;text-align:center;padding:16px 18px;border-radius:10px;
+margin:20px 0 4px;text-decoration:none !important;max-width:100%}
+.hero-cta:hover{background:#d8b95c}
+
+/* ---- RANK BADGES ---- */
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 2px}
+.badge{font-family:Arial,Helvetica,sans-serif;font-size:12.5px;font-weight:600;
+color:#f3ead0;background:#1c2942;border:1px solid #3a4a6b;border-radius:7px;
+padding:7px 12px;text-decoration:none !important;display:inline-block}
+.badge:hover{border-color:#c9a84c}
+.badge-note{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:#6d7688;margin:6px 0 0}
+
+/* ---- RECEIPTS / COVERAGE ARC ---- */
+.receipt{background:#16202f;border:1px solid #2a3344;border-radius:10px;
+padding:14px 16px;margin:0 0 12px}
+.receipt-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px}
+.receipt-date{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+letter-spacing:.03em}
+.receipt-source{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#f3ead0;
+font-weight:600}
+.chip{font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;
+letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;
+margin-left:auto}
+.chip-bullish{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.chip-bearish{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.chip-neutral{color:#9aa3b3;background:rgba(154,163,179,.12);border:1px solid rgba(154,163,179,.3)}
+.receipt-excerpt{font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#cdd3dd;
+line-height:1.55;margin:0}
+.disclosure{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6d7688;
+margin:8px 0 4px;line-height:1.5}
+.arc-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:4px 0 0}
+
+/* ---- COMPARABLES TABLE ---- */
+.comp-table{width:100%;border-collapse:collapse;margin:10px 0;font-family:Arial,Helvetica,sans-serif}
+.comp-table th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+color:#8a93a3;padding:8px 10px;border-bottom:1px solid #2a3344}
+.comp-table td{font-size:14px;color:#cdd3dd;padding:10px;border-bottom:1px solid #1e2735;
+vertical-align:top}
+.comp-table td.num{font-family:Georgia,serif;color:#c9a84c;font-weight:700;white-space:nowrap}
+.comp-table tr.self td{color:#f3ead0;font-weight:600}
+.comp-table td.dealname a{display:block}
+.comp-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:10px 0 0}
+
+/* ---- UNGRADED (T4) NOTE ---- */
+.ungraded-note{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#8a93a3;
+background:#16202f;border:1px solid #2a3344;border-radius:10px;padding:14px 16px;
+margin:16px 0 4px;line-height:1.55}
+.ungraded-note b{color:#c9a84c}
+
+@media (max-width:420px){
+  .vpanel .pnum{font-size:38px}
+  .comp-table{font-size:12.5px}
+  .comp-table th,.comp-table td{padding:7px 6px}
+}
 </style>
 </head>
 <body>
@@ -76,9 +154,58 @@ footer a{color:#9aa3b3}
 <p class="kicker">Pharma BD Deal Intelligence</p>
 <h1>AstraZeneca PLC / Innate Pharma SA</h1>
 <p class="meta">2018 · Licensing/Option · $1.3B · Complete</p>
-<div class="scores"><div class="score"><div class="lbl">Critic Score</div><div class="num">65</div><div class="verdict">Positive</div></div><div class="score"><div class="lbl">Outcome Score</div><div class="num">54</div><div class="verdict">Mixed — partial payoff, real shortfalls.</div></div></div>
-<div class="score-note">Critic Score — analyst &amp; media reaction at announcement. Outcome Score — post-close performance vs. thesis; grades open 5 years after close.</div>
+<div class="hero">
+  <div class="verdict-panels">
+    <a class="vpanel street" href="https://thepharmacloseout.com/deal.html?id=24c6e0d2bbd342d8bff11ced97a686fa">
+      <div class="plbl">The Street Said</div>
+      <div class="pnum">65</div>
+      <div class="pverdict">Positive — critic reaction at announcement</div>
+    </a>
+    <a class="vpanel history" href="https://thepharmacloseout.com/deal.html?id=24c6e0d2bbd342d8bff11ced97a686fa">
+      <div class="plbl">History Says</div>
+      <div class="pnum">54</div>
+      <div class="pverdict">Mixed — partial payoff, real shortfalls</div>
+    </a>
+  </div>
+  <div class="delta-row"><span class="delta-chip aligned">CALLED IT — OFF BY 11</span></div>
+  <a class="hero-cta" href="https://thepharmacloseout.com/deal.html?id=24c6e0d2bbd342d8bff11ced97a686fa">Full analysis, sources &amp; comparables →</a>
+</div>
+
+<h2>The coverage arc</h2>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Oct 23, 2018</span>
+    <span class="receipt-source">AstraZeneca Press Release</span>
+    <span class="chip chip-bullish">Bullish</span>
+  </div>
+  <p class="receipt-excerpt">AstraZeneca strengthens and expands oncology development and commercialisation collaboration with Innate Pharma, obtaining full oncology rights to monalizumab.</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Aug 01, 2022</span>
+    <span class="receipt-source">Innate Pharma Press Release</span>
+    <span class="chip chip-bearish">Bearish</span>
+  </div>
+  <p class="receipt-excerpt">AstraZeneca to discontinue the Phase 3 INTERLINK-1 study of monalizumab plus cetuximab in R/M HNSCC after the futility interim analysis did not meet a…</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">May 13, 2026</span>
+    <span class="receipt-source">Innate Pharma 6-K (Q1 2026)</span>
+    <span class="chip chip-neutral">Neutral</span>
+  </div>
+  <p class="receipt-excerpt">Innate Pharma SA Form 6-K Q1 2026 business update and financial results (exhibit 99.1).</p>
+</div>
+
+<p class="disclosure">Source summaries from our enrichment pipeline; follow links for originals.</p>
+<p class="arc-closer"><a href="https://thepharmacloseout.com/deal.html?id=24c6e0d2bbd342d8bff11ced97a686fa">All 10 sources with sentiment breakdown →</a></p>
+
+
 <p class="summary">AstraZeneca expanded its immuno-oncology collaboration with Innate Pharma on 23 October 2018, obtaining full global oncology rights to monalizumab, a first-in-class anti-NKG2A antibody (NK/CD8 T-cell checkpoint). The multi-part deal comprised: (1) a $100M payment for monalizumab rights with up to $1.275B in total potential payments; (2) $50M upfront for a co-development option on IPH5201 (anti-CD39); and (3) $20M for license options on four preclinical molecules. For commercialized products AstraZeneca books sales and pays Innate double-digit to mid-teen royalties globally, with a 50:50 profit share in Europe. POST-DEAL ARC: A $50M milestone was triggered when the first patient was dosed in the monalizumab Phase 3 lung-cancer program. In August 2022 AstraZeneca discontinued the Phase 3 INTERLINK-1 trial (monalizumab + cetuximab in recurrent/metastatic head-and-neck cancer) after a futility interim analysis missed its pre-defined efficacy threshold. Monalizumab&#x27;s value now hinges on the pivotal Phase 3 PACIFIC-9 trial (durvalumab + monalizumab or oleclumab in unresectable Stage III NSCLC), whose enrollment is complete with a data readout expected in H2 2026. On the optioned asset, IPH5201 (anti-CD39) reported positive MATISSE Phase 2 interim results at the AACR 2026 plenary (April 2026): pathological complete response of 35.7% in PD-L1&gt;=1% and 50% in PD-L1&gt;=50% resectable NSCLC, supporting continued study.</p>
+
 
 <h2>Key facts</h2>
 <ul class="facts">
@@ -91,15 +218,20 @@ footer a{color:#9aa3b3}
 <li><b>Key assets</b> <span>monalizumab (anti-NKG2A), IPH5201 (anti-CD39), Four undisclosed preclinical molecules</span></li>
 <li><b>Mechanism</b> <span>Anti-NKG2A monoclonal antibody (NK cell checkpoint inhibitor), Anti-CD39 monoclonal antibody</span></li>
 </ul>
-<h2>Related deals</h2>
-<ul class="facts">
-<li><a href="https://thepharmacloseout.com/deals/astrazeneca-daiichi-sankyo-2019.html">AstraZeneca PLC / Daiichi Sankyo Company, Limited (2019)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/astrazeneca-alexion-2020.html">AstraZeneca PLC / Alexion Pharmaceuticals Inc. (2020)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/astrazeneca-acerta-2015.html">AstraZeneca PLC / Acerta Pharma (2015)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/astrazeneca-amgen-2020.html">AstraZeneca PLC / Amgen Inc. (2020)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/astrazeneca-medimmune-2007.html">AstraZeneca PLC / MedImmune Inc. (2007)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/astrazeneca-cincor-2023.html">AstraZeneca PLC / CinCor Pharma Inc. (2023)</a></li>
-</ul>
+<h2>Related deals — scored</h2>
+<table class="comp-table">
+<thead><tr><th>Deal</th><th>Year</th><th>Value</th><th>Outcome</th></tr></thead>
+<tbody>
+<tr class="self"><td class="dealname">AstraZeneca PLC / Innate Pharma SA <span class="body-sans" style="font-size:11px;color:#8a93a3">(this deal)</span></td><td>2018</td><td class="num">$1.3B</td><td class="num">54</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/astrazeneca-daiichi-sankyo-2019.html">AstraZeneca PLC / Daiichi Sankyo Company, Limited</a></td><td>2019</td><td class="num">$6.9B</td><td class="num">100</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/astrazeneca-alexion-2020.html">AstraZeneca PLC / Alexion Pharmaceuticals Inc.</a></td><td>2020</td><td class="num">$39.0B</td><td class="num">86</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/astrazeneca-acerta-2015.html">AstraZeneca PLC / Acerta Pharma</a></td><td>2015</td><td class="num">$4.0B</td><td class="num">86</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/astrazeneca-amgen-2020.html">AstraZeneca PLC / Amgen Inc.</a></td><td>2020</td><td class="num">$2.3B</td><td class="num">84</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/astrazeneca-medimmune-2007.html">AstraZeneca PLC / MedImmune Inc.</a></td><td>2007</td><td class="num">$15.6B</td><td class="num">82</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/astrazeneca-cincor-2023.html">AstraZeneca PLC / CinCor Pharma Inc.</a></td><td>2023</td><td class="num">$1.8B</td><td class="num">78</td></tr>
+</tbody>
+</table>
+<p class="comp-closer"><a href="https://thepharmacloseout.com/compare.html">Compare all 7 side-by-side →</a></p>
 <a class="cta" href="https://thepharmacloseout.com/deal.html?id=24c6e0d2bbd342d8bff11ced97a686fa">See the full interactive analysis, sources &amp; comparables →</a>
 <p class="sublinks">
 <a href="https://thepharmacloseout.com/deals.html">← Browse all deals</a> &nbsp;·&nbsp;

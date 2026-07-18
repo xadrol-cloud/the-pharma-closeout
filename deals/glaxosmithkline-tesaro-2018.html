@@ -69,6 +69,84 @@ footer{margin-top:46px;padding-top:18px;border-top:1px solid #2a3344;
 font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7a8392}
 footer a{color:#9aa3b3}
 .summary{font-size:18px;color:#e7e3d8}
+.projected-note{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+margin:6px 0 0;font-style:italic}
+
+/* ---- VERDICT HERO (Task B3: gate-passed sample is the spec) ---- */
+.hero{margin:18px 0 8px}
+.verdict-panels{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0 0;align-items:stretch}
+.vpanel{flex:1 1 220px;min-width:0;background:#16202f;border:1px solid #2a3344;
+border-radius:12px;padding:18px 18px 16px;display:block;color:inherit;text-decoration:none;
+transition:border-color .15s ease}
+a.vpanel:hover{border-color:#c9a84c;text-decoration:none}
+.vpanel .plbl{font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.14em;
+text-transform:uppercase;color:#8a93a3;margin-bottom:8px}
+.vpanel .pnum{font-family:Georgia,serif;font-size:46px;color:#c9a84c;font-weight:700;line-height:1}
+.vpanel .pverdict{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#cdd3dd;margin-top:8px}
+.vpanel.street .pnum{color:#9aa3b3}
+.delta-row{display:flex;justify-content:center;margin:14px 0 2px}
+.delta-chip{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:13px;
+letter-spacing:.04em;border-radius:999px;padding:7px 18px;text-align:center}
+.delta-chip.under{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.delta-chip.over{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.delta-chip.aligned{color:#c9a84c;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4)}
+.verdict-line{font-family:Georgia,serif;font-size:19px;color:#f3ead0;text-align:center;
+margin:14px 0 4px;line-height:1.4}
+.hero-cta{display:block;background:#c9a84c;color:#0f1622 !important;font-family:Arial,Helvetica,sans-serif;
+font-weight:700;font-size:16px;text-align:center;padding:16px 18px;border-radius:10px;
+margin:20px 0 4px;text-decoration:none !important;max-width:100%}
+.hero-cta:hover{background:#d8b95c}
+
+/* ---- RANK BADGES ---- */
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 2px}
+.badge{font-family:Arial,Helvetica,sans-serif;font-size:12.5px;font-weight:600;
+color:#f3ead0;background:#1c2942;border:1px solid #3a4a6b;border-radius:7px;
+padding:7px 12px;text-decoration:none !important;display:inline-block}
+.badge:hover{border-color:#c9a84c}
+.badge-note{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:#6d7688;margin:6px 0 0}
+
+/* ---- RECEIPTS / COVERAGE ARC ---- */
+.receipt{background:#16202f;border:1px solid #2a3344;border-radius:10px;
+padding:14px 16px;margin:0 0 12px}
+.receipt-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px}
+.receipt-date{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+letter-spacing:.03em}
+.receipt-source{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#f3ead0;
+font-weight:600}
+.chip{font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;
+letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;
+margin-left:auto}
+.chip-bullish{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.chip-bearish{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.chip-neutral{color:#9aa3b3;background:rgba(154,163,179,.12);border:1px solid rgba(154,163,179,.3)}
+.receipt-excerpt{font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#cdd3dd;
+line-height:1.55;margin:0}
+.disclosure{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6d7688;
+margin:8px 0 4px;line-height:1.5}
+.arc-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:4px 0 0}
+
+/* ---- COMPARABLES TABLE ---- */
+.comp-table{width:100%;border-collapse:collapse;margin:10px 0;font-family:Arial,Helvetica,sans-serif}
+.comp-table th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+color:#8a93a3;padding:8px 10px;border-bottom:1px solid #2a3344}
+.comp-table td{font-size:14px;color:#cdd3dd;padding:10px;border-bottom:1px solid #1e2735;
+vertical-align:top}
+.comp-table td.num{font-family:Georgia,serif;color:#c9a84c;font-weight:700;white-space:nowrap}
+.comp-table tr.self td{color:#f3ead0;font-weight:600}
+.comp-table td.dealname a{display:block}
+.comp-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:10px 0 0}
+
+/* ---- UNGRADED (T4) NOTE ---- */
+.ungraded-note{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#8a93a3;
+background:#16202f;border:1px solid #2a3344;border-radius:10px;padding:14px 16px;
+margin:16px 0 4px;line-height:1.55}
+.ungraded-note b{color:#c9a84c}
+
+@media (max-width:420px){
+  .vpanel .pnum{font-size:38px}
+  .comp-table{font-size:12.5px}
+  .comp-table th,.comp-table td{padding:7px 6px}
+}
 </style>
 </head>
 <body>
@@ -76,9 +154,58 @@ footer a{color:#9aa3b3}
 <p class="kicker">Pharma BD Deal Intelligence</p>
 <h1>GlaxoSmithKline plc / Tesaro Inc.</h1>
 <p class="meta">2018 · Acquisition/Merger · $5.1B · Complete</p>
-<div class="scores"><div class="score"><div class="lbl">Critic Score</div><div class="num">86</div><div class="verdict">Strongly positive</div></div><div class="score"><div class="lbl">Outcome Score</div><div class="num">79</div><div class="verdict">Worked — the deal delivered on its rationale.</div></div></div>
-<div class="score-note">Critic Score — analyst &amp; media reaction at announcement. Outcome Score — post-close performance vs. thesis; grades open 5 years after close.</div>
+<div class="hero">
+  <div class="verdict-panels">
+    <a class="vpanel street" href="https://thepharmacloseout.com/deal.html?id=3910f8ebd12745958c1c022671d587e6">
+      <div class="plbl">The Street Said</div>
+      <div class="pnum">86</div>
+      <div class="pverdict">Strongly positive — critic reaction at announcement</div>
+    </a>
+    <a class="vpanel history" href="https://thepharmacloseout.com/deal.html?id=3910f8ebd12745958c1c022671d587e6">
+      <div class="plbl">History Says</div>
+      <div class="pnum">79</div>
+      <div class="pverdict">Worked — the deal delivered on its rationale</div>
+    </a>
+  </div>
+  <div class="delta-row"><span class="delta-chip aligned">CALLED IT — OFF BY 7</span></div>
+  <a class="hero-cta" href="https://thepharmacloseout.com/deal.html?id=3910f8ebd12745958c1c022671d587e6">Full analysis, sources &amp; comparables →</a>
+</div>
+
+<h2>The coverage arc</h2>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Dec 03, 2018</span>
+    <span class="receipt-source">BioSpace</span>
+    <span class="chip chip-neutral">Neutral</span>
+  </div>
+  <p class="receipt-excerpt">GlaxoSmithKline agreed to acquire TESARO, Inc. for $75 per share in an all-cash transaction valued at approximately $5.1 billion, gaining the PARP inhibitor…</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Dec 16, 2024</span>
+    <span class="receipt-source">GSK: Jemperli FDA Breakthrough Therapy Designation, dMMR/MSI-H rectal cancer</span>
+    <span class="chip chip-bullish">Bullish</span>
+  </div>
+  <p class="receipt-excerpt">Jemperli (dostarlimab) received US FDA Breakthrough Therapy Designation for locally advanced dMMR/MSI-H rectal cancer; 100% clinical complete response in all…</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Feb 04, 2026</span>
+    <span class="receipt-source">GSK FY2025 Results Announcement</span>
+    <span class="chip chip-neutral">Neutral</span>
+  </div>
+  <p class="receipt-excerpt">FY2025: Jemperli (dostarlimab) sales ~GBP 600M, +89% YoY driven by endometrial cancer expansion; Zejula GBP 419M, -7% YoY on US volume/price pressure and IRA…</p>
+</div>
+
+<p class="disclosure">Source summaries from our enrichment pipeline; follow links for originals.</p>
+<p class="arc-closer"><a href="https://thepharmacloseout.com/deal.html?id=3910f8ebd12745958c1c022671d587e6">All 7 sources with sentiment breakdown →</a></p>
+
+
 <p class="summary">GSK acquired Tesaro for approximately $5.1 billion in cash ($75.00 per share) via tender offer and merger (announced 3 Dec 2018, completed 22 Jan 2019), gaining Zejula (niraparib), an oral PARP inhibitor for ovarian cancer, plus the then-early-stage anti-PD-1 antibody dostarlimab (TSR-042) and additional immuno-oncology pipeline assets. The deal was widely criticized at signing as a rich multiple (~22.9x trailing revenue) for a Zejula franchise that has since plateaued and declined (FY2025 Zejula sales GBP 419M, down 7% on US volume/price pressure, IRA Part D redesign, and a 2022 FDA label restriction). The deal&#x27;s value has instead come from the pipeline: dostarlimab, marketed as Jemperli, reached ~GBP 600M in FY2025 (+89% YoY) on endometrial-cancer expansion and carries a &gt;$2.5B 2030 sales ambition. In December 2024 Jemperli received FDA Breakthrough Therapy Designation in locally advanced dMMR/MSI-H rectal cancer after a trial reported a 100% clinical complete response in all 42 patients who completed treatment, with a pivotal readout expected in 2H 2026 and a potential filing in 2027 — a pipeline optionality that materially offsets the original &#x27;overpaid for a niche PARP asset&#x27; critique.</p>
+
 
 <h2>Key facts</h2>
 <ul class="facts">
@@ -91,15 +218,20 @@ footer a{color:#9aa3b3}
 <li><b>Key assets</b> <span>niraparib (Zejula), dostarlimab (TSR-042), anti-TIM-3 antibody, anti-LAG-3 antibody</span></li>
 <li><b>Mechanism</b> <span>PARP inhibitor, Anti-PD-1 checkpoint inhibitor</span></li>
 </ul>
-<h2>Related deals</h2>
-<ul class="facts">
-<li><a href="https://thepharmacloseout.com/deals/glaxosmithkline-theravance-2012.html">GlaxoSmithKline plc / Theravance, Inc. (2012)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/glaxosmithkline-pfizer-consumer-healthcare-division-2018.html">GlaxoSmithKline plc / Pfizer Inc. (Consumer Healthcare Division) (2018)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/glaxosmithkline-novartis-consumer-healthcare-jv-2018.html">GlaxoSmithKline plc / Novartis Consumer Healthcare JV (2018)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/glaxosmithkline-id-biomedical-2005.html">GlaxoSmithKline plc / ID Biomedical Corporation (2005)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/glaxosmithkline-vir-biotechnology-2020.html">GlaxoSmithKline plc / Vir Biotechnology Inc. (2020)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/glaxosmithkline-reliant-2007.html">GlaxoSmithKline plc / Reliant Pharmaceuticals Inc. (2007)</a></li>
-</ul>
+<h2>Related deals — scored</h2>
+<table class="comp-table">
+<thead><tr><th>Deal</th><th>Year</th><th>Value</th><th>Outcome</th></tr></thead>
+<tbody>
+<tr class="self"><td class="dealname">GlaxoSmithKline plc / Tesaro Inc. <span class="body-sans" style="font-size:11px;color:#8a93a3">(this deal)</span></td><td>2018</td><td class="num">$5.1B</td><td class="num">79</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/glaxosmithkline-theravance-2012.html">GlaxoSmithKline plc / Theravance, Inc.</a></td><td>2012</td><td class="num">$213M</td><td class="num">82</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/glaxosmithkline-pfizer-consumer-healthcare-division-2018.html">GlaxoSmithKline plc / Pfizer Inc. (Consumer Healthcare Division)</a></td><td>2018</td><td class="num">$12.7B</td><td class="num">76</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/glaxosmithkline-novartis-consumer-healthcare-jv-2018.html">GlaxoSmithKline plc / Novartis Consumer Healthcare JV</a></td><td>2018</td><td class="num">$13.0B</td><td class="num">74</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/glaxosmithkline-id-biomedical-2005.html">GlaxoSmithKline plc / ID Biomedical Corporation</a></td><td>2005</td><td class="num">$1.4B</td><td class="num">64</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/glaxosmithkline-vir-biotechnology-2020.html">GlaxoSmithKline plc / Vir Biotechnology Inc.</a></td><td>2020</td><td class="num">$595M</td><td class="num">51</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/glaxosmithkline-reliant-2007.html">GlaxoSmithKline plc / Reliant Pharmaceuticals Inc.</a></td><td>2007</td><td class="num">$1.6B</td><td class="num">47</td></tr>
+</tbody>
+</table>
+<p class="comp-closer"><a href="https://thepharmacloseout.com/compare.html">Compare all 7 side-by-side →</a></p>
 <a class="cta" href="https://thepharmacloseout.com/deal.html?id=3910f8ebd12745958c1c022671d587e6">See the full interactive analysis, sources &amp; comparables →</a>
 <p class="sublinks">
 <a href="https://thepharmacloseout.com/deals.html">← Browse all deals</a> &nbsp;·&nbsp;

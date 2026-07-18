@@ -69,6 +69,84 @@ footer{margin-top:46px;padding-top:18px;border-top:1px solid #2a3344;
 font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7a8392}
 footer a{color:#9aa3b3}
 .summary{font-size:18px;color:#e7e3d8}
+.projected-note{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+margin:6px 0 0;font-style:italic}
+
+/* ---- VERDICT HERO (Task B3: gate-passed sample is the spec) ---- */
+.hero{margin:18px 0 8px}
+.verdict-panels{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0 0;align-items:stretch}
+.vpanel{flex:1 1 220px;min-width:0;background:#16202f;border:1px solid #2a3344;
+border-radius:12px;padding:18px 18px 16px;display:block;color:inherit;text-decoration:none;
+transition:border-color .15s ease}
+a.vpanel:hover{border-color:#c9a84c;text-decoration:none}
+.vpanel .plbl{font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.14em;
+text-transform:uppercase;color:#8a93a3;margin-bottom:8px}
+.vpanel .pnum{font-family:Georgia,serif;font-size:46px;color:#c9a84c;font-weight:700;line-height:1}
+.vpanel .pverdict{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#cdd3dd;margin-top:8px}
+.vpanel.street .pnum{color:#9aa3b3}
+.delta-row{display:flex;justify-content:center;margin:14px 0 2px}
+.delta-chip{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:13px;
+letter-spacing:.04em;border-radius:999px;padding:7px 18px;text-align:center}
+.delta-chip.under{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.delta-chip.over{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.delta-chip.aligned{color:#c9a84c;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4)}
+.verdict-line{font-family:Georgia,serif;font-size:19px;color:#f3ead0;text-align:center;
+margin:14px 0 4px;line-height:1.4}
+.hero-cta{display:block;background:#c9a84c;color:#0f1622 !important;font-family:Arial,Helvetica,sans-serif;
+font-weight:700;font-size:16px;text-align:center;padding:16px 18px;border-radius:10px;
+margin:20px 0 4px;text-decoration:none !important;max-width:100%}
+.hero-cta:hover{background:#d8b95c}
+
+/* ---- RANK BADGES ---- */
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 2px}
+.badge{font-family:Arial,Helvetica,sans-serif;font-size:12.5px;font-weight:600;
+color:#f3ead0;background:#1c2942;border:1px solid #3a4a6b;border-radius:7px;
+padding:7px 12px;text-decoration:none !important;display:inline-block}
+.badge:hover{border-color:#c9a84c}
+.badge-note{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:#6d7688;margin:6px 0 0}
+
+/* ---- RECEIPTS / COVERAGE ARC ---- */
+.receipt{background:#16202f;border:1px solid #2a3344;border-radius:10px;
+padding:14px 16px;margin:0 0 12px}
+.receipt-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px}
+.receipt-date{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+letter-spacing:.03em}
+.receipt-source{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#f3ead0;
+font-weight:600}
+.chip{font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;
+letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;
+margin-left:auto}
+.chip-bullish{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.chip-bearish{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.chip-neutral{color:#9aa3b3;background:rgba(154,163,179,.12);border:1px solid rgba(154,163,179,.3)}
+.receipt-excerpt{font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#cdd3dd;
+line-height:1.55;margin:0}
+.disclosure{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6d7688;
+margin:8px 0 4px;line-height:1.5}
+.arc-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:4px 0 0}
+
+/* ---- COMPARABLES TABLE ---- */
+.comp-table{width:100%;border-collapse:collapse;margin:10px 0;font-family:Arial,Helvetica,sans-serif}
+.comp-table th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+color:#8a93a3;padding:8px 10px;border-bottom:1px solid #2a3344}
+.comp-table td{font-size:14px;color:#cdd3dd;padding:10px;border-bottom:1px solid #1e2735;
+vertical-align:top}
+.comp-table td.num{font-family:Georgia,serif;color:#c9a84c;font-weight:700;white-space:nowrap}
+.comp-table tr.self td{color:#f3ead0;font-weight:600}
+.comp-table td.dealname a{display:block}
+.comp-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:10px 0 0}
+
+/* ---- UNGRADED (T4) NOTE ---- */
+.ungraded-note{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#8a93a3;
+background:#16202f;border:1px solid #2a3344;border-radius:10px;padding:14px 16px;
+margin:16px 0 4px;line-height:1.55}
+.ungraded-note b{color:#c9a84c}
+
+@media (max-width:420px){
+  .vpanel .pnum{font-size:38px}
+  .comp-table{font-size:12.5px}
+  .comp-table th,.comp-table td{padding:7px 6px}
+}
 </style>
 </head>
 <body>
@@ -76,9 +154,53 @@ footer a{color:#9aa3b3}
 <p class="kicker">Pharma BD Deal Intelligence</p>
 <h1>Ipsen S.A. / Epizyme Inc.</h1>
 <p class="meta">2022 · Acquisition/Merger · $247M · Complete</p>
-<div class="scores"><div class="score"><div class="lbl">Critic Score</div><div class="num">36</div><div class="verdict">Skeptical</div></div></div>
-<div class="score-note">Critic Score — analyst &amp; media reaction at announcement. Outcome Score — post-close performance vs. thesis; grades open 5 years after close.</div>
+<div class="hero">
+  <div class="verdict-panels">
+    <a class="vpanel street" href="https://thepharmacloseout.com/deal.html?id=f92ae17cabca4bd88523dcea29c659f6">
+      <div class="plbl">The Street Said</div>
+      <div class="pnum">36</div>
+      <div class="pverdict">Skeptical — critic reaction at announcement</div>
+    </a>
+  </div>
+  <p class="projected-note">Outcome grade pending — assessed 5 years post-close.</p>
+  <a class="hero-cta" href="https://thepharmacloseout.com/deal.html?id=f92ae17cabca4bd88523dcea29c659f6">Full analysis, sources &amp; comparables →</a>
+</div>
+
+<h2>The coverage arc</h2>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Jun 27, 2022</span>
+    <span class="receipt-source">BioPharma Dive</span>
+    <span class="chip chip-neutral">Neutral</span>
+  </div>
+  <p class="receipt-excerpt">Ipsen is acquiring Epizyme for about $247 million upfront plus a CVR that could add up to $4 per share in deferred milestones, handing the French pharma an…</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Jun 27, 2022</span>
+    <span class="receipt-source">Reuters</span>
+    <span class="chip chip-neutral">Neutral</span>
+  </div>
+  <p class="receipt-excerpt">French drugmaker Ipsen agreed to buy U.S. biotech Epizyme for about $247 million in cash, it said on Monday, adding a rare cancer drug to its portfolio. Under…</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Mar 10, 2026</span>
+    <span class="receipt-source">Pharmacy Times</span>
+    <span class="chip chip-bearish">Bearish</span>
+  </div>
+  <p class="receipt-excerpt">Ipsen voluntarily withdrew tazemetostat from all markets following a safety signal in the confirmatory SYMPHONY-1 trial, where the IDMC flagged adverse events…</p>
+</div>
+
+<p class="disclosure">Source summaries from our enrichment pipeline; follow links for originals.</p>
+<p class="arc-closer"><a href="https://thepharmacloseout.com/deal.html?id=f92ae17cabca4bd88523dcea29c659f6">All 12 sources with sentiment breakdown →</a></p>
+
+
 <p class="summary">Ipsen acquired Epizyme for $1.45/share cash (~$247M upfront) plus a non-tradable CVR of up to $4/share, announced June 27, 2022 and closed August 8, 2022. The deal added Tazverik (tazemetostat), a first-in-class FDA-approved EZH2 inhibitor for relapsed/refractory follicular lymphoma and epithelioid sarcoma, plus EZM0414, a Phase 1 SETD2 inhibitor (Fast Track in MM/DLBCL). POST-CLOSE OUTCOME: the thesis did not hold. EZM0414&#x27;s SET-101 study (NCT05121103) was terminated in 2025 for a &#x27;strategic business decision,&#x27; ending the pipeline arm. On March 9, 2026 Ipsen voluntarily withdrew Tazverik in all indications from all markets and discontinued all tazemetostat trials and expanded-access programs, after the confirmatory Phase Ib/III SYMPHONY-1 trial surfaced a safety signal of secondary hematologic malignancies (IDMC: risks may outweigh benefits). With 2025 Tazverik sales of only ~EUR 40.6M (~$47M, -13% YoY), the CVR&#x27;s $250M sales milestone is effectively unreachable. The acquisition closed as an M&amp;A transaction, but both acquired assets are now off the market or terminated.</p>
+
 
 <h2>Key facts</h2>
 <ul class="facts">
@@ -91,15 +213,20 @@ footer a{color:#9aa3b3}
 <li><b>Key assets</b> <span>Tazverik (tazemetostat); EZM0414</span></li>
 <li><b>Mechanism</b> <span>First-in-class EZH2 inhibitor; SETD2 inhibitor</span></li>
 </ul>
-<h2>Related deals</h2>
-<ul class="facts">
-<li><a href="https://thepharmacloseout.com/deals/ipsen-s-a-exelixis-2016.html">Ipsen S.A. / Exelixis Inc. (2016)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/ipsen-s-a-kartos-2026.html">Ipsen S.A. / Kartos Therapeutics, Inc. (2026)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/ipsen-s-a-memo-2026.html">Ipsen S.A. / Memo Therapeutics AG (2026)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/ipsen-s-a-clementia-2019.html">Ipsen S.A. / Clementia Pharmaceuticals Inc. (2019)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/ipsen-s-a-genfit-2021.html">Ipsen S.A. / GENFIT (2021)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/amgen-micromet-2012.html">Amgen Inc. / Micromet Inc. (2012)</a></li>
-</ul>
+<h2>Related deals — scored</h2>
+<table class="comp-table">
+<thead><tr><th>Deal</th><th>Year</th><th>Value</th><th>Outcome</th></tr></thead>
+<tbody>
+<tr class="self"><td class="dealname">Ipsen S.A. / Epizyme Inc. <span class="body-sans" style="font-size:11px;color:#8a93a3">(this deal)</span></td><td>2022</td><td class="num">$247M</td><td class="num">—</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/ipsen-s-a-exelixis-2016.html">Ipsen S.A. / Exelixis Inc.</a></td><td>2016</td><td class="num">$855M</td><td class="num">80</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/ipsen-s-a-kartos-2026.html">Ipsen S.A. / Kartos Therapeutics, Inc.</a></td><td>2026</td><td class="num">$1.8B</td><td class="num">68</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/ipsen-s-a-memo-2026.html">Ipsen S.A. / Memo Therapeutics AG</a></td><td>2026</td><td class="num">$797M</td><td class="num">66</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/ipsen-s-a-clementia-2019.html">Ipsen S.A. / Clementia Pharmaceuticals Inc.</a></td><td>2019</td><td class="num">$1.3B</td><td class="num">—</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/ipsen-s-a-genfit-2021.html">Ipsen S.A. / GENFIT</a></td><td>2021</td><td class="num">$543M</td><td class="num">—</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/amgen-micromet-2012.html">Amgen Inc. / Micromet Inc.</a></td><td>2012</td><td class="num">$1.2B</td><td class="num">88</td></tr>
+</tbody>
+</table>
+<p class="comp-closer"><a href="https://thepharmacloseout.com/compare.html">Compare all 7 side-by-side →</a></p>
 <a class="cta" href="https://thepharmacloseout.com/deal.html?id=f92ae17cabca4bd88523dcea29c659f6">See the full interactive analysis, sources &amp; comparables →</a>
 <p class="sublinks">
 <a href="https://thepharmacloseout.com/deals.html">← Browse all deals</a> &nbsp;·&nbsp;

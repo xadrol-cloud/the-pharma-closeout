@@ -69,6 +69,84 @@ footer{margin-top:46px;padding-top:18px;border-top:1px solid #2a3344;
 font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7a8392}
 footer a{color:#9aa3b3}
 .summary{font-size:18px;color:#e7e3d8}
+.projected-note{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+margin:6px 0 0;font-style:italic}
+
+/* ---- VERDICT HERO (Task B3: gate-passed sample is the spec) ---- */
+.hero{margin:18px 0 8px}
+.verdict-panels{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0 0;align-items:stretch}
+.vpanel{flex:1 1 220px;min-width:0;background:#16202f;border:1px solid #2a3344;
+border-radius:12px;padding:18px 18px 16px;display:block;color:inherit;text-decoration:none;
+transition:border-color .15s ease}
+a.vpanel:hover{border-color:#c9a84c;text-decoration:none}
+.vpanel .plbl{font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.14em;
+text-transform:uppercase;color:#8a93a3;margin-bottom:8px}
+.vpanel .pnum{font-family:Georgia,serif;font-size:46px;color:#c9a84c;font-weight:700;line-height:1}
+.vpanel .pverdict{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#cdd3dd;margin-top:8px}
+.vpanel.street .pnum{color:#9aa3b3}
+.delta-row{display:flex;justify-content:center;margin:14px 0 2px}
+.delta-chip{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:13px;
+letter-spacing:.04em;border-radius:999px;padding:7px 18px;text-align:center}
+.delta-chip.under{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.delta-chip.over{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.delta-chip.aligned{color:#c9a84c;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4)}
+.verdict-line{font-family:Georgia,serif;font-size:19px;color:#f3ead0;text-align:center;
+margin:14px 0 4px;line-height:1.4}
+.hero-cta{display:block;background:#c9a84c;color:#0f1622 !important;font-family:Arial,Helvetica,sans-serif;
+font-weight:700;font-size:16px;text-align:center;padding:16px 18px;border-radius:10px;
+margin:20px 0 4px;text-decoration:none !important;max-width:100%}
+.hero-cta:hover{background:#d8b95c}
+
+/* ---- RANK BADGES ---- */
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 2px}
+.badge{font-family:Arial,Helvetica,sans-serif;font-size:12.5px;font-weight:600;
+color:#f3ead0;background:#1c2942;border:1px solid #3a4a6b;border-radius:7px;
+padding:7px 12px;text-decoration:none !important;display:inline-block}
+.badge:hover{border-color:#c9a84c}
+.badge-note{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:#6d7688;margin:6px 0 0}
+
+/* ---- RECEIPTS / COVERAGE ARC ---- */
+.receipt{background:#16202f;border:1px solid #2a3344;border-radius:10px;
+padding:14px 16px;margin:0 0 12px}
+.receipt-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px}
+.receipt-date{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+letter-spacing:.03em}
+.receipt-source{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#f3ead0;
+font-weight:600}
+.chip{font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;
+letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;
+margin-left:auto}
+.chip-bullish{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.chip-bearish{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.chip-neutral{color:#9aa3b3;background:rgba(154,163,179,.12);border:1px solid rgba(154,163,179,.3)}
+.receipt-excerpt{font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#cdd3dd;
+line-height:1.55;margin:0}
+.disclosure{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6d7688;
+margin:8px 0 4px;line-height:1.5}
+.arc-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:4px 0 0}
+
+/* ---- COMPARABLES TABLE ---- */
+.comp-table{width:100%;border-collapse:collapse;margin:10px 0;font-family:Arial,Helvetica,sans-serif}
+.comp-table th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+color:#8a93a3;padding:8px 10px;border-bottom:1px solid #2a3344}
+.comp-table td{font-size:14px;color:#cdd3dd;padding:10px;border-bottom:1px solid #1e2735;
+vertical-align:top}
+.comp-table td.num{font-family:Georgia,serif;color:#c9a84c;font-weight:700;white-space:nowrap}
+.comp-table tr.self td{color:#f3ead0;font-weight:600}
+.comp-table td.dealname a{display:block}
+.comp-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:10px 0 0}
+
+/* ---- UNGRADED (T4) NOTE ---- */
+.ungraded-note{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#8a93a3;
+background:#16202f;border:1px solid #2a3344;border-radius:10px;padding:14px 16px;
+margin:16px 0 4px;line-height:1.55}
+.ungraded-note b{color:#c9a84c}
+
+@media (max-width:420px){
+  .vpanel .pnum{font-size:38px}
+  .comp-table{font-size:12.5px}
+  .comp-table th,.comp-table td{padding:7px 6px}
+}
 </style>
 </head>
 <body>
@@ -76,9 +154,25 @@ footer a{color:#9aa3b3}
 <p class="kicker">Pharma BD Deal Intelligence</p>
 <h1>Pfizer Inc. / Agouron Pharmaceuticals</h1>
 <p class="meta">1999 · Acquisition/Merger · $2.1B · Complete</p>
-<div class="scores"><div class="score"><div class="lbl">Outcome Score</div><div class="num">74</div><div class="verdict">Largely worked — most objectives met.</div></div></div>
-<div class="score-note">Critic Score — analyst &amp; media reaction at announcement. Outcome Score — post-close performance vs. thesis; grades open 5 years after close.</div>
+<div class="hero">
+  <div class="verdict-panels">
+    <a class="vpanel history" href="https://thepharmacloseout.com/deal.html?id=9e778115fbef4814aeebbcb54a3c7cbf">
+      <div class="plbl">History Says</div>
+      <div class="pnum">74</div>
+      <div class="pverdict">Largely worked — most objectives met</div>
+    </a>
+  </div>
+  <a class="hero-cta" href="https://thepharmacloseout.com/deal.html?id=9e778115fbef4814aeebbcb54a3c7cbf">Full analysis, sources &amp; comparables →</a>
+</div>
+<div class="badges">
+  <a class="badge" href="https://thepharmacloseout.com/deals/by-year/1999.html">Top 25 largest deals of the 1990s</a>
+</div>
+<p class="badge-note">Ranks computed across 826 graded deals (Critic + Outcome Score both present).</p>
+
+
+
 <p class="summary">In January 1999 Warner-Lambert agreed to acquire Agouron Pharmaceuticals for approximately $2.1 billion in stock, gaining the HIV protease inhibitor Viracept (nelfinavir) and Agouron&#x27;s structure-based drug discovery platform. Agouron subsequently became part of Pfizer through Pfizer&#x27;s 2000 acquisition of Warner-Lambert.</p>
+
 
 <h2>Key facts</h2>
 <ul class="facts">
@@ -88,15 +182,20 @@ footer a{color:#9aa3b3}
 <li><b>Deal type</b> <span>Acquisition/Merger</span></li>
 <li><b>Therapeutic area</b> <span>Infectious Disease</span></li>
 </ul>
-<h2>Related deals</h2>
-<ul class="facts">
-<li><a href="https://thepharmacloseout.com/deals/pfizer-biontech-se-2020.html">Pfizer Inc. / BioNTech SE (2020)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/pfizer-foldrx-2010.html">Pfizer Inc. / FoldRx Pharmaceuticals (2010)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/pfizer-medivation-2016.html">Pfizer Inc. / Medivation Inc. (2016)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/pfizer-wyeth-2009.html">Pfizer Inc. / Wyeth (2009)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/pfizer-warner-lambert-2000.html">Pfizer Inc. / Warner-Lambert Company (2000)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/pfizer-arvinas-2021.html">Pfizer Inc. / Arvinas, Inc. (2021)</a></li>
-</ul>
+<h2>Related deals — scored</h2>
+<table class="comp-table">
+<thead><tr><th>Deal</th><th>Year</th><th>Value</th><th>Outcome</th></tr></thead>
+<tbody>
+<tr class="self"><td class="dealname">Pfizer Inc. / Agouron Pharmaceuticals <span class="body-sans" style="font-size:11px;color:#8a93a3">(this deal)</span></td><td>1999</td><td class="num">$2.1B</td><td class="num">74</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/pfizer-biontech-se-2020.html">Pfizer Inc. / BioNTech SE</a></td><td>2020</td><td class="num">$748M</td><td class="num">100</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/pfizer-foldrx-2010.html">Pfizer Inc. / FoldRx Pharmaceuticals</a></td><td>2010</td><td class="num">—</td><td class="num">99</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/pfizer-medivation-2016.html">Pfizer Inc. / Medivation Inc.</a></td><td>2016</td><td class="num">$14.0B</td><td class="num">86</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/pfizer-wyeth-2009.html">Pfizer Inc. / Wyeth</a></td><td>2009</td><td class="num">$68.0B</td><td class="num">86</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/pfizer-warner-lambert-2000.html">Pfizer Inc. / Warner-Lambert Company</a></td><td>2000</td><td class="num">$90.0B</td><td class="num">83</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/pfizer-arvinas-2021.html">Pfizer Inc. / Arvinas, Inc.</a></td><td>2021</td><td class="num">$2.4B</td><td class="num">77</td></tr>
+</tbody>
+</table>
+<p class="comp-closer"><a href="https://thepharmacloseout.com/compare.html">Compare all 7 side-by-side →</a></p>
 <a class="cta" href="https://thepharmacloseout.com/deal.html?id=9e778115fbef4814aeebbcb54a3c7cbf">See the full interactive analysis, sources &amp; comparables →</a>
 <p class="sublinks">
 <a href="https://thepharmacloseout.com/deals.html">← Browse all deals</a> &nbsp;·&nbsp;

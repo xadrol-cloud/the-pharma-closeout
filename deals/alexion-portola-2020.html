@@ -69,6 +69,84 @@ footer{margin-top:46px;padding-top:18px;border-top:1px solid #2a3344;
 font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7a8392}
 footer a{color:#9aa3b3}
 .summary{font-size:18px;color:#e7e3d8}
+.projected-note{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+margin:6px 0 0;font-style:italic}
+
+/* ---- VERDICT HERO (Task B3: gate-passed sample is the spec) ---- */
+.hero{margin:18px 0 8px}
+.verdict-panels{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0 0;align-items:stretch}
+.vpanel{flex:1 1 220px;min-width:0;background:#16202f;border:1px solid #2a3344;
+border-radius:12px;padding:18px 18px 16px;display:block;color:inherit;text-decoration:none;
+transition:border-color .15s ease}
+a.vpanel:hover{border-color:#c9a84c;text-decoration:none}
+.vpanel .plbl{font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.14em;
+text-transform:uppercase;color:#8a93a3;margin-bottom:8px}
+.vpanel .pnum{font-family:Georgia,serif;font-size:46px;color:#c9a84c;font-weight:700;line-height:1}
+.vpanel .pverdict{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#cdd3dd;margin-top:8px}
+.vpanel.street .pnum{color:#9aa3b3}
+.delta-row{display:flex;justify-content:center;margin:14px 0 2px}
+.delta-chip{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:13px;
+letter-spacing:.04em;border-radius:999px;padding:7px 18px;text-align:center}
+.delta-chip.under{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.delta-chip.over{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.delta-chip.aligned{color:#c9a84c;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4)}
+.verdict-line{font-family:Georgia,serif;font-size:19px;color:#f3ead0;text-align:center;
+margin:14px 0 4px;line-height:1.4}
+.hero-cta{display:block;background:#c9a84c;color:#0f1622 !important;font-family:Arial,Helvetica,sans-serif;
+font-weight:700;font-size:16px;text-align:center;padding:16px 18px;border-radius:10px;
+margin:20px 0 4px;text-decoration:none !important;max-width:100%}
+.hero-cta:hover{background:#d8b95c}
+
+/* ---- RANK BADGES ---- */
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 2px}
+.badge{font-family:Arial,Helvetica,sans-serif;font-size:12.5px;font-weight:600;
+color:#f3ead0;background:#1c2942;border:1px solid #3a4a6b;border-radius:7px;
+padding:7px 12px;text-decoration:none !important;display:inline-block}
+.badge:hover{border-color:#c9a84c}
+.badge-note{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:#6d7688;margin:6px 0 0}
+
+/* ---- RECEIPTS / COVERAGE ARC ---- */
+.receipt{background:#16202f;border:1px solid #2a3344;border-radius:10px;
+padding:14px 16px;margin:0 0 12px}
+.receipt-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px}
+.receipt-date{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+letter-spacing:.03em}
+.receipt-source{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#f3ead0;
+font-weight:600}
+.chip{font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;
+letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;
+margin-left:auto}
+.chip-bullish{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.chip-bearish{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.chip-neutral{color:#9aa3b3;background:rgba(154,163,179,.12);border:1px solid rgba(154,163,179,.3)}
+.receipt-excerpt{font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#cdd3dd;
+line-height:1.55;margin:0}
+.disclosure{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6d7688;
+margin:8px 0 4px;line-height:1.5}
+.arc-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:4px 0 0}
+
+/* ---- COMPARABLES TABLE ---- */
+.comp-table{width:100%;border-collapse:collapse;margin:10px 0;font-family:Arial,Helvetica,sans-serif}
+.comp-table th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+color:#8a93a3;padding:8px 10px;border-bottom:1px solid #2a3344}
+.comp-table td{font-size:14px;color:#cdd3dd;padding:10px;border-bottom:1px solid #1e2735;
+vertical-align:top}
+.comp-table td.num{font-family:Georgia,serif;color:#c9a84c;font-weight:700;white-space:nowrap}
+.comp-table tr.self td{color:#f3ead0;font-weight:600}
+.comp-table td.dealname a{display:block}
+.comp-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:10px 0 0}
+
+/* ---- UNGRADED (T4) NOTE ---- */
+.ungraded-note{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#8a93a3;
+background:#16202f;border:1px solid #2a3344;border-radius:10px;padding:14px 16px;
+margin:16px 0 4px;line-height:1.55}
+.ungraded-note b{color:#c9a84c}
+
+@media (max-width:420px){
+  .vpanel .pnum{font-size:38px}
+  .comp-table{font-size:12.5px}
+  .comp-table th,.comp-table td{padding:7px 6px}
+}
 </style>
 </head>
 <body>
@@ -76,9 +154,53 @@ footer a{color:#9aa3b3}
 <p class="kicker">Pharma BD Deal Intelligence</p>
 <h1>Alexion Pharmaceuticals Inc. / Portola Pharmaceuticals, Inc.</h1>
 <p class="meta">2020 · Acquisition/Merger · $1.4B · Complete</p>
-<div class="scores"><div class="score"><div class="lbl">Critic Score</div><div class="num">41</div><div class="verdict">Skeptical</div></div></div>
-<div class="score-note">Critic Score — analyst &amp; media reaction at announcement. Outcome Score — post-close performance vs. thesis; grades open 5 years after close.</div>
+<div class="hero">
+  <div class="verdict-panels">
+    <a class="vpanel street" href="https://thepharmacloseout.com/deal.html?id=645fca04e18d4d118f48ac88ce0b2314">
+      <div class="plbl">The Street Said</div>
+      <div class="pnum">41</div>
+      <div class="pverdict">Skeptical — critic reaction at announcement</div>
+    </a>
+  </div>
+  <p class="projected-note">Outcome grade pending — assessed 5 years post-close.</p>
+  <a class="hero-cta" href="https://thepharmacloseout.com/deal.html?id=645fca04e18d4d118f48ac88ce0b2314">Full analysis, sources &amp; comparables →</a>
+</div>
+
+<h2>The coverage arc</h2>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">May 03, 2018</span>
+    <span class="receipt-source">FDA Press Release</span>
+    <span class="chip chip-bullish">Bullish</span>
+  </div>
+  <p class="receipt-excerpt">The U.S. Food and Drug Administration today granted accelerated approval to Andexxa (coagulation factor Xa [recombinant], inactivated-zhzo), the first and only…</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">May 05, 2020</span>
+    <span class="receipt-source">Reuters</span>
+    <span class="chip chip-neutral">Neutral</span>
+  </div>
+  <p class="receipt-excerpt">Alexion Pharmaceuticals said on Tuesday it would buy Portola Pharmaceuticals for about $1.41 billion to add the only approved reversal agent for the side…</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">May 15, 2023</span>
+    <span class="receipt-source">CDC Heart Disease — Atrial Fibrillation</span>
+    <span class="chip chip-neutral">Neutral</span>
+  </div>
+  <p class="receipt-excerpt">Atrial fibrillation affects an estimated 6 million people in the United States, with prevalence projected to rise to over 12 million by 2030. AF increases…</p>
+</div>
+
+<p class="disclosure">Source summaries from our enrichment pipeline; follow links for originals.</p>
+<p class="arc-closer"><a href="https://thepharmacloseout.com/deal.html?id=645fca04e18d4d118f48ac88ce0b2314">All 18 sources with sentiment breakdown →</a></p>
+
+
 <p class="summary">Alexion acquired Portola Pharmaceuticals for $18.00/share in cash, ~$1.41B total; announced May 5, 2020 and completed July 2, 2020 via tender offer (~79.7% of shares tendered) and back-end merger. The deal added Andexxa/Ondexxya (andexanet alfa), the only approved reversal agent for Factor Xa inhibitors (Eliquis, Xarelto), expanding Alexion beyond Soliris into hematology. Activist investor Elliott Management publicly criticized the deal as value-destructive. The thesis ultimately did not hold: andexanet never approached its projected blockbuster sales (peaking near $219M globally in 2024, only ~$81M of it US). Alexion itself was acquired by AstraZeneca (completed July 2021), folding Andexxa into AstraZeneca Rare Disease. The ANNEXA-I confirmatory randomized trial (2024) met its hemostasis endpoint (63.9% vs 52.4% good/excellent hemostasis) but showed materially higher thrombosis (14.6% vs 6.9%) and thrombosis-related deaths. In December 2025 AstraZeneca voluntarily withdrew Andexxa&#x27;s US biologics license application effective Dec 22-23, 2025 after the FDA concluded its serious thromboembolic risks outweighed its benefit and a path from conditional to traditional approval could not be reached.</p>
+
 <h2>Did it work? Outcome assessment</h2><div class="verdict-grid"><div class="vcard"><div class="vl">Strategic verdict</div><div class="vv">Partially Achieved</div></div><div class="vcard"><div class="vl">Financial impact</div><div class="vv">Dilutive</div></div><div class="vcard"><div class="vl">Pipeline outcome</div><div class="vv">Mixed</div></div></div><p class="sublinks">Assessment window: 5yr post-close.</p>
 <h2>Key facts</h2>
 <ul class="facts">
@@ -91,15 +213,20 @@ footer a{color:#9aa3b3}
 <li><b>Key assets</b> <span>Andexxa/Ondexxya (andexanet alfa)</span></li>
 <li><b>Mechanism</b> <span>Recombinant modified human Factor Xa decoy protein</span></li>
 </ul>
-<h2>Related deals</h2>
-<ul class="facts">
-<li><a href="https://thepharmacloseout.com/deals/alexion-synageva-biopharma-2015.html">Alexion Pharmaceuticals Inc. / Synageva BioPharma (2015)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/amgen-micromet-2012.html">Amgen Inc. / Micromet Inc. (2012)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/servier-shire-oncology-business-2018.html">Servier / Shire plc (Oncology Business) (2018)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/astrazeneca-alexion-2020.html">AstraZeneca PLC / Alexion Pharmaceuticals Inc. (2020)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/swedish-orphan-biovitrum-ab-biovitrum-2001.html">Swedish Orphan Biovitrum AB / Biovitrum (2001)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/otsuka-pharmaceutical-astex-2013.html">Otsuka Pharmaceutical Co. Ltd. / Astex Pharmaceuticals Inc. (2013)</a></li>
-</ul>
+<h2>Related deals — scored</h2>
+<table class="comp-table">
+<thead><tr><th>Deal</th><th>Year</th><th>Value</th><th>Outcome</th></tr></thead>
+<tbody>
+<tr class="self"><td class="dealname">Alexion Pharmaceuticals Inc. / Portola Pharmaceuticals, Inc. <span class="body-sans" style="font-size:11px;color:#8a93a3">(this deal)</span></td><td>2020</td><td class="num">$1.4B</td><td class="num">—</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/alexion-synageva-biopharma-2015.html">Alexion Pharmaceuticals Inc. / Synageva BioPharma</a></td><td>2015</td><td class="num">$8.4B</td><td class="num">36</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/amgen-micromet-2012.html">Amgen Inc. / Micromet Inc.</a></td><td>2012</td><td class="num">$1.2B</td><td class="num">88</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/servier-shire-oncology-business-2018.html">Servier / Shire plc (Oncology Business)</a></td><td>2018</td><td class="num">$2.4B</td><td class="num">88</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/astrazeneca-alexion-2020.html">AstraZeneca PLC / Alexion Pharmaceuticals Inc.</a></td><td>2020</td><td class="num">$39.0B</td><td class="num">86</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/swedish-orphan-biovitrum-ab-biovitrum-2001.html">Swedish Orphan Biovitrum AB / Biovitrum</a></td><td>2001</td><td class="num">$493M</td><td class="num">84</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/otsuka-pharmaceutical-astex-2013.html">Otsuka Pharmaceutical Co. Ltd. / Astex Pharmaceuticals Inc.</a></td><td>2013</td><td class="num">$886M</td><td class="num">79</td></tr>
+</tbody>
+</table>
+<p class="comp-closer"><a href="https://thepharmacloseout.com/compare.html">Compare all 7 side-by-side →</a></p>
 <a class="cta" href="https://thepharmacloseout.com/deal.html?id=645fca04e18d4d118f48ac88ce0b2314">See the full interactive analysis, sources &amp; comparables →</a>
 <p class="sublinks">
 <a href="https://thepharmacloseout.com/deals.html">← Browse all deals</a> &nbsp;·&nbsp;

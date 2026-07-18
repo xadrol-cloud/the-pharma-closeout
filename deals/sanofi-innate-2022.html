@@ -69,6 +69,84 @@ footer{margin-top:46px;padding-top:18px;border-top:1px solid #2a3344;
 font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7a8392}
 footer a{color:#9aa3b3}
 .summary{font-size:18px;color:#e7e3d8}
+.projected-note{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+margin:6px 0 0;font-style:italic}
+
+/* ---- VERDICT HERO (Task B3: gate-passed sample is the spec) ---- */
+.hero{margin:18px 0 8px}
+.verdict-panels{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0 0;align-items:stretch}
+.vpanel{flex:1 1 220px;min-width:0;background:#16202f;border:1px solid #2a3344;
+border-radius:12px;padding:18px 18px 16px;display:block;color:inherit;text-decoration:none;
+transition:border-color .15s ease}
+a.vpanel:hover{border-color:#c9a84c;text-decoration:none}
+.vpanel .plbl{font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.14em;
+text-transform:uppercase;color:#8a93a3;margin-bottom:8px}
+.vpanel .pnum{font-family:Georgia,serif;font-size:46px;color:#c9a84c;font-weight:700;line-height:1}
+.vpanel .pverdict{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#cdd3dd;margin-top:8px}
+.vpanel.street .pnum{color:#9aa3b3}
+.delta-row{display:flex;justify-content:center;margin:14px 0 2px}
+.delta-chip{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:13px;
+letter-spacing:.04em;border-radius:999px;padding:7px 18px;text-align:center}
+.delta-chip.under{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.delta-chip.over{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.delta-chip.aligned{color:#c9a84c;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4)}
+.verdict-line{font-family:Georgia,serif;font-size:19px;color:#f3ead0;text-align:center;
+margin:14px 0 4px;line-height:1.4}
+.hero-cta{display:block;background:#c9a84c;color:#0f1622 !important;font-family:Arial,Helvetica,sans-serif;
+font-weight:700;font-size:16px;text-align:center;padding:16px 18px;border-radius:10px;
+margin:20px 0 4px;text-decoration:none !important;max-width:100%}
+.hero-cta:hover{background:#d8b95c}
+
+/* ---- RANK BADGES ---- */
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 2px}
+.badge{font-family:Arial,Helvetica,sans-serif;font-size:12.5px;font-weight:600;
+color:#f3ead0;background:#1c2942;border:1px solid #3a4a6b;border-radius:7px;
+padding:7px 12px;text-decoration:none !important;display:inline-block}
+.badge:hover{border-color:#c9a84c}
+.badge-note{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:#6d7688;margin:6px 0 0}
+
+/* ---- RECEIPTS / COVERAGE ARC ---- */
+.receipt{background:#16202f;border:1px solid #2a3344;border-radius:10px;
+padding:14px 16px;margin:0 0 12px}
+.receipt-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px}
+.receipt-date{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
+letter-spacing:.03em}
+.receipt-source{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#f3ead0;
+font-weight:600}
+.chip{font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;
+letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;
+margin-left:auto}
+.chip-bullish{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
+.chip-bearish{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
+.chip-neutral{color:#9aa3b3;background:rgba(154,163,179,.12);border:1px solid rgba(154,163,179,.3)}
+.receipt-excerpt{font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#cdd3dd;
+line-height:1.55;margin:0}
+.disclosure{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6d7688;
+margin:8px 0 4px;line-height:1.5}
+.arc-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:4px 0 0}
+
+/* ---- COMPARABLES TABLE ---- */
+.comp-table{width:100%;border-collapse:collapse;margin:10px 0;font-family:Arial,Helvetica,sans-serif}
+.comp-table th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+color:#8a93a3;padding:8px 10px;border-bottom:1px solid #2a3344}
+.comp-table td{font-size:14px;color:#cdd3dd;padding:10px;border-bottom:1px solid #1e2735;
+vertical-align:top}
+.comp-table td.num{font-family:Georgia,serif;color:#c9a84c;font-weight:700;white-space:nowrap}
+.comp-table tr.self td{color:#f3ead0;font-weight:600}
+.comp-table td.dealname a{display:block}
+.comp-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:10px 0 0}
+
+/* ---- UNGRADED (T4) NOTE ---- */
+.ungraded-note{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#8a93a3;
+background:#16202f;border:1px solid #2a3344;border-radius:10px;padding:14px 16px;
+margin:16px 0 4px;line-height:1.55}
+.ungraded-note b{color:#c9a84c}
+
+@media (max-width:420px){
+  .vpanel .pnum{font-size:38px}
+  .comp-table{font-size:12.5px}
+  .comp-table th,.comp-table td{padding:7px 6px}
+}
 </style>
 </head>
 <body>
@@ -76,9 +154,53 @@ footer a{color:#9aa3b3}
 <p class="kicker">Pharma BD Deal Intelligence</p>
 <h1>Sanofi SA / Innate Pharma SA</h1>
 <p class="meta">2022 · Licensing/Option · $1.4B · Complete</p>
-<div class="scores"><div class="score"><div class="lbl">Critic Score</div><div class="num">79</div><div class="verdict">Strongly positive</div></div></div>
-<div class="score-note">Critic Score — analyst &amp; media reaction at announcement. Outcome Score — post-close performance vs. thesis; grades open 5 years after close.</div>
+<div class="hero">
+  <div class="verdict-panels">
+    <a class="vpanel street" href="https://thepharmacloseout.com/deal.html?id=21aa7cbcc2dd431589f64e008d7fcf25">
+      <div class="plbl">The Street Said</div>
+      <div class="pnum">79</div>
+      <div class="pverdict">Strongly positive — critic reaction at announcement</div>
+    </a>
+  </div>
+  <p class="projected-note">Outcome grade pending — assessed 5 years post-close.</p>
+  <a class="hero-cta" href="https://thepharmacloseout.com/deal.html?id=21aa7cbcc2dd431589f64e008d7fcf25">Full analysis, sources &amp; comparables →</a>
+</div>
+
+<h2>The coverage arc</h2>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Dec 19, 2022</span>
+    <span class="receipt-source">BioPharma Dive</span>
+    <span class="chip chip-neutral">Neutral</span>
+  </div>
+  <p class="receipt-excerpt">Sanofi will pay French biotech Innate Pharma 25 million euros upfront for rights to a B7-H3-directed natural killer cell engager and options on two more…</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Dec 20, 2022</span>
+    <span class="receipt-source">Fierce Pharma</span>
+    <span class="chip chip-bullish">Bullish</span>
+  </div>
+  <p class="receipt-excerpt">Sanofi has signed a second NK cell engager licensing deal with Innate Pharma, this time for a B7-H3-targeted asset along with options on up to two additional…</p>
+</div>
+
+<div class="receipt">
+  <div class="receipt-head">
+    <span class="receipt-date">Mar 25, 2026</span>
+    <span class="receipt-source">Innate Pharma (BusinessWire)</span>
+    <span class="chip chip-neutral">Neutral</span>
+  </div>
+  <p class="receipt-excerpt">FY2025 update: IPH62 (B7-H3) ANKET remains under preclinical development; Sanofi to lead development, manufacturing and commercialization upon candidate…</p>
+</div>
+
+<p class="disclosure">Source summaries from our enrichment pipeline; follow links for originals.</p>
+<p class="arc-closer"><a href="https://thepharmacloseout.com/deal.html?id=21aa7cbcc2dd431589f64e008d7fcf25">All 13 sources with sentiment breakdown →</a></p>
+
+
 <p class="summary">Announced Dec 19, 2022 and effective Jan 25, 2023 after Hart-Scott-Rodino clearance, Sanofi licensed Innate Pharma&#x27;s B7-H3-targeted NK cell engager program (IPH62) from the ANKET platform, with options on up to two additional ANKET targets. Innate received EUR 25M (~$27M) upfront against up to EUR 1.35B (~$1.42B) in development, regulatory and commercial milestones plus royalties. The lead B7-H3 asset (IPH62) remains partnered and in preclinical development, with Sanofi to assume all development, manufacturing and commercialization upon candidate selection. The option/expansion component has since eroded: Sanofi exercised an option in Dec 2023 to license a second solid-tumor NKCE (IPH67) but terminated that license (notice Oct 9, 2024; effective Jan 7, 2025), returning IPH67 rights to Innate. As of Innate&#x27;s FY2024 report Sanofi retained one further ANKET option. The deal thesis holds for the lead B7-H3 asset, but the multi-target platform-expansion upside that underpinned the headline milestone ceiling is materially reduced.</p>
+
 
 <h2>Key facts</h2>
 <ul class="facts">
@@ -91,15 +213,20 @@ footer a{color:#9aa3b3}
 <li><b>Key assets</b> <span>B7H3-targeted NK cell engager (plus options on 2 more ANKET targets)</span></li>
 <li><b>Mechanism</b> <span>Antibody-based NK cell engager (ANKET) bispecific</span></li>
 </ul>
-<h2>Related deals</h2>
-<ul class="facts">
-<li><a href="https://thepharmacloseout.com/deals/sanofi-regeneron-2007.html">Sanofi SA / Regeneron Pharmaceuticals, Inc. (2007)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/sanofi-synthelabo-s-a-1998.html">Sanofi SA / Synthelabo S.A. (1998)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/sanofi-genzyme-2011.html">Sanofi SA / Genzyme Corporation (2011)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/sanofi-amunix-2021.html">Sanofi SA / Amunix Pharmaceuticals Inc. (2021)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/sanofi-genzyme-2010.html">Sanofi SA / Genzyme Corporation (2010)</a></li>
-<li><a href="https://thepharmacloseout.com/deals/sanofi-translate-bio-2018.html">Sanofi SA / Translate Bio Inc. (2018)</a></li>
-</ul>
+<h2>Related deals — scored</h2>
+<table class="comp-table">
+<thead><tr><th>Deal</th><th>Year</th><th>Value</th><th>Outcome</th></tr></thead>
+<tbody>
+<tr class="self"><td class="dealname">Sanofi SA / Innate Pharma SA <span class="body-sans" style="font-size:11px;color:#8a93a3">(this deal)</span></td><td>2022</td><td class="num">$1.4B</td><td class="num">—</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/sanofi-regeneron-2007.html">Sanofi SA / Regeneron Pharmaceuticals, Inc.</a></td><td>2007</td><td class="num">$1.0B</td><td class="num">97</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/sanofi-synthelabo-s-a-1998.html">Sanofi SA / Synthelabo S.A.</a></td><td>1998</td><td class="num">$11.0B</td><td class="num">84</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/sanofi-genzyme-2011.html">Sanofi SA / Genzyme Corporation</a></td><td>2011</td><td class="num">$20.1B</td><td class="num">84</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/sanofi-amunix-2021.html">Sanofi SA / Amunix Pharmaceuticals Inc.</a></td><td>2021</td><td class="num">$1.2B</td><td class="num">76</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/sanofi-genzyme-2010.html">Sanofi SA / Genzyme Corporation</a></td><td>2010</td><td class="num">$18.5B</td><td class="num">75</td></tr>
+<tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/sanofi-translate-bio-2018.html">Sanofi SA / Translate Bio Inc.</a></td><td>2018</td><td class="num">$805M</td><td class="num">73</td></tr>
+</tbody>
+</table>
+<p class="comp-closer"><a href="https://thepharmacloseout.com/compare.html">Compare all 7 side-by-side →</a></p>
 <a class="cta" href="https://thepharmacloseout.com/deal.html?id=21aa7cbcc2dd431589f64e008d7fcf25">See the full interactive analysis, sources &amp; comparables →</a>
 <p class="sublinks">
 <a href="https://thepharmacloseout.com/deals.html">← Browse all deals</a> &nbsp;·&nbsp;
