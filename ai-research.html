@@ -1661,14 +1661,6 @@ var CONFIG = {
   links.forEach(function(a) { a.href = CONFIG.stripePaymentLink; });
 })();
 
-/* ── WIRE KIT FORM FROM CONFIG ── */
-(function() {
-  var form = document.querySelector('.briefing-form form');
-  if (form && CONFIG.kitFormAction !== '#') {
-    form.action = CONFIG.kitFormAction;
-  }
-})();
-
 /* ── WIRE SPOTIFY EMBEDS FROM CONFIG ── */
 (function() {
   var episodes = CONFIG.spotifyEpisodes;
