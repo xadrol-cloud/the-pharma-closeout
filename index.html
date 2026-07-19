@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- charset must be first in <head> (within the first 1024 bytes) or the
+     parser can fall back to windows-1252 and mojibake accented names -->
+<meta charset="UTF-8">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-K6XEWCK7W4"></script>
 <script>
@@ -42,7 +45,6 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   ]
 }
 </script>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Pharma Closeout — Pharma Deal Database &amp; Daily Biotech Intelligence</title>
 <meta name="description" content="Free pharma deal database: 1,300+ graded M&amp;A and licensing deals with outcome scores, plus daily pharma intelligence in under 15 minutes.">
@@ -51,63 +53,40 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thepharmacloseout.com">
 <meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://thepharmacloseout.com/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0a'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23c49332'/%3E%3C/svg%3E">
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;0,6..72,700;0,6..72,800;1,6..72,300;1,6..72,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;0,6..72,800;1,6..72,300;1,6..72,400;1,6..72,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <script defer src="assets/nav.js?v=20260531a"></script>
 <style>
-  :root {
-    --black: #0a0a0a;
-    --gold: #c49332;
-    --gold-dim: rgba(196, 147, 50, 0.12);
-    --white: #e8e4de;
-    --gray: #6b6b6b;
-    --gray-light: #999;
-    --rule: rgba(196, 147, 50, 0.15);
-
-    --font-display: 'Newsreader', Georgia, 'Times New Roman', serif;
-    --font-body: 'DM Sans', system-ui, sans-serif;
+  :root{
+    --black:#0a0a0a; --ink:#0c0d0f; --gold:#c49332; --gold-2:#dcae54; --gold-dim:rgba(196,147,50,.1);
+    --white:#e8e4de; --gray:#6b6b6b; --gray-light:#9a948b; --rule:rgba(196,147,50,.16);
+    --font-body:'DM Sans',system-ui,sans-serif;
+    --font-display:'Newsreader',Georgia,serif;
+    --maxw:1200px;
   }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: var(--font-body);
-    background: var(--black);
-    color: var(--white);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  a { color: inherit; text-decoration: none; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--black);color:var(--white);font-family:var(--font-body);-webkit-font-smoothing:antialiased;line-height:1.55;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  .eyebrow{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+  .ritual{display:flex;align-items:baseline;gap:14px;margin-bottom:30px}
+  .ritual .n{font-family:var(--font-display);font-style:italic;font-weight:400;font-size:1.1rem;color:var(--gold);opacity:.7}
+  .ritual .t{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+  .ritual .line{flex:1;height:1px;background:var(--rule)}
 
   /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; width: 100%; z-index: 100;
-    transition: background 0.3s, border-color 0.3s;
-  }
-  nav.scrolled {
-    background: rgba(10, 10, 10, 0.9);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--rule);
-  }
-  .nav-inner {
-    max-width: 1400px; margin: 0 auto;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 72px; padding: 0 clamp(1.5rem, 4vw, 4rem);
-  }
-  .logo {
-    font-family: var(--font-display); font-weight: 700;
-    font-size: 1.1rem; letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-  .nav-links a {
-    color: var(--gray-light); font-size: 0.75rem;
-    font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
-    transition: color 0.3s;
-  }
-  .nav-links a:hover { color: var(--white); }
+  nav{position:sticky;top:0;z-index:30;background:rgba(10,10,10,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+  .nav-inner{max-width:var(--maxw);margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+  .logo{font-family:var(--font-display);font-weight:600;font-size:1.1rem;letter-spacing:.01em}
+  .logo b{color:var(--gold);font-weight:600}
+  .nav-links{display:flex;gap:32px;list-style:none;align-items:center}
+  .nav-links a{font-size:.82rem;font-weight:500;letter-spacing:.02em;opacity:.8;transition:.2s}
+  .nav-links a:hover{opacity:1;color:var(--gold)}
+  .nav-links a.sub{color:var(--gold);border:1px solid rgba(196,147,50,.42);padding:8px 17px;border-radius:2px;opacity:1}
+  .nav-links a.sub:hover{background:var(--gold-dim)}
 
   /* ── MOBILE NAV ── */
   .nav-toggle {
@@ -129,317 +108,123 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   .nav-toggle[aria-expanded='true'] span::after { transform: rotate(-45deg); top: 0; }
 
   /* ── HERO ── */
-  .hero {
-    min-height: calc(100vh - 110px);
-    display: flex; flex-direction: column;
-    justify-content: center;
-    padding: 0 clamp(1.5rem, 4vw, 4rem);
-    max-width: 1400px; margin: 0 auto;
-    position: relative;
-  }
-  .hero h1 {
-    font-family: var(--font-display);
-    font-size: clamp(3.5rem, 10vw, 10rem);
-    font-weight: 800;
-    line-height: 0.92;
-    letter-spacing: -0.04em;
-    margin-bottom: 2.5rem;
-  }
-  .hero-pulse {
-    position: absolute; bottom: 12%; left: 0; right: 0;
-    height: 100px; pointer-events: none;
-    opacity: 0.5;
-  }
-  .hero-pulse canvas { width: 100%; height: 100%; display: block; }
-  .hero-sub {
-    display: flex; align-items: center; gap: 3rem;
-    flex-wrap: wrap;
-  }
-  .hero-tagline {
-    font-family: var(--font-display);
-    font-size: clamp(0.85rem, 1.2vw, 1.05rem);
-    color: var(--gray-light);
-    font-weight: 300;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
-  .hero-tagline .tag-phrase { white-space: nowrap; }
-  .hero-links {
-    display: flex; gap: 2rem;
-  }
-  .hero-links a {
-    font-size: 0.85rem; font-weight: 500;
-    color: var(--gold);
-    border-bottom: 1px solid var(--gold);
-    padding-bottom: 2px;
-    transition: opacity 0.3s;
-  }
-  .hero-links a:hover { opacity: 0.7; }
+  .hero{position:relative;min-height:85vh;display:flex;flex-direction:column;justify-content:center;padding:40px 0 60px;overflow:hidden}
+  .hero .wrap{position:relative;z-index:2}
+  .hero-kicker{margin-bottom:34px;display:inline-flex;align-items:center;gap:10px}
+  .hero-kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulse 2.6s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(196,147,50,.5)}70%{box-shadow:0 0 0 11px rgba(196,147,50,0)}100%{box-shadow:0 0 0 0 rgba(196,147,50,0)}}
+  .hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(3.4rem,11vw,9.5rem);line-height:.92;letter-spacing:-.025em;margin-bottom:34px}
+  .hero h1 .row2{display:block;color:var(--white)}
+  .mission{font-family:var(--font-display);font-weight:300;font-size:clamp(1.3rem,2.5vw,2rem);line-height:1.4;max-width:760px;color:#d6d0c6;margin-bottom:42px}
+  .mission b{font-weight:500;color:var(--white)}
+  .mission .em{font-style:italic;color:var(--gold)}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn{display:inline-flex;align-items:center;gap:9px;font-size:.9rem;font-weight:500;padding:14px 24px;border-radius:2px;transition:.18s}
+  .btn-primary{background:var(--gold);color:#0a0a0a}
+  .btn-primary:hover{background:var(--gold-2);transform:translateY(-2px)}
+  .btn-ghost{border:1px solid rgba(232,228,222,.22);color:var(--white)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .hero-pulse{position:absolute;left:0;right:0;bottom:8%;height:120px;z-index:1;opacity:.5;pointer-events:none}
+  .hero-scroll{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);z-index:2}
 
-  /* ── TICKER ── */
-  .ticker-wrap {
-    overflow: hidden;
-    background: rgba(196, 147, 50, 0.04);
-    border-bottom: 1px solid var(--rule);
-    padding: 0.7rem 0;
-    margin-top: 72px;
-    position: relative;
-  }
-  .ticker-wrap::before,
-  .ticker-wrap::after {
-    content: ''; position: absolute; top: 0; bottom: 0;
-    width: 80px; z-index: 2; pointer-events: none;
-  }
-  .ticker-wrap::before {
-    left: 0;
-    background: linear-gradient(to right, var(--black), transparent);
-  }
-  .ticker-wrap::after {
-    right: 0;
-    background: linear-gradient(to left, var(--black), transparent);
-  }
-  .ticker {
-    display: flex; gap: 3rem;
-    animation: ticker-scroll 90s linear infinite;
-    white-space: nowrap; width: max-content;
-  }
-  .ticker:hover { animation-play-state: paused; }
-  .ticker-item {
-    font-family: var(--font-display);
-    font-size: 0.8rem; font-weight: 400;
-    color: var(--gray-light);
-    display: flex; align-items: center; gap: 0.75rem;
-  }
-  .ticker-item a {
-    transition: color 0.2s;
-  }
-  .ticker-item a:hover { color: var(--white); }
-  .ticker-dot {
-    width: 4px; height: 4px; border-radius: 50%;
-    background: var(--gold); flex-shrink: 0;
-    opacity: 0.6;
-  }
-  @keyframes ticker-scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
+  /* ── SECTION shell ── */
+  section.blk{padding:88px 0;border-top:1px solid var(--rule)}
 
-  /* ── SHARED ── */
-  .section {
-    max-width: 1400px; margin: 0 auto;
-    padding: 0 clamp(1.5rem, 4vw, 4rem);
-  }
-  .gold-rule {
-    border: none; height: 1px;
-    background: var(--rule);
-    margin: 0;
-  }
-  .section-label {
-    font-size: 0.7rem; font-weight: 500;
-    letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--gold);
-  }
+  /* ── S2 PODCAST ── */
+  .pod-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+  .pod-lead h2{font-family:var(--font-display);font-weight:600;font-size:clamp(2rem,3.6vw,2.9rem);line-height:1.08;letter-spacing:-.01em;margin-bottom:20px}
+  .pod-lead p{font-size:1rem;color:var(--gray-light);max-width:440px;margin-bottom:26px}
+  .pod-lead p b{color:var(--white);font-weight:500}
+  .platforms{display:flex;gap:22px;align-items:center;margin-top:28px;padding-top:24px;border-top:1px solid var(--rule)}
+  .platforms .pl-label{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray)}
+  .platforms a{font-size:.84rem;color:var(--gray-light);display:inline-flex;align-items:center;gap:7px;transition:.2s}
+  .platforms a:hover{color:var(--white)}
+  .platforms svg{width:15px;height:15px;fill:currentColor}
+  .ep-card{background:linear-gradient(158deg,rgba(196,147,50,.07),rgba(255,255,255,.012));border:1px solid var(--rule);border-radius:7px;padding:26px;position:relative;overflow:hidden}
+  .ep-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+  .ep-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+  .ep-top .live{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:7px}
+  .ep-top .live .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2.6s infinite}
+  .ep-top .date{font-size:.72rem;color:var(--gray)}
+  .ep-title{font-family:var(--font-display);font-weight:600;font-size:1.3rem;line-height:1.26;margin-bottom:8px}
+  .ep-title a{transition:color .2s}
+  .ep-title a:hover{color:var(--gold)}
+  .ep-meta{font-size:.8rem;color:var(--gray-light);margin-bottom:18px}
+  .ep-player{border-radius:11px;overflow:hidden;min-height:152px;background:#000;border:1px solid rgba(255,255,255,.05)}
+  .ep-player iframe{display:block;width:100%;border:0}
+  .ep-recent{margin-top:18px;border-top:1px solid var(--rule);padding-top:14px}
+  .ep-recent .rl{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:9px}
+  .ep-recent a{display:block;font-size:.85rem;color:#cfc9c0;padding:5px 0;border-bottom:1px solid rgba(196,147,50,.07);transition:.18s}
+  .ep-recent a:last-child{border-bottom:none}
+  .ep-recent a:hover{color:var(--gold);padding-left:5px}
+  .fallback{display:none;padding:1.5rem 0;text-align:center}
+  .fallback p{color:var(--gray);font-size:.85rem;margin-bottom:.75rem}
+  .fallback a{color:var(--gold);font-size:.85rem;border-bottom:1px solid var(--gold);padding-bottom:2px}
 
-  /* ── LATEST EPISODE ── */
-  .latest-ep {
-    padding-top: 5rem; padding-bottom: 5rem;
-  }
-  .latest-ep .section-label { margin-bottom: 2rem; }
-  .latest-ep-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.6rem, 3.5vw, 2.8rem);
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    margin-bottom: 1rem;
-    max-width: 900px;
-  }
-  .latest-ep-title a { transition: color 0.3s; }
-  .latest-ep-title a:hover { color: var(--gold); }
-  .latest-ep-desc {
-    color: var(--gray-light); font-size: 0.95rem;
-    line-height: 1.65; max-width: 700px;
-    margin-bottom: 2rem;
-  }
-  .latest-ep-embed {
-    max-width: 700px;
-  }
-  .latest-ep-embed iframe {
-    width: 100%; height: 152px; border: none; border-radius: 8px;
-  }
+  /* ── S3 DEAL INTELLIGENCE — data-forward identity ── */
+  .deal.blk{background:radial-gradient(120% 100% at 100% 0,rgba(196,147,50,.05),transparent 60%)}
+  .deal-head{max-width:640px;margin-bottom:44px}
+  .deal-head h2{font-family:var(--font-display);font-weight:600;font-size:clamp(2rem,3.6vw,2.9rem);line-height:1.08;letter-spacing:-.01em;margin-bottom:16px}
+  .deal-head p{font-size:1rem;color:var(--gray-light);max-width:560px}
+  .deal-head p b{color:var(--white);font-weight:500}
+  .deal-cards{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+  .dc{background:#0c0c0e;padding:30px 26px;display:flex;flex-direction:column;min-height:280px;transition:.2s;position:relative}
+  .dc:hover{background:#101013}
+  .dc .tag{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:auto}
+  .dc.feat{background:linear-gradient(165deg,rgba(196,147,50,.09),#0c0c0e)}
+  .dc h3{font-family:var(--font-display);font-weight:600;font-size:1.5rem;line-height:1.14;margin:18px 0 10px}
+  .dc.feat h3{font-size:1.85rem}
+  .dc p{font-size:.86rem;color:var(--gray-light);margin-bottom:18px}
+  .dc .stat{font-family:var(--font-display);font-weight:700;font-variant-numeric:tabular-nums;font-size:2.6rem;color:var(--gold);line-height:1;margin-bottom:6px}
+  .dc .stat small{font-size:.9rem;color:var(--gray-light);font-family:var(--font-body);font-weight:400;display:block;margin-top:8px;letter-spacing:0}
+  .dc .go{font-size:.82rem;font-weight:500;color:var(--white);border-bottom:1px solid var(--gold);padding-bottom:2px;align-self:flex-start;transition:.18s}
+  .dc:hover .go{color:var(--gold)}
+  .dc .tools-list{list-style:none;font-size:.9rem;color:#cfc9c0}
+  .dc .tools-list li{padding:0;border-bottom:1px solid rgba(196,147,50,.08)}
+  .dc .tools-list li:last-child{border-bottom:none}
+  .dc .tools-list li a{display:block;padding:6px 0;transition:.18s}
+  .dc .tools-list li a:hover{color:var(--gold);padding-left:4px}
 
-  /* ── EPISODE WIRE ── */
-  .wire {
-    padding-top: 3rem; padding-bottom: 5rem;
-  }
-  .wire-list { list-style: none; }
-  .wire-item {
-    display: flex; align-items: baseline; gap: 1.5rem;
-    padding: 1.1rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    transition: opacity 0.2s;
-    text-decoration: none; color: inherit;
-  }
-  .wire-item:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
-  .wire-item:hover { opacity: 0.65; }
-  .wire-date {
-    flex-shrink: 0; width: 5rem;
-    font-size: 0.75rem; color: var(--gray);
-    font-weight: 500; letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-  .wire-title {
-    flex: 1; min-width: 0;
-    font-family: var(--font-display);
-    font-size: 1.05rem; font-weight: 600;
-    line-height: 1.35;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .wire-meta {
-    flex-shrink: 0;
-    font-size: 0.75rem; color: var(--gray);
-    display: flex; align-items: center; gap: 0.5rem;
-  }
-  .wire-arrow {
-    color: var(--gold); font-size: 0.85rem;
-    transition: transform 0.2s;
-  }
-  .wire-item:hover .wire-arrow { transform: translateX(3px); }
-  .wire-more {
-    display: inline-block; margin-top: 1.5rem;
-    font-size: 0.8rem; color: var(--gold);
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s;
-  }
-  .wire-more:hover { border-color: var(--gold); }
-
-  /* ── ARTICLES ── */
-  .articles {
-    padding-top: 5rem; padding-bottom: 5rem;
-  }
-  .articles .section-label { margin-bottom: 2.5rem; }
-  .articles-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-  }
-  .article-featured {
-    display: flex; flex-direction: column;
-    align-items: flex-start;
-  }
-  .article-featured .af-date {
-    font-size: 0.7rem; color: var(--gray);
-    letter-spacing: 0.1em; text-transform: uppercase;
-    margin-bottom: 0.75rem;
-  }
-  .article-featured .af-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.4rem, 2.5vw, 2rem);
-    font-weight: 700; line-height: 1.2;
-    letter-spacing: -0.01em;
-    margin-bottom: 0.75rem;
-  }
-  .article-featured .af-title a { transition: color 0.3s; }
-  .article-featured .af-title a:hover { color: var(--gold); }
-  .article-featured .af-desc {
-    color: var(--gray-light); font-size: 0.9rem;
-    line-height: 1.65; margin-bottom: 1rem;
-  }
-  .article-featured .af-link {
-    font-size: 0.8rem; color: var(--gold);
-    border-bottom: 1px solid var(--gold);
-    padding-bottom: 2px;
-    margin-top: auto; /* bottom-align with the article list column */
-  }
-
-  .article-list {}
-  .article-list-item {
-    display: block; padding: 1.25rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    transition: opacity 0.2s;
-  }
-  .article-list-item:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
-  .article-list-item:hover { opacity: 0.65; }
-  .article-list-item .al-date {
-    font-size: 0.7rem; color: var(--gray);
-    letter-spacing: 0.08em; text-transform: uppercase;
-    margin-bottom: 0.35rem;
-  }
-  .article-list-item .al-title {
-    font-family: var(--font-display);
-    font-size: 1.05rem; font-weight: 600; line-height: 1.3;
-  }
-  .article-list-item .al-arrow {
-    color: var(--gold); font-size: 0.85rem;
-    margin-left: 0.5rem; display: inline-block;
-    transition: transform 0.2s;
-  }
-  .article-list-item:hover .al-arrow { transform: translateX(3px); }
-
-  .articles-more {
-    display: inline-block; margin-top: 1.5rem;
-    font-size: 0.8rem; color: var(--gold);
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s;
-  }
-  .articles-more:hover { border-color: var(--gold); }
+  /* ── S4 NEWSLETTER ── */
+  .news.blk{background:rgba(196,147,50,.028);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  .news-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+  .news h2{font-family:var(--font-display);font-weight:600;font-size:clamp(1.8rem,3vw,2.5rem);line-height:1.1;margin-bottom:16px}
+  .news p{font-size:.98rem;color:var(--gray-light);max-width:440px;margin-bottom:12px}
+  .lead-magnet{background:#0c0c0e;border:1px solid var(--rule);border-radius:6px;padding:26px}
+  .lead-magnet .lm-tag{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+  .lead-magnet h4{font-family:var(--font-display);font-weight:600;font-size:1.25rem;margin-bottom:8px}
+  .lead-magnet .sub{font-size:.85rem;color:var(--gray-light);margin-bottom:18px}
+  .lm-form{display:flex;gap:8px}
+  .lm-form input{flex:1;background:#000;border:1px solid var(--rule);border-radius:2px;padding:12px 14px;color:var(--white);font-family:var(--font-body);font-size:.88rem}
+  .lm-form input::placeholder{color:var(--gray)}
+  .lm-form button{background:var(--gold);color:#0a0a0a;border:none;border-radius:2px;padding:0 20px;font-weight:500;font-size:.86rem;cursor:pointer}
+  .lm-fine{font-size:.72rem;color:var(--gray);margin-top:12px;line-height:1.5}
+  .art-list{border-top:1px solid var(--rule);padding-top:16px}
+  .art-list-label{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:12px}
+  .art-item{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:11px 0;border-bottom:1px solid rgba(196,147,50,.08);cursor:pointer;transition:.18s}
+  .art-item:hover{padding-left:5px}
+  .art-item .art-t{font-family:var(--font-display);font-size:1.02rem;line-height:1.3;color:#d6d0c6;transition:.18s}
+  .art-item:hover .art-t{color:var(--gold)}
+  .art-item .art-d{font-size:.72rem;color:var(--gray);white-space:nowrap}
 
   /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--rule);
-    padding: 3rem clamp(1.5rem, 4vw, 4rem);
-  }
-  .footer-inner {
-    max-width: 1400px; margin: 0 auto;
-    display: flex; justify-content: space-between;
-    align-items: flex-start; flex-wrap: wrap; gap: 2rem;
-  }
-  .footer-left {}
-  .footer-brand {
-    font-family: var(--font-display); font-weight: 700;
-    font-size: 0.9rem; letter-spacing: 0.06em;
-    text-transform: uppercase; margin-bottom: 0.4rem;
-  }
-  .footer-tagline {
-    font-family: var(--font-display); font-style: italic;
-    color: var(--gray); font-size: 0.8rem;
-    font-weight: 300; letter-spacing: 0.03em;
-  }
-  .footer-right {
-    display: flex; flex-direction: column;
-    align-items: flex-end; gap: 0.75rem;
-  }
-  .footer-connect {
-    display: flex; gap: 2rem; list-style: none;
-  }
-  .footer-connect a {
-    font-size: 0.75rem; color: var(--gray-light);
-    letter-spacing: 0.08em; text-transform: uppercase;
-    transition: color 0.3s;
-  }
-  .footer-connect a:hover { color: var(--gold); }
-  .copyright {
-    color: rgba(255,255,255,0.2); font-size: 0.7rem;
-  }
-
-  /* ── FALLBACK STATES ── */
-  .fallback {
-    display: none; padding: 3rem 0; text-align: center;
-  }
-  .fallback p { color: var(--gray); font-size: 0.9rem; margin-bottom: 1rem; }
-  .fallback a {
-    color: var(--gold); font-size: 0.85rem;
-    border-bottom: 1px solid var(--gold);
-    padding-bottom: 2px;
-  }
+  footer{padding:56px 0 44px}
+  .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;padding-bottom:28px;border-bottom:1px solid var(--rule)}
+  .foot-col h5{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:14px}
+  .foot-col a{display:block;font-size:.86rem;color:var(--gray-light);padding:4px 0;transition:.18s}
+  .foot-col a:hover{color:var(--gold)}
+  .foot-brand{max-width:280px}
+  .foot-brand .fb-logo{font-family:var(--font-display);font-weight:600;font-size:1.05rem;margin-bottom:10px}
+  .foot-brand p{font-size:.82rem;color:var(--gray)}
+  .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:24px;font-size:.76rem;color:var(--gray)}
+  .foot-bottom .trust{color:var(--gold-2);font-style:italic;font-family:var(--font-display)}
 
   /* ── PRINT ── */
   @media print {
-    nav, iframe, .hero-pulse, .ticker-wrap { display: none !important; }
+    nav, iframe, .hero-pulse { display: none !important; }
     body { background: #fff; color: #111; }
     .hero { min-height: 0; padding-top: 2rem; padding-bottom: 2rem; }
     a { color: #111; }
-    .gold-rule { background: #ccc; }
   }
 
   /* ── ACCESSIBILITY ── */
@@ -462,205 +247,205 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
-    .hero-pulse, .ticker-wrap { display: none; }
+    .hero-pulse { display: none; }
   }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 800px) {
+  @media(max-width:880px){
+    .pod-grid,.news-grid{grid-template-columns:1fr;gap:36px}
+    .deal-cards{grid-template-columns:1fr}
     .nav-toggle { display: flex; }
     .nav-links {
-      position: absolute; top: 72px; left: 0; right: 0;
-      flex-direction: column; gap: 0;
-      padding: 1rem clamp(1.5rem, 4vw, 4rem) 1.5rem;
-      background: rgba(10, 10, 10, 0.95);
+      position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; align-items: flex-start; gap: 0;
+      padding: 1rem 32px 1.5rem;
+      background: rgba(10, 10, 10, 0.97);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--rule);
     }
     .nav-links[data-collapsed='true'] { display: none; }
     .nav-links[data-collapsed='false'] { display: flex; }
-    .nav-links a { padding: 0.75rem 0; font-size: 0.85rem; }
-
-    .hero { min-height: auto; padding: 6rem 1.5rem 3rem; }
-    .hero h1 { font-size: clamp(2.8rem, 12vw, 5rem); }
-    .hero-sub { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
-    .hero-tagline { font-size: 0.85rem; letter-spacing: 0.1em; }
-    /* Waveform: take it out of absolute flow so it can't overlap the action links */
-    .hero-pulse { position: static; order: 10; height: 60px; margin-top: 2.5rem; }
-    .hero-links a {
-      display: inline-block;
-      padding: 0.75rem 0;
-      min-height: 44px;
-      box-sizing: border-box;
-    }
-
-    .wire-title { white-space: normal; }
-    .wire-date { width: 4rem; }
-    .wire-item { gap: 1rem; }
-
-    .articles-layout {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-    }
-
-    .footer-inner { flex-direction: column; }
-    .footer-right { align-items: flex-start; }
-    .footer-connect {
-      flex-direction: column;
-      gap: 0;
-    }
-    .footer-connect a {
-      display: block;
-      padding: 0.75rem 0;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .wire-meta { display: none; }
+    .nav-links a { padding: 0.75rem 0; font-size: 0.9rem; }
+    .nav-links a.sub { margin-top: .5rem; }
+    .hero h1{font-size:clamp(3rem,15vw,5rem)}
+    .hero{padding:6rem 0 3rem}
+    .hero-pulse{position:static;height:60px;margin-top:2rem;order:10}
+    section.blk{padding:64px 0}
+    .foot-grid{flex-direction:column}
   }
 </style>
 </head>
 <body>
 
-<a href="#podcast" class="skip-link">Skip to content</a>
+<a href="#day" class="skip-link">Skip to content</a>
 <noscript><div style="background:var(--gold);color:var(--black);text-align:center;padding:0.75rem;font-size:0.85rem;font-weight:600;">This site works best with JavaScript enabled. <a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" style="color:var(--black);text-decoration:underline;">Listen on Spotify</a> or <a href="https://thepharmacloseout.substack.com/" style="color:var(--black);text-decoration:underline;">read on Substack</a>.</div></noscript>
 
 <nav aria-label="Main navigation">
   <div class="nav-inner">
-    <div class="logo">The Pharma Closeout</div>
+    <div class="logo">The Pharma <b>Closeout</b></div>
     <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links"><span></span></button>
     <ul id="nav-links" class="nav-links" data-collapsed="true">
-      <li><a href="#podcast">Podcast</a></li>
-      <li><a href="#articles">Articles</a></li>
-      <li><a href="ai-research.html">Research</a></li>
+      <li><a href="#day">Podcast</a></li>
       <li><a href="deals.html">Deal Intelligence</a></li>
+      <li><a href="#news">Newsletter</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="https://www.linkedin.com/company/the-pharma-closeout" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="https://thepharmacloseout.substack.com/subscribe" target="_blank" rel="noopener" class="sub" onclick="gtag('event','subscribe_submit',{event_category:'nav'})">Subscribe</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- ── TICKER ── -->
-<div class="ticker-wrap" aria-hidden="true">
-  <div class="ticker" id="ticker"></div>
-</div>
+<!-- S1 MISSION HERO -->
+<header class="hero">
+  <canvas class="hero-pulse" id="pulse" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-kicker eyebrow"><span class="dot"></span> For pharma &amp; biotech professionals</div>
+    <h1>The Pharma<span class="row2">Closeout</span></h1>
+    <p class="mission">Your edge in pharma — the daily brief and the deal record.</p>
+    <div class="hero-cta">
+      <a href="#day" class="btn btn-primary" onclick="gtag('event','hero_play_click')">&#9654; Play today's episode</a>
+      <a href="#deal" class="btn btn-ghost" onclick="gtag('event','hero_deals_click')">Explore Deal Intelligence &rarr;</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll &darr;</div>
+</header>
 
-<!-- ── HERO ── -->
-<section class="hero" aria-label="Introduction">
-  <div class="hero-pulse" aria-hidden="true"><canvas id="pulseCanvas"></canvas></div>
-  <h1>The Pharma<br>Closeout</h1>
-  <div class="hero-sub">
-    <span class="hero-tagline"><span class="tag-phrase">The signal</span> &ensp;/&ensp; <span class="tag-phrase">The synthesis</span> &ensp;/&ensp; <span class="tag-phrase">The closeout</span></span>
-    <div class="hero-links">
-      <a href="#podcast">Listen &rarr;</a>
-      <a href="#articles">Read &rarr;</a>
-      <a href="ai-research.html">Research &rarr;</a>
+<main>
+<!-- S2 CLOSE OUT YOUR DAY -->
+<section class="blk" id="day" aria-label="Podcast">
+  <div class="wrap">
+    <div class="ritual"><span class="n">i.</span><span class="t">Close out your day</span><span class="line"></span></div>
+    <div class="pod-grid">
+      <div class="pod-lead">
+        <h2>Fifteen minutes. Every weekday. Everything that moved.</h2>
+        <p><b>Trial readouts, FDA decisions, deals, and money moves</b> — the whole industry beat, distilled into one tight brief you can finish before your first meeting.</p>
+        <a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" rel="noopener" class="btn btn-ghost">Browse all episodes &rarr;</a>
+        <div class="platforms">
+          <span class="pl-label">Listen on</span>
+          <a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.5 17.3c-.23.37-.7.5-1.08.27-2.95-1.8-6.66-2.2-11.04-1.2-.42.1-.85-.17-.95-.6-.1-.42.17-.85.6-.95 4.8-1.1 8.9-.63 12.2 1.4.38.23.5.7.27 1.08zm1.47-3.27c-.29.47-.9.62-1.37.33-3.38-2.08-8.53-2.68-12.53-1.46-.53.16-1.08-.14-1.24-.66-.16-.52.14-1.08.66-1.24 4.57-1.39 10.25-.72 14.13 1.66.47.29.62.9.33 1.37zm.13-3.4C15.6 8.2 8.5 7.98 4.4 9.23c-.63.19-1.3-.16-1.49-.79-.19-.63.16-1.3.79-1.49 4.7-1.43 12.55-1.15 17.02 1.5.57.33.75 1.06.42 1.63-.34.56-1.07.75-1.63.42z"/></svg>Spotify</a>
+          <a href="https://podcasts.apple.com/us/podcast/id1885096479" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 00-1.6 19.87c-.03-.5-.05-1.27.01-1.82.07-.6.44-3.8.44-3.8s-.11-.22-.11-.56c0-.53.3-.92.69-.92.32 0 .48.24.48.53 0 .32-.2.8-.31 1.25-.09.37.18.68.55.68.66 0 1.17-.7 1.17-1.7 0-.9-.64-1.52-1.56-1.52-1.06 0-1.69.8-1.69 1.62 0 .32.12.66.28.85a.11.11 0 01.03.11l-.11.44c-.02.07-.06.09-.14.05-.5-.23-.82-.97-.82-1.56 0-1.27.92-2.43 2.66-2.43 1.4 0 2.48.99 2.48 2.32 0 1.39-.87 2.5-2.09 2.5-.4 0-.79-.21-.92-.46l-.25.96c-.09.35-.34.79-.5 1.06A10 10 0 1012 2z"/></svg>Apple</a>
+        </div>
+      </div>
+      <div class="ep-card">
+        <div class="ep-top"><span class="live"><span class="dot"></span> Latest episode</span><span class="date" id="latest-ep-date"></span></div>
+        <div class="ep-title" id="latest-ep-title"></div>
+        <div class="ep-meta" id="latest-ep-desc"></div>
+        <div class="ep-player" id="latest-ep-embed"></div>
+        <div class="ep-recent" id="ep-recent" style="display:none;">
+          <div class="rl">Earlier this week</div>
+          <div id="episode-wire"></div>
+        </div>
+        <div id="podcast-fallback" class="fallback">
+          <p>Loading episodes&hellip;</p>
+          <a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" rel="noopener">Listen on Spotify &rarr;</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ── RESEARCH TEASER ── -->
-<main>
-<section id="research" class="section" aria-label="Research" style="padding-top: 3rem; padding-bottom: 3rem; text-align: center;">
-  <h2 style="font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 300; line-height: 1.2; margin-bottom: 0.75rem;">AI in Pharma: The Definitive Research</h2>
-  <p style="font-size: 0.9rem; color: var(--gray-light); max-width: 550px; margin: 0 auto 1.5rem; line-height: 1.6;">63 use cases. 3 deep case studies. The framework pharma leaders are using to separate AI signal from noise.</p>
-  <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-    <a href="ai-research.html#briefing" style="font-size: 0.8rem; color: var(--gold); border-bottom: 1px solid rgba(196,147,50,0.4); padding-bottom: 2px; transition: border-color 0.3s;">Free Strategic Briefing &rarr;</a>
-    <a href="ai-research.html#compendium" style="display: inline-flex; align-items: center; background: var(--gold); color: var(--black); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.7rem 1.5rem; transition: box-shadow 0.3s;">Get the Compendium — $149</a>
+<!-- S3 CLOSE OUT THE DEAL -->
+<section class="blk deal" id="deal" aria-label="Deal Intelligence">
+  <div class="wrap">
+    <div class="ritual"><span class="n">ii.</span><span class="t">Close out the deal</span><span class="line"></span></div>
+    <div class="deal-head">
+      <h2>Walk into the room knowing which deals actually worked.</h2>
+      <p>Every pharma deal, <b>graded twice</b> — once by Wall Street on announcement day, once by history. The market-intelligence layer for BD, CI, and commercial teams — <b>yours to use, not your company's to license.</b></p>
+    </div>
+    <div class="deal-cards">
+      <div class="dc feat">
+        <span class="tag">Flagship study</span>
+        <h3>The Hype Gap</h3>
+        <p>What Wall Street's deal-day verdict got wrong — measured across 828 dual-graded deals.</p>
+        <div class="stat">43%<small>of graded deals: consensus missed the outcome by 25+ points</small></div>
+        <a href="hype-gap.html" class="go">Read the study &rarr;</a>
+      </div>
+      <div class="dc">
+        <span class="tag">The record</span>
+        <div class="stat" style="margin-top:34px">1,329<small>pharma deals tracked &amp; graded, announcement vs. outcome</small></div>
+        <h3 style="font-size:1.3rem">Deal Library</h3>
+        <p>Search the full graded history. Every deal, its scorecard, the receipts.</p>
+        <a href="deals/index.html" class="go">Browse deals &rarr;</a>
+      </div>
+      <div class="dc">
+        <span class="tag">Work tools</span>
+        <h3 style="font-size:1.3rem;margin-top:24px">Prep faster</h3>
+        <ul class="tools-list">
+          <li><a href="compare.html">Compare — two deals, side by side</a></li>
+          <li><a href="acquirers.html">Acquirers — every buyer's scorecard</a></li>
+          <li><a href="hindsight.html">Hindsight — what the Street missed</a></li>
+        </ul>
+        <a href="deals.html" class="go" style="margin-top:18px">Open the tools &rarr;</a>
+      </div>
+    </div>
   </div>
 </section>
 
-<hr class="gold-rule section">
-
-<!-- ── DEAL INTELLIGENCE ── -->
-<section id="deal-intelligence" class="section" aria-label="Deal Intelligence" style="padding-top: 3rem; padding-bottom: 3rem; text-align: center;">
-  <h2 style="font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 300; line-height: 1.2; margin-bottom: 0.5rem;">Deal Intelligence</h2>
-  <p style="font-family: var(--font-display); font-style: italic; font-size: clamp(1rem, 1.5vw, 1.15rem); color: var(--gold); max-width: 620px; margin: 0 auto 1.25rem; line-height: 1.4;">
-    The press release is the easy part. We do the closeout.
-  </p>
-  <p style="font-size: 0.9rem; color: var(--gray-light); max-width: 560px; margin: 0 auto 1.75rem; line-height: 1.6;">
-    The only deal database that grades how deals actually <em>aged</em> — and the gap between what the Street said and what history did. Free, no login.
-  </p>
-  <p style="font-size: 0.9rem; color: var(--gray-light); max-width: 560px; margin: 0 auto 1.75rem; line-height: 1.6;">
-    Explore the <a href="deals/index.html" style="color: var(--gold); border-bottom: 1px solid rgba(196,147,50,0.4);">full deal library</a> — graded pharma M&amp;A and licensing deals back to the 1990s.
-  </p>
-  <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-    <a href="deals.html" style="display: inline-flex; align-items: center; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.7rem 1.5rem; transition: opacity 0.3s;">Read the closeout &rarr;</a>
-    <a href="deals.html?ta=Oncology" style="font-size: 0.8rem; color: var(--gold); border-bottom: 1px solid rgba(196,147,50,0.4); padding-bottom: 2px; transition: border-color 0.3s;">Compare deals &rarr;</a>
+<!-- S4 NEWSLETTER + ARTICLES -->
+<section class="blk news" id="news" aria-label="Newsletter">
+  <div class="wrap">
+    <div class="ritual"><span class="n">iii.</span><span class="t">The daily close, in writing</span><span class="line"></span></div>
+    <div class="news-grid">
+      <div class="articles-col">
+        <h2>The brief you can forward, cite, and keep.</h2>
+        <p style="margin-bottom:26px">Audio disappears after you hear it. The written close persists — for the people who reference it in leadership meetings.</p>
+        <div class="art-list" id="art-list">
+          <div class="art-list-label">Latest from the newsletter</div>
+          <a class="art-item" href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener"><span class="art-t">Jasper's Rescue Deal Is a Bet on Two Drugs It Almost Buried</span><span class="art-d">&nbsp;</span></a>
+          <a class="art-item" href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener"><span class="art-t">Novo Just Turned Its Injectable Habit Into a European Moat</span><span class="art-d">&nbsp;</span></a>
+          <a class="art-item" href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener"><span class="art-t">Biogen Wants to File a Trial That Missed Its Primary Endpoint</span><span class="art-d">&nbsp;</span></a>
+          <a class="art-item" href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener"><span class="art-t">GSK Paid $10.6 Billion for Two FDA Dates It Doesn't Control</span><span class="art-d">&nbsp;</span></a>
+        </div>
+        <div id="articles-fallback" class="fallback">
+          <p>Loading articles&hellip;</p>
+        </div>
+        <a href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener" class="go" style="display:inline-block;margin-top:20px;font-size:.84rem;font-weight:500;color:var(--white);border-bottom:1px solid var(--gold);padding-bottom:2px">All articles on Substack &rarr;</a>
+      </div>
+      <div class="lead-magnet">
+        <div class="lm-tag">Join free — get the report</div>
+        <h4>AI in Pharma: The 2026 Reckoning</h4>
+        <div class="sub">Our research report on where AI actually lands in pharma — free when you subscribe to the newsletter.</div>
+        <form class="lm-form" action="https://thepharmacloseout.substack.com/subscribe" method="get" target="_blank" onsubmit="gtag('event','subscribe_submit',{event_category:'lead_magnet'})">
+          <input type="email" name="email" placeholder="you@company.com" required>
+          <button type="submit">Subscribe &rarr;</button>
+        </form>
+        <div class="lm-fine">Subscribes you on Substack &middot; report arrives in your welcome email. Independent &amp; ad-light — we never sell your identity.</div>
+      </div>
+    </div>
   </div>
-</section>
-
-<hr class="gold-rule section">
-
-<!-- ── LATEST EPISODE ── -->
-<section id="podcast" class="section latest-ep" aria-label="Latest episode">
-  <div class="section-label" id="latest-ep-label">Latest Episode</div>
-  <div id="latest-ep-title" class="latest-ep-title"></div>
-  <div id="latest-ep-desc" class="latest-ep-desc"></div>
-  <div id="latest-ep-embed" class="latest-ep-embed"></div>
-  <div id="podcast-fallback" class="fallback">
-    <p>Loading episodes&hellip;</p>
-    <a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" rel="noopener">Listen on Spotify &rarr;</a>
-  </div>
-</section>
-
-<hr class="gold-rule section">
-
-<!-- ── EPISODE WIRE ── -->
-<section class="section wire" aria-label="Previous episodes">
-  <ul id="episode-wire" class="wire-list" aria-label="Episode list">
-  </ul>
-  <a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" rel="noopener" class="wire-more" id="wire-more" style="display:none;">All episodes on Spotify &rarr;</a>
-</section>
-
-<hr class="gold-rule section">
-
-<!-- ── ARTICLES ── -->
-<section id="articles" class="section articles" aria-label="Articles">
-  <div class="section-label">Analysis</div>
-  <div id="articles-layout" class="articles-layout">
-    <div id="article-featured" class="article-featured"></div>
-    <div id="article-list" class="article-list"></div>
-  </div>
-  <div id="articles-fallback" class="fallback">
-    <p>Loading articles&hellip;</p>
-    <a href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener">Read on Substack &rarr;</a>
-  </div>
-  <a href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener" class="articles-more" id="articles-more" style="display:none;">All articles on Substack &rarr;</a>
 </section>
 </main>
 
-<!-- ── FOOTER ── -->
+<!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <div class="footer-left">
-      <div class="footer-brand">The Pharma Closeout</div>
-      <p class="footer-tagline">Daily pharma intelligence in under 15 minutes.</p>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="fb-logo">The Pharma Closeout</div>
+        <p>Your edge in pharma — the daily brief, the deal record, and the judgment to use them.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Listen</h5>
+        <a href="#day">Latest episode</a><a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" rel="noopener">All episodes</a><a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" rel="noopener">Spotify</a><a href="https://podcasts.apple.com/us/podcast/id1885096479" target="_blank" rel="noopener">Apple Podcasts</a>
+      </div>
+      <div class="foot-col">
+        <h5>Deal Intelligence</h5>
+        <a href="hype-gap.html">The Hype Gap</a><a href="deals/index.html">Deal Library</a><a href="browse.html">Browse</a><a href="compare.html">Compare</a><a href="acquirers.html">Acquirers</a><a href="methodology.html">Methodology</a>
+      </div>
+      <div class="foot-col">
+        <h5>More</h5>
+        <a href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener">Newsletter</a><a href="about.html">About</a><a href="ai-research.html">Research</a><a href="mailto:admin@thepharmacloseout.com">Contact</a><a href="https://www.linkedin.com/company/the-pharma-closeout" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
     </div>
-    <div class="footer-right">
-      <ul class="footer-connect">
-        <li><a href="https://www.linkedin.com/company/the-pharma-closeout" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="https://thepharmacloseout.substack.com/" target="_blank" rel="noopener">Newsletter</a></li>
-        <li><a href="https://open.spotify.com/show/6bib0887ucySx51e49M3tp" target="_blank" rel="noopener">Spotify</a></li>
-      </ul>
-      <p class="copyright">&copy; 2026 The Pharma Closeout</p>
+    <div class="foot-bottom">
+      <span class="copyright">&copy; 2026 The Pharma Closeout</span>
+      <span class="trust">Independent. We never sell your identity.</span>
     </div>
   </div>
 </footer>
 
 <script>
-/* ── NAV SCROLL ── */
-(function() {
-  var nav = document.querySelector('nav');
-  window.addEventListener('scroll', function() {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-  });
-})();
-
-/* Mobile nav toggle now in assets/nav.js (Phase 3 unification) */
-
 /* ── HERO PULSE LINE ── */
 (function() {
-  var c = document.getElementById('pulseCanvas');
+  var c = document.getElementById('pulse');
   if (!c) return;
   var ctx = c.getContext('2d');
   var w, h, t = 0, visible = true, rafId;
@@ -674,93 +459,21 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   }, { threshold: 0 }).observe(c);
 
   function draw() {
-    t += 0.012;
+    t += 0.02;
     ctx.clearRect(0, 0, w, h);
-    var mid = h * 0.5;
-    var barW = 2;
-    var gap = 3;
-    var step = barW + gap;
-    var bars = Math.floor(w / step);
-
-    for (var i = 0; i < bars; i++) {
-      var x = i / bars;
-      // Envelope: fades at edges like a real audio clip
-      var env = Math.pow(Math.sin(x * Math.PI), 0.6);
-      // Layered pseudo-random waveform
-      var amp = Math.abs(Math.sin(x * 40 + t * 1.2)) * 0.3
-             + Math.abs(Math.sin(x * 90 + t * 0.7 + 1.5)) * 0.25
-             + Math.abs(Math.sin(x * 18 + t * 2.1 + 3.0)) * 0.25
-             + Math.abs(Math.sin(x * 55 + t * 0.4 + 5.0)) * 0.2;
-      amp = Math.max(0.04, amp * env);
-      var barH = amp * h * 0.85;
-      var bx = i * step;
-      // Draw bar mirrored from center
-      var alpha = 0.25 + env * 0.4;
-      ctx.fillStyle = 'rgba(196, 147, 50, ' + alpha + ')';
-      ctx.fillRect(bx, mid - barH * 0.5, barW, barH);
+    ctx.strokeStyle = 'rgba(196, 147, 50, .6)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    for (var i = 0; i < w; i++) {
+      var y = h / 2 + Math.sin(i * 0.012 + t) * Math.sin(i * 0.003 + t * 0.7) * 22;
+      i ? ctx.lineTo(i, y) : ctx.moveTo(i, y);
     }
-
+    ctx.stroke();
     if (visible) rafId = requestAnimationFrame(loop);
     else rafId = null;
   }
   function loop() { draw(); }
   loop();
-})();
-
-/* ── TICKER ── */
-(function() {
-  var tickerEl = document.getElementById('ticker');
-  var items = [];
-
-  function buildTicker() {
-    if (items.length === 0) return;
-    // Duplicate items so the scroll loops seamlessly
-    var html = '';
-    for (var r = 0; r < 2; r++) {
-      items.forEach(function(item) {
-        html += '<div class="ticker-item"><span class="ticker-dot"></span><a href="' +
-          esc(item.link) + '" target="_blank" rel="noopener">' +
-          esc(item.title) + '</a></div>';
-      });
-    }
-    tickerEl.innerHTML = html;
-  }
-
-  // Collect from both RSS feeds
-  var PODCAST_RSS = 'https://spotifeed.timdorr.com/6bib0887ucySx51e49M3tp';
-  var SUBSTACK_URL = 'https://thepharmacloseout.substack.com';
-  var podcastApi = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(PODCAST_RSS);
-  var substackApi = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(SUBSTACK_URL + '/feed');
-  var done = 0;
-
-  function check() {
-    done++;
-    if (done >= 2) buildTicker();
-  }
-
-  fetch(podcastApi)
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      if (data.status === 'ok' && data.items) {
-        data.items.slice(0, 4).forEach(function(ep) {
-          items.push({ title: cleanTitle(decodeEntities(ep.title)), link: ep.link || 'https://open.spotify.com/show/6bib0887ucySx51e49M3tp' });
-        });
-      }
-      check();
-    })
-    .catch(check);
-
-  fetch(substackApi)
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      if (data.status === 'ok' && data.items) {
-        data.items.slice(0, 4).forEach(function(item) {
-          items.push({ title: decodeEntities(item.title), link: item.link });
-        });
-      }
-      check();
-    })
-    .catch(check);
 })();
 
 /* ── SANITIZATION ── */
@@ -795,18 +508,18 @@ function truncateWords(str, limit) {
   return cut.replace(/[\s,;:.–—-]+$/, '') + '...';
 }
 
-/* ── SPOTIFY PODCAST RSS FEED ── */
+/* ── SPOTIFY PODCAST RSS FEED (latest episode card + recent list) ── */
 (function() {
   var SPOTIFY_SHOW = 'https://open.spotify.com/show/6bib0887ucySx51e49M3tp';
   var PODCAST_RSS = 'https://spotifeed.timdorr.com/6bib0887ucySx51e49M3tp';
   var RSS_API = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(PODCAST_RSS);
 
-  var labelEl = document.getElementById('latest-ep-label');
+  var dateEl = document.getElementById('latest-ep-date');
   var titleEl = document.getElementById('latest-ep-title');
   var descEl = document.getElementById('latest-ep-desc');
   var embedEl = document.getElementById('latest-ep-embed');
+  var recentWrap = document.getElementById('ep-recent');
   var wireEl = document.getElementById('episode-wire');
-  var wireMore = document.getElementById('wire-more');
   var fallbackEl = document.getElementById('podcast-fallback');
 
   fetch(RSS_API)
@@ -819,15 +532,15 @@ function truncateWords(str, limit) {
       var eps = data.items;
       var latest = eps[0];
       var d = new Date(latest.pubDate);
-      var dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      var dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
       var desc = latest.description
-        ? truncateWords(decodeEntities(latest.description.replace(/<[^>]*>/g, '')), 260)
+        ? truncateWords(decodeEntities(latest.description.replace(/<[^>]*>/g, '')), 140)
         : '';
 
-      labelEl.textContent = 'Latest Episode \u00B7 ' + dateStr;
+      dateEl.textContent = dateStr;
       titleEl.innerHTML = '<a href="' + esc(latest.link || SPOTIFY_SHOW) + '" target="_blank" rel="noopener">' + esc(cleanTitle(decodeEntities(latest.title))) + '</a>';
       descEl.textContent = desc;
-      embedEl.innerHTML = '<iframe src="https://open.spotify.com/embed/show/6bib0887ucySx51e49M3tp?utm_source=generator&theme=0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Spotify player"></iframe>';
+      embedEl.innerHTML = '<iframe src="https://open.spotify.com/embed/show/6bib0887ucySx51e49M3tp?utm_source=generator&theme=0" height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Spotify player" loading="lazy"></iframe>';
 
       // Embed fallback: if the Spotify iframe never loads (blocked / offline),
       // collapse the reserved slot to a plain link instead of dead space.
@@ -837,80 +550,54 @@ function truncateWords(str, limit) {
         fr.addEventListener('load', function() { loaded = true; });
         setTimeout(function() {
           if (!loaded) {
-            embedEl.innerHTML = '<a href="' + esc(latest.link || SPOTIFY_SHOW) + '" target="_blank" rel="noopener" style="font-size:0.85rem;color:var(--gold);border-bottom:1px solid var(--gold);padding-bottom:2px;">Play on Spotify &rarr;</a>';
+            embedEl.innerHTML = '<a href="' + esc(latest.link || SPOTIFY_SHOW) + '" target="_blank" rel="noopener" style="display:block;padding:2rem 1rem;text-align:center;font-size:0.85rem;color:var(--gold);border-bottom:1px solid var(--gold);">Play on Spotify &rarr;</a>';
           }
         }, 5000);
       })();
 
-      // Wire feed — next 6 episodes
-      var wireEps = eps.slice(1, 7);
-      wireEl.innerHTML = wireEps.map(function(ep) {
-        var ed = new Date(ep.pubDate);
-        var edStr = ed.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-        var epDur = ep.enclosure && ep.enclosure.duration
-          ? Math.round(ep.enclosure.duration / 60) + ' min'
-          : '';
-        return '<li><a class="wire-item" href="' + esc(ep.link || SPOTIFY_SHOW) + '" target="_blank" rel="noopener">' +
-          '<span class="wire-date">' + esc(edStr) + '</span>' +
-          '<span class="wire-title">' + esc(cleanTitle(decodeEntities(ep.title))) + '</span>' +
-          '<span class="wire-meta">' + (epDur ? epDur + ' ' : '') + '<span class="wire-arrow">&rarr;</span></span>' +
-        '</a></li>';
-      }).join('');
-      wireMore.style.display = 'inline-block';
+      // Recent list — next 2 episodes
+      var wireEps = eps.slice(1, 3);
+      if (wireEps.length > 0) {
+        wireEl.innerHTML = wireEps.map(function(ep) {
+          return '<a href="' + esc(ep.link || SPOTIFY_SHOW) + '" target="_blank" rel="noopener">' + esc(cleanTitle(decodeEntities(ep.title))) + '</a>';
+        }).join('');
+        recentWrap.style.display = 'block';
+      }
     })
     .catch(function() {
       fallbackEl.style.display = 'block';
     });
 })();
 
-/* ── SUBSTACK RSS FEED ── */
+/* ── SUBSTACK RSS FEED (S4 article list) ── */
 (function() {
   var SUBSTACK_URL = 'https://thepharmacloseout.substack.com';
   var RSS_API = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(SUBSTACK_URL + '/feed');
 
-  var layoutEl = document.getElementById('articles-layout');
-  var featuredEl = document.getElementById('article-featured');
-  var listEl = document.getElementById('article-list');
+  var listEl = document.getElementById('art-list');
   var fallbackEl = document.getElementById('articles-fallback');
-  var moreEl = document.getElementById('articles-more');
 
   fetch(RSS_API)
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (data.status !== 'ok' || !data.items || data.items.length === 0) {
-        layoutEl.style.display = 'none';
-        fallbackEl.style.display = 'block';
-        return;
+        return; // keep static fallback markup already in #art-list
       }
-      var posts = data.items;
-      var featured = posts[0];
-      var rest = posts.slice(1, 6);
-
-      var fd = new Date(featured.pubDate);
-      var fDateStr = fd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      var fDesc = featured.description
-        ? truncateWords(decodeEntities(featured.description.replace(/<[^>]*>/g, '')), 200)
-        : '';
-
-      featuredEl.innerHTML =
-        '<div class="af-date">' + esc(fDateStr) + '</div>' +
-        '<h3 class="af-title"><a href="' + esc(featured.link) + '" target="_blank" rel="noopener">' + esc(decodeEntities(featured.title)) + '</a></h3>' +
-        '<p class="af-desc">' + esc(fDesc) + '</p>' +
-        '<a href="' + esc(featured.link) + '" target="_blank" rel="noopener" class="af-link">Read on Substack &rarr;</a>';
-
-      listEl.innerHTML = rest.map(function(item) {
+      var posts = data.items.slice(0, 4);
+      var html = '<div class="art-list-label">Latest from the newsletter</div>';
+      html += posts.map(function(item) {
         var d = new Date(item.pubDate);
         var dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-        return '<a href="' + esc(item.link) + '" target="_blank" rel="noopener" class="article-list-item">' +
-          '<div class="al-date">' + esc(dateStr) + '</div>' +
-          '<div class="al-title">' + esc(decodeEntities(item.title)) + '<span class="al-arrow">&rarr;</span></div>' +
+        return '<a class="art-item" href="' + esc(item.link) + '" target="_blank" rel="noopener">' +
+          '<span class="art-t">' + esc(decodeEntities(item.title)) + '</span>' +
+          '<span class="art-d">' + esc(dateStr) + '</span>' +
         '</a>';
       }).join('');
-      moreEl.style.display = 'inline-block';
+      listEl.innerHTML = html;
+      fallbackEl.style.display = 'none';
     })
     .catch(function() {
-      layoutEl.style.display = 'none';
-      fallbackEl.style.display = 'block';
+      // keep static fallback markup already in #art-list; nothing to do
     });
 })();
 </script>
