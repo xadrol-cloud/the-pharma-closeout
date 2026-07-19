@@ -319,10 +319,14 @@ check('S4-004', 'index.html S4 has a form/link whose action or href starts with 
   return { ok, found: ok ? undefined : 'no <form action="https://thepharmacloseout.substack.com/subscribe...> or matching <a href> found' };
 });
 
-check('S4-005', 'index.html footer contains "We never sell your identity"', () => {
-  if (indexHtml == null) return { ok: false, found: 'index.html does not exist' };
-  const ok = indexHtml.includes('We never sell your identity');
-  return { ok, found: ok ? undefined : 'trust line "We never sell your identity" not found' };
+check('S4-005', 'no "never sell your identity" line anywhere (removed per Bin 7/18 — premature pre-jobs; reintroduce at jobs Phase 2)', () => {
+  const pages = ['index.html','about.html','ai-research.html','deals.html','methodology.html','compare.html','acquirers.html','browse.html','hindsight.html','hype-gap.html'];
+  const hits = pages.filter(p => {
+    const abs = path.join(ROOT, p);
+    if (!fs.existsSync(abs)) return false;
+    return fs.readFileSync(abs, 'utf8').toLowerCase().includes('never sell your identity');
+  });
+  return { ok: hits.length === 0, found: hits.length ? `still present in: ${hits.join(', ')}` : undefined };
 });
 
 // ===========================================================================
