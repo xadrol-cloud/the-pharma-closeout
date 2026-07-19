@@ -1198,12 +1198,11 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     <div class="logo"><a href="index.html">The Pharma Closeout</a></div>
     <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><span></span></button>
     <ul class="nav-links">
-      <li><a href="index.html#podcast">Podcast</a></li>
-      <li><a href="index.html#articles">Articles</a></li>
-      <li><a href="ai-research.html" class="active">Research</a></li>
+      <li><a href="index.html#day">Podcast</a></li>
       <li><a href="deals.html">Deal Intelligence</a></li>
+      <li><a href="index.html#news">Newsletter</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="https://www.linkedin.com/company/the-pharma-closeout" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="https://thepharmacloseout.substack.com/subscribe" target="_blank" rel="noopener">Subscribe</a></li>
     </ul>
   </div>
 </nav>
@@ -1217,7 +1216,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   <p class="hero-tagline" style="max-width: 620px; margin-bottom: 1rem;">The operational intelligence your AI strategy is missing.</p>
   <p style="color: var(--gray-light); font-size: 0.82rem; letter-spacing: 0.03em; margin-bottom: 2rem;">169 pages. 63 use cases. Built by pharma operators, not consultants.</p>
   <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3.5rem;">
-    <a href="https://thepharmacloseout.gumroad.com/l/briefing" target="_blank" class="btn-primary" onclick="trackEvent('hero_cta_click', {cta: 'briefing'})">Get the Free Briefing &rarr;</a>
+    <a href="https://thepharmacloseout.substack.com/subscribe" target="_blank" rel="noopener" class="btn-primary" onclick="trackEvent('hero_newsletter_click', {cta: 'newsletter'})">Get it free with the newsletter &rarr;</a>
     <a href="#compendium" class="btn-secondary" onclick="trackEvent('hero_cta_click', {cta: 'compendium'})">Get the Full Compendium &mdash; $149</a>
   </div>
 
@@ -1424,10 +1423,11 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       </ul>
     </div>
     <div class="briefing-form">
-      <div class="briefing-form-title">Download the Briefing</div>
-      <div class="briefing-form-sub">Free PDF. Enter your email at checkout and download instantly.</div>
-      <a href="https://thepharmacloseout.gumroad.com/l/briefing?wanted=true" target="_blank" rel="noopener" class="form-submit gumroad-button" style="display: block; text-align: center; text-decoration: none;" onclick="trackEvent('briefing_click', {location: 'briefing_section'})">Get the Free Briefing &rarr;</a>
-      <p class="form-note">Powered by Gumroad. Your email is collected for delivery only.</p>
+      <div class="briefing-form-title">Get the Briefing</div>
+      <div class="briefing-form-sub">Free PDF. Delivered via the newsletter welcome email.</div>
+      <a href="https://thepharmacloseout.substack.com/subscribe" target="_blank" rel="noopener" class="form-submit" style="display: block; text-align: center; text-decoration: none;" onclick="trackEvent('newsletter_click', {location: 'briefing_section'})">Get it free with the newsletter &rarr;</a>
+      <p class="form-note" style="text-align: center; margin-top: 1rem;"><a href="https://thepharmacloseout.gumroad.com/l/briefing" target="_blank" rel="noopener" onclick="trackEvent('briefing_gumroad_click', {location: 'briefing_section'})" style="color: var(--gray); text-decoration: underline;">or direct download via Gumroad</a></p>
+      <p class="form-note">The report arrives via the newsletter welcome email. We never sell your identity.</p>
     </div>
   </div>
 </section>
@@ -1825,7 +1825,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- ── STICKY CTA BAR ── -->
 <div class="sticky-cta" id="stickyCta">
   <span class="sticky-cta-text"><span class="sticky-cta-text-full">Get the free 28-page AI in Pharma briefing</span><span class="sticky-cta-text-short">Free 28-page AI briefing</span></span>
-  <a href="https://thepharmacloseout.gumroad.com/l/briefing" target="_blank" rel="noopener" class="sticky-cta-btn" onclick="trackEvent('sticky_cta_click')">Download Free &rarr;</a>
+  <a href="https://thepharmacloseout.substack.com/subscribe" target="_blank" rel="noopener" class="sticky-cta-btn" onclick="trackEvent('sticky_newsletter_click')">Get it Free &rarr;</a>
   <button class="sticky-cta-close" onclick="document.getElementById('stickyCta').classList.add('dismissed')" aria-label="Dismiss"><span class="sticky-cta-close-icon" aria-hidden="true">&times;</span></button>
 </div>
 
