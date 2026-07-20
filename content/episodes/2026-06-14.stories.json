@@ -1,0 +1,271 @@
+[
+  {
+    "rank": 1,
+    "title": "Lilly Unveils JAK2 Inhibitor Data from $2.3B Ajax Deal",
+    "headline": "Eli Lilly presents Phase 1 data for AJ1-11095, a type II JAK2 inhibitor from $2.3B Ajax acquisition, showing 70% spleen volume reduction and 70% symptom response in pretreated myelofibrosis patients at EHA 2026.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "$2.3B Ajax Therapeutics deal; AJ1-11095 Phase 1 AJX-101 study (Abstract S218); 23 patients across 5 dose levels (25-125 mg daily); SVR35 70% (16/23 patients) vs. historical 0-32%; TSS50 70% week 12, 65% week 24; 59% had ≥20% VAF reduction by week 24, 35% had ≥50% reduction",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "AJ1-11095"
+    ],
+    "mentioned_companies": [
+      "Ajax Therapeutics",
+      "Incyte",
+      "Icahn School of Medicine at Mount Sinai",
+      "Memorial Sloan Kettering"
+    ],
+    "mentioned_drugs": [
+      "Jakafi"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "J&J Talvey + Darzalex Combo Dominates Myeloma Trial",
+    "headline": "Johnson & Johnson presents Phase 3 MonumenTAL-3 data showing Talvey plus Darzalex Faspro achieves 81.3% PFS vs. 51.2% standard of care in earlier-line relapsed/refractory multiple myeloma at EHA 2026.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "MonumenTAL-3 Phase 3 trial; Talvey (talquetamab-tgvs) + Darzalex Faspro (daratumumab and hyaluronidase-fihj); PFS 81.3% vs. 51.2% comparator; OS 89.2% vs. standard of care; ≥1 prior line population; J&J presented 30+ abstracts at EHA 2026",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Johnson & Johnson"
+    ],
+    "drugs": [
+      "Talvey",
+      "Darzalex Faspro"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [
+      "Imaavy"
+    ]
+  },
+  {
+    "rank": 3,
+    "title": "AbbVie Presents Venetoclax CLL Data at EHA 2026",
+    "headline": "AbbVie announces new Phase 3 fixed-duration venetoclax-based combination data at EHA 2026 Congress in Stockholm (CLL14 study context).",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Phase 3 fixed-duration venetoclax-based combination; CLL14 study; presented EHA 2026 June 11-14",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "AbbVie"
+    ],
+    "drugs": [
+      "venetoclax"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Kardigan Biotech Targets $373M IPO at $1.4B Valuation",
+    "headline": "Cardiovascular biotech Kardigan sets IPO terms for $373.3 million raise targeting $1.4 billion valuation with lead asset danicamtiv for genetic dilated cardiomyopathy.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$373.3M IPO proceeds; $1.4B valuation target; lead drug danicamtiv for genetic dilated cardiomyopathy; three-drug pipeline; 13th biotech IPO of 2026; terms set June 11",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Kardigan Biotech"
+    ],
+    "drugs": [
+      "danicamtiv"
+    ],
+    "mentioned_companies": [
+      "Parabilis Medicines"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Parabilis Sets Record $670M Biotech IPO",
+    "headline": "Parabilis Medicines prices record-setting $670 million biotech initial public offering, largest biotech IPO on record.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$670M IPO proceeds; largest biotech IPO on record",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Parabilis Medicines"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Camurus Receives FDA Complete Response Letter",
+    "headline": "Camurus receives CRL from FDA (June 14 breaking news; specific drug/indication not fully detailed).",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "FDA CRL issued June 14, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Camurus"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Jazz Pharma Zepzelca Phase 3 Lung Study Fails",
+    "headline": "Jazz Pharmaceuticals' Phase 3 confirmatory lung cancer study for Zepzelca fails.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "Phase 3 confirmatory trial failure",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Jazz Pharmaceuticals"
+    ],
+    "drugs": [
+      "Zepzelca"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Summit Therapeutics Withdraws $500M Share Offering",
+    "headline": "Summit Therapeutics pulls $500 million share offering one day after announcement citing market conditions; drug is PD-1/VEGF cancer combination.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "$500M share offering withdrawn; PD-1/VEGF cancer drug",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Summit Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Menarini/Stemline SENTRY Trial Data in Myelofibrosis",
+    "headline": "Menarini and Stemline present Phase 3 SENTRY trial data for selinexor plus ruxolitinib in myelofibrosis at EHA 2026.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "Phase 3 SENTRY trial; selinexor + ruxolitinib; myelofibrosis; presented EHA 2026",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Menarini",
+      "Stemline"
+    ],
+    "drugs": [
+      "selinexor",
+      "ruxolitinib"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Merck Welireg-Keytruda Approved for Kidney Cancer",
+    "headline": "FDA approves Merck's Welireg and Keytruda combination as adjuvant treatment for renal cell carcinoma.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "FDA approval; Welireg + Keytruda; kidney cancer adjuvant setting; approved June 12, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Merck"
+    ],
+    "drugs": [
+      "Welireg",
+      "Keytruda"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "GSK Acquires Nuvalent for $10.6B",
+    "headline": "GlaxoSmithKline completes $10.6 billion acquisition of Nuvalent, marking GSK's third major buyout since late January and the sector's second-largest deal of 2026.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$10.6B acquisition price; GSK's 3rd buyout since late January 2026; sector's 2nd-largest deal of 2026; GSK timed purchase around ASCO stock dip",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "GlaxoSmithKline",
+      "Nuvalent"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "Novo Nordisk Oral GLP-1 Gains UK Approval",
+    "headline": "Novo Nordisk's oral GLP-1 therapy (Wegovy) receives UK regulatory approval; new CEO Mike Doustdar discusses Big Pharma competitive positioning.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Oral Wegovy (semaglutide) UK approval; Novo Nordisk new CEO Mike Doustdar interview June 11",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Novo Nordisk"
+    ],
+    "drugs": [
+      "Wegovy"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "Shionogi Ensitrelvir PDUFA Decision Due June 16",
+    "headline": "Shionogi's ensitrelvir (Xocova), a COVID-19 antiviral, has FDA PDUFA decision date of June 16, 2026; major upcoming catalyst.",
+    "tier": 2,
+    "segment": "What to Watch",
+    "key_facts": "Shionogi ensitrelvir (Xocova); PDUFA date June 16, 2026; COVID-19 antiviral",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Shionogi"
+    ],
+    "drugs": [
+      "ensitrelvir",
+      "Xocova"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

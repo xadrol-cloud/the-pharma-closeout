@@ -1,0 +1,283 @@
+[
+  {
+    "rank": 1,
+    "title": "GSK AREXVY EXPANSION (RSV VACCINE)",
+    "headline": "GSK wins FDA approval to expand Arexvy RSV vaccine to at-risk adults ages 18-49, marking significant label broadening.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Product:** Arexvy (RSV vaccine)",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "GSK"
+    ],
+    "drugs": [
+      "Arexvy"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "CHINA CELL THERAPY FDA CLEARANCE",
+    "headline": "Shanghai-based Unixell receives FDA clearance to begin U.S. cell therapy trial, marking first for Chinese biotech in this category.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Unixell"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "LILLY GLP-1 COMPOUNDER WARNINGS (CONTINUATION)",
+    "headline": "Eli Lilly escalates warnings that compounded GLP-1 drugs may be \"dangerous,\" intensifying conflict with compounding pharmacies.",
+    "tier": 1,
+    "segment": "What to Watch",
+    "key_facts": "",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Zepbound",
+      "Mounjaro"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "PFIZER CEO COMPENSATION",
+    "headline": "Pfizer CEO Albert Bourla received $27.6 million in total 2025 compensation, up from $24.6 million in 2024.",
+    "tier": 2,
+    "segment": "What to Watch",
+    "key_facts": "Executive:** Albert Bourla, CEO; 2025 pay:** $27.6 million total compensation; 2024 pay:** $24.6 million (for comparison); Change:** +$3.0 million year-over-year (+12.2% increase)",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Pfizer"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "BAYER/ROCHE INDUSTRY CONDUCT DISPUTE",
+    "headline": "Bayer found to have \"discredited industry\" following dispute with Roche, according to industry body or regulatory finding.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Bayer"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Context: Described as \"Bayer/Roche row\""
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "GILEAD YEZTUGO PREP MANUFACTURING FOCUS",
+    "headline": "Gilead highlights manufacturing as key priority for Yeztugo (lenacapavir) PrEP rollout, per company executive.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Gilead Sciences"
+    ],
+    "drugs": [
+      "Yeztugo"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [
+      "Lenacapavir"
+    ]
+  },
+  {
+    "rank": 7,
+    "title": "2026 PATENT CLIFF PRESSURES",
+    "headline": "Major patent expirations push biopharma industry toward more challenging 2026 financial environment.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Timing:** 2026 patent expirations; Impact:** Industry financial pressures; Context:** Multiple products losing exclusivity simultaneously",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "HYLORIS ANTIVIRAL FDA REJECTION",
+    "headline": "FDA rejects Hyloris antiviral application due to manufacturing issues.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Hyloris"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "LAG-3 PHASE 3 FAILURE (CONTINUATION)",
+    "headline": "LAG-3 cancer immunotherapy pioneer fails in Phase 3 trial, adding to setbacks for once-promising target.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Target:** LAG-3 (lymphocyte-activation gene 3) checkpoint inhibitor; Stage:** Phase 3 failure; Context:** \"Pouring more cold water on a once-hot cancer target\"; Characterization:** Developer described as \"LAG-3 pioneer\"",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "ULTRAGENYX GENE THERAPY PHASE 3 SUCCESS (CONTINUATION)",
+    "headline": "Ultragenyx gene therapy hits primary endpoint in Phase 3 trial for blood ammonia disease (urea cycle disorder).",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Ultragenyx"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "PFIZER CLOSES IGNITE R&D UNIT",
+    "headline": "Pfizer shuts down Ignite, its R&D services unit created to support small biotech companies.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Pfizer"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "Y-MABS TRIAL TERMINATION",
+    "headline": "Y-mAbs terminates radiopharmaceutical clinical trial.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Y-mAbs"
+    ],
+    "drugs": [
+      "Arexvy"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "NOVARTIS COSENTYX PEDIATRIC HS APPROVAL",
+    "headline": "Novartis receives FDA approval for Cosentyx in pediatric patients aged 12+ with moderate to severe hidradenitis suppurativa.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Novartis"
+    ],
+    "drugs": [
+      "Cosentyx"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 14,
+    "title": "LILLY CHINA $3 BILLION EXPANSION (CONTINUATION)",
+    "headline": "Eli Lilly announces $3 billion production expansion in China focused on oral solid dosage manufacturing.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Orforglipron"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 15,
+    "title": "ORPHAN DRUG MARKET PROJECTION",
+    "headline": "Orphan drug sales projected to exceed $400 billion by 2032, per industry report.",
+    "tier": 4,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Market size:** >$400 billion in orphan drug sales; Timeframe:** By 2032; Growth driver:** Report projects \"surge\"; Segment:** Orphan/rare disease drugs",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

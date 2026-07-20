@@ -1,0 +1,360 @@
+[
+  {
+    "rank": 1,
+    "title": "Akeso/Summit Ivonescimab Shows 34% OS Improvement in Lung Cancer",
+    "headline": "Akeso's bispecific antibody ivonescimab plus chemotherapy delivered a 34% improvement in overall survival in the Harmoni-6 trial in China, exceeding expectations but drawing scrutiny on detailed data.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "34% overall survival improvement; Harmoni-6 trial; China-based lung cancer study; ivonescimab (PD-1/VEGF bispecific) plus chemotherapy",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Akeso",
+      "Summit Therapeutics"
+    ],
+    "drugs": [
+      "ivonescimab"
+    ],
+    "mentioned_companies": [
+      "Merck"
+    ],
+    "mentioned_drugs": [
+      "Keytruda"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "Revolution Medicines Pancreatic Cancer Data Called 'Unprecedented'",
+    "headline": "Revolution Medicines presented ASCO data in pancreatic cancer described as 'unprecedented' and pointing to a paradigm shift in a historically intractable tumor type.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "ASCO 2026 presentation; pancreatic cancer; described as 'unprecedented' breakthrough; RAS-targeting therapy; competing against other RAS inhibitor programs",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Revolution Medicines"
+    ],
+    "drugs": [
+      "RAS inhibitor (unspecified)"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Pfizer-Innovent $10.5B China Cancer Drug Partnership",
+    "headline": "Pfizer and Innovent Biologics struck a deal worth up to $10.5 billion covering up to 12 antibody cancer drug programs in the latest mega-deal for China-originated assets.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$10.5 billion deal value; up to 12 antibody cancer programs; announced May 28, 2026; sixth China-originated drug partnership since July 2025 worth $8B+ total",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Pfizer",
+      "Innovent Biologics"
+    ],
+    "drugs": [
+      "Multiple antibody cancer therapeutics (unspecified)"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Merck Positions 'Cornerstone' Cancer Drug at ASCO",
+    "headline": "At ASCO 2026, Merck makes the case for what it calls a 'cornerstone' cancer drug with new clinical positioning data.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "ASCO 2026 presentation; described as 'cornerstone' cancer therapy; specific drug name and data not accessible",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Merck"
+    ],
+    "drugs": [
+      "Unspecified cancer drug"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Lilly Retevmo Expansion Into 'Final Chapter' at ASCO",
+    "headline": "Eli Lilly presents ASCO data teeing up expansion for Retevmo (selpercatinib), its RET inhibitor, described as the drug's 'final chapter' of label expansion.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "ASCO 2026 presentation; Retevmo (selpercatinib) RET inhibitor; label expansion data; RET-targeted cancer therapy",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Retevmo",
+      "selpercatinib"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "J&J Erleada vs. Pfizer in Prostate Cancer One-Upmanship",
+    "headline": "J&J positions Erleada (apalutamide) to shake up prostate cancer care at ASCO, but Pfizer presented data that 'one-ups J&J' in the same therapeutic space.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "ASCO 2026 presentations; J&J Erleada (apalutamide) May 31 data; Pfizer prostate cancer data May 30; competitive positioning in prostate cancer",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Johnson & Johnson",
+      "Pfizer"
+    ],
+    "drugs": [
+      "Erleada",
+      "apalutamide"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Incyte Monjuvi Combo for First-Line DLBCL Expansion",
+    "headline": "Incyte presents ASCO data positioning its Monjuvi (tafasitamab) combination for first-line diffuse large B-cell lymphoma, expanding from relapsed/refractory indication.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "ASCO 2026 presentation; Monjuvi (tafasitamab); first-line DLBCL indication; label expansion from relapsed/refractory setting",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Incyte"
+    ],
+    "drugs": [
+      "Monjuvi",
+      "tafasitamab"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "BMS Unveils Next-Generation Blood Cancer Drug Data",
+    "headline": "Bristol Myers Squibb unveils data for one of its next-generation blood cancer drugs at ASCO 2026.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "ASCO 2026 presentation; next-generation blood cancer therapeutic; specific drug name and data not accessible",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Bristol Myers Squibb"
+    ],
+    "drugs": [
+      "Unspecified blood cancer drug"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "GSK/Ionis Bepirovirsen Called 'Historic' Functional Cure for HBV",
+    "headline": "GSK and Ionis' bepirovirsen data for hepatitis B is called a 'historic moment' and 'functional cure' with clear blockbuster potential by analysts.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Bepirovirsen hepatitis B therapy; described as 'functional cure'; 'historic moment' designation; blockbuster potential forecast",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "GlaxoSmithKline",
+      "Ionis Pharmaceuticals"
+    ],
+    "drugs": [
+      "bepirovirsen"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Replimune Takes Third FDA Approval Attempt for Oncolytic Therapy",
+    "headline": "Replimune takes a third swing at gaining FDA approval for its oncolytic immunotherapy following 'productive' FDA interactions.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Third FDA approval attempt; oncolytic immunotherapy; 'productive' pre-submission meetings with FDA",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Replimune"
+    ],
+    "drugs": [
+      "Oncolytic immunotherapy (unspecified)"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "MannKind Afrezza FDA Approval for Pediatric Expansion",
+    "headline": "FDA signs off on pediatric expansion for MannKind's Afrezza, extending the inhaled insulin therapy to younger patients.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Afrezza (inhaled insulin); pediatric indication approval; May 29, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "MannKind"
+    ],
+    "drugs": [
+      "Afrezza"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "Tremfya, Venclyxto Secure Label Expansions",
+    "headline": "Tremfya and Venclyxto receive FDA label expansions, broadening their approved indications.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Tremfya label expansion; Venclyxto label expansion; May 29, 2026; specific indications not detailed",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Janssen",
+      "AbbVie"
+    ],
+    "drugs": [
+      "Tremfya",
+      "Venclyxto"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "Lilly Acquires Three Vaccine Biotechs for Up to $3.8B",
+    "headline": "Eli Lilly announced acquisition of three vaccine biotechs for up to $3.8 billion total to expand its vaccine pipeline.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Up to $3.8 billion acquisition value; three vaccine biotechs; announced May 26, 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Vaccine programs (unspecified)"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 14,
+    "title": "CVS Obesity Drug Deal Puts Lilly on Par with Novo Nordisk",
+    "headline": "CVS obesity drug deal restores Lilly Zepbound coverage and advances Foundayo pill, putting Lilly on equal footing with Novo Nordisk in obesity market.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "CVS partnership; Lilly Foundayo (tirzepatide oral); Zepbound coverage restoration; competitive parity with Novo Nordisk obesity portfolio",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Eli Lilly",
+      "CVS Health"
+    ],
+    "drugs": [
+      "Foundayo",
+      "Zepbound",
+      "tirzepatide"
+    ],
+    "mentioned_companies": [
+      "Novo Nordisk"
+    ],
+    "mentioned_drugs": [
+      "semaglutide"
+    ]
+  },
+  {
+    "rank": 15,
+    "title": "Allogene CEO David Chang Steps Down After 8 Years",
+    "headline": "David Chang, CEO of Allogene Therapeutics, is stepping down after eight years leading the CAR-T cell therapy company.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "CEO David Chang resignation; 8-year tenure; Allogene Therapeutics",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Allogene Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 16,
+    "title": "Agios Drug Fails Key Clinical Test",
+    "headline": "Agios Pharmaceuticals' drug program fails a key clinical trial endpoint, impacting pipeline progress.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Clinical trial failure; specific drug and indication not specified",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Agios Pharmaceuticals"
+    ],
+    "drugs": [
+      "Unspecified drug program"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 17,
+    "title": "Experts: Grail Cancer Blood Test Still Not Ready for Broad Use",
+    "headline": "Experts say Grail's Galleri cancer detection blood test is still not ready for widespread clinical adoption despite technological promise.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "Grail Galleri blood test; expert consensus on premature widespread adoption; May 30, 2026",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Grail"
+    ],
+    "drugs": [
+      "Galleri"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

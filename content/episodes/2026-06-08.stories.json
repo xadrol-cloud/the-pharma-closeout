@@ -1,0 +1,318 @@
+[
+  {
+    "rank": 1,
+    "title": "Eli Lilly Retatrutide Dominates ADA 2026",
+    "headline": "Lilly's triple-agonist retatrutide delivered 28.3% average weight loss at 80 weeks in pivotal Phase 3 TRIUMPH-1, with 45.3% achieving ≥30% weight loss and comorbidity improvements in OSA, knee OA, and diabetes.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "TRIUMPH-1: 70.3 lbs (28.3%) weight loss over 80 weeks; 45.3% achieved ≥30% weight loss; 30.3% average weight loss at 104 weeks; TRANSCEND-T2D-1 showed significant A1C reductions; Lilly stock ~2.5% higher; market cap exceeds $1 trillion",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "retatrutide"
+    ],
+    "mentioned_companies": [
+      "Pfizer",
+      "Roche"
+    ],
+    "mentioned_drugs": [
+      "tirzepatide",
+      "Zepbound",
+      "semaglutide",
+      "Wegovy"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "Zealand Pharma Crashes 23% on Survodutide Safety",
+    "headline": "Zealand Pharma (ZLDPF) plunged ~23% on June 8 after Phase 3 SYNCHRONIZE-1 data showed 19% discontinuation rate due to GI side effects, with >40% reporting vomiting.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Stock drop: ~23% on June 8; Phase 3 SYNCHRONIZE-1: 16.6% sustained weight loss; 19% discontinued due to GI adverse events; >40% reported vomiting; >84% achieved ≥30% relative reduction in liver fat; 76-week trial",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Zealand Pharma"
+    ],
+    "drugs": [
+      "survodutide"
+    ],
+    "mentioned_companies": [
+      "Boehringer Ingelheim",
+      "Eli Lilly",
+      "Novo Nordisk"
+    ],
+    "mentioned_drugs": [
+      "tirzepatide",
+      "semaglutide",
+      "Wegovy"
+    ]
+  },
+  {
+    "rank": 3,
+    "title": "Incyte Acquires Vega Therapeutics for $2B",
+    "headline": "Incyte (INCY) will acquire Vega Therapeutics for $1.25 billion upfront, up to $2 billion total, expanding into bleeding disorders ahead of Jakafi patent cliff.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$1.25 billion upfront; up to $2 billion total with milestones; expected R&D charge ~$1.25 billion in Q3 2026; close expected Q3 2026; pending HSR review",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Incyte"
+    ],
+    "drugs": [
+      "ruxolitinib"
+    ],
+    "mentioned_companies": [
+      "Vega Therapeutics",
+      "Star Therapeutics",
+      "Takeda"
+    ],
+    "mentioned_drugs": [
+      "Jakafi"
+    ]
+  },
+  {
+    "rank": 4,
+    "title": "J&J Acquires Firefly Bio for $1 Billion",
+    "headline": "Johnson & Johnson will acquire Firefly Bio for $1 billion, gaining degrader antibody drugs targeting KRAS-driven cancers founded on Nobel laureate Carolyn Bertozzi's chemistry.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Deal value: $1 billion; degrader antibody technology targeting KRAS; founded on Carolyn Bertozzi's chemistry",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Johnson & Johnson"
+    ],
+    "drugs": [
+      "degrader antibody drugs"
+    ],
+    "mentioned_companies": [
+      "Firefly Bio"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Roche Collaborates with Nurix on BTK Degrader",
+    "headline": "Roche stakes $700 million upfront on collaboration with Nurix Therapeutics for a BTK protein-degrading drug, worth up to $2.3 billion total.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$700 million upfront; up to $2.3 billion total value; BTK protein-degrading drug technology",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Roche"
+    ],
+    "drugs": [
+      "BTK degrader"
+    ],
+    "mentioned_companies": [
+      "Nurix Therapeutics"
+    ],
+    "mentioned_drugs": [
+      "ibrutinib",
+      "acalabrutinib"
+    ]
+  },
+  {
+    "rank": 6,
+    "title": "AstraZeneca Obesity Pill Matches Rivals",
+    "headline": "AstraZeneca's oral obesity candidate matched injectable rivals in Phase 2 data, anchoring a projected $5 billion franchise push.",
+    "tier": 2,
+    "segment": "Pipeline Roundup",
+    "key_facts": "Phase 2 data reported June 8; projected $5 billion franchise; oral delivery differentiator",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "AstraZeneca"
+    ],
+    "drugs": [
+      "oral obesity candidate"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Lilly Foundayo Oral Tirzepatide Advances",
+    "headline": "Lilly's Foundayo (oral tirzepatide) padded case against semaglutide in diabetes at ADA; oral Wegovy hits 3 million prescription milestone.",
+    "tier": 3,
+    "segment": "Pipeline Roundup",
+    "key_facts": "Oral Wegovy: 3 million prescription milestone; data presented at ADA",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Foundayo",
+      "tirzepatide"
+    ],
+    "mentioned_companies": [
+      "Novo Nordisk"
+    ],
+    "mentioned_drugs": [
+      "semaglutide",
+      "Wegovy"
+    ]
+  },
+  {
+    "rank": 8,
+    "title": "Novo Nordisk Triple-G Launch Targeted for 2030",
+    "headline": "Novo Nordisk targets 2030 launch for its own triple-G obesity shot, positioning a competitive response to Lilly's retatrutide dominance.",
+    "tier": 3,
+    "segment": "Pipeline Roundup",
+    "key_facts": "2030 launch target; triple-GLP-1/GIP/glucagon agonist",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Novo Nordisk"
+    ],
+    "drugs": [
+      "triple-G obesity shot"
+    ],
+    "mentioned_companies": [
+      "Eli Lilly"
+    ],
+    "mentioned_drugs": [
+      "retatrutide"
+    ]
+  },
+  {
+    "rank": 9,
+    "title": "City Therapeutics Raises $99M for RNAi",
+    "headline": "City Therapeutics raised ~$99 million for next-generation RNAi drug development.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Funding: ~$99 million; focus: next-generation RNAi drugs",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "City Therapeutics"
+    ],
+    "drugs": [
+      "RNAi drugs"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "GSK Partners with Engitix on Liver Disease",
+    "headline": "GSK announced multi-target liver disease pact with Engitix.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Multi-target liver disease collaboration",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "GSK"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Engitix"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "Tango Therapeutics Advances Pancreatic Cancer",
+    "headline": "Tango Therapeutics plans Phase 3 pancreatic cancer study after successful combination therapy results.",
+    "tier": 3,
+    "segment": "Pipeline Roundup",
+    "key_facts": "Phase 3 pancreatic cancer study planned; combination therapy success",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Tango Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "FDA Approves Pfizer Hemophilia Pediatric Use",
+    "headline": "FDA signed off on pediatric use of Pfizer's hemophilia treatment.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Pediatric approval; hemophilia treatment",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Pfizer"
+    ],
+    "drugs": [
+      "hemophilia treatment"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "House Targets China Biotech Deals",
+    "headline": "House bill aims to crack down on China biotech deals, following Pfizer/Innovent $10.5B deal and BMS partnerships; added to COINS Act.",
+    "tier": 4,
+    "segment": "Regulatory Watch",
+    "key_facts": "Pfizer/Innovent deal: $10.5 billion; BMS partnerships referenced; added to COINS Act",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": true,
+    "companies": [
+      "Pfizer"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Innovent",
+      "Bristol Myers Squibb"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 14,
+    "title": "Parabilis Medicines Files $413M IPO",
+    "headline": "Parabilis Medicines filed for $413 million IPO.",
+    "tier": 4,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "IPO filing: $413 million",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Parabilis Medicines"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

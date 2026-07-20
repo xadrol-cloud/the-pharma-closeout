@@ -1,0 +1,212 @@
+[
+  {
+    "rank": 1,
+    "title": "FDA Approves Orca Bio's Tregzi Cell Therapy",
+    "headline": "FDA approves Orca Bio's allogeneic regulatory T cell therapy Tregzi for improving survival free of chronic graft-versus-host disease in adult hematological malignancy stem cell transplants.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "FDA approval July 1, 2026; first-in-class Treg-based immunotherapy for chronic GVHD in stem cell transplants; Orca Bio currently private",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Orca Bio"
+    ],
+    "drugs": [
+      "Tregzi",
+      "Orca-T"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [
+      "CAR-T"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "Merck Terminates MK-1167 Alzheimer's Phase 2",
+    "headline": "Merck halts development of oral Alzheimer's drug MK-1167 from partner Neuphoria Therapeutics after Phase 2 interim analysis missed efficacy criteria, with MRK stock down 2.44% and NEUP down 18.76%.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Phase 2 termination July 1, 2026; MK-1167 oral small molecule; MRK -2.44%, NEUP -18.76%; partner Neuphoria Therapeutics",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Merck"
+    ],
+    "drugs": [
+      "MK-1167"
+    ],
+    "mentioned_companies": [
+      "Neuphoria Therapeutics"
+    ],
+    "mentioned_drugs": [
+      "verubecestat"
+    ]
+  },
+  {
+    "rank": 3,
+    "title": "BridgeBio Secures $1B from Sixth Street & KKR",
+    "headline": "BridgeBio Pharma secures up to $1 billion in non-dilutive financing from Sixth Street and KKR to support three upcoming drug launches.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$1 billion financing; investors Sixth Street and KKR; three upcoming drug launches; announced July 1, 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "BridgeBio Pharma"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Sixth Street",
+      "KKR"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Ipsen Acquires Memo Therapeutics for $800M",
+    "headline": "Ipsen announces acquisition of Swiss biotech Memo Therapeutics, focused on kidney infection therapeutics, for up to $800 million.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$800 million deal value; Memo Therapeutics target; kidney infection focus; second Ipsen deal in days (Kartos $1.75B on June 30); total ~$2.55B potential deal value",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Ipsen"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Memo Therapeutics",
+      "Kartos"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "FDA Warning for Sanofi Genzyme Altuviiio Plant",
+    "headline": "FDA issues warning to Sanofi's Genzyme manufacturing facility in Ireland over quality concerns related to Altuviiio hemophilia A factor VIII therapy production.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "FDA warning July 1, 2026; Genzyme Irish facility; Altuviiio (hemophilia A factor VIII replacement); quality issues identified",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Sanofi"
+    ],
+    "drugs": [
+      "Altuviiio"
+    ],
+    "mentioned_companies": [
+      "Genzyme"
+    ],
+    "mentioned_drugs": [
+      "fitusisan",
+      "emicizumab"
+    ]
+  },
+  {
+    "rank": 6,
+    "title": "Senior FDA Gene/Cell Therapy Regulator Departs",
+    "headline": "Vijay Kumar, top FDA official overseeing gene and cell therapy regulation, announces departure, following earlier exit of CBER chief Peter Marks.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Vijay Kumar stepping down; senior FDA gene and cell therapy regulator; follows Peter Marks CBER departure; regulatory continuity concerns raised",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "FDA"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Lonza Expands ADC Manufacturing Capacity",
+    "headline": "Lonza announces antibody-drug conjugate manufacturing capacity expansion and broadened collaboration with unnamed U.S. drugmaker.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "ADC capacity expansion; U.S. drugmaker partnership broadening; announced July 1, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Lonza"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": [
+      "Enhertu",
+      "Padcev"
+    ]
+  },
+  {
+    "rank": 8,
+    "title": "WuXi AppTec Seeks Injunction on China Military List",
+    "headline": "WuXi AppTec pursues legal injunction after placement on China military-related list triggers customer relationship suspensions.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "WuXi AppTec legal injunction filed; China military list designation; customers suspending relationships; U.S.-China biotech decoupling ongoing",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "WuXi AppTec"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Guardant Health Gains 13.82% on Cancer Screening News",
+    "headline": "Guardant Health stock up 13.82% on multi-cancer blood screening development progress.",
+    "tier": 4,
+    "segment": "What to Watch",
+    "key_facts": "GH +13.82% July 1, 2026; multi-cancer blood screening; Breakthrough Device Designation timing unclear",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Guardant Health"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Enhertu PDUFA Decision Due July 7",
+    "headline": "AstraZeneca/Daiichi Sankyo Enhertu faces FDA PDUFA decision July 7, 2026 for post-neoadjuvant HER2-positive early breast cancer expansion.",
+    "tier": 4,
+    "segment": "What to Watch",
+    "key_facts": "PDUFA date July 7, 2026; HER2-positive early breast cancer post-neoadjuvant indication; AstraZeneca/Daiichi Sankyo",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "AstraZeneca",
+      "Daiichi Sankyo"
+    ],
+    "drugs": [
+      "Enhertu"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

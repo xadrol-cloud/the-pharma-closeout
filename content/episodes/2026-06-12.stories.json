@@ -1,0 +1,168 @@
+[
+  {
+    "rank": 1,
+    "title": "FDA Approves Merck's Welireg-Keytruda Combo as Adjuvant Treatment for Kidney Can",
+    "headline": "Pharma news story",
+    "tier": 1,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "FDA approved Merck's combination of Welireg (belzutifan) + Keytruda (pembrolizumab) as adjuvant treatment for kidney cancer. Approval announced June 12, 2026.",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Merck",
+      "Welireg"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "Jazz Pharma's Zepzelca Fails Confirmatory Phase 3 Lung Cancer Study",
+    "headline": "Pharma news story",
+    "tier": 1,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "Zepzelca (lurbinectedin) failed its confirmatory Phase 3 study in lung cancer. Endpoints describes it as \"Zepzelca saga takes another turn with ph. 3 lung cancer flop.\" FiercePharma timestamp: Jun 12, 2026, 10:48am.",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Jazz Pharmaceuticals",
+      "Zepzelca"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Enliven Therapeutics Prices $400M Public Offering",
+    "headline": "Pharma news story",
+    "tier": 4,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "Enliven Therapeutics priced a $400 million public offering. Reported alongside Zepzelca failure in Endpoints News Briefing (Jun 12).",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": true,
+    "companies": [
+      "Enliven Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Amgen to File Third-Party Review of Tavneos Data for FDA Hearing",
+    "headline": "Pharma news story",
+    "tier": 1,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "Amgen plans to file a third-party review of Tavneos (avacopan) data ahead of an FDA advisory committee hearing. Timestamp: Jun 12, 2026, 11:12am.",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Amgen (AMGN",
+      "+0.32% on day)"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Novo Nordisk's Oral GLP-1 (Oral Wegovy/Semaglutide) Picks Up UK Approval",
+    "headline": "Pharma news story",
+    "tier": 1,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "Novo Nordisk's oral GLP-1 received UK regulatory approval. FiercePharma Regulatory Tracker: Jun 12, 2026, 9:50am. Separate FiercePharma tracker headline: \"Novo's Wegovy keeps gaining ground\" (Jun 12, 2:30pm).",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Novo Nordisk",
+      "oral semaglutide"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "CMS Proposal to Lock in Medicare Drug Price Negotiations",
+    "headline": "Pharma news story",
+    "tier": 1,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "CMS proposed a rule that would \"lock in\" Medicare drug price negotiations. Fierce Healthcare timestamp: Jun 12, 2026, 5:50pm.",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "CMS",
+      "HHS"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "WuXi AppTec Sues Pentagon Over Chinese Military List Inclusion",
+    "headline": "Pharma news story",
+    "tier": 3,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "WuXi AppTec filed a lawsuit against the Pentagon challenging its inclusion on a list of Chinese military-linked companies. Reported 11 hours before Endpoints page fetch.",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "WuXi AppTec"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Incyte Agrees to Acquire Vega Therapeutics for $1.25 Billion",
+    "headline": "Pharma news story",
+    "tier": 4,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": true,
+    "key_facts": "Incyte agreed to acquire Vega Therapeutics (a subsidiary of Star Therapeutics) for $1.25 billion.",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Incyte",
+      "Vega Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

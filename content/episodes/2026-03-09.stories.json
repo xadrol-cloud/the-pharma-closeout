@@ -1,0 +1,230 @@
+[
+  {
+    "rank": 1,
+    "title": "NOVO NORDISK / HIMS & HERS GLP-1 PARTNERSHIP",
+    "headline": "Novo Nordisk and Hims & Hers end legal dispute, agree to sell branded GLP-1 drugs together through telehealth platform.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "Partnership announced March 9, 2026; Deal resolves prior conflict over compounded GLP-1 medications; Hims & Hers agrees to \"limit compounding\" as part of settlement; Will now distribute Novo's *branded* GLP-1 drugs (likely Ozempic/Wegovy) via telehealth; No financial terms disclosed",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Novo Nordisk",
+      "Hims & Hers"
+    ],
+    "drugs": [
+      "Ozempic",
+      "Wegovy"
+    ],
+    "mentioned_companies": [
+      "GLP-1 class drugs"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "FDA EXPANDS BMS SOTYKTU LABEL TO PSORIATIC ARTHRITIS",
+    "headline": "Bristol Myers Squibb's Sotyktu (deucravacitinib) wins FDA approval for psoriatic arthritis indication.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "FDA approval announced March 9, 2026, 11:16am; Drug name: Sotyktu (deucravacitinib); New indication: psoriatic arthritis (PsA); Original approval: psoriasis; This was a **tracked PDUFA date from March 6 episode** (outcome confirmed)",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Bristol Myers Squibb",
+      "Sotyktu  - TYK2 inhibitor"
+    ],
+    "drugs": [
+      "SOTYKTU"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [
+      "Deucravacitinib"
+    ]
+  },
+  {
+    "rank": 3,
+    "title": "BRISTOL MYERS CELMOD BLOOD CANCER SUCCESS",
+    "headline": "Bristol Myers claims Phase 3 success for second-generation CELMoD drug in blood cancer.",
+    "tier": 1,
+    "segment": "What to Watch",
+    "key_facts": "Phase 3 study met primary endpoint (announced March 9); Drug class: CELMoD (cereblon E3 ligase modulator) - next-generation after lenalidomide/revlimid; Indication: blood cancer (likely multiple myeloma based on context); No specific efficacy data disclosed yet; Second CELMoD success for BMS (follow",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Bristol Myers Squibb",
+      "CELMoD class"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "INCYTE RECEIVES FDA CRL DUE TO NOVO INDIANA FACILITY",
+    "headline": "Incyte becomes third company to receive Complete Response Letter over manufacturing issues at Novo Nordisk's Indiana fill-finish plant.",
+    "tier": 1,
+    "segment": "What to Watch",
+    "key_facts": "CRL (Complete Response Letter) issued by FDA March 9, 2026; Issue: manufacturing problems at **Novo Nordisk's Indiana facility**; Incyte drug affected: PD-1 inhibitor (checkpoint inhibitor, oncology); Third company impacted by same facility issues (other two not named in summaries); Not related to d",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Incyte",
+      "Novo Nordisk"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "PD-1 checkpoint inhibitor"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "IPSEN WITHDRAWS TAZVERIK CANCER DRUG",
+    "headline": "Ipsen to withdraw Tazverik from market due to secondary malignancy safety signals in confirmatory study.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Voluntary market withdrawal announced March 9, 2026; Drug: Tazverik (tazemetostat) - EZH2 inhibitor; Safety issue: **secondary malignancies** (new cancers) detected in post-approval confirmatory study; Tazverik acquired via Ipsen's purchase of **Epizyme** (prior acquisition); Indication: epithelioid",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": true,
+    "companies": [
+      "Ipsen",
+      "Tazverik/tazemetostat"
+    ],
+    "drugs": [
+      "TAZVERIK"
+    ],
+    "mentioned_companies": [
+      "Epizyme"
+    ],
+    "mentioned_drugs": [
+      "Tazemetostat"
+    ]
+  },
+  {
+    "rank": 6,
+    "title": "XENON PHASE 3 WIN IN EPILEPSY",
+    "headline": "Xenon Pharmaceuticals achieves Phase 3 success with epilepsy drug, fueling blockbuster hopes for first commercial launch.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Phase 3 study met primary endpoint (announced March 9); Indication: epilepsy; First product launch anticipated for Xenon; Analysts citing \"blockbuster hopes\" (>$1B annual revenue potential implied); No specific efficacy data disclosed",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Xenon Pharmaceuticals",
+      "Epilepsy drug candidate"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "UNIVERSAL HEALTH SERVICES ACQUIRES TALKSPACE FOR $835M",
+    "headline": "Universal Health Services (UHS) acquires telehealth mental health platform Talkspace for $835 million.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Deal value: **$835 million**; Buyer: Universal Health Services (UHS) - major hospital/facilities operator; Target: Talkspace - digital mental health/teletherapy platform; Deal announced March 9, 2026; Talkspace claims \"1.2 million members\" per separate reference",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Universal Health Services",
+      "Talkspace"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "MINERALYS THERAPEUTICS NDA ACCEPTED, OSA TRIAL DATA",
+    "headline": "FDA accepts Mineralys NDA for lorundrostat in hypertension; PDUFA date December 22, 2026; separate obstructive sleep apnea trial reports topline results.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "NDA acceptance announced March 9, 2026, 4:30pm ET; Drug: lorundrostat; Indication: hypertension in adults; PDUFA target action date: December 22, 2026**; Separate trial: Explore-OSA (obstructive sleep apnea) - topline results released (no efficacy details in summary); Mechanism: aldosterone synthase",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Mineralys Therapeutics"
+    ],
+    "drugs": [
+      "Lorundrostat"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "TELIX PROSTATE CANCER PHASE 3 SUCCESS",
+    "headline": "Telix Pharmaceuticals' ProstACT Global Phase 3 study (Part 1) achieves primary objectives in prostate cancer.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Study name: ProstACT Global Phase 3 (Part 1); Primary objectives: **achieved**; Indication: prostate cancer (likely radiopharmaceutical therapy based on Telix's portfolio); Conference call held March 10, 9:30am AEDT (March 9, 6:30pm EDT); No specific efficacy metrics disclosed",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Telix Pharmaceuticals Limited",
+      "ProstACT study drug"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "DIANTHUS $400M PUBLIC OFFERING",
+    "headline": "Dianthus Therapeutics announces proposed $400 million underwritten public offering.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Offering size: **$400 million** (proposed); Type: underwritten public offering; Announced March 9, 4:01pm ET; Nasdaq ticker: DNTH",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Dianthus Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "ELI LILLY CEO 2025 COMPENSATION",
+    "headline": "Eli Lilly CEO David Ricks received $36.7 million pay package for 2025.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Executive: David Ricks, CEO; Compensation: **$36.7 million** total for 2025; Disclosed March 9, 3:20pm; Lilly ticker: LLY currently trading at $1,008.39 (up 1.82% on day per Yahoo Finance); Lilly YTD 2026 performance: **-6.17%** (Yahoo Finance data)",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Mounjaro",
+      "Zepbound"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

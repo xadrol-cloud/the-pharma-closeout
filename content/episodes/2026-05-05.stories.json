@@ -1,0 +1,334 @@
+[
+  {
+    "rank": 1,
+    "title": "Cytokinetics' Myqorzo Succeeds in Non-Obstructive HCM Trial",
+    "headline": "Cytokinetics' Myqorzo scores in non-obstructive hypertrophic cardiomyopathy trial, opening multibillion-dollar market opportunity where BMS Camzyos lacks data.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Non-obstructive HCM patient population; multibillion-dollar market opportunity; differentiates from Camzyos",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Cytokinetics"
+    ],
+    "drugs": [
+      "Myqorzo"
+    ],
+    "mentioned_companies": [
+      "Bristol Myers Squibb"
+    ],
+    "mentioned_drugs": [
+      "Camzyos"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "Pfizer Scraps Final Trillium CD47 Program — $2.3B Failure",
+    "headline": "Pfizer abandons second and final clinical-stage CD47 blocker from its $2.3 billion Trillium Therapeutics acquisition, marking complete write-off.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "$2.3 billion acquisition price; both clinical-stage CD47 blockers scrapped; CD47 target failing across multiple companies",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Pfizer"
+    ],
+    "drugs": [
+      "CD47 blocker"
+    ],
+    "mentioned_companies": [
+      "Trillium Therapeutics"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Pfizer Q1 Earnings Beat; Bourla Rules Out Mega-Mergers",
+    "headline": "Pfizer beats Q1 earnings and revenue estimates with stock up 2.2%; CEO Bourla explicitly rules out mega-merger strategy.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "Stock up 2.2%; beat Q1 earnings and revenue forecasts; reaffirmed 2026 guidance; COVID franchise supporting guidance",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Pfizer"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Madrigal Boosts MASH Pipeline with $1B Arrowhead Deal",
+    "headline": "Madrigal licenses Arrowhead drug J&J declined in deal worth up to $1 billion in biobucks to expand MASH pipeline.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Up to $1 billion in biobucks; asset previously declined by J&J; Madrigal maker of Rezdiffra (first approved MASH drug)",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Madrigal Pharmaceuticals"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Arrowhead Pharmaceuticals",
+      "Johnson & Johnson"
+    ],
+    "mentioned_drugs": [
+      "Rezdiffra"
+    ]
+  },
+  {
+    "rank": 5,
+    "title": "BioNTech Exits Multiple Sites; 1,800+ Jobs Impacted",
+    "headline": "BioNTech announces manufacturing scale-down and site exits impacting over 1,800 jobs amid post-COVID rightsizing.",
+    "tier": 2,
+    "segment": "Under the Radar",
+    "key_facts": "1,800+ jobs impacted; multiple site exits; manufacturing scale-down; pivot toward oncology pipeline",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "BioNTech"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Intercept's Next-Gen FXR Agonist Fails Phase 2",
+    "headline": "Intercept Pharmaceuticals' next-generation FXR agonist fails Phase 2, deepening competitive disadvantage versus Madrigal in MASH.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Phase 2 failure; FXR agonist class (same mechanism as ocaliva/OCA); Italian-owned (Alfasigma)",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Intercept Pharmaceuticals"
+    ],
+    "drugs": [
+      "FXR agonist"
+    ],
+    "mentioned_companies": [
+      "Alfasigma",
+      "Madrigal Pharmaceuticals"
+    ],
+    "mentioned_drugs": [
+      "ocaliva",
+      "OCA"
+    ]
+  },
+  {
+    "rank": 7,
+    "title": "Viridian's TED Drug Racks Up Another Phase 3 Win",
+    "headline": "Viridian Therapeutics' thyroid eye disease candidate scores another Phase 3 victory, building case against Horizon/Amgen's Tepezza.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Another Phase 3 win; competing against Tepezza (~$2B+ franchise); multiple Phase 3 wins strengthening positioning",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Viridian Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Horizon Therapeutics",
+      "Amgen"
+    ],
+    "mentioned_drugs": [
+      "Tepezza"
+    ]
+  },
+  {
+    "rank": 8,
+    "title": "Axsome Projects Auvelity Peak Sales at $8 Billion",
+    "headline": "Axsome projects peak sales of $8 billion for Auvelity following FDA label expansion into Alzheimer's disease agitation.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$8 billion peak sales projection; recent FDA expansion into Alzheimer's disease agitation; expands addressable population beyond MDD",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Axsome Therapeutics"
+    ],
+    "drugs": [
+      "Auvelity"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Vertex Drops Moderna-Partnered Inhaled CF Candidate",
+    "headline": "Vertex discontinues inhaled cystic fibrosis candidate developed in partnership with Moderna.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Inhaled CF candidate; Moderna partnership; mRNA-based approach; rare setback for Vertex CF dominance",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Vertex Pharmaceuticals"
+    ],
+    "drugs": [
+      "inhaled CF candidate"
+    ],
+    "mentioned_companies": [
+      "Moderna"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Passage Bio Cuts 75% of Workforce After FDA Block",
+    "headline": "Passage Bio slashes 75% of workforce following FDA clinical hold on gene therapy program.",
+    "tier": 2,
+    "segment": "Under the Radar",
+    "key_facts": "75% headcount reduction; FDA clinical hold/block; gene therapy company",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Passage Bio"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "Gilead Lays Off Arcellx Staff in California Post-Buyout",
+    "headline": "Gilead lays off Arcellx employees in California following acquisition, executing post-M&A cost-cutting.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "Gilead acquisition of Arcellx; California layoffs; cell therapy workforce consolidation",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Gilead Sciences"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Arcellx"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "Sanofi Invests $294M in Toronto AI Hub",
+    "headline": "Sanofi invests $294 million in Toronto-based artificial intelligence research hub.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "$294 million investment; Toronto location; AI-focused research",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Sanofi"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "Novartis Cuts 220 Jobs, Closes German Site",
+    "headline": "Novartis cuts 220 jobs and closes German manufacturing site as part of restructuring.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "220 jobs cut; German site closure; manufacturing restructuring",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Novartis"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 14,
+    "title": "Incyte's Jakafi XR Receives FDA Approval",
+    "headline": "FDA approves Incyte's extended-release formulation Jakafi XR for myelofibrosis.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Jakafi XR FDA approval; extended-release formulation; myelofibrosis indication",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Incyte Corporation"
+    ],
+    "drugs": [
+      "Jakafi XR"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [
+      "Jakafi"
+    ]
+  },
+  {
+    "rank": 15,
+    "title": "Supreme Court Grants One-Week Mifepristone Stay",
+    "headline": "Supreme Court grants one-week stay on lower court order blocking mifepristone mail and pharmacy access.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "key_facts": "One-week SCOTUS stay; manufacturer Danco appealed within hours; mifepristone available through mail and pharmacies; duration unclear; major FDA authority implications",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [],
+    "drugs": [
+      "mifepristone"
+    ],
+    "mentioned_companies": [
+      "Danco"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 16,
+    "title": "J&J's IBD Combo Fails Phase 2 But Advances",
+    "headline": "Johnson & Johnson's inflammatory bowel disease combination therapy fails Phase 2 but will advance to pivotal testing.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "Phase 2 failure; pivotal testing advancement; IBD combination therapy; unexpected progression despite Phase 2 failure",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Johnson & Johnson"
+    ],
+    "drugs": [
+      "IBD combination therapy"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

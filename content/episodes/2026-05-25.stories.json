@@ -1,0 +1,230 @@
+[
+  {
+    "rank": 1,
+    "title": "Lantheus Weighs ~$7B Sale After Curium Takeover Offer",
+    "headline": "Radiopharmaceutical company Lantheus Holdings (LNTH) is considering a sale after receiving a takeover bid from private-equity-backed Curium Pharma valuing it at approximately $7 billion.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$7 billion valuation; LNTH stock surged 7.4%; Curium is PE-backed",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Lantheus Holdings",
+      "Curium Pharma"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Novartis"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "ASCO 2026 Abstracts Drop — Major Cancer Data Preview",
+    "headline": "Clinical trial abstracts posted May 22 ahead of ASCO 2026 (starting May 29) reveal anticipated datasets from Merck, BioNTech, Eli Lilly, and Moderna.",
+    "tier": 1,
+    "segment": "What to Watch",
+    "key_facts": "Abstracts dropped May 22; ASCO meeting begins May 29; datasets from Merck, BioNTech, Eli Lilly, and Moderna",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Merck",
+      "BioNTech",
+      "Eli Lilly",
+      "Moderna"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Biogen/Denali Parkinson's Drug Fails in Study",
+    "headline": "A Parkinson's disease drug from Biogen and Denali Therapeutics came up short in clinical testing, compounding strategic pressure on both companies.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Study failure reported May 21–22; Biogen also facing Alzheimer's tau program setback",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Biogen",
+      "Denali Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Bristol Myers Squibb Alzheimer's & AI Strategy Advances",
+    "headline": "BMS sees 'big promise beyond amyloid' in Alzheimer's disease while deepening AI investment through collaboration with Anthropic, amid political scrutiny of its $15.2B Hengrui deal.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "$15.2 billion Hengrui deal; more than a dozen early-stage drugs; GOP chairman seeks biotech clampdown on BMS-China deal",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Bristol Myers Squibb",
+      "Anthropic",
+      "Hengrui Pharma"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "EU Backs AZ Etcamah & Novo Oral Wegovy; Datroway Approved",
+    "headline": "European regulators recommended approval of AstraZeneca's Etcamah and Novo Nordisk's oral Wegovy, while AZ/Daiichi Sankyo's Datroway won approval in first-line triple-negative breast cancer.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "key_facts": "EU recommendations for Etcamah and oral Wegovy; Datroway approved in first-line TNBC; both May 22",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "AstraZeneca",
+      "Novo Nordisk",
+      "Daiichi Sankyo"
+    ],
+    "drugs": [
+      "Etcamah",
+      "Wegovy (oral)",
+      "Datroway"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "AbbVie Trims Allergan Workforce; Novartis Also Cutting US Jobs",
+    "headline": "AbbVie is trimming 85 jobs at its Allergan Irvine, California site effective July 20, while Novartis is also reducing its US workforce.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "AbbVie cutting 85 jobs; effective July 20; Allergan Irvine site; May 22 WARN notice",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "AbbVie",
+      "Novartis"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "BridgeBio Acoramidis Data at HF 2026; Q1 Revenue Beat",
+    "headline": "BridgeBio presented new acoramidis data in ATTR cardiomyopathy at Heart Failure 2026 and reported Q1 2026 revenue beat driven by Attruby sales surge.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Stock up 97% YoY; market cap ~$13.23B; trading at $69.12 (17% premium to $48 Morningstar fair value); $500M share repurchase program; Q1 revenue beat from Attruby",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "BridgeBio"
+    ],
+    "drugs": [
+      "acoramidis",
+      "Attruby"
+    ],
+    "mentioned_companies": [
+      "Pfizer"
+    ],
+    "mentioned_drugs": [
+      "tafamidis"
+    ]
+  },
+  {
+    "rank": 8,
+    "title": "Eli Lilly Acquires Engage for Non-Viral Genetic Medicines",
+    "headline": "Eli Lilly acquired Engage Therapeutics to advance non-viral genetic medicines technology and overcome longstanding delivery limitations.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Non-viral genetic medicines platform; deal terms not disclosed; part of Lilly's genetic medicine strategy expansion",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Eli Lilly",
+      "Engage Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Gilead Hepcludex Cleared by FDA Four Years After Prior Rejection",
+    "headline": "FDA cleared Gilead's Hepcludex for hepatitis D treatment, marking approval four years after a prior rejection.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "FDA clearance May 22; four years after prior rejection; hepatitis D indication",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Gilead Sciences"
+    ],
+    "drugs": [
+      "Hepcludex"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Leqembi Autoinjector PDUFA Extended to August 24",
+    "headline": "Biogen's Leqembi autoinjector PDUFA date extended from May 24 to August 24.",
+    "tier": 4,
+    "segment": "Regulatory Watch",
+    "key_facts": "PDUFA extended from May 24 to August 24; autoinjector formulation",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Biogen"
+    ],
+    "drugs": [
+      "Leqembi"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "Lilly Retatrutide TRIUMPH-1 Phase 3 Obesity Data Disclosed",
+    "headline": "Eli Lilly disclosed Phase 3 TRIUMPH-1 obesity data for retatrutide, with results from the trial released May 21.",
+    "tier": 2,
+    "segment": "What to Watch",
+    "key_facts": "TRIUMPH-1 Phase 3 trial; obesity indication; data disclosed May 21",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "retatrutide"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

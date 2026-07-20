@@ -1,0 +1,193 @@
+[
+  {
+    "rank": 1,
+    "title": "BeOne's Beqalzi Wins FDA Approval as Venclexta Challenger",
+    "headline": "BeOne Medicines' Beqalzi receives FDA approval on May 13, 2026, becoming the first new BCL-2 inhibitor approved in a decade and a direct challenger to AbbVie/Roche's blockbuster Venclexta.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "FDA approval date: May 13, 2026; First new BCL-2 inhibitor since Venclexta's 2016 approval (10-year gap); Venclexta is a multi-billion-dollar annual revenue asset",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "BeOne Medicines"
+    ],
+    "drugs": [
+      "Beqalzi"
+    ],
+    "mentioned_companies": [
+      "AbbVie",
+      "Roche"
+    ],
+    "mentioned_drugs": [
+      "Venclexta",
+      "venetoclax"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "Takeda Cuts 4,500 Jobs in $1.3B Restructuring",
+    "headline": "Takeda announces elimination of approximately 4,500 roles in 2026 as part of a $1.26 billion cost-cutting program targeting 2028.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Total savings target: $1.26 billion by 2028; 2026 savings target: ~$633 million; Headcount impact: ~4,500 roles in 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Takeda"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Novo Nordisk and Lilly Escalate GLP-1 Obesity Rivalry",
+    "headline": "Novo Nordisk and Eli Lilly both present new obesity data on the same day, intensifying the GLP-1 competitive battle with maintenance strategy focus.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Lilly low-dose Zepbound and oral Foundayo maintenance data (SURMOUNT-MAINTAIN, ATTAIN-MAINTAIN); LLY stock: +2.61% on May 13",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Novo Nordisk",
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Zepbound",
+      "Foundayo"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Merck KGaA CEO Signals Heavy M&A Strategy Focus",
+    "headline": "Merck KGaA's newly installed CEO Beckmann emphasizes M&A as a primary growth driver, with geopolitical tailwinds supporting business guidance.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "New CEO: Beckmann; Iran-related client stockpiling supporting guidance boost in life science/CDMO business",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Merck KGaA"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "FDA Leadership Vacuum Deepens After Makary Exit",
+    "headline": "FDA Commissioner Marty Makary's May 12 resignation leaves the agency with temporary directors in three top positions, creating regulatory uncertainty.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "key_facts": "Makary resignation announced May 12, 2026; Kyle Diamantas named acting commissioner; Three top positions now filled by temporary directors; Replimune (REPL) surged 8%+ on May 12; Leqembi SC PDUFA extended to August 24",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "FDA"
+    ],
+    "drugs": [
+      "Leqembi"
+    ],
+    "mentioned_companies": [
+      "Replimune"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Hantavirus Biotech Rally Fading as Analysts Call Overdone",
+    "headline": "The hantavirus cruise ship outbreak-driven biotech rally (Moderna, Novavax, Emergent BioSolutions) cools as analysts cite low contagion risk.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "Outbreak sparked rally ~May 8-11; Novavax fell 5%, Emergent BioSolutions fell 1%, Inovio fell 1% post-surge; Biotech sector +1.09%, Drug Manufacturers +1.55% on May 13",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Moderna",
+      "Novavax",
+      "Emergent BioSolutions",
+      "Inovio"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Galapagos Completes Rebrand to Lakefront Biotherapeutics",
+    "headline": "Galapagos NV completes strategic transformation by rebranding as Lakefront Biotherapeutics following years of setbacks.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "Rebrand completed May 13, 2026; Follows $5.1B Gilead partnership (2019); Strategic reset after filgotinib setbacks",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Galapagos NV"
+    ],
+    "drugs": [
+      "filgotinib"
+    ],
+    "mentioned_companies": [
+      "Gilead",
+      "Lakefront Biotherapeutics"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Tessera Reports 85% Blood Cell Editing Efficiency",
+    "headline": "Tessera Therapeutics achieves 85% blood cell editing efficiency with infusion-based approach, pointing toward off-the-shelf sickle cell solution.",
+    "tier": 2,
+    "segment": "What to Watch",
+    "key_facts": "85% editing efficiency in blood cells; Infusion-based off-the-shelf approach; Reported May 13, 2026",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Tessera Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Vertex",
+      "CRISPR Therapeutics"
+    ],
+    "mentioned_drugs": [
+      "Casgevy"
+    ]
+  },
+  {
+    "rank": 9,
+    "title": "Valneva Cuts Up to 15% of Workforce",
+    "headline": "Valneva announces layoffs of up to 15% of staff as reduced travel demand impacts its vaccine business.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "Up to 15% workforce reduction; Driven by reduced travel demand affecting vaccine business",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Valneva"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

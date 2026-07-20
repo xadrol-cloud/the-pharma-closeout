@@ -1,0 +1,272 @@
+[
+  {
+    "rank": 1,
+    "title": "BIONTECH LEADERSHIP EXODUS",
+    "headline": "BioNTech co-founders Ugur Sahin and Özlem Türeci stepping down to launch new mRNA-focused startup",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "Both founders departing BioNTech simultaneously; New company: as-yet-unnamed, dedicated to mRNA discovery work; Stock impact: BioNTech shares dropped (specific percentage not provided in sources); Timing: Announced March 10, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "BioNTech"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "FDA LEUCOVORIN APPROVAL (REGULATORY PRECEDENT)",
+    "headline": "FDA approves GSK's Wellcovorin (leucovorin) for cerebral folate deficiency using real-world data without clinical trial",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Product: Wellcovorin (leucovorin calcium tablets); Indication: Cerebral folate deficiency (CFD) in patients with confirmed FOLR1 gene variant; Regulatory pathway: Real-world data/external controls - NO NEW CLINICAL TRIAL required; Approval date: March 10, 2026; Controversy: Explicitly NOT approved f",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "GSK"
+    ],
+    "drugs": [
+      "Wellcovorin"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "NOVO NORDISK FDA WARNING LETTER",
+    "headline": "Novo Nordisk US headquarters receives FDA warning letter",
+    "tier": 1,
+    "segment": "What to Watch",
+    "key_facts": "Facility: US headquarters (Indiana facility mentioned in prior coverage per researcher notes); Date: March 10, 2026 (11:40am publication); Specific violations: Not detailed in available sources",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Novo Nordisk"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "VERTEX KIDNEY DISEASE PHASE 3 SUCCESS",
+    "headline": "Vertex kidney disease drug hits primary endpoint in late-stage study",
+    "tier": 1,
+    "segment": "What to Watch",
+    "key_facts": "Stage: Phase 3 trial successful; Indication: Kidney disease (specific condition not detailed in snippets); Prior context: Researcher notes reference \"Humira-like potential\" question from Endpoints; Trial milestone: \"Critical Phase 3 test\" cleared",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Vertex"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "BRISTOL MYERS SQUIBB BLOOD CANCER SUCCESS",
+    "headline": "Bristol Myers claims success in next-generation blood cancer drug study",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Program: \"Another next-gen blood cancer drug\" (suggests multiple programs running); Result: Study success claimed; Specific drug name, indication, endpoints: Not provided in available snippets",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Bristol Myers Squibb"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "ROCHE BREAST CANCER FAILURE",
+    "headline": "Roche's \"prized breast cancer pill\" fails closely watched study",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Formulation: Oral pill (significant for adherence); Result: Study failure in closely watched trial; Asset description: \"Prized\" suggests high internal/investor expectations",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Roche"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "SERVIER ACQUIRES DAY ONE BIOPHARMACEUTICALS",
+    "headline": "Servier to acquire Day One for $2.5 billion, gaining rare pediatric oncology portfolio",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Deal value: $2.5 billion total; Target: Day One Biopharmaceuticals; Assets acquired:; Ojemda (approved therapy for pediatric brain tumors); Multiple experimental drugs in human testing (specific number: \"a couple\"); Therapeutic area: Rare oncology, specifically hard-to-treat pediatric brain tumors",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Servier"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "IPSEN WITHDRAWS TAVZERIK FROM MARKET",
+    "headline": "Ipsen pulls Tavzerik (cancer drug) from market due to secondary malignancy safety signals",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Product: Tavzerik; Reason: Cases of secondary malignancies identified in confirmatory study; Acquisition context: Drug obtained through Epizyme purchase; Commercial performance: \"Struggled to sell\" per Endpoints",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": true,
+    "companies": [
+      "Ipsen"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "EXECUTIVE COMPENSATION DISCLOSURES",
+    "headline": "Major pharma CEO pay packages disclosed for 2025",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "AbbVie CEO Robert Michael:** $32.5 million total compensation for 2025; GSK CEO Emma Walmsley:** Nearly 50% pay increase in final year as CEO (specific dollar amount not provided)",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "AbbVie"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "SANDOZ ORGANIZATIONAL RESTRUCTURING",
+    "headline": "Sandoz to separate biosimilars business unit from generics division",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Restructuring: Biosimilars to be standalone business unit, broken out from generics; Timing: Announced March 10, 2026 (4:01pm)",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Sandoz"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "CSL PLASMA MANUFACTURING EXPANSION",
+    "headline": "CSL firms up $1.5 billion US plasma-based medicines manufacturing plant details",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Investment: $1.5 billion total; Location: United States; Product focus: Plasma-based medicines",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "CSL"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "VINAY PRASAD FDA DEPARTURE (CONTEXT UPDATE)",
+    "headline": "Vinay Prasad leaving FDA vaccine leadership position again - second departure",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Position: FDA vaccine chief; Departure count: Second time leaving FDA; Characterization: \"Embattled\"; Timing: 4 days ago (March 6, 2026) per Endpoints; 3 days ago per CBS News reference",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "OBESITY/GLP-1 RELATED UPDATES",
+    "headline": "Ascletis presents quarterly-dosing GLP-1 data; Mineralys sleep apnea Phase 2 misses endpoint",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Ascletis:** GLP-1 program with quarterly dosing interval (Q3M dosing); Mineralys:** Sleep apnea indication Phase 2 failure; Data presentation timing: 7 hours ago from fetch time",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Ascletis"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 14,
+    "title": "FILANA THERAPEUTICS PIVOT",
+    "headline": "Filana pivots from Alzheimer's (Cassava roots) into epilepsy",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Previous focus: Cassava Scientific-related programs (Alzheimer's); New focus: Epilepsy; Timing: March 10, 2026 (11:05am)",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Filana Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 15,
+    "title": "UNIQURE GENETIC MEDICINE RALLY",
+    "headline": "uniQure leads genetic medicine biotech stock rally following Prasad FDA exit",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Catalyst: Vinay Prasad departure from FDA; Stock movement: Led biotech rally (specific percentage not provided); Sector: Genetic medicine biotechs broadly",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "uniQure"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

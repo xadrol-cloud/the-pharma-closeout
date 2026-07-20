@@ -1,0 +1,235 @@
+[
+  {
+    "rank": 1,
+    "title": "Angelini Pharma Acquires Catalyst for $4.1B",
+    "headline": "Italy's Angelini Pharma is acquiring Catalyst Pharmaceuticals for $4.1 billion, gaining Firdapse (amifampridine) for Lambert-Eaton myasthenic syndrome as part of accelerating M&A pace in 2026.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$4.1 billion acquisition price; Firdapse (amifampridine) for Lambert-Eaton myasthenic syndrome; fourth biotech acquisition in May 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Angelini Pharma",
+      "Catalyst Pharmaceuticals"
+    ],
+    "drugs": [
+      "Firdapse",
+      "amifampridine"
+    ],
+    "mentioned_companies": [
+      "UCB",
+      "Candid",
+      "Bayer",
+      "Perfuse"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "Atara Surges 35-48% on FDA Path for Tab-cel",
+    "headline": "Atara Biotherapeutics (ATRA) stock jumped 35-48% after FDA Type A meeting opened resubmission path for tab-cel (tabelecleucel), an allogeneic T-cell therapy for EBV-positive post-transplant lymphoproliferative disease.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "key_facts": "Stock up 35.53%-47.57% intraday May 7; Type A FDA meeting held; BLA resubmission pathway opened; prior rejection in January 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Atara Biotherapeutics"
+    ],
+    "drugs": [
+      "tab-cel",
+      "tabelecleucel"
+    ],
+    "mentioned_companies": [
+      "Pierre Fabre"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Entrada Stock Falls on DMD Phase 1/2 Data",
+    "headline": "Entrada Therapeutics (TRDA) stock declined despite announcing 'positive topline data' from Cohort 1 of Phase 1/2 ELEVATE-44-201 study of ENTR-601-44 in Duchenne muscular dystrophy.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "Phase 1/2 ELEVATE-44-201 study; double-blind, placebo-controlled MAD portion; Cohort 1 topline data",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Entrada Therapeutics"
+    ],
+    "drugs": [
+      "ENTR-601-44"
+    ],
+    "mentioned_companies": [
+      "Sarepta Therapeutics"
+    ],
+    "mentioned_drugs": [
+      "Elevidys"
+    ]
+  },
+  {
+    "rank": 4,
+    "title": "Sarepta Tumbles as Gene Therapy Sales Decline",
+    "headline": "Sarepta Therapeutics stock fell as Elevidys (delandistrogene moxeparvovec) gene therapy sales continued declining.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "Elevidys sales declining; no specific revenue figures disclosed",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Sarepta Therapeutics"
+    ],
+    "drugs": [
+      "Elevidys",
+      "delandistrogene moxeparvovec"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Roche Acquires PathAI for Over $1B",
+    "headline": "Roche is acquiring digital pathology company PathAI for potentially over $1 billion to integrate AI-driven diagnostic tools for cancer diagnosis and tailored treatment.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Deal value potentially over $1 billion; digital pathology AI platform",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Roche",
+      "PathAI"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "EnGene Shares Crash on Bladder Cancer Data",
+    "headline": "EnGene shares crashed following updated pivotal bladder cancer data announcement.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "Updated pivotal bladder cancer data; specific data points not disclosed",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "EnGene"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Amazon Adds Ozempic Pill to Same-Day Kiosks",
+    "headline": "Amazon is now offering oral semaglutide (Novo Nordisk's Rybelsus/Wegovy pill formulation) through same-day prescription drug kiosks, expanding GLP-1 distribution.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Oral semaglutide; same-day prescription kiosks; Novo's Wegovy pill posted $355M Q1 2026 sales",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Amazon",
+      "Novo Nordisk"
+    ],
+    "drugs": [
+      "oral semaglutide",
+      "Rybelsus",
+      "Wegovy"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "FDA Rebukes Alnylam Over Amvuttra Claims",
+    "headline": "FDA issued an untitled letter rebuking Alnylam Pharmaceuticals for efficacy claims made on the Amvuttra (vutrisiran) website.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Untitled letter issued May 7, 2026; website efficacy claims violation",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Alnylam Pharmaceuticals"
+    ],
+    "drugs": [
+      "Amvuttra",
+      "vutrisiran"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Blackstone Invests $250M in Anagram",
+    "headline": "Blackstone committed $250 million to Anagram, a startup developing treatments for cystic fibrosis complications.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$250 million investment; cystic fibrosis complications focus",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Blackstone",
+      "Anagram"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Eli Lilly Announces $4.5B Manufacturing Investment",
+    "headline": "Eli Lilly is investing $4.5 billion in new manufacturing capacity across Indiana to support obesity drug and GLP-1 production.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$4.5 billion manufacturing investment; Indiana facilities; GLP-1/obesity drug capacity",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "Mirum Hits Primary Endpoint in PSC Phase 2b Study",
+    "headline": "Mirum Pharmaceuticals (MIRM) met primary endpoint in VISTAS Phase 2b study of volixibat (oral IBAT inhibitor) for primary sclerosing cholangitis; stock up 16.9%.",
+    "tier": 2,
+    "segment": "What to Watch",
+    "key_facts": "VISTAS Phase 2b study; primary endpoint met; stock gained 16.9%; oral IBAT inhibitor; announcement May 4 still moving markets May 7",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Mirum Pharmaceuticals"
+    ],
+    "drugs": [
+      "volixibat"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

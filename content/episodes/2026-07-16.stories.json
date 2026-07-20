@@ -1,0 +1,276 @@
+[
+  {
+    "rank": 1,
+    "title": "Merck Wins First-Ever Oral PCSK9 Approval for Lipfendra",
+    "headline": "Merck's Lipfendra (enlicitide) becomes the first FDA-approved once-daily oral PCSK9 inhibitor, beating AstraZeneca to market for reducing LDL-C in hypercholesterolemia.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Approval date: July 16, 2026; Drug: Lipfendra (enlicitide); Mechanism: novel macrocyclic peptide; First oral PCSK9 inhibitor (existing competitors are injectables); Indication: reduce LDL-C in adults with hypercholesterolemia and heterozygous familial hypercholesterolemia (HeFH)",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Merck"
+    ],
+    "drugs": [
+      "Lipfendra",
+      "enlicitide"
+    ],
+    "mentioned_companies": [
+      "AstraZeneca"
+    ],
+    "mentioned_drugs": [
+      "Repatha",
+      "Praluent"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "Eli Lilly to Acquire AtaiBeckley for $2.8B",
+    "headline": "Eli Lilly agrees to acquire psychedelic-focused AtaiBeckley for $2.8 billion upfront, marking Big Pharma's strongest embrace of psychedelic medicine for treatment-resistant depression.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Deal value: $2.8B upfront (possible additional milestones); Target: AtaiBeckley Inc. (Nasdaq: ATAI), clinical-stage psychedelic-inspired medicines; Buyer: Eli Lilly (NYSE: LLY); Lilly's 2026 M&A pace: 11 drugmakers acquired (most among pharma peers); BPL-003 Phase 2b: 11.1-point MADRS decrease at Day 29 vs. 5.8-point placebo [NOTES-ONLY — NEEDS PRIMARY VERIFICATION]",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "BPL-003"
+    ],
+    "mentioned_companies": [
+      "AtaiBeckley",
+      "Centessa Pharmaceuticals",
+      "Oura"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Kalshi Launches Prediction Markets for Biotech Catalysts",
+    "headline": "Prediction-market platform Kalshi will allow bets on clinical trial outcomes and FDA approval decisions.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "New offering covering clinical trial results and FDA decisions; Platform: Kalshi",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Kalshi"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "VivoSim Labs Plunges 25% on $4M Private Placement",
+    "headline": "VivoSim Labs (NASDAQ: VIVS) shares fall 25%+ after announcing a $4M private placement priced at $0.85 per share.",
+    "tier": 4,
+    "segment": "Market Movers",
+    "key_facts": "VivoSim Labs (NASDAQ: VIVS): –25%+ on $4M private placement at $0.85/share",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "VivoSim Labs"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Oruka Therapeutics Drops After Fairmount $300M Unload",
+    "headline": "Oruka Therapeutics shares decline after-hours following Fairmount's divestiture of 3.55M shares worth $300M via SEC filing.",
+    "tier": 4,
+    "segment": "Market Movers",
+    "key_facts": "Oruka Therapeutics; Fairmount unloads 3.55M shares / $300M stake; SEC filing disclosure",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Oruka Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Fairmount"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Q32 Bio Prices $200M Public Offering at $18.25/Share",
+    "headline": "Q32 Bio (NASDAQ: QTTB) shares slip after pricing a $200M public offering at $18.25 per share.",
+    "tier": 4,
+    "segment": "Market Movers",
+    "key_facts": "Q32 Bio (NASDAQ: QTTB); $200M public offering priced at $18.25/share",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Q32 Bio"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Celcuity Gains FDA Approval for Revtorpyk, Shares Fall 20%",
+    "headline": "Celcuity receives FDA approval for breast cancer drug Revtorpyk but shares fall nearly 20% on disclosed launch delay.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Drug: Revtorpyk; Indication: breast cancer; FDA approval date: July 15, 2026; Share decline: ~20%",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Celcuity"
+    ],
+    "drugs": [
+      "Revtorpyk"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "2026 H1 Pharma M&A Hits $134B, Exceeds Full-Year 2025",
+    "headline": "First-half 2026 biopharma M&A reaches $134B with 33 acquisitions ≥$1B; full-year 2026 projected to exceed $250B.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "2026 H1 M&A: $134B in deals; Full-year 2025: $112B; 33 acquisitions ≥$1B in H1 2026; Projected 2026 total: >$250B; Vertex acquires Crinetics for $10B (7/6); Ligand completes XOMA Royalty acquisition at $39.00/share (7/14); Novartis buys Myricx Bio: $1.1B upfront; AstraZeneca takes rights to Dizal lung cancer pill: $600M upfront; AbbVie/Apogee: ~$10.9B equity value; Merck in talks to buy Revolution Medicines: $28B–$32B",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Vertex",
+      "Ligand",
+      "Novartis",
+      "AstraZeneca",
+      "AbbVie",
+      "Merck"
+    ],
+    "drugs": [
+      "Dizal"
+    ],
+    "mentioned_companies": [
+      "Crinetics",
+      "XOMA",
+      "Myricx Bio",
+      "Apogee",
+      "Revolution Medicines"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Sanofi Sues Pfizer, Moderna Over mRNA Patents",
+    "headline": "Sanofi files patent litigation against Pfizer and Moderna over mRNA technology intellectual property.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Plaintiff: Sanofi; Defendants: Pfizer, Moderna; Dispute: mRNA patents; Date: July 15, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Sanofi"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Pfizer",
+      "Moderna"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Europe Approves Novo Nordisk Wegovy Pill",
+    "headline": "European regulatory approval granted for Novo Nordisk's Wegovy tablet formulation, ahead of competing injectables.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Drug: Wegovy (pill); Approval: European; Company: Novo Nordisk; Date: July 15, 2026; Context: first-mover advantage vs. Eli Lilly",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Novo Nordisk"
+    ],
+    "drugs": [
+      "Wegovy"
+    ],
+    "mentioned_companies": [
+      "Eli Lilly"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "Pfizer Downgraded to Hold by Analysts",
+    "headline": "Pfizer receives analyst downgrade to Hold rating amid market uncertainty.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Company: Pfizer; Rating change: Downgraded to Hold",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Pfizer"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "Biotech IPO Pipeline: Braveheart, Attovia, Vogenx Queue Up",
+    "headline": "Braveheart, Attovia, and Vogenx join the biotech initial public offering queue for 2026.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Companies: Braveheart, Attovia, Vogenx; Activity: IPO preparation",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Braveheart",
+      "Attovia",
+      "Vogenx"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "Biogen Tau-Targeting Alzheimer's Drug Data Update",
+    "headline": "Biogen releases data on tau-targeting Alzheimer's disease therapeutic candidate.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "Company: Biogen; Target: tau-targeting mechanism; Indication: Alzheimer's disease; Source: BioPharma Dive",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Biogen"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

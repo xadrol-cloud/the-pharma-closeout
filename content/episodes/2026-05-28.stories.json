@@ -1,0 +1,204 @@
+[
+  {
+    "rank": 1,
+    "title": "Spero Tebipenem Phase 3 Halted Early for Efficacy",
+    "headline": "Spero Therapeutics stock soared 245% after Phase 3 PIVOT-PO trial of tebipenem HBr met non-inferiority to IV imipenem-cilastatin in complicated UTIs, with potential for first oral carbapenem approval.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Stock: $0.68→$2.35 (245% gain); Non-inferiority margin: 10%; Primary endpoint met vs IV imipenem-cilastatin; GSK partnership; First oral carbapenem for cUTI if approved",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Spero Therapeutics"
+    ],
+    "drugs": [
+      "tebipenem HBr"
+    ],
+    "mentioned_companies": [
+      "GSK"
+    ],
+    "mentioned_drugs": [
+      "imipenem-cilastatin"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "GSK/Ionis Bepirovirsen Achieves 'Functional Cure' in HBV",
+    "headline": "GSK and Ionis reported Phase 3 B-Well 1 and B-Well 2 data for bepirovirsen, achieving unprecedented functional cure rates in chronic hepatitis B with Breakthrough Therapy Designation.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "B-Well 1 and B-Well 2 Phase 3 positive topline (announced Jan 7, 2026; detailed May 28); Breakthrough Therapy Designation; Priority Review; Functional cure rates; ~300M HBV patients globally",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "GSK",
+      "Ionis"
+    ],
+    "drugs": [
+      "bepirovirsen"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "AstraZeneca Imfinzi Wins Second Bladder Cancer FDA OK",
+    "headline": "FDA approved AstraZeneca's Imfinzi (durvalumab) as first immunotherapy combination regimen for high-risk non-muscle-invasive bladder cancer (NMIBC).",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Second bladder cancer indication for Imfinzi; First immunotherapy combo for high-risk NMIBC; Competitive with Merck Keytruda in genitourinary oncology",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "AstraZeneca"
+    ],
+    "drugs": [
+      "Imfinzi"
+    ],
+    "mentioned_companies": [
+      "Merck"
+    ],
+    "mentioned_drugs": [
+      "Keytruda"
+    ]
+  },
+  {
+    "rank": 4,
+    "title": "CVS Adds Lilly Obesity Drugs to Formulary",
+    "headline": "CVS Health added Eli Lilly's Zepbound (tirzepatide) and Foundayo to formulary coverage, putting Lilly on equal competitive footing with Novo Nordisk's Wegovy.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "CVS formulary coverage for Zepbound and Foundayo; Material revenue catalyst for Lilly; Positions Lilly vs Novo Nordisk on major PBM",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Zepbound",
+      "Foundayo"
+    ],
+    "mentioned_companies": [
+      "CVS Health",
+      "Novo Nordisk"
+    ],
+    "mentioned_drugs": [
+      "Wegovy"
+    ]
+  },
+  {
+    "rank": 5,
+    "title": "AbbVie ADC Wins FDA Approval for Ultra-Rare Blood Cancer",
+    "headline": "AbbVie received FDA approval for an antibody-drug conjugate from its ImmunoGen acquisition portfolio targeting an ultra-rare blood cancer.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "ImmunoGen-derived asset; Ultra-rare blood cancer indication; Follows AbbVie's ImmunoGen $10.1B acquisition; Multiple approved products now emerging from deal portfolio",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": true,
+    "companies": [
+      "AbbVie"
+    ],
+    "drugs": [
+      "antibody-drug conjugate"
+    ],
+    "mentioned_companies": [
+      "ImmunoGen"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "BridgeBio BBP-418 Shows Positive LGMD Phase 3 Data",
+    "headline": "BridgeBio reported positive Phase 3 interim FORTIFY results for oral BBP-418 in limb-girdle muscular dystrophy type 2I/R9, with plans to file FDA approval in 2026.",
+    "tier": 2,
+    "segment": "What to Watch",
+    "key_facts": "Phase 3 FORTIFY interim data; Improved mobility and reduced muscle damage biomarkers; First-in-disease approved therapy (no current approved treatments); FDA filing planned 2026; Stock up ~15%; Presented at MDA Conference",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "BridgeBio"
+    ],
+    "drugs": [
+      "BBP-418"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Biomx Stock Surges 98.29%",
+    "headline": "Biomx (PHGE) was the top biotech gainer on May 28, rising 98.29% with catalyst unclear from available reports.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Stock gain: 98.29%; Top biotech industry gainer May 28; Catalyst not identified",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Biomx"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "ASCO 2026 Abstract Drops Show Merck, BioNTech, Lilly Data",
+    "headline": "Clinical trial abstracts released ahead of ASCO 2026 conference gave early looks at datasets from Merck, BioNTech, Eli Lilly, and Moderna cancer programs.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "ASCO 2026 abstracts posted; Companies: Merck, BioNTech, Eli Lilly, Moderna; Akeso PD-1/VEGF bispecific plenary flagged as high-stakes; BioPharma Dive '5 data snapshots' feature",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Merck",
+      "BioNTech",
+      "Eli Lilly",
+      "Moderna",
+      "Akeso"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Trump Drug Pricing Order Details: 80% Price Cuts Named",
+    "headline": "Trump's most-favored-nation drug pricing executive order details emerged, naming specific drugs including AstraZeneca's Baxfendy and Novo Nordisk's Awiqli with price cuts up to 80%.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Named drugs: Baxfendy (AstraZeneca, hypertension), Awiqli (Novo Nordisk, insulin); Price cuts cited up to 80%; Novo Nordisk, Pfizer, J&J premarket declines; Executive order details being revealed",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "AstraZeneca",
+      "Novo Nordisk"
+    ],
+    "drugs": [
+      "Baxfendy",
+      "Awiqli"
+    ],
+    "mentioned_companies": [
+      "Pfizer",
+      "J&J"
+    ],
+    "mentioned_drugs": []
+  }
+]

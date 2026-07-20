@@ -1,0 +1,283 @@
+[
+  {
+    "rank": 1,
+    "title": "FDA Approves Merck's IDVYNSO for HIV",
+    "headline": "FDA approves Merck's once-daily two-drug oral combination IDVYNSO (doravirine/islatravir) for HIV-1 infection in adults, with islatravir being a first-in-class NRTTI mechanism.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "100 mg doravirine + 0.25 mg islatravir; FDA approved April 21, 2026; first-in-class nucleoside reverse transcriptase translocation inhibitor (NRTTI)",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Merck"
+    ],
+    "drugs": [
+      "IDVYNSO",
+      "doravirine",
+      "islatravir"
+    ],
+    "mentioned_companies": [
+      "Gilead Sciences"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "Merck & Google Strike $1B AI Deal",
+    "headline": "Merck and Google announce a $1 billion enterprise AI partnership to accelerate drug discovery and enterprise operations.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$1 billion deal value; enterprise AI partnership for drug discovery and operations",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Merck"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Google",
+      "Roche"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "AbbVie Invests $1.4B in NC Manufacturing",
+    "headline": "AbbVie announces $1.4 billion investment to establish new pharmaceutical manufacturing facility in North Carolina.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$1.4 billion investment; North Carolina production facility; announced April 22, 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "AbbVie"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Amneal Acquires Kashiv for $1.1B",
+    "headline": "Amneal Pharmaceuticals acquires biosimilars specialist Kashiv BioSciences for $1.1 billion.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$1.1 billion deal value; biosimilars acquisition",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Amneal Pharmaceuticals"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Kashiv BioSciences"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Revolution Medicines Pancreatic Cancer Data",
+    "headline": "Revolution Medicines' daraxonrasib demonstrates significant overall survival benefit in Phase 3 metastatic pancreatic cancer trial, with blockbuster sales potential.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Phase 3 positive results in metastatic pancreatic cancer; AACR 2026 presentation; $2 billion capital raise completed",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Revolution Medicines"
+    ],
+    "drugs": [
+      "daraxonrasib"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Roche Fenebrutinib MS Data & Liver Safety",
+    "headline": "Roche's fenebrutinib, an oral BTK inhibitor for multiple sclerosis, shows relapse delay in Phase 3 but raises liver toxicity concerns; regulatory filing planned.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Phase 3 data released April 21; first oral BTK inhibitor with Phase 3 MS efficacy; liver toxicity signal identified",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Roche"
+    ],
+    "drugs": [
+      "fenebrutinib"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [
+      "Ocrevus",
+      "Kesimpta"
+    ]
+  },
+  {
+    "rank": 7,
+    "title": "Sanofi Sarclisa Subcutaneous FDA Delay",
+    "headline": "FDA delays decision on Sanofi's subcutaneous formulation of Sarclisa (isatuximab).",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "FDA decision delayed; subcutaneous formulation; regulatory update April 22, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Sanofi"
+    ],
+    "drugs": [
+      "Sarclisa",
+      "isatuximab"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "BridgeBio Oncology Spinoff CEO Change",
+    "headline": "BridgeBio's oncology spinoff replaces CEO as it accelerates KRAS-targeted drug development programs.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "CEO change announced April 22, 2026; KRAS-focused oncology programs",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "BridgeBio"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Rigel Loses Eli Lilly RIPK Alliance",
+    "headline": "Rigel Pharmaceuticals loses its Eli Lilly partnership as Lilly exits RIPK kinase program, part of broader industry retreat from RIPK targets.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Alliance termination; RIPK program exit; announced April 22, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Rigel Pharmaceuticals"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Eli Lilly"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Nektar $325M Offering; Alopecia Data",
+    "headline": "Nektar Therapeutics prices $325 million public offering as alopecia drug demonstrates deepening response in extension study.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$325 million offering; extension study shows deepening treatment response; shares rallied substantially over prior year",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Nektar Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "Tortugas Neuroscience Launches with $106M",
+    "headline": "Tortugas Neuroscience launches with $106 million Series A funding and a portfolio of brain drugs licensed from Hansoh Pharma and Eisai, led by former Sage Therapeutics executives.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "$106 million Series A funding; brain drug portfolio; founded by Jeff Jonas and Al Robichaud (ex-Sage)",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Tortugas Neuroscience"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Hansoh Pharma",
+      "Eisai",
+      "Sage Therapeutics"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "BioAge NLRP3 Inhibitor 'Best-in-Class' Data",
+    "headline": "BioAge reports early data suggesting best-in-class potential for its NLRP3 inflammasome-targeting drug, rebounding from prior obesity program setback.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "NLRP3 inflammasome inhibitor; early-stage data; positioned as best-in-class",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "BioAge"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "Purdue Pharma $225M Forfeiture Directive",
+    "headline": "U.S. judge expected to direct Purdue Pharma to forfeit $225 million to the Justice Department, clearing the way for a massive opioid settlement.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "$225 million forfeiture; opioid settlement; judicial ruling expected April 21-22, 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Purdue Pharma"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 14,
+    "title": "BMS Mezigdomide Phase 3 SUCCESSOR-2 Data",
+    "headline": "Bristol-Myers Squibb's mezigdomide shows positive Phase 3 results in SUCCESSOR-2 trial for relapsed/refractory multiple myeloma.",
+    "tier": 2,
+    "segment": "What to Watch",
+    "key_facts": "Phase 3 SUCCESSOR-2 trial positive; relapsed/refractory multiple myeloma indication; AACR 2026 presentation",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Bristol-Myers Squibb"
+    ],
+    "drugs": [
+      "mezigdomide"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

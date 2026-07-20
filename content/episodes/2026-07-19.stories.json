@@ -1,0 +1,408 @@
+[
+  {
+    "rank": 1,
+    "title": "GSK Terminates Camlipixant After Phase 3 Failure",
+    "headline": "GSK ceased development of cough drug camlipixant after mixed Phase 3 data, abandoning a drug from a $2 billion deal.",
+    "tier": 1,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "$2 billion deal; third P2X3 antagonist to fail",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "GSK"
+    ],
+    "drugs": [
+      "camlipixant"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [],
+    "prior_coverage": {
+      "last_date": "2026-07-17",
+      "days_ago": 2,
+      "segment": "Top Story",
+      "headline": "GSK discontinued Phase 3 chronic cough drug camlipixant after mixed data, marking the third failure in the P2X3 antagonist class and raising write-down risk on its ~$2B Bellus Health acquisition.",
+      "coverage_relation": "UNKNOWN_DATE"
+    },
+    "stale_restatement": false
+  },
+  {
+    "rank": 2,
+    "title": "Novartis Fabhalta Gains Full FDA Approval in IgAN",
+    "headline": "FDA granted traditional approval to Novartis' Fabhalta (iptacopan) on July 17, 2026, as first complement inhibitor to slow kidney function decline in primary IgAN.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "event_date": "2026-07-17",
+    "is_context": false,
+    "key_facts": "Iptacopan; complement pathway inhibitor; oral; converts from accelerated approval",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Novartis"
+    ],
+    "drugs": [
+      "Fabhalta",
+      "iptacopan"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [],
+    "prior_coverage": {
+      "last_date": "2026-07-17",
+      "days_ago": 2,
+      "segment": "Regulatory Watch",
+      "headline": "FDA converted Fabhalta's accelerated approval to full traditional approval for immunoglobulin A nephropathy (IgAN), solidifying its commercial position in kidney disease treatment.",
+      "coverage_relation": "RE_TOUCH"
+    },
+    "stale_restatement": true
+  },
+  {
+    "rank": 3,
+    "title": "Merck Wins First PCSK9 Oral Cholesterol Pill Approval",
+    "headline": "Merck achieved first FDA approval of an oral PCSK9 cholesterol-lowering pill, advancing beyond injectables.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "PCSK9 inhibitor; oral formulation; first approval in class",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Merck"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": [],
+    "prior_coverage": null,
+    "stale_restatement": false
+  },
+  {
+    "rank": 4,
+    "title": "Merck ADC Shows Potential in Lung Cancer Study",
+    "headline": "Merck's sac-TMT (sacituzumab tirumotecan) showed potential to replace chemotherapy in front-line lung cancer; OptiTROP-Lung06 Phase 3 met primary PFS endpoint with Keytruda, reported July 17, 2026.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "event_date": "2026-07-17",
+    "is_context": false,
+    "key_facts": "sac-TMT; TROP2-directed ADC; OptiTROP-Lung06 Phase 3; met primary PFS endpoint; combined with pembrolizumab",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Merck",
+      "Kelun-Biotech"
+    ],
+    "drugs": [
+      "sacituzumab tirumotecan",
+      "sac-TMT",
+      "Keytruda"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [
+      "pembrolizumab"
+    ],
+    "prior_coverage": {
+      "last_date": "2026-07-15",
+      "days_ago": 4,
+      "segment": "Top Story",
+      "headline": "Merck's ADC sac-TMT shows potential to replace chemotherapy in front-line PD-L1-negative NSCLC, per China Phase 3 trial OptiTROP-Lung06.",
+      "coverage_relation": "NEW_SINCE_COVERAGE"
+    },
+    "stale_restatement": false
+  },
+  {
+    "rank": 5,
+    "title": "Lilly Acquires AtaiBeckley for $2.8 Billion",
+    "headline": "Eli Lilly to acquire AtaiBeckley for $2.8 billion, validating psychedelics; Lilly's 11th drugmaker acquisition this year.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "$2.8 billion acquisition; 11th acquisition by Lilly this year",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "AtaiBeckley"
+    ],
+    "mentioned_drugs": [],
+    "prior_coverage": {
+      "last_date": "2026-07-16",
+      "days_ago": 3,
+      "segment": "Deal & Pipeline Roundup",
+      "headline": "Eli Lilly agrees to acquire psychedelic-focused AtaiBeckley for $2.8 billion upfront, marking Big Pharma's strongest embrace of psychedelic medicine for treatment-resistant depression.",
+      "coverage_relation": "UNKNOWN_DATE"
+    },
+    "stale_restatement": false
+  },
+  {
+    "rank": 6,
+    "title": "Celcuity Gains FDA Approval for Revtorpyk",
+    "headline": "Celcuity (CELC) gained FDA approval for breast cancer drug Revtorpyk (gedatolisib) for HR+/HER2- breast cancer around July 15, 2026; shares fell nearly 20% on launch-delay disclosure.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "event_date": "2026-07-15",
+    "is_context": false,
+    "key_facts": "Gedatolisib (Revtorpyk); HR+/HER2- breast cancer; share decline ~20%; launch delay",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Celcuity"
+    ],
+    "drugs": [
+      "Revtorpyk",
+      "gedatolisib"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [],
+    "prior_coverage": {
+      "last_date": "2026-07-17",
+      "days_ago": 2,
+      "segment": "Regulatory Watch",
+      "headline": "Celcuity won FDA approval for breast cancer drug Revtorpyk but shares fell nearly 20% following a launch delay and prescribing information surprises.",
+      "coverage_relation": "RE_TOUCH"
+    },
+    "stale_restatement": false
+  },
+  {
+    "rank": 7,
+    "title": "Sanofi Sarclisa SC Faces July 23 FDA Decision",
+    "headline": "Sanofi's subcutaneous Sarclisa (isatuximab-irfc) faces July 23, 2026 FDA decision after three-month PDUFA extension; uses on-body injector.",
+    "tier": 2,
+    "segment": "What to Watch",
+    "event_date": "2026-07-23",
+    "is_context": false,
+    "key_facts": "Isatuximab-irfc; subcutaneous; on-body injector (OBI); three-month PDUFA extension; multiple myeloma indications",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Sanofi"
+    ],
+    "drugs": [
+      "Sarclisa",
+      "isatuximab-irfc"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [],
+    "prior_coverage": {
+      "last_date": "2026-07-10",
+      "days_ago": 9,
+      "segment": "Regulatory Watch",
+      "headline": "Sanofi secured FDA approval for a subcutaneous on-body injector version of Sarclisa following an earlier regulatory delay.",
+      "coverage_relation": "NEW_SINCE_COVERAGE"
+    },
+    "stale_restatement": false
+  },
+  {
+    "rank": 8,
+    "title": "Biotech IPO Wave Gains Momentum in July",
+    "headline": "Latigo Biotherapeutics, BlossomHill Therapeutics, and Vogenx joined IPO queue in July; Attovia, Braveheart Bio, and Apnimed also filed, marking surge in 2026 biotech offerings.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "Multiple IPO filings in July 2026; 5th-7th startups in July queue; Attovia focuses on I&I; biotech raised IPO offering",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Latigo Biotherapeutics",
+      "BlossomHill Therapeutics",
+      "Vogenx",
+      "Attovia",
+      "Braveheart Bio",
+      "Apnimed"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": [],
+    "prior_coverage": {
+      "last_date": "2026-07-16",
+      "days_ago": 3,
+      "segment": "Under the Radar",
+      "headline": "Braveheart, Attovia, and Vogenx join the biotech initial public offering queue for 2026.",
+      "coverage_relation": "UNKNOWN_DATE"
+    },
+    "stale_restatement": false
+  },
+  {
+    "rank": 9,
+    "title": "Jasper Merges with Immune Drugmaker Kira",
+    "headline": "Jasper merges with immune drugmaker Kira plus concurrent licensing deal with startup Mirador, after setbacks wiped out most of Jasper's market value.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "Merger with Kira; concurrent licensing deal with Mirador; prior market value loss",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Jasper"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Kira",
+      "Mirador"
+    ],
+    "mentioned_drugs": [],
+    "prior_coverage": {
+      "last_date": "2026-07-17",
+      "days_ago": 2,
+      "segment": "Deal & Pipeline Roundup",
+      "headline": "Jasper Therapeutics completed all-stock acquisition of Kira Pharmaceuticals with concurrent $132M private placement, securing runway into H2 2028 and out-licensing complement assets to Mirador Therapeutics.",
+      "coverage_relation": "UNKNOWN_DATE"
+    },
+    "stale_restatement": true
+  },
+  {
+    "rank": 10,
+    "title": "Corcept Relacorilant Approved; Insider Activity Noted",
+    "headline": "FDA approved Corcept's relacorilant (Lifyorli) on March 25, 2026, in combination with nab-paclitaxel for platinum-resistant ovarian cancer; CDO sold 20,000 shares July 7.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "event_date": "2026-03-25",
+    "is_context": true,
+    "key_facts": "Lifyorli (relacorilant); glucocorticoid receptor antagonist; combined with nab-paclitaxel; platinum-resistant ovarian/fallopian/peritoneal cancer; 1-3 prior therapies; CDO sold 20,000 shares July 7, 2026; $1.05 billion outlook",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Corcept Therapeutics"
+    ],
+    "drugs": [
+      "relacorilant",
+      "Lifyorli"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [
+      "nab-paclitaxel"
+    ],
+    "prior_coverage": {
+      "last_date": "2026-07-12",
+      "days_ago": 7,
+      "segment": "Top Story",
+      "headline": "Corcept CDO William Guyer sold 20,000 shares ($1.9M) post-relacorilant approval, with $1.05B 2026 revenue outlook and late-2026 Cushing's PDUFA pending.",
+      "coverage_relation": "RE_TOUCH"
+    },
+    "stale_restatement": false
+  },
+  {
+    "rank": 11,
+    "title": "Eli Lilly Orforglipron Approved; Launched with $50/Month Option",
+    "headline": "FDA approved Lilly's orforglipron (Foundayo) around April 1, 2026, as first oral GLP-1 pill with no food/water restrictions; Medicare enrollees pay as little as $50/month starting July 1.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "event_date": "2026-04-01",
+    "is_context": true,
+    "key_facts": "Foundayo (orforglipron); oral GLP-1; no food/water restrictions; National Priority Voucher Program; Medicare Part D copay $50/month; available via LillyDirect from April 6",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Foundayo",
+      "orforglipron"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [],
+    "prior_coverage": {
+      "last_date": "2026-07-17",
+      "days_ago": 2,
+      "segment": "Deal & Pipeline Roundup",
+      "headline": "Eli Lilly's oral GLP-1 agonist Foundayo (orforglipron) shows increasing prescription uptake according to FiercePharma tracking.",
+      "coverage_relation": "RE_TOUCH"
+    },
+    "stale_restatement": false
+  },
+  {
+    "rank": 12,
+    "title": "Scribe Therapeutics IPO Still Lacks Pricing Details",
+    "headline": "Scribe Therapeutics (SCTX, S-1 filed July 2, 2026) remains unpruced despite SEC filing; lead candidate STX-1150 CRISPR epigenetic therapy in Australian trial for cardiovascular disease.",
+    "tier": 4,
+    "segment": "Deal & Pipeline Roundup",
+    "event_date": "2026-07-02",
+    "is_context": true,
+    "key_facts": "S-1 filed July 2, 2026; no price range announced; Nasdaq Global Market; co-founded by Jennifer Doudna (Nobel laureate); STX-1150 epigenetic-silencing CRISPR for cardiovascular/cholesterol; $150M raised since 2017; $49.7M cash; $175.1M accumulated deficit; would be 14th venture-backed biotech IPO in 2026",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Scribe Therapeutics"
+    ],
+    "drugs": [
+      "STX-1150"
+    ],
+    "mentioned_companies": [
+      "Biogen",
+      "Sanofi",
+      "Eli Lilly"
+    ],
+    "mentioned_drugs": [],
+    "prior_coverage": {
+      "last_date": "2026-07-16",
+      "days_ago": 3,
+      "segment": "What to Watch",
+      "headline": "Biogen releases data on tau-targeting Alzheimer's disease therapeutic candidate.",
+      "coverage_relation": "RE_TOUCH"
+    },
+    "stale_restatement": false
+  },
+  {
+    "rank": 13,
+    "title": "Novartis Pelacarsen Phase 3 Data Delayed; H1 2026 Window Closing",
+    "headline": "Ionis (Novartis partner) expects pelacarsen Phase 3 topline data in H1 2026 and regulatory submissions H2 2026, but no readout announced as of July 19, 2026.",
+    "tier": 4,
+    "segment": "What to Watch",
+    "event_date": null,
+    "is_context": true,
+    "key_facts": "Pelacarsen (TQJ230); antisense Lp(a)-lowering; Phase 3 Lp(a)HORIZON; expected H1 2026 topline (Jan 31, 2025 guidance); regulatory submissions H2 2026; NCT06813911 (pelacarsen + inclisiran in ASCVD) last updated July 14, 2026",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Novartis",
+      "Ionis"
+    ],
+    "drugs": [
+      "pelacarsen",
+      "TQJ230"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [
+      "inclisiran"
+    ],
+    "prior_coverage": {
+      "last_date": "2026-07-15",
+      "days_ago": 4,
+      "segment": "What to Watch",
+      "headline": "Biotech selloff hits Moderna, ImmunityBio, Sarepta, and Ionis; Ionis Phase 3 trial failure erases a year of gains.",
+      "coverage_relation": "UNKNOWN_DATE"
+    },
+    "stale_restatement": false
+  }
+]

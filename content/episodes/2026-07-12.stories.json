@@ -1,0 +1,274 @@
+[
+  {
+    "rank": 1,
+    "title": "AstraZeneca Wainua Phase III Disappoints",
+    "headline": "AstraZeneca's Phase III trial for Wainua in cardiomyopathy failed to meet expectations.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Phase III failure in cardiomyopathy indication",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "AstraZeneca"
+    ],
+    "drugs": [
+      "Wainua"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "Corcept Insider Sale After Ovarian Cancer Approval",
+    "headline": "Corcept CDO William Guyer sold 20,000 shares ($1.9M) post-relacorilant approval, with $1.05B 2026 revenue outlook and late-2026 Cushing's PDUFA pending.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "20,000 shares sold at $94.04/share = $1.9M on July 7, 2026; 83% of direct holdings liquidated; $1.05B 2026 revenue outlook; market cap $10.1B; relacorilant approved March 25, 2026 for platinum-resistant ovarian cancer; Cushing's NDA resubmitted June 17, 2026 with ~late 2026 PDUFA; 10b5-1 plan established November 27, 2024",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Corcept Therapeutics"
+    ],
+    "drugs": [
+      "relacorilant",
+      "Korlym"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Q32 Bio SIGNAL-AA 36-Week Topline Due",
+    "headline": "Q32 Bio to report 36-week Part B topline from Phase 2a SIGNAL-AA trial of bempikibart in alopecia areata on July 13, 2026.",
+    "tier": 2,
+    "segment": "What to Watch",
+    "key_facts": "Phase 2a SIGNAL-AA trial Part B; 36-week topline readout; catalyst date July 13, 2026",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Q32 Bio"
+    ],
+    "drugs": [
+      "bempikibart"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Celcuity Gedatolisib PDUFA on July 17",
+    "headline": "Celcuity faces July 17, 2026 PDUFA for gedatolisib in HR+/HER2-/PIK3CA wild-type advanced breast cancer under Real-Time Oncology Review.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "PDUFA July 17, 2026; indication HR+/HER2-/PIK3CA wild-type advanced breast cancer; review pathway Real-Time Oncology Review (RTOR)",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Celcuity"
+    ],
+    "drugs": [
+      "gedatolisib"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Novartis Pelacarsen HORIZON Readout Pending",
+    "headline": "Novartis' pelacarsen Phase 3 HORIZON CV outcomes trial enrollment complete at 8,325 participants with up to 80% Lp(a) reduction in Phase 2; readout still awaited.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "Phase 3 HORIZON enrollment complete: 8,325 participants; Phase 2 achieved up to 80% Lp(a) reduction at 80 mg monthly dose; expected 1H 2026 readout (pending); regulatory submissions guided for 2H 2026; Korea readout guided early next year",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Novartis",
+      "Ionis"
+    ],
+    "drugs": [
+      "pelacarsen"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Scribe Therapeutics IPO on File",
+    "headline": "Scribe Therapeutics S-1 filed July 2, 2026 for Nasdaq listing (ticker SCTX) as 14th venture-backed biotech IPO of 2026; co-founder Jennifer Doudna; collaborations with Biogen, Sanofi, Eli Lilly.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "S-1 filed July 2, 2026; Nasdaq Global Market ticker SCTX; 14th biotech IPO of 2026; co-founder Jennifer Doudna (Nobel laureate); CEO Benjamin Oakes; Australian trial readout planned 2027",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Scribe Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Biogen",
+      "Sanofi",
+      "Eli Lilly"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Eli Lilly Orforglipron (Foundayo) Already Approved",
+    "headline": "Eli Lilly's oral GLP-1 orforglipron (Foundayo) approved April 1, 2026 for adults with obesity/overweight + comorbidities; launch described as muted vs Novo's Wegovy pill.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "FDA approval ~April 1, 2026; indication: adults with obesity/overweight + weight-related comorbidities; brand Foundayo; Lilly's second obesity product; no food/water/timing restrictions; launch characterized as muted",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "orforglipron",
+      "Foundayo"
+    ],
+    "mentioned_companies": [
+      "Novo Nordisk"
+    ],
+    "mentioned_drugs": [
+      "Wegovy"
+    ]
+  },
+  {
+    "rank": 8,
+    "title": "Padcev + Keytruda Approved for MIBC (Neoadjuvant/Adjuvant)",
+    "headline": "FDA approved Padcev (enfortumab vedotin-ejfv) + Keytruda (pembrolizumab) as neoadjuvant/adjuvant for muscle-invasive bladder cancer on July 10-11, 2026.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "FDA approval July 10-11, 2026; indication: muscle-invasive bladder cancer (MIBC) neoadjuvant/adjuvant setting; combination therapy",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Pfizer",
+      "Astellas",
+      "Merck & Co"
+    ],
+    "drugs": [
+      "Padcev",
+      "Keytruda"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Bayer Raises €3B Equity Capital from Apollo",
+    "headline": "Bayer secured €3 billion capital equity infusion deal with Apollo on July 10, 2026.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "€3 billion equity capital infusion; deal closed July 10, 2026; partner Apollo",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Bayer"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Apollo"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Hengrui/Elevar HCC Combo Rejected 3rd Time",
+    "headline": "FDA rejected Hengrui/Elevar PD-1 combination (rivoceranib + camrelizumab) for first-line unresectable HCC for the third time; decision expected July 23, 2026.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Third FDA rejection; indication: first-line unresectable hepatocellular carcinoma (HCC); drugs rivoceranib + camrelizumab; FDA decision date July 23, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Hengrui",
+      "Elevar"
+    ],
+    "drugs": [
+      "rivoceranib",
+      "camrelizumab"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "Bausch + Lomb BL1107 Phase II Disappoints",
+    "headline": "Bausch + Lomb reported disappointing Phase II topline for BL1107 in glaucoma on July 11, 2026.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Phase II topline failure; indication: glaucoma; readout date July 11, 2026",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Bausch + Lomb"
+    ],
+    "drugs": [
+      "BL1107"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "Vertex Acquires Crinetics for ~$99M+",
+    "headline": "Vertex announced takeover bid for Crinetics Technologies; Crinetics shares surged 99% to $83.64 pre-market; Vertex's largest-ever acquisition.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Vertex acquisition of Crinetics; pre-market share jump +99% to $83.64; transaction date ~July 7, 2026; Vertex's largest-ever M&A deal",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Vertex Pharmaceuticals"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Crinetics Technologies"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "GSK Closes Largest Oncology Deal in >1 Decade",
+    "headline": "GSK closed its largest oncology acquisition in over a decade, acquiring two near-launch lung cancer assets via all-cash tender and second-step merger under CEO Luke Miels.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "GSK's largest oncology deal in >10 years; two near-launch lung cancer assets; transaction structure: all-cash tender + second-step merger; CEO Luke Miels",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "GSK"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

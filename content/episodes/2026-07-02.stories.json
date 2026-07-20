@@ -1,0 +1,308 @@
+[
+  {
+    "rank": 1,
+    "title": "Otsuka Reports Long-Term Kidney Data for Voxzact",
+    "headline": "Otsuka released long-term kidney disease data for Voxzact, supporting FDA approval bid.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "Long-term kidney data reported; timing tied to full FDA approval strategy",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Otsuka"
+    ],
+    "drugs": [
+      "Voxzact"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "Roche's Divarasib Beats Rivals in Head-to-Head Phase 3 NSCLC",
+    "headline": "Roche's KRAS G12C inhibitor divarasib demonstrated statistically significant superiority on PFS and OS versus rival KRAS inhibitors in Phase 3 non-small cell lung cancer trial.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Phase 3 head-to-head study; primary endpoint PFS and key secondary endpoint OS both met; exact numerical values deferred to medical meeting; competitor KRAS inhibitors studied",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Roche"
+    ],
+    "drugs": [
+      "divarasib"
+    ],
+    "mentioned_companies": [
+      "Amgen",
+      "Mirati",
+      "BMS",
+      "Revolution Medicines"
+    ],
+    "mentioned_drugs": [
+      "sotorasib",
+      "Lumakras",
+      "adagrasib",
+      "Krazati"
+    ]
+  },
+  {
+    "rank": 3,
+    "title": "Abivax Surges on $920M Raise and Obefazimod Safety Data",
+    "headline": "Abivax stock rose up to 10.16% after upsized $920M capital raise and Phase 3 data showing obefazimod cancer risk (1.09–1.37 per 100 patient-years) matches UC background rates.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$920M raise (upsized from $800M); 6,400,000 ADSs at $125.00/ADS; greenshoe exercise $120M; NMSC rates 1.09 per 100 patient-years (25 mg) and 1.37 per 100 patient-years (50 mg); stock up 7.94%–10.16%; Phase 3 ABTECT Part 2 data",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Abivax"
+    ],
+    "drugs": [
+      "obefazimod"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "AstraZeneca Partners CSPC in $1.7B Kidney Disease Deal",
+    "headline": "AstraZeneca signed a deal worth up to $1.7 billion with Chinese partner CSPC Pharmaceutical for a kidney disease asset, marking the second collaboration between the two companies.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Deal value up to $1.7 billion; kidney disease indication; second AstraZeneca-CSPC partnership; first was obesity-related",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "AstraZeneca"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "CSPC Pharmaceutical"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Scribe Therapeutics Files for IPO",
+    "headline": "Gene-editing company Scribe Therapeutics filed for IPO, testing market appetite for earlier-stage CRISPR biotechs in a strong 2026 IPO environment.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "IPO filing announced July 2, 2026; CRISPR/gene-editing platform; 2026 biotech IPO class includes five of six largest offerings since 2022; H1 2026 biotech deals totaled $134 billion",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Scribe Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Editas",
+      "CRISPR Therapeutics",
+      "Intellia"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Oruka Therapeutics Falls After $300M Insider Sale",
+    "headline": "Oruka Therapeutics shares declined after-hours on July 1 following a $300 million block sale by major shareholder Fairmount Healthcare Fund II at $84.43/share.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "Fairmount Healthcare Fund II sold 3,553,410 shares at $84.43/share on July 1, 2026; total value $300,014,406; stock later recovered to $93.29",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Oruka Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Fairmount Healthcare Fund II"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Colorado Court Halts Enbrel Price Cap",
+    "headline": "Court blocked Colorado's state price cap on Amgen's Enbrel (etanercept), delivering a legal win for the drug manufacturer on pricing regulation.",
+    "tier": 4,
+    "segment": "Regulatory Watch",
+    "key_facts": "Colorado price cap halted by court; Enbrel (etanercept) affected; regulatory/legal win for Amgen",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Amgen"
+    ],
+    "drugs": [
+      "Enbrel"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Galderma Receives CRL for Anti-Wrinkle Drug",
+    "headline": "FDA issued a Complete Response Letter rejecting Galderma's anti-wrinkle drug application.",
+    "tier": 4,
+    "segment": "Regulatory Watch",
+    "key_facts": "Complete Response Letter (CRL) issued; anti-wrinkle/cosmetic indication; FDA rejection",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Galderma"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Sarepta DMD Drugs FDA Decision Pending",
+    "headline": "Sarepta Therapeutics awaits FDA decision on ductal muscular dystrophy (DMD) drugs.",
+    "tier": 4,
+    "segment": "Regulatory Watch",
+    "key_facts": "FDA decision date tracked; DMD indication; regulatory milestone pending",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Sarepta Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "BridgeBio Secures Up to $1B from Sixth Street, KKR",
+    "headline": "BridgeBio raised up to $1 billion from Sixth Street and KKR to support three drug launches.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Up to $1 billion investment; Sixth Street and KKR participants; funds support three drug launches",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "BridgeBio"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Sixth Street",
+      "KKR"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "Ipsen Acquires Memo Therapeutics in ~$800M Deal",
+    "headline": "Ipsen acquired Memo Therapeutics in a potential $800 million deal for a kidney infection drug, adding to Ipsen's $2.55 billion deal spree.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Deal value ~$800 million; Memo Therapeutics acquisition; kidney infection indication; Ipsen cumulative deal commitments $2.55 billion in spree",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Ipsen"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Memo Therapeutics"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "FDA Gene/Cell Therapy Regulator Steps Down",
+    "headline": "Vijay Kumar, top FDA gene and cell therapy regulator, is stepping down; Karim Mikhail assumes acting CBER Director role with expanded oversight.",
+    "tier": 4,
+    "segment": "Regulatory Watch",
+    "key_facts": "Vijay Kumar exiting CBER leadership; Karim Mikhail assuming acting CBER Director; gene/cell therapy regulatory leadership change",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "FDA"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "Orca Bio's Tregzi Approved; $428K WAC",
+    "headline": "Orca Bio's Tregzi, a novel regulatory T cell therapy for blood cancer transplant patients, received FDA approval on July 1 with a WAC of $428,000.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Tregzi approved July 1, 2026; regulatory T cell therapy; indication: blood cancer transplant patients; WAC $428,000",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Orca Bio"
+    ],
+    "drugs": [
+      "Tregzi"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 14,
+    "title": "Eli Lilly Foundayo Approved; $149–$50/Month Pricing",
+    "headline": "Eli Lilly's Foundayo (orforglipron) approved April 1, 2026, priced at $149/month base dose, with Medicare Part D enrollees eligible for $50/month copay starting July 1, 2026.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Foundayo (orforglipron) approved April 1, 2026; base WAC $149/month; Medicare Part D copay reduced to $50/month effective July 1, 2026; oral GLP-1 agonist",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Foundayo",
+      "orforglipron"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 15,
+    "title": "Revolution Medicines Shares KRAS Drug Combination Data",
+    "headline": "Revolution Medicines released promising data on a KRAS drug combination, adding to competitive KRAS-mutant oncology market momentum.",
+    "tier": 4,
+    "segment": "What to Watch",
+    "key_facts": "KRAS drug combination data; promising topline; reported ~7 hours before Roche divarasib news; part of KRAS market competitive cluster",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Revolution Medicines"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

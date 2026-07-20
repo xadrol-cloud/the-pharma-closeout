@@ -1,0 +1,229 @@
+[
+  {
+    "rank": 1,
+    "title": "VERTEX KIDNEY DISEASE DRUG — PHASE 3 SUCCESS",
+    "headline": "Vertex achieves positive Phase 3 results in kidney disease, triggering after-market stock surge",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Phase 3 study met primary endpoint (specific endpoint not detailed in sources); March 10, 2026 announcement; Company characterizes drug as having \"best-in-class potential\"; Drug acquired via prior multibillion-dollar deal (specific acquisition terms not in excerpts); Operating in competitive field (",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Vertex"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "UCB BIMZELX BEATS ABBVIE SKYRIZI — HEAD-TO-HEAD PsA TRIAL",
+    "headline": "UCB's Bimzelx defeats AbbVie's Skyrizi in direct comparison psoriatic arthritis trial; \"remains undefeated\"",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "Head-to-head trial in psoriatic arthritis (PsA); March 11, 2026 announcement; UCB described as maintaining undefeated record (implies multiple prior trial wins); Competitor: AbbVie's Skyrizi (risankizumab); Specific efficacy data/endpoints not provided in excerpts",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "AbbVie",
+      "UCB"
+    ],
+    "drugs": [
+      "BIMZELX",
+      "SKYRIZI"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [
+      "Bimzelx"
+    ]
+  },
+  {
+    "rank": 3,
+    "title": "ELI LILLY — Q4 EARNINGS + $3B CHINA EXPANSION",
+    "headline": "Lilly reports Q4 results and commits $3 billion to China manufacturing expansion",
+    "tier": 1,
+    "segment": "What to Watch",
+    "key_facts": "$3 billion** total China production expansion announced March 11, 2026; Additional **$500 million** pledge to South Korea manufacturing (from Endpoints); Q4 2025 earnings reported March 11; Stock price: **$999.84** (from Yahoo Finance sector data); YTD return: **-6.96%** (underperforming despite GLP",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "GSK LEUCOVORIN — FDA APPROVAL FOR ULTRA-RARE BRAIN DISEASE",
+    "headline": "FDA approves GSK's decades-old leucovorin for cerebral folate deficiency, not autism as previously promoted",
+    "tier": 1,
+    "segment": "What to Watch",
+    "key_facts": "March 11, 2026 FDA approval; Indication: Cerebral folate deficiency (ultra-rare brain disease); Disease prevalence: **fewer than 50 documented cases** worldwide; Drug: Leucovorin (decades-old, repurposed medicine); Controversy: FDA initially promised help for \"hundreds of thousands of kids\" with aut",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "GSK"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "BIONTECH FOUNDERS EXIT — NEW mRNA STARTUP",
+    "headline": "BioNTech co-founders Ugur Sahin and Özlem Türeci stepping down to helm new mRNA discovery startup",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Founders: **Ugur Sahin** and **Özlem Türeci** (COVID vaccine architects); Stepping down from BioNTech leadership roles; Launching as-yet-unnamed mRNA discovery company; Dedicated to mRNA discovery work (not specified if therapeutic vs. platform focus); Timing: March 2026 announcement",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "BioNTech"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "BRISTOL MYERS MEZIGDOMIDE — BLOOD CANCER SUCCESS",
+    "headline": "Bristol Myers Squibb reports positive results for mezigdomide in blood cancer study",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Drug: **Mezigdomide** (next-generation CELMoD); Indication: Multiple myeloma (blood cancer); Described as part of \"next-gen\" drugs succeeding **Revlimid** and **Pomalyst** (prior BMS blockbusters); Study success announced March 2026; Specific endpoints/survival data not in excerpts",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "BMS",
+      "Bristol Myers"
+    ],
+    "drugs": [
+      "MEZIGDOMIDE"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "XENON PHARMACEUTICALS — EPILEPSY DATA, ~50% STOCK SURGE",
+    "headline": "Xenon reports epilepsy trial data, shares jump approximately 50%",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Stock surge: **~50%** (rounded figure from researcher notes); Indication: Epilepsy; March 2026 readout; Specific drug name, endpoints not in excerpts",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Xenon"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "ROCHE GIREDESTRANT — BREAST CANCER FAILURE",
+    "headline": "Roche's giredestrant fails in breast cancer study",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Drug: **Giredestrant** (oral SERD); Indication: Breast cancer; Study failed (specific phase/endpoint not detailed); March 2026 announcement",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Roche"
+    ],
+    "drugs": [
+      "GIREDESTRANT"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "CSL — $1.5B ILLINOIS PLANT EXPANSION",
+    "headline": "CSL breaks ground on $1.5 billion Illinois immunoglobulin manufacturing expansion",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Investment: **$1.5 billion**; Location: Kankakee, Illinois; Product focus: Plasma-derived immunoglobulin therapies; Part of broader **$3+ billion** U.S. footprint expansion; March 2026 groundbreaking",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "CSL"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "UNIQURE — FDA PHASE 3 MANDATE (FOLLOW-UP)",
+    "headline": "UNIQURE — FDA PHASE 3 MANDATE (FOLLOW-UP)",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "uniQure"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "VEEVA ACQUIRES OSTRO — AI CHAT TOOL",
+    "headline": "VEEVA ACQUIRES OSTRO — AI CHAT TOOL",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Veeva"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "J&J CEO COMPENSATION",
+    "headline": "J&J CEO COMPENSATION",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "J&J"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

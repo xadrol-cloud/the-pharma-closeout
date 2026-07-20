@@ -1,0 +1,185 @@
+[
+  {
+    "rank": 1,
+    "title": "Novo Nordisk's Awiqli Wins FDA Approval for Weekly Insulin",
+    "headline": "Novo Nordisk receives FDA approval for Awiqli (insulin icodec), a once-weekly basal insulin, after a three-year regulatory journey.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "key_facts": "Awiqli (insulin icodec); once-weekly dosing; three-year wait for approval; first once-weekly basal insulin",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Novo Nordisk"
+    ],
+    "drugs": [
+      "Awiqli",
+      "insulin icodec"
+    ],
+    "mentioned_companies": [
+      "Sanofi",
+      "Eli Lilly"
+    ],
+    "mentioned_drugs": [
+      "Lantus",
+      "Toujeo"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "Rocket Pharma's First Gene Therapy Wins FDA Approval",
+    "headline": "FDA approves Rocket Pharmaceuticals' first gene therapy for an ultra-rare immune disease following years of setbacks.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "key_facts": "Rocket Pharmaceuticals first commercial product; ultra-rare immune disease; limited launch planned",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Rocket Pharmaceuticals"
+    ],
+    "drugs": [
+      "gene therapy"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Otsuka Acquires Transcend for $700M Upfront",
+    "headline": "Otsuka Pharmaceutical acquires private neuropsychiatry biotech Transcend Therapeutics for $700 million upfront.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$700 million upfront; private company; neuropsychiatry focus",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Otsuka Pharmaceutical",
+      "Transcend Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": [
+      "Abilify"
+    ]
+  },
+  {
+    "rank": 4,
+    "title": "Novartis Bets Up to $2B on Next-Gen Xolair Successor",
+    "headline": "Novartis strikes a deal worth up to $2 billion with Excellergy for a next-generation allergy candidate to succeed blockbuster Xolair.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Up to $2 billion deal value; Excellergy partnership; next-generation anti-IgE successor to Xolair; Xolair generated ~$4B+ in annual sales",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Novartis",
+      "Excellergy"
+    ],
+    "drugs": [
+      "Xolair",
+      "omalizumab"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "AstraZeneca's Tozorakimab Hits Phase 3 Endpoints in COPD",
+    "headline": "AstraZeneca's tozorakimab demonstrates statistically significant reductions in COPD exacerbations across two Phase 3 trials, driving ~3% premarket stock gain.",
+    "tier": 1,
+    "segment": "What to Watch",
+    "key_facts": "Tozorakimab (anti-IL-33 antibody); COPD indication; two Phase III studies hit primary endpoints; statistically significant reductions in moderate-to-severe exacerbations; broader-than-expected population; AstraZeneca stock up ~3% premarket",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "AstraZeneca"
+    ],
+    "drugs": [
+      "tozorakimab"
+    ],
+    "mentioned_companies": [
+      "GSK"
+    ],
+    "mentioned_drugs": [
+      "depemokimab"
+    ]
+  },
+  {
+    "rank": 6,
+    "title": "AstraZeneca In Vivo CAR-T Shows Myeloma Promise, One Death",
+    "headline": "AstraZeneca presents early in vivo CAR-T efficacy data in multiple myeloma but reports one patient death in China-based trial.",
+    "tier": 2,
+    "segment": "What to Watch",
+    "key_facts": "In vivo CAR-T platform; multiple myeloma indication; one death reported in China trial; next-generation approach without external cell manufacturing",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "AstraZeneca"
+    ],
+    "drugs": [
+      "in vivo CAR-T"
+    ],
+    "mentioned_companies": [
+      "Legend Biotech",
+      "Johnson & Johnson",
+      "Bristol Myers Squibb",
+      "Capstan",
+      "Umoja"
+    ],
+    "mentioned_drugs": [
+      "Carvykti",
+      "Abecma"
+    ]
+  },
+  {
+    "rank": 7,
+    "title": "CVC Capital Bids $12.6B for Italian Pharma Recordati",
+    "headline": "Private equity firm CVC Capital Partners tables a $12.6 billion offer to fully acquire Italian pharmaceutical company Recordati.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$12.6 billion acquisition offer; CVC Capital Partners bidder; Recordati confirmed receipt of bid; Italian pharmaceutical company",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Recordati",
+      "CVC Capital Partners"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "CHMP Backs Subcutaneous Sarclisa, Four Additional Drugs",
+    "headline": "European CHMP recommends approval of subcutaneous Sarclisa formulation plus four additional new medicines.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Subcutaneous formulation of Sarclisa (isatuximab); CHMP recommendation; four additional drugs recommended",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Sanofi"
+    ],
+    "drugs": [
+      "Sarclisa",
+      "isatuximab"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

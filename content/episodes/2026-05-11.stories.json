@@ -1,0 +1,201 @@
+[
+  {
+    "rank": 1,
+    "title": "CSL Slashes FY26 Revenue by $600M, Flags $5B Impairments",
+    "headline": "CSL Ltd. cut FY2026 revenue guidance to US$15.2B and flagged ~$5B in non-cash impairments related to underutilized Vifor Pharma assets, causing shares to hit a nine-year low.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "FY2026 revenue cut to US$15.2B (down ~$600M), net profit to US$3.1B at constant currency, ~$5B additional pre-tax impairments across FY2026-FY2027, total writedowns ~$6.9B including prior impairments, Vifor acquisition ~$11.7B in 2022, nine-year share low, largest single-day drop on record",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "CSL Ltd."
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Vifor Pharma"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "Inhibrx Combo Therapy Outperforms Keytruda Monotherapy",
+    "headline": "Inhibrx Biosciences' INBRX-106 combination therapy demonstrated superiority to Merck's Keytruda (pembrolizumab) monotherapy in Phase 2 data with differentiated tumor shrinkage.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Phase 2 data showing INBRX-106 combo superior to Keytruda monotherapy, Keytruda annual revenue ~$25B+, approaching patent cliff",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Inhibrx Biosciences"
+    ],
+    "drugs": [
+      "INBRX-106"
+    ],
+    "mentioned_companies": [
+      "Merck"
+    ],
+    "mentioned_drugs": [
+      "Keytruda",
+      "pembrolizumab"
+    ]
+  },
+  {
+    "rank": 3,
+    "title": "Daiichi Sankyo Targets Global Top 5 Oncology Rank by 2035",
+    "headline": "Daiichi Sankyo outlined a strategic vision to become a global top 5 oncology company by 2035, targeting approximately $15 billion in oncology sales by 2030 driven by its ADC franchise.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Target ~$15B oncology sales by 2030, global top 5 oncology rank by 2035, ADC (antibody-drug conjugate) franchise backbone, Enhertu partnership with AstraZeneca",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Daiichi Sankyo"
+    ],
+    "drugs": [
+      "Enhertu"
+    ],
+    "mentioned_companies": [
+      "AstraZeneca"
+    ],
+    "mentioned_drugs": [
+      "trastuzumab deruxtecan"
+    ]
+  },
+  {
+    "rank": 4,
+    "title": "Partner Therapeutics' Bizengri Approved for NRG1 Fusion Cancers",
+    "headline": "FDA approved Partner Therapeutics' Bizengri (zenocutuzumab) for NRG1 fusion-positive cholangiocarcinoma via the Community National Priority Voucher (CNPV) pilot program.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Bizengri (zenocutuzumab) approved for NRG1 fusion-positive cholangiocarcinoma, FDA CNPV pilot program pathway, NRG1 fusions ~0.2% of solid tumors, precision oncology rare-tumor indication",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Partner Therapeutics"
+    ],
+    "drugs": [
+      "Bizengri",
+      "zenocutuzumab"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "European Regulators Greenlight First GLP-1 Gene Therapy Trial",
+    "headline": "European regulators approved the first-ever clinical trial of a GLP-1 gene therapy, with Fractyl separately launching a diabetes gene therapy trial.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "First clinical trial of GLP-1 gene therapy approved by European regulators, Fractyl diabetes gene therapy trial initiated, UC Berkeley startup involvement referenced, one-time gene therapy vs. chronic injections/pills",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Fractyl"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Novo Nordisk",
+      "Eli Lilly"
+    ],
+    "mentioned_drugs": [
+      "GLP-1"
+    ]
+  },
+  {
+    "rank": 6,
+    "title": "GSK Licenses Bepirovirsen to Sino Biopharmaceutical for China",
+    "headline": "GSK struck a deal with Sino Biopharmaceutical to license hepatitis B drug bepirovirsen for the China market.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "GSK-Sino Biopharmaceutical licensing deal for bepirovirsen in China, separate GSK-Arrowhead $1B obesity siRNA deal noted from prior week",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "GSK"
+    ],
+    "drugs": [
+      "bepirovirsen"
+    ],
+    "mentioned_companies": [
+      "Sino Biopharmaceutical",
+      "Arrowhead Pharmaceuticals"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Rezdiffra Exceeding Wall Street Expectations in MASH Market",
+    "headline": "Madrigal Pharmaceuticals' Rezdiffra (resmetirom) is exceeding Wall Street sales expectations as the MASH market gains commercial traction.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "Rezdiffra (resmetirom) exceeding Wall Street expectations, MASH market TAM estimated ~$30B+, first-mover advantage holding",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Madrigal Pharmaceuticals"
+    ],
+    "drugs": [
+      "Rezdiffra",
+      "resmetirom"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Eli Lilly Invests Additional $4.5B in Indiana Manufacturing",
+    "headline": "Eli Lilly announced an additional $4.5 billion investment across Indiana manufacturing to meet growing demand for weight-loss drugs Mounjaro and Zepbound (tirzepatide).",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Additional $4.5B investment across Indiana, weight-loss drugs tirzepatide (Mounjaro, Zepbound), supply constraint concerns, sustained demand trajectory confidence",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Mounjaro",
+      "Zepbound",
+      "tirzepatide"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Braveheart Bio's Hengrui-Licensed Cardiac Drug Scores Second Win",
+    "headline": "Braveheart Bio reported a second positive clinical readout for a cardiac drug licensed from Hengrui Pharmaceuticals.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Braveheart Bio second positive clinical readout, Hengrui Pharmaceuticals China-originated asset, Western clinical validation of Chinese biotech asset",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Braveheart Bio"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Hengrui Pharmaceuticals"
+    ],
+    "mentioned_drugs": []
+  }
+]

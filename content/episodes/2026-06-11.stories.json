@@ -1,0 +1,313 @@
+[
+  {
+    "rank": 1,
+    "title": "Takeda's Zasocitinib Beats BMS Sotyktu in Phase 3",
+    "headline": "Takeda's zasocitinib tops Bristol Myers Squibb's Sotyktu in head-to-head Phase 3 trial for plaque psoriasis, potentially reshaping the $4B+ TYK2 market.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "$4B+ TYK2 market opportunity; head-to-head Phase 3 in plaque psoriasis; zasocitinib vs. deucravacitinib",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Takeda",
+      "Bristol Myers Squibb"
+    ],
+    "drugs": [
+      "zasocitinib",
+      "Sotyktu"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [
+      "deucravacitinib"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "Summit Therapeutics Pulls $500M Share Offering",
+    "headline": "Summit Therapeutics withdraws its $500M stock offering just one day after announcement, citing deteriorating market conditions amid 4.2% YoY CPI inflation.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$500M share offering withdrawn; May CPI 4.2% YoY; fed-hike odds surging",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Summit Therapeutics"
+    ],
+    "drugs": [
+      "ivonescimab"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Novartis RNA Drug from $12B Avidity Deal Wins Trial",
+    "headline": "Novartis reports positive biomarker data for RNA-based therapy acquired via ~$12B Avidity Biosciences acquisition in muscular dystrophy.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "~$12B Avidity acquisition; muscular dystrophy indication; biomarker data positive",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Novartis"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Avidity Biosciences"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Genentech Lays Off VPs, Closes Infectious Disease Unit",
+    "headline": "Genentech dismisses 3 VPs including legendary immunologist Vishva Dixit and reportedly shuts down its infectious disease research unit.",
+    "tier": 2,
+    "segment": "Under the Radar",
+    "key_facts": "3 VPs dismissed; Vishva Dixit included; infectious disease research unit closed",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Genentech"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Roche"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Kardigan Sets IPO Terms at $320M–$373M+",
+    "headline": "Cardiac drugmaker Kardigan sets IPO pricing at $320M–$373M+, positioning as the 13th biotech IPO of 2026.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "IPO target $320M–$373M+; cardiac focus; 13th biotech IPO of 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Kardigan"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Camurus Receives Second CRL for Acromegaly Drug",
+    "headline": "Camurus receives a second Complete Response Letter from the FDA for its acromegaly drug, signaling serious manufacturing or clinical concerns.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Second CRL; acromegaly indication; repeat FDA rejection",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Camurus"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Teva Details Workforce Reduction Plan",
+    "headline": "Teva Pharmaceutical outlines specifics of its workforce reduction plan.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "Workforce cuts detailed",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Teva Pharmaceutical"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Sensorion Drops Hearing Loss Gene Therapy",
+    "headline": "Sensorion ends OTOF-related hearing loss gene therapy development after strategic review cites intensified competition from Regeneron.",
+    "tier": 2,
+    "segment": "Under the Radar",
+    "key_facts": "OTOF gene therapy discontinued; Regeneron competitive pressure; development environment 'notably changed'",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Sensorion"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Regeneron"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "J&J Data Support Imaavy Anemic Disorder Expansion",
+    "headline": "Johnson & Johnson presents clinical data positioning Imaavy for label expansion into an anemic disorder indication.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "Imaavy label expansion; anemic disorder; clinical data positive",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Johnson & Johnson"
+    ],
+    "drugs": [
+      "Imaavy"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Ethyreal Launches with $101M for Thyroid Eye Disease",
+    "headline": "Ethyreal launches with $101M in funding to develop differentiated medicine for thyroid eye disease and Graves' disease.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$101M funding; thyroid eye disease (TED) and Graves' disease; differentiated mechanism",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Ethyreal"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Horizon",
+      "Amgen"
+    ],
+    "mentioned_drugs": [
+      "Tepezza"
+    ]
+  },
+  {
+    "rank": 11,
+    "title": "Novo Nordisk CEO Calls for Competitive Push",
+    "headline": "Novo Nordisk CEO Mike Doustdar calls for company to 'become more competitive' in new interview.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "CEO Mike Doustdar; competitive positioning statement",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Novo Nordisk"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "Novo Nordisk Data Breach Reported",
+    "headline": "Novo Nordisk reports data breach, urging patients to remain vigilant.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Data breach disclosed; patient notification issued",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Novo Nordisk"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "Astellas CEO Outlines Xtandi Patent Cliff Strategy",
+    "headline": "Astellas CEO outlines strategy to offset looming patent expiration of blockbuster prostate cancer drug Xtandi.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "Xtandi patent cliff; prostate cancer; revenue protection strategy",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Astellas"
+    ],
+    "drugs": [
+      "Xtandi"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 14,
+    "title": "SonoThera Raises $125M for Gene Therapy",
+    "headline": "SonoThera raises $125M for non-viral gene therapy platform development.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$125M raised; non-viral gene therapy focus",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "SonoThera"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 15,
+    "title": "City Therapeutics Raises $99M for RNAi",
+    "headline": "City Therapeutics raises $99M to advance three RNAi medicines in development.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$99M raised; three RNAi medicines",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "City Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 16,
+    "title": "Neion Bio Lands $23M Series A Funding",
+    "headline": "Neion Bio secures $23M Series A to develop protein production platform using chicken eggs.",
+    "tier": 4,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$23M Series A; chicken egg-based protein platform",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Neion Bio"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

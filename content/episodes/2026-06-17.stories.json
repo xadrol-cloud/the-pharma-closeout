@@ -1,0 +1,166 @@
+[
+  {
+    "rank": 1,
+    "title": "UniQure Stock Surges ~70% After FDA Reverses Course on Huntington's Gene Therapy",
+    "headline": "FDA agrees to accept 3-year data for accelerated approval BLA filing of UniQure's AMT-130 gene therapy for Huntington's disease, marking a major regulatory U-turn after previous FDA leadership rejections.",
+    "tier": 1,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": true,
+    "key_facts": "UniQure stock surged (Fierce Biotech: \"stock surges\"; BioPharma Dive confirms filing path cleared) FDA now willing to accept 3-year follow-up data for an accelerated approval pathway AMT-130 is a one-time gene therapy for Huntington's disease",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "UniQure",
+      "AMT-130"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "Hackers Claim $25M Ransom After Breaching Novo Nordisk \u2014 Drug Recipes and AI Mod",
+    "headline": "Hacking group FulcrumSec claims to have stolen over 1 TB of data from Novo Nordisk, including drug formulations and AI models, demanding $25 million ransom.",
+    "tier": 1,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": true,
+    "key_facts": "$25 million ransom demanded; Novo reportedly did not pay (\"no deal\") Hackers claim to possess drug recipes and AI models, now allegedly for sale Dual hacking groups claimed involvement per FiercePharma (\"Novo's security breach claimed by dual hacking groups\")",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": true,
+    "companies": [
+      "Novo Nordisk",
+      "Wegovy"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Biogen Acquiring RayThera for Up to $1 Billion \u2014 Immunology Pipeline Expansion",
+    "headline": "Biogen (BIIB) announced acquisition of RayThera to expand its immunology pipeline, in a deal valued at up to $1 billion.",
+    "tier": 2,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": true,
+    "key_facts": "Deal announced via GlobeNewswire (23 minutes prior to researcher's first note) BIIB stock up +1.56% on the news Deal value: up to $1 billion (likely includes milestones; upfront not specified in available sources)",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Biogen",
+      "RayThera"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Jazz Pharmaceuticals and AbCellera Strike T Cell Engager Deal Worth Up to $4.1 B",
+    "headline": "Jazz Pharmaceuticals partners with AbCellera for discovery and development of T cell engagers (TCEs) targeting GI cancers.",
+    "tier": 1,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": true,
+    "key_facts": "Deal value: up to $4.1 billion (per Endpoints News) Focus: next-generation T cell engagers against gastrointestinal cancers Announced June 17, 2026",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": true,
+    "companies": [
+      "Jazz Pharmaceuticals",
+      "AbCellera Biologics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "FDA Approves GSK/Spero's Oral Treatment for Complicated UTIs",
+    "headline": "FDA approved GSK and Spero Therapeutics' oral antibiotic for complicated urinary tract infections.",
+    "tier": 1,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": true,
+    "key_facts": "Approval announced June 17, 2026 (FiercePharma, 3:20pm) Oral treatment for complicated UTIs Specific drug name not captured in available sources",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "GSK",
+      "Spero Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Vedana Biosciences Launches with $46M for Migraine Prevention Therapies",
+    "headline": "Vedana Biosciences debuted with $46 million in financing to develop preclinical migraine prevention therapies.",
+    "tier": 3,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": true,
+    "key_facts": "$46 million raised Focus: migraine prevention, preclinical pipeline Fierce Biotech (Jun 17, 9:48am) and Endpoints News both confirmed",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Vedana Biosciences"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Moderna mRNA Flu Vaccine (mFlusiva) \u2014 FDA Staff Appears Less Negative Ahead of T",
+    "headline": "FDA staff review appears less critical than expected toward Moderna's mRNA flu vaccine mFlusiva ahead of June 18 VRBPAC advisory committee meeting.",
+    "tier": 4,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": true,
+    "key_facts": "VRBPAC vote scheduled Thursday, June 18, 2026 FDA briefing documents released; staff concerns about comparator trial design noted from yesterday but tone described as \"less prickly\" (FiercePharma, Jun 16, 2:46pm) Continuity item from yesterday's episode",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Moderna",
+      "mFlusiva"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Additional Notable Items",
+    "headline": "Pharma news story",
+    "tier": 1,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": true,
+    "key_facts": "Pharma news story",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

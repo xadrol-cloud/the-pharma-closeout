@@ -1,0 +1,147 @@
+[
+  {
+    "rank": 1,
+    "title": "Alnylam and Inceptive Ink Up-to-$2 Billion AI-Driven RNA Drug Discovery Deal",
+    "headline": "Alnylam Pharmaceuticals partners with Inceptive Nucleics in a three-year AI collaboration worth up to $2 billion to accelerate discovery of novel RNAi therapeutics.",
+    "tier": 2,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "$30 million upfront, comprising cash and an equity investment in privately held Inceptive Additional payments tied to pre-clinical, regulatory, and sales milestones bring total potential value to ~$2 billion Three-year collaboration term",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": true,
+    "companies": [
+      "Alnylam Pharmaceuticals",
+      "Inceptive Nucleics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "Otsuka's Voyxact (Sibeprenlimab) Shows Positive Phase 3 VISIONARY eGFR Data in I",
+    "headline": "Otsuka presents interim Phase 3 VISIONARY data showing Voyxact (sibeprenlimab-szsi) preserved kidney function over 12 months versus placebo in adults with primary IgAN at risk for disease progression.",
+    "tier": 2,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "Voyxact preserved kidney function (eGFR) compared to placebo over 12 months Demonstrated \"clinically meaningful improvements across key markers of IgAN\" Data presented at ERA (European Renal Association) Congress 2026",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Otsuka (Voyxact",
+      "sibeprenlimab-szsi)"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Lundbeck Presents Phase IIb PROCEED Data for Bocunebart (Anti-PACAP mAb) in Migr",
+    "headline": "Lundbeck's bocunebart (Lu AG09222), a first-in-class anti-PACAP monoclonal antibody, met its primary endpoint in the Phase IIb PROCEED trial in migraine prevention but showed a modest treatment difference that disappointed some analysts.",
+    "tier": 3,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "Treatment difference of 1.38 monthly migraine days vs. placebo Trial enrolled patients who had failed 1-4 prior preventive therapies (refractory population) Primary endpoint met",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Lundbeck",
+      "bocunebart"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Replimune Plans Third FDA Submission for RP1 Melanoma Drug After Two Rejections",
+    "headline": "Replimune announces plans for a third FDA submission of RP1 (oncolytic immunotherapy for melanoma) after \"productive\" talks with the agency, following rejections in June 2025 and April 2026.",
+    "tier": 2,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "First CRL: June 2025; Second CRL: April 10, 2026 Replimune reached agreement with FDA on May 29, 2026 to resubmit FDA will treat the resubmission as \"urgent\"",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Replimune",
+      "RP1"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Fulcrum Therapeutics Explores Sale After Discontinuing Sickle Cell Drug Pociredi",
+    "headline": "Fulcrum Therapeutics initiates strategic review\u2014potentially resulting in a sale\u2014after discontinuing pociredir for sickle cell disease following FDA feedback linking PRC2 inhibitors to malignancy risks.",
+    "tier": 2,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "Announced June 2, 2026 Stock dropped 53.6% on the news FDA flagged malignancy risks across the PRC2 inhibitor class",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": true,
+    "companies": [
+      "Fulcrum Therapeutics",
+      "pociredir"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Takeda Swings to Full-Year Loss on $2.5 Billion Jury Verdict Provision",
+    "headline": "Takeda adjusted FY2025 earnings to a net loss after booking a legal provision of 402.5 billion JPY (~$2.5 billion) related to a jury verdict.",
+    "tier": 1,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "Legal provision: 402.5 billion JPY ($2.5 billion) Swung full-year results to a net loss Published June 5, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Takeda"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Supreme Court Sides with Hikma in \"Skinny Label\" Generics Patent Case",
+    "headline": "In a key victory for generic drugmakers, the Supreme Court ruled in favor of Hikma in a closely watched skinny label patent case.",
+    "tier": 3,
+    "segment": "Top Story",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "Ruling issued around June 4, 2026 Described as a \"big win for generics drugmakers\"",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": true,
+    "companies": [
+      "Hikma Pharmaceuticals"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

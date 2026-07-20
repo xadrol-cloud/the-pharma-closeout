@@ -1,0 +1,397 @@
+[
+  {
+    "rank": 1,
+    "title": "FDA Launches Unified Adverse Event Monitoring System",
+    "headline": "FDA Launches Unified Adverse Event Monitoring System",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "FDA has merged its fragmented adverse event tracking systems into a single unified database; New system consolidates vaccine side effects reporting (previously separate) with drug adverse events; Described as addressing the agency's \"fragmented\" safety surveillance architecture; No specific launch d",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "Vinay Prasad Departure Sparks Gene Therapy Rally",
+    "headline": "Vinay Prasad Departure Sparks Gene Therapy Rally",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "Vinay Prasad stepping down as FDA CBER director (Center for Biologics Evaluation and Research) in April 2026; Announcement made March 6, 2026 after \"string of controversies\"; UniQure shares led genetic medicine biotech rally on news; Prasad characterized as having contributed to \"uncertain regulator",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "uniQure"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "GSK Drug Cleared for Ultra-Rare Brain Disease (Autism Indication Rejected)",
+    "headline": "GSK Drug Cleared for Ultra-Rare Brain Disease (Autism Indication Rejected)",
+    "tier": 1,
+    "segment": "What to Watch",
+    "key_facts": "FDA approved a repurposed GSK drug for ultra-rare brain disease; REJECTED for autism indication (specific drug name not provided in available excerpts); Classified as \"ultra-rare\" suggests orphan drug designation; Approval announced March 12, 2026 or shortly before",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "GSK"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Eli Lilly Dominates Q4 2025; Projects Strong 2026 Growth",
+    "headline": "Eli Lilly Dominates Q4 2025; Projects Strong 2026 Growth",
+    "tier": 1,
+    "segment": "What to Watch",
+    "key_facts": "Lilly \"shines in Q4\" while peers project 2026 slowdown; Most competitors forecasting \"growth decline\" for 2026; Lilly telegraphs **$126 million Japan production expansion** (Mar 12, 11:41am); Separate announcement: **$3 billion production expansion in China** to boost oral solid dosage supply chain ",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Orforglipron"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Lilly Escalates War on Compounded GLP-1s",
+    "headline": "Lilly Escalates War on Compounded GLP-1s",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Lilly warned compounded tirzepatide (Mounjaro/Zepbound) versions may be \"dangerous\" with \"unknown risks\"; Testing by Lilly detected \"impurity\" in certain compounded forms; Lilly formally requested FDA intervention against compounders; Endpoints characterized this as part of broader story: \"How GLP-1",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Mounjaro",
+      "Zepbound"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Novo Nordisk Valuation Collapse",
+    "headline": "Novo Nordisk Valuation Collapse",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Novo Holdings' assets fell **by one-third** in 2025; Decline attributed to Novo Nordisk's value falling substantially; No specific dollar figures provided in excerpt",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Novo Nordisk"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "UCB's Bimzelx Beats AbbVie's Skyrizi in Head-to-Head PsA Trial",
+    "headline": "UCB's Bimzelx Beats AbbVie's Skyrizi in Head-to-Head PsA Trial",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Bimzelx (UCB) demonstrated **superiority** over Skyrizi (AbbVie) in psoriatic arthritis trial; First approved biologic to show superiority over an IL-23 blocker in PsA; Analysts remain \"unsure how commercially impactful the results will be\"; No specific endpoint data or percentage improvements provi",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "AbbVie",
+      "UCB"
+    ],
+    "drugs": [
+      "Bimzelx",
+      "Skyrizi"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Biogen Builds Case for Spinraza Successor",
+    "headline": "Biogen Builds Case for Spinraza Successor",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Fresh data presented for Spinraza successor program; Spinraza (nusinersen) is Biogen's SMA therapy, launched 2016, facing competition from gene therapies; Specific data points not provided in excerpts",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Novartis",
+      "Biogen"
+    ],
+    "drugs": [
+      "Spinraza"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Johnson & Johnson's Tecvayli Competition from Legend's Carvykti",
+    "headline": "Johnson & Johnson's Tecvayli Competition from Legend's Carvykti",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Legend Biotech \"sloughs off\" competitive threat from J&J's Tecvayli to its Carvykti product; Both are BCMA-targeted therapies for multiple myeloma; J&J partnered on Carvykti; Tecvayli is wholly-owned competitor; No specific sales or trial data in excerpt",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "J&J",
+      "Johnson & Johnson"
+    ],
+    "drugs": [
+      "Tecvayli",
+      "Carvykti"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Pfizer Shuts Down Ignite R&D Services Unit",
+    "headline": "Pfizer Shuts Down Ignite R&D Services Unit",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Pfizer closing Ignite, its R&D services unit for small biotechs; Unit provided lab services and support to emerging companies; Closure timing and employee count not specified",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Pfizer"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "Xenon Pharmaceuticals Closes Upsized $747.5M Offering",
+    "headline": "Xenon Pharmaceuticals Closes Upsized $747.5M Offering",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$747.5 million** public offering closed; Offering was upsized (original size not stated); Underwriters' option to purchase additional shares exercised in full; Xenon is neuroscience-focused biopharma (Nasdaq: XENE)",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Xenon"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "Dianthus Therapeutics Closes Upsized $719M Offering",
+    "headline": "Dianthus Therapeutics Closes Upsized $719M Offering",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$719 million** underwritten public offering closed; Offering was upsized; Underwriters' option exercised in full",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Xenon",
+      "Dianthus"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "BioNTech Co-Founders Departing to Launch New mRNA Startup",
+    "headline": "BioNTech Co-Founders Departing to Launch New mRNA Startup",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Ugur Sahin and Özlem Türeci stepping down from BioNTech; Couple directed BioNTech's \"rise to prominence\" with COVID vaccine; Will helm unnamed new company dedicated to mRNA discovery; No financial terms or timeline provided",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "BioNTech"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 14,
+    "title": "Blackstone Provides $400M to Teva for TL1A Program",
+    "headline": "Blackstone Provides $400M to Teva for TL1A Program",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$400 million** from Blackstone to Teva; Supports TL1A program partnered with Sanofi; TL1A is emerging IBD/immunology target (competing with Roivant, others)",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Sanofi",
+      "Blackstone"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 15,
+    "title": "Breakout Ventures Closes $114M Fund",
+    "headline": "Breakout Ventures Closes $114M Fund",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$114 million** fund closed; Plans for approximately **20 investments**; Average check size: ~$5.7 million per investment",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 16,
+    "title": "Mineralys Therapeutics NDA Accepted for Lorundrostat",
+    "headline": "Mineralys Therapeutics NDA Accepted for Lorundrostat",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "FDA accepted NDA for **lorundrostat** in adults with hypertension; PDUFA target action date: **December 22, 2026**; Company reporting Q4 2025 results same day; Conference call scheduled 4:30 PM ET March 12",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Mineralys"
+    ],
+    "drugs": [
+      "Lorundrostat"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 17,
+    "title": "Capricor's Deramiocel BLA Under Review for DMD",
+    "headline": "Capricor's Deramiocel BLA Under Review for DMD",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Deramiocel BLA for Duchenne muscular dystrophy under FDA review; PDUFA target date: **August 22, 2026**; Pivotal HOPE-3 Phase 3 trial achieved **primary endpoint (PUL v2.0)** and key secondary endpoints; Company reporting Q4/FY 2025 results",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Capricor"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 18,
+    "title": "Biotech Sector Weakness",
+    "headline": "Biotech Sector Weakness",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Biotechnology sector: **-2.50% day return** (March 12); YTD return: **+0.16%** (essentially flat); Broader healthcare sector: **-1.59% day**, +0.78% YTD; S&P 500: -1.52% day, +3.24% YTD; Market cap biotech sector: **12.62% of healthcare**, total healthcare $7.293 trillion; Thermo Fisher (TMO): -4.00",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 19,
+    "title": "Sandoz Reorganization Ahead of \"Golden Decade for Biosimilars\"",
+    "headline": "Sandoz Reorganization Ahead of \"Golden Decade for Biosimilars\"",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Sandoz reorganizing structure; Sanofi shedding Latin America generics business (related coverage); Sandoz positioning for \"golden decade\" of biosimilar growth",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Sanofi",
+      "Sandoz"
+    ],
+    "drugs": [
+      "Humira"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 20,
+    "title": "Evotec Plans Up to 800 Job Cuts, Four Site Closures",
+    "headline": "Evotec Plans Up to 800 Job Cuts, Four Site Closures",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Up to 800 job cuts** planned; Four site closures**; Part of \"next phase of reorganization\"",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Evotec"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "title": "SERVIER / DAY ONE BIOPHARMACEUTICALS ACQUISITION (CONTINUATION)",
+    "headline": "Follow-up coverage of Servier's $2.5B acquisition of Day One Biopharmaceuticals and its Ojemda pediatric brain tumor franchise",
+    "tier": 2,
+    "segment": "Deals & Capital",
+    "companies": [
+      "Servier",
+      "Day One Biopharmaceuticals"
+    ],
+    "drugs": [
+      "Ojemda"
+    ],
+    "key_facts": "Deal value: $2.5 billion; Target: Day One Biopharmaceuticals; Key asset: Ojemda (approved for pediatric brain tumors); continuation coverage",
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "has_numbers": true
+  }
+]

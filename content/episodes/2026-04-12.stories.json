@@ -1,0 +1,218 @@
+[
+  {
+    "rank": 1,
+    "title": "FDA Rejects Replimune's Melanoma Drug RP1 for Second Time",
+    "headline": "FDA issues second complete response letter for Replimune's oncolytic immunotherapy RP1 in advanced melanoma, maintaining objections to single-arm trial design.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "key_facts": "CRL issued April 10, 2026; first rejection July 2025; Replimune stock fell nearly 20%; FDA objection: single-arm trial insufficient for approval",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Replimune Group"
+    ],
+    "drugs": [
+      "RP1",
+      "vusolimogene oderparepvec"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "Sun Pharma's $12 Billion All-Cash Bid for Organon",
+    "headline": "Sun Pharmaceutical Industries submits binding all-cash proposal valued at $12 billion for Organon & Co., the largest overseas acquisition by an Indian pharma company.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$12 billion all-cash bid; Organon shares rose 41% to $8.25 on Friday; financing from JPMorgan, MUFG, Standard Chartered, Citi; three months due diligence completed",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Sun Pharmaceutical Industries"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Organon & Co."
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Amgen's Subcutaneous TEPEZZA Meets Phase 3 Endpoints",
+    "headline": "Amgen's Phase 3 trial of subcutaneous TEPEZZA via on-body injector meets primary and all key secondary endpoints in moderate-to-severe active thyroid eye disease with 77% proptosis response rate.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Announced April 6, 2026; primary endpoint: 77% proptosis response (76.7% TEPEZZA OBI vs. 19.6% placebo, p<0.0001); mean proptosis reduction -3.17 mm vs. -0.80 mm placebo (p<0.0001); 25,000+ patients treated worldwide; 24-week trial period",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Amgen"
+    ],
+    "drugs": [
+      "TEPEZZA",
+      "teprotumumab-trbw"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Neurocrine Acquires Soleno Therapeutics",
+    "headline": "Neurocrine Biosciences acquires Soleno Therapeutics to expand endocrinology and rare disease portfolio including DCCR for Prader-Willi syndrome.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Announced April 6, 2026; deal terms not disclosed",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Neurocrine Biosciences"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Soleno Therapeutics"
+    ],
+    "mentioned_drugs": [
+      "DCCR",
+      "diazoxide choline"
+    ]
+  },
+  {
+    "rank": 5,
+    "title": "Gilead Acquires Tubulis and Announces Diversification Strategy",
+    "headline": "Gilead Sciences acquires privately-held German biotech Tubulis, an ADC developer, as part of diversification strategy through recent cancer and autoimmune disease acquisitions.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Announced April 7, 2026; Tubulis develops next-generation antibody-drug conjugates; deal terms not disclosed; part of broader portfolio diversification",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Gilead Sciences"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Tubulis GmbH"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Invivyd Advances Measles Monoclonal Antibody VMS063",
+    "headline": "Invivyd announces discovery and advancement of VMS063, a potentially first-and-best-in-class measles monoclonal antibody for treatment and prevention.",
+    "tier": 2,
+    "segment": "What to Watch",
+    "key_facts": "Announced April 9, 2026; VMS063 discovered using Invivyd proprietary platform; also reported progress in REVOLUTION clinical program for COVID-19 prevention mAb VYD2311",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Invivyd"
+    ],
+    "drugs": [
+      "VMS063",
+      "VYD2311"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Novartis Cuts 114 Jobs at New Jersey Headquarters",
+    "headline": "Novartis plans to eliminate 114 positions at East Hanover, NJ headquarters between June and November 2026 as part of rare-disease sales force restructuring.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "114 positions cut June 26–November 27, 2026; follows prior 58 positions cut November 2025–June 2026; part of multiyear global restructuring for rare-disease sales reorganization",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Novartis Pharmaceuticals"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Eli Lilly Launches Oral GLP-1 Pill Foundayo",
+    "headline": "Eli Lilly launches oral GLP-1 pill Foundayo, directly competing with Novo Nordisk's oral obesity medicine where Novo holds approximately three-month market lead.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Brand name: Foundayo; Novo Nordisk has ~3-month head start in oral GLP-1 market",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Foundayo"
+    ],
+    "mentioned_companies": [
+      "Novo Nordisk"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "AACR 2026 Annual Meeting Begins Next Week",
+    "headline": "AACR 2026 Annual Meeting (April 19–22) represents one of the year's most important oncology data catalysts with BioNTech presenting endometrial cancer data.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "Dates: April 19–22, 2026; BioNTech presenting endometrial cancer data",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [],
+    "drugs": [],
+    "mentioned_companies": [
+      "BioNTech"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Pharma M&A Surge Continues Into Q2 2026",
+    "headline": "Seven deals worth $1B+ announced in 12 days during March with 272 catalyst events tracked for Q2 including 17 PDUFA decisions and 52 Phase 3 readouts.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "7 deals worth $1B+ in 12 days during March; Q2 2026 tracking 272 catalyst events April–June; 17 PDUFA decisions; 52 Phase 3 readouts; 25 NDA/BLA filings",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": true,
+    "companies": [],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "RFK Jr. Updates ACIP Charter with Vaccine Safety Emphasis",
+    "headline": "HHS updates ACIP charter under RFK Jr. leadership with new emphasis on vaccine safety, raising alarm bells among public health experts.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Announced April 10, 2026; updated ACIP charter reflects new vaccine safety focus",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

@@ -1,0 +1,226 @@
+[
+  {
+    "rank": 1,
+    "title": "AstraZeneca's Truqap Clears Prostate Cancer Hurdle",
+    "headline": "AstraZeneca's Truqap (capivasertib) received FDA approval on June 12, 2026 for PTEN-deficient metastatic hormone-sensitive prostate cancer, marking a label expansion from its prior breast cancer indication.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "FDA approval June 12, 2026; PTEN-deficient mHSPC indication; label expansion from breast cancer",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "AstraZeneca"
+    ],
+    "drugs": [
+      "Truqap",
+      "capivasertib"
+    ],
+    "mentioned_companies": [
+      "Pfizer",
+      "Johnson & Johnson"
+    ],
+    "mentioned_drugs": [
+      "Xtandi",
+      "Erleada"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "Sanofi's Tzield Gains FDA Expansion After Delay",
+    "headline": "Sanofi's Tzield (teplizumab) received FDA accelerated approval expansion on June 12, 2026 for Stage 3 type 1 diabetes, following a 2-month regulatory delay.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "FDA accelerated approval June 12, 2026; Stage 3 T1D indication; 2-month delay before approval",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Sanofi"
+    ],
+    "drugs": [
+      "Tzield",
+      "teplizumab"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Elicio KRAS Cancer Vaccine Fails Phase 2",
+    "headline": "Elicio Therapeutics' KRAS-targeted cancer vaccine failed in Phase 2 testing, causing significant stock decline.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "Phase 2 failure; KRAS-mutant cancer target (likely pancreatic/colorectal)",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Elicio Therapeutics"
+    ],
+    "drugs": [
+      "KRAS cancer vaccine"
+    ],
+    "mentioned_companies": [
+      "Moderna",
+      "Merck",
+      "BioNTech"
+    ],
+    "mentioned_drugs": [
+      "V940/mRNA-4157"
+    ]
+  },
+  {
+    "rank": 4,
+    "title": "CMS Targets Subcutaneous Drug Loophole",
+    "headline": "CMS is proposing to close a Medicare drug price negotiation loophole affecting subcutaneous formulations of Merck's Keytruda and Bristol Myers Squibb's Opdivo, with billions at stake.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "key_facts": "Subcutaneous reformulation loophole; Keytruda ~$30B+ annual revenue; IRA negotiation implications",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Merck",
+      "Bristol Myers Squibb"
+    ],
+    "drugs": [
+      "Keytruda",
+      "Opdivo"
+    ],
+    "mentioned_companies": [
+      "Centers for Medicare & Medicaid Services"
+    ],
+    "mentioned_drugs": [
+      "pembrolizumab",
+      "nivolumab"
+    ]
+  },
+  {
+    "rank": 5,
+    "title": "Traws Pharma Shares Plunge on MHRA Review",
+    "headline": "Traws Pharma (TRAW) shares fell 18.2% to $1.05 in pre-market trading after deferring Phase 2a influenza study following a negative UK MHRA review.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "Stock fell 18.2% to $1.05; Phase 2a influenza study deferred; negative UK MHRA review",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Traws Pharma"
+    ],
+    "drugs": [
+      "tivoxavir marboxil"
+    ],
+    "mentioned_companies": [
+      "Shionogi"
+    ],
+    "mentioned_drugs": [
+      "Xofluza",
+      "baloxavir"
+    ]
+  },
+  {
+    "rank": 6,
+    "title": "Takeda Presents Orexin Phase 3 Data",
+    "headline": "Takeda presented new Phase 3 data supporting its lead orexin agonist program for narcolepsy.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Phase 3 data presentation; orexin agonist program; narcolepsy indication",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Takeda"
+    ],
+    "drugs": [
+      "orexin agonist"
+    ],
+    "mentioned_companies": [
+      "Centessa Pharmaceuticals"
+    ],
+    "mentioned_drugs": [
+      "ORX750"
+    ]
+  },
+  {
+    "rank": 7,
+    "title": "Gan & Lee Reports Phase 3 Obesity Successes",
+    "headline": "Chinese drugmaker Gan & Lee Pharmaceuticals reported Phase 3 obesity trial successes in an increasingly competitive GLP-1 market.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Phase 3 obesity trial successes; GLP-1 program; Chinese competitor",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Gan & Lee Pharmaceuticals"
+    ],
+    "drugs": [
+      "GLP-1 agonist"
+    ],
+    "mentioned_companies": [
+      "Novo Nordisk",
+      "Eli Lilly",
+      "Sciwind"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Merck's Welireg Gains Adjuvant Kidney Cancer Nod",
+    "headline": "Merck's Welireg (belzutifan) gained FDA approval for adjuvant use in kidney cancer, expanding its commercial opportunity.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Adjuvant approval for kidney cancer; Welireg-Keytruda combination previously approved; post-surgical indication",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Merck"
+    ],
+    "drugs": [
+      "Welireg",
+      "belzutifan"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [
+      "Keytruda"
+    ]
+  },
+  {
+    "rank": 9,
+    "title": "J&J's Talvey Shows Myeloma Benefit Earlier",
+    "headline": "Johnson & Johnson's Talvey (talquetamab) in combination with Darzalex Faspro demonstrated benefit in earlier-stage multiple myeloma, expanding its commercial potential.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Talvey + Darzalex Faspro combination; earlier-stage multiple myeloma; MonumenTAL-3 trial data",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Johnson & Johnson"
+    ],
+    "drugs": [
+      "Talvey",
+      "talquetamab",
+      "Darzalex Faspro",
+      "daratumumab"
+    ],
+    "mentioned_companies": [
+      "Pfizer"
+    ],
+    "mentioned_drugs": [
+      "elranatamab"
+    ]
+  }
+]

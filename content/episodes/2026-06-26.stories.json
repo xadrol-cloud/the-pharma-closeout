@@ -1,0 +1,304 @@
+[
+  {
+    "rank": 1,
+    "title": "FDA Approves Viridian's Lumvoa for Thyroid Eye Disease",
+    "headline": "FDA approves Viridian Therapeutics' Lumvoa (veligrotug), the first competitor to Amgen's Tepezza in thyroid eye disease treatment.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Drug: Lumvoa (veligrotug); Company: Viridian Therapeutics (VRDN); Indication: Thyroid Eye Disease (TED); Competitor: Amgen's Tepezza (teprotumumab)",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Viridian Therapeutics"
+    ],
+    "drugs": [
+      "Lumvoa",
+      "veligrotug"
+    ],
+    "mentioned_companies": [
+      "Amgen"
+    ],
+    "mentioned_drugs": [
+      "Tepezza",
+      "teprotumumab"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "Eli Lilly Surges +7.13% on Sector Leadership",
+    "headline": "Eli Lilly (LLY) shares jump 7.13% to $1,208.12, leading the Drug Manufacturers sector with $1.077 trillion market cap and +12.42% YTD return.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "Stock: LLY; Close: $1,208.12; 1Y target: $1,218.72; Market cap: $1.077 trillion; Day change: +7.13%; YTD return: +12.42%; Sector up +4.02%",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Alkermes",
+      "Takeda"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Moderna Spikes +12.59% Post-Investor Day",
+    "headline": "Moderna (MRNA) shares surge 12.59% following investor day and pipeline catalyst announcements.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "Stock: MRNA; Day change: +12.59%; Catalyst: Post-investor day; Recent commercial chief appointment",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Moderna"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Biogen Cuts Apellis Pipeline After $5.6B Acquisition",
+    "headline": "Biogen acquires Apellis Pharma for $5.6 billion and immediately cuts most of the acquired pipeline programs.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Acquirer: Biogen (BIIB); Target: Apellis Pharma; Deal value: $5.6 billion; Action: Cutting most pipeline programs; Stock move: +6.97%",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Biogen"
+    ],
+    "drugs": [
+      "Syfovre"
+    ],
+    "mentioned_companies": [
+      "Apellis Pharma"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Ardelyx Falls -8.42% on Medicare Reimbursement Loss",
+    "headline": "Ardelyx (ARDX) shares drop 8.42% after losing Medicare reimbursement for Xphozah in dialysis patients.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Stock: ARDX; Day change: -8.42%; Drug: Xphozah (tenapanor); Indication: Chronic kidney disease/dialysis; Setback: Medicare coverage denial",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Ardelyx"
+    ],
+    "drugs": [
+      "Xphozah",
+      "tenapanor"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "EU Probes Sanofi for Flu Vaccine Smear Campaign",
+    "headline": "European Commission opens antitrust investigation into Sanofi for alleged smear campaign against rival flu vaccine competitor.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Company: Sanofi; Regulator: European Commission; Allegation: Smear campaign against competitor flu vaccine; Type: Antitrust probe",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Sanofi"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "CHMP Recommends Revoking Amgen's Tavneos",
+    "headline": "European regulators recommend revoking marketing authorization for Amgen's Tavneos (avacopan) for ANCA-associated vasculitis.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "key_facts": "Drug: Tavneos (avacopan); Company: Amgen; Indication: ANCA-associated vasculitis; Mechanism: Complement C5a receptor inhibitor; Regulator: CHMP; Action: Recommend revocation",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Amgen"
+    ],
+    "drugs": [
+      "Tavneos",
+      "avacopan"
+    ],
+    "mentioned_companies": [
+      "ChemoCentryx"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Merck KGaA Acquires Bio-Techne for $11.3 Billion",
+    "headline": "Merck KGaA completes $11.3 billion acquisition of Bio-Techne, its largest deal in a decade focused on life sciences services.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Acquirer: Merck KGaA; Target: Bio-Techne; Deal value: $11.3 billion; Focus: Life sciences services; Scale: Largest deal in decade",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Merck KGaA"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Bio-Techne"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Ionis Gains Expanded Approval for Tryngolza",
+    "headline": "Ionis (IONS) receives expanded FDA approval for Tryngolza as first treatment to reduce acute pancreatitis risk in severe hypertriglyceridemia.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Stock: IONS; Drug: Tryngolza; Indication: Severe hypertriglyceridemia/acute pancreatitis prevention; Status: Expanded approval; Described as commercial inflection point",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Ionis"
+    ],
+    "drugs": [
+      "Tryngolza"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Keytruda-Padcev Wins EU Label Expansion",
+    "headline": "Keytruda-Padcev combination therapy receives European Union label expansion.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Drug: Keytruda-Padcev combination; Regulator: European Union; Action: Label expansion",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Merck"
+    ],
+    "drugs": [
+      "Keytruda",
+      "Padcev"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "AbbVie Gains +4.20% Following Apogee Deal",
+    "headline": "AbbVie (ABBV) gains 4.20% to $253.35 after completing $10.9 billion acquisition of Apogee Therapeutics.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Stock: ABBV; Close: $253.35; Market cap: $447.6 billion; Day change: +4.20%; YTD return: +10.88%; Deal: $10.9 billion Apogee acquisition",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "AbbVie"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Apogee Therapeutics"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "Johnson & Johnson Gains +3.99% on Sector Strength",
+    "headline": "Johnson & Johnson (JNJ) advances 3.99% to $254.66 with $613 billion market cap amid healthcare sector strength.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "Stock: JNJ; Close: $254.66; Market cap: $613 billion; Day change: +3.99%",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Johnson & Johnson"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "Lycia Raises $75M for Food Allergy and Graves' Programs",
+    "headline": "Lycia raises $75 million in funding for food allergy and Graves' disease programs.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Company: Lycia; Funding: $75 million; Programs: Food allergy, Graves' disease",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Lycia"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 14,
+    "title": "Dr. Reddy's Receives FDA Form 483 at Indian Plant",
+    "headline": "Dr. Reddy's receives FDA Form 483 inspection observation at Indian manufacturing facility.",
+    "tier": 4,
+    "segment": "Regulatory Watch",
+    "key_facts": "Company: Dr. Reddy's; Regulator: FDA; Action: Form 483 issued; Location: Plant in India",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Dr. Reddy's"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 15,
+    "title": "Akeso Pushes Back on ASCO Lung Cancer Drug Questions",
+    "headline": "Akeso disputes ASCO questioning regarding efficacy claims for its lung cancer therapy.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Company: Akeso; Forum: ASCO; Issue: Lung cancer drug efficacy questioning",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Akeso"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

@@ -1,0 +1,266 @@
+[
+  {
+    "rank": 1,
+    "title": "Celcuity's Gedatolisib Misses Expectations at ASCO",
+    "headline": "Celcuity's gedatolisib doubled PFS versus Novartis Piqray in PIK3CA-mutated breast cancer but disappointed investors despite strong efficacy at ASCO 2026.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "Phase 3 trial; doubled progression-free survival (PFS) versus Piqray (alpelisib); PIK3CA-mutated HR+/HER2- breast cancer",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Celcuity"
+    ],
+    "drugs": [
+      "gedatolisib"
+    ],
+    "mentioned_companies": [
+      "Novartis"
+    ],
+    "mentioned_drugs": [
+      "Piqray",
+      "alpelisib"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "Abivax Shares Tank on Cancer Safety Signal",
+    "headline": "Abivax's obefazimod showed landmark efficacy in ulcerative colitis but a cancer safety signal emerged, causing significant stock decline.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "Cancer safety signal; strong/landmark efficacy data; ulcerative colitis indication",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Abivax"
+    ],
+    "drugs": [
+      "obefazimod"
+    ],
+    "mentioned_companies": [
+      "J&J",
+      "AbbVie",
+      "Pfizer"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Fulcrum Exploring Sale After Sickle Cell Setback",
+    "headline": "Fulcrum Therapeutics is exploring a potential sale after FDA sidelined its sickle cell disease drug program.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "FDA sidelined sickle cell drug; company exploring sale; ending sickle cell ambitions",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": true,
+    "companies": [
+      "Fulcrum Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "CRISPR Therapeutics",
+      "Vertex",
+      "bluebird bio"
+    ],
+    "mentioned_drugs": [
+      "Casgevy",
+      "Lyfgenia"
+    ]
+  },
+  {
+    "rank": 4,
+    "title": "Gilead's Livdelzi Shows Phase 3 IDEAL Success",
+    "headline": "Gilead reported positive Phase 3 IDEAL results for Livdelzi, supporting broader use in primary biliary cholangitis.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Phase 3 IDEAL trial positive; Livdelzi already has initial approval; primary biliary cholangitis (PBC)",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Gilead Sciences"
+    ],
+    "drugs": [
+      "Livdelzi",
+      "seladelpar"
+    ],
+    "mentioned_companies": [
+      "Intercept"
+    ],
+    "mentioned_drugs": [
+      "obeticholic acid"
+    ]
+  },
+  {
+    "rank": 5,
+    "title": "Merck Cuts 88 Jobs in New Jersey",
+    "headline": "Merck laid off 88 employees in New Jersey as part of its $3 billion cost-cutting initiative announced in July 2025.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "88 layoffs; $3 billion cost-cutting plan announced July 2025; New Jersey headquarters",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Merck & Co."
+    ],
+    "drugs": [
+      "Keytruda"
+    ],
+    "mentioned_companies": [
+      "Revolution Medicines"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Cingulate Gets Manufacturing CRL for CTx-1301",
+    "headline": "Cingulate received a Complete Response Letter for ADHD drug CTx-1301 citing only manufacturing issues with no clinical safety or efficacy concerns.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Complete Response Letter (CRL); manufacturing-related only; no safety or efficacy deficiencies; ADHD indication",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Cingulate"
+    ],
+    "drugs": [
+      "CTx-1301"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Contraline Raises $92.5M for Male Contraception",
+    "headline": "Contraline closed a $92.5 million Series B funding round to advance male birth control development.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$92.5 million raised; Series B funding; male contraception focus",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Contraline"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "NewLimit Raises $435M at $3B+ Valuation",
+    "headline": "Anti-aging startup NewLimit raised $435 million at a valuation exceeding $3 billion, targeting clinical entry in 2027.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$435 million raised; $3 billion+ valuation; clinical entry targeted for 2027; anti-aging/longevity focus",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "NewLimit"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Travere Acquires Everest Kidney Disease Pipeline",
+    "headline": "Travere Therapeutics paid Everest Medicines $112 million upfront to acquire rare kidney disease pipeline assets.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$112 million upfront payment; rare kidney disease focus; Everest Medicines (China-based)",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Travere Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Everest Medicines"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Legend Biotech Shares In Vivo CAR-T Data",
+    "headline": "Legend Biotech disclosed its first in vivo CAR-T therapy data, positioning it as a next-generation successor to Carvykti.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "First in vivo CAR-T data; Carvykti (cilta-cel) approved for multiple myeloma; in vivo CAR-T approach",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Legend Biotech"
+    ],
+    "drugs": [
+      "in vivo CAR-T"
+    ],
+    "mentioned_companies": [
+      "J&J"
+    ],
+    "mentioned_drugs": [
+      "Carvykti",
+      "cilta-cel"
+    ]
+  },
+  {
+    "rank": 11,
+    "title": "Roche's Giredestrant Misses First-Line, NDA Accepted",
+    "headline": "Roche's oral SERD giredestrant missed first-line metastatic breast cancer but had its NDA accepted with Priority Review for ER+ early breast cancer (PDUFA November 30, 2026).",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "First-line metastatic trial miss; NDA accepted; Priority Review; PDUFA date November 30, 2026; ER+ early breast cancer",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Roche"
+    ],
+    "drugs": [
+      "giredestrant"
+    ],
+    "mentioned_companies": [
+      "AstraZeneca"
+    ],
+    "mentioned_drugs": [
+      "camizestrant"
+    ]
+  },
+  {
+    "rank": 12,
+    "title": "Lilly Threatens Hospitals Over 340B Claims Data",
+    "headline": "Eli Lilly issued a deadline for hospitals to submit 340B drug discount claims data or lose pricing benefits.",
+    "tier": 4,
+    "segment": "What to Watch",
+    "key_facts": "340B claims data deadline; hospital pricing dispute; discount enforcement",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

@@ -1,0 +1,251 @@
+[
+  {
+    "rank": 1,
+    "title": "FDA Approves Expanded Label for Ionis' Tryngolza",
+    "headline": "FDA approves expanded indication for Ionis' Tryngolza (olezarsen), making it the first treatment to reduce risk of acute pancreatitis associated with severe hypertriglyceridemia, transforming it from rare-disease niche to potential blockbuster.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "FDA approval June 25, 2026; Tryngolza previously approved for familial chylomicronemia syndrome; new indication addresses significantly larger patient population with severe hypertriglyceridemia",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Ionis Pharmaceuticals"
+    ],
+    "drugs": [
+      "Tryngolza",
+      "olezarsen"
+    ],
+    "mentioned_companies": [
+      "Recordati"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "Merck KGaA Acquires Bio-Techne for $11.3B",
+    "headline": "Merck KGaA (Darmstadt) announces largest acquisition in over a decade, acquiring diagnostics and life sciences tools company Bio-Techne for $73 per share in an all-cash deal valued at $11.3 billion.",
+    "tier": 1,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$11.3 billion deal value; $73 per share all-cash; largest deal in 10+ years for Merck KGaA; announced June 25, 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Merck KGaA"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Bio-Techne"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Healthcare Sector Outperforms S&P 500",
+    "headline": "Healthcare sector gains +1.58% on June 25, outperforming S&P 500's +0.01%, led by AbbVie +3.51% and Merck +4.02%, with Drug Manufacturers subsector up +1.60%.",
+    "tier": 2,
+    "segment": "What to Watch",
+    "key_facts": "Healthcare sector day return +1.58% vs. S&P 500 +0.01%; YTD healthcare +6.03% vs. S&P 500 +6.69%; AbbVie +3.51% to $243.14 (market cap $429.6B); Merck +4.02% to $125.45 (market cap $309.8B); Drug Manufacturers subsector +1.60% day, +18.79% YTD; Biotechnology subsector +1.25% day, +13.87% YTD; Gilead -1.05%; Pfizer -1.54%",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "AbbVie",
+      "Merck & Co.",
+      "Eli Lilly",
+      "Gilead Sciences",
+      "Pfizer"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "SCOTUS Rules on Bayer Roundup Litigation",
+    "headline": "Supreme Court ruling limits state-level claims against Bayer regarding Roundup herbicide, potentially reducing future litigation exposure for the company.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "SCOTUS ruling issued June 25, 2026; blunts state-level claims; Bayer has previously spent over $10 billion settling Roundup claims",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Bayer AG"
+    ],
+    "drugs": [
+      "Roundup",
+      "glyphosate"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Gilead's Trodelvy Approved for Front-Line TNBC",
+    "headline": "Gilead Sciences receives FDA approval for Trodelvy (sacituzumab govitecan) in front-line triple-negative breast cancer, though stock dips -1.05% on June 25 in possible sell-the-news reaction.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "FDA approval issued June 24, 2026; indication: front-line TNBC; Gilead stock -1.05% on June 25",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Gilead Sciences"
+    ],
+    "drugs": [
+      "Trodelvy",
+      "sacituzumab govitecan"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Pfizer's Seagen ADC Fails in Lung Cancer Trial",
+    "headline": "Pfizer's acquired Seagen ADC therapy fails in late-stage lung cancer trial, further pressuring stock -1.54% and highlighting class divergence as competitors succeed with anthracycline-based therapies.",
+    "tier": 2,
+    "segment": "Under the Radar",
+    "key_facts": "$43 billion Seagen acquisition; late-stage lung cancer trial failure; Pfizer stock -1.54% on June 25",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Pfizer"
+    ],
+    "drugs": [
+      "Seagen ADC"
+    ],
+    "mentioned_companies": [
+      "Gilead Sciences"
+    ],
+    "mentioned_drugs": [
+      "Trodelvy"
+    ]
+  },
+  {
+    "rank": 7,
+    "title": "Achieve Life Sciences Receives FDA CRL",
+    "headline": "Achieve Life Sciences receives Complete Response Letter from FDA, details not yet specified.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Complete Response Letter issued June 25, 2026; specific indication/drug not specified in available text",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Achieve Life Sciences"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Oblenio Bio Raises $62M for Autoimmune Programs",
+    "headline": "Oblenio Bio raises $62 million in financing led by Pfizer Ventures for development of autoimmune disease treatments.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$62 million financing; led by Pfizer Ventures; focus: autoimmune disease; announced June 25, 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Oblenio Bio"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Pfizer Ventures"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Remix to Go Public via Passage Bio Merger",
+    "headline": "Remix Therapeutics to go public via reverse merger with Passage Bio, utilizing the gene therapy company's Nasdaq listing to advance mRNA degrader platform.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Reverse merger transaction; Passage Bio provides Nasdaq listing; Remix platform: mRNA degraders; announced June 25, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Remix Therapeutics",
+      "Passage Bio"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Ollin Raises $330M for Vabysmo Competitor",
+    "headline": "Ollin Therapeutics raises $330 million to fund pivotal trials of an ophthalmology drug licensed from China-based developer, positioning as competitor to Roche's Vabysmo.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$330 million financing; indication: ophthalmology; licensed from China-based developer; announced June 25, 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Ollin Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Roche"
+    ],
+    "mentioned_drugs": [
+      "Vabysmo"
+    ]
+  },
+  {
+    "rank": 11,
+    "title": "Novartis & Antares Partner on Small Molecule Discovery",
+    "headline": "Novartis and Antares Pharma (Scorpion Therapeutics spinout) announce $105 million upfront small molecule drug discovery pact.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$105 million upfront; small molecule discovery pact; Antares is Scorpion Therapeutics spinout; announced June 25, 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Novartis",
+      "Antares Pharma"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Scorpion Therapeutics"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "RQ Bio Raises $115M for Preventive Flu Antibody",
+    "headline": "RQ Bio raises $115 million in financing to advance development of preventive antibody therapeutic for influenza.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$115 million financing; therapeutic class: preventive antibody; indication: influenza; announced June 25, 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "RQ Bio"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

@@ -1,0 +1,234 @@
+[
+  {
+    "rank": 1,
+    "title": "FDA Approves Celcuity's Revtorpyk for HR+/HER2- Breast Cancer",
+    "headline": "FDA approves Celcuity's Revtorpyk (gedatolisib) for HR+/HER2-, PIK3CA wild-type advanced or metastatic breast cancer, with HR 0.24 and 76% risk reduction in VIKTORIA-1 trial.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "FDA approval July 14, 2026; VIKTORIA-1 HR 0.24, median PFS 9.3 vs 2.0 months (76% risk reduction); Celcuity stock $103.79→$111.05; $10B commercial potential; regimen: gedatolisib + fulvestrant ± palbociclib",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Celcuity Inc."
+    ],
+    "drugs": [
+      "Revtorpyk",
+      "gedatolisib",
+      "fulvestrant",
+      "palbociclib"
+    ],
+    "mentioned_companies": [
+      "Pfizer"
+    ],
+    "mentioned_drugs": [
+      "Piqray",
+      "alpelisib"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "AstraZeneca Licenses Dizal's Zegfrovy for Up to $1.5B",
+    "headline": "AstraZeneca acquires exclusive global rights to Dizal's oral EGFR inhibitor Zegfrovy (sunvozertinib) for $600M upfront plus up to $900M in milestones.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$600M upfront; up to $900M development/regulatory/sales milestones; total up to $1.5B; tiered royalties on global sales; deal close expected H2 2026; drug: sunvozertinib, oral EGFR inhibitor for lung cancer",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "AstraZeneca",
+      "Dizal Pharmaceutical"
+    ],
+    "drugs": [
+      "Zegfrovy",
+      "sunvozertinib"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Biogen CELIA Data: Diranersen Slows Cognitive Decline but Misses Primary",
+    "headline": "Biogen's Phase 2 CELIA trial shows diranersen achieved 26% slowing on CDR-SB and 50-65% CSF tau reduction at 60mg over 18 months in 416 patients, but missed primary dose-response endpoint.",
+    "tier": 1,
+    "segment": "What to Watch",
+    "key_facts": "Phase 2 CELIA, 416 patients, 18-month RCT; 26% CDR-SB slowing at 60mg; 50-65% CSF total tau reduction; missed primary endpoint (inverse dose-response); presented AAIC 2026 London July 12-15",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Biogen"
+    ],
+    "drugs": [
+      "diranersen",
+      "BIIB080"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Huyabio HBI-8000 Scores Phase 3 Win in Melanoma",
+    "headline": "Huyabio's HDAC inhibitor HBI-8000 meets positive Phase 3 endpoint in checkpoint-naïve unresectable/metastatic melanoma when combined with immune checkpoint inhibitors.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "HBI-8000-303 global Phase 3 pivotal trial; indication: unresectable/metastatic melanoma, checkpoint-naïve; combined with ICIs; prior Phase 2: HBI-8000-302",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "HUYABIO International"
+    ],
+    "drugs": [
+      "HBI-8000"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "NextCure/Avere Merge on Oral IL-23 Psoriasis Therapy",
+    "headline": "NextCure and Avere Therapeutics merge to advance AVR-001, a once-weekly oral IL-23 inhibitor, with stock spiking ~3X on deal announcement.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "NextCure stock ~3X spike; lead asset AVR-001, once-weekly oral IL-23; runway funds Phase 2b psoriasis readout, Phase 3 psoriasis initiation, Phase 2b ulcerative colitis initiation",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "NextCure",
+      "Avere Therapeutics"
+    ],
+    "drugs": [
+      "AVR-001"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Leqembi Subcutaneous Starter Dose Approved by FDA",
+    "headline": "FDA approves subcutaneous starter-dose formulation of lecanemab (Leqembi) for Alzheimer's disease.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "FDA approval for subcutaneous starter dose; drug: Leqembi (lecanemab); approval date July 13-14, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Eisai"
+    ],
+    "drugs": [
+      "Leqembi",
+      "lecanemab"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Chai Discovery Raises $400M on AI Drug Discovery Platform",
+    "headline": "AI-driven drug discovery platform Chai Discovery closes $400M financing round, tripling valuation from seven months prior.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "$400M raised; valuation tripled in 7 months; AI drug-discovery platform",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Chai Discovery"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Roche Terminates Two Ionis Huntington's Antisense Programs",
+    "headline": "Roche discontinues tominersen and a second Ionis antisense oligonucleotide program for Huntington's disease due to lack of disease-progression delay and animal safety signals.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Drug tominersen failed to delay Huntington's disease progression; second drug halted due to safety signal in animal testing",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Roche",
+      "Ionis Pharmaceuticals"
+    ],
+    "drugs": [
+      "tominersen"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Pfizer Downgraded on Delayed 2027 Growth Catalysts",
+    "headline": "Analyst downgrades Pfizer on beta-raise concerns; growth catalysts atirmociclib, SV, VEGF-bispecific pushed to 2027.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "Pfizer beta raised 0.85 from 0.78; key catalysts: atirmociclib, SV, VEGF-bispecific; timeline pushed to 2027",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Pfizer"
+    ],
+    "drugs": [
+      "atirmociclib"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [
+      "SV",
+      "VEGF-bispecific"
+    ]
+  },
+  {
+    "rank": 10,
+    "title": "Evotec Plummets 32% on Widened H1 Loss, Slashed Outlook",
+    "headline": "Evotec stock drops 32% after H1 2026 loss widened and full-year guidance slashed.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Stock decline −32%; H1 loss widened; full-year outlook reduced",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Evotec"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "Erasca Launches $550M Public Offering; Summit Divests Antibiotic",
+    "headline": "Erasca announces $550M equity offering; Summit Therapeutics sells antibiotic asset.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "$550M public offering (Erasca); antibiotic asset divestiture (Summit)",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Erasca",
+      "Summit Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

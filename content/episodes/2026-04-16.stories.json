@@ -1,0 +1,356 @@
+[
+  {
+    "rank": 1,
+    "title": "Lilly's Foundayo Passes Heart Safety Test; FDA Requests Liver Evaluation",
+    "headline": "Eli Lilly's oral GLP-1 obesity pill Foundayo (orforglipron) clears cardiovascular safety in ACHIEVE-4 diabetes trial, positioning it for diabetes filing, while FDA requests liver risk evaluation.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "ACHIEVE-4 trial results April 16, 2026; FDA approval letter requests liver risk evaluation",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Foundayo",
+      "orforglipron"
+    ],
+    "mentioned_companies": [
+      "Novo Nordisk"
+    ],
+    "mentioned_drugs": [
+      "semaglutide",
+      "tirzepatide"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "Cochrane Review Calls Anti-Amyloid Alzheimer's Drugs 'Trivial'",
+    "headline": "A Cochrane systematic review published April 16 concludes anti-amyloid Alzheimer's drugs show 'trivial' clinical effects, drawing immediate backlash from researchers and drugmakers.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Cochrane review published April 16, 2026; anti-amyloid drugs dismissed as trivial",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Eisai",
+      "Biogen",
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "lecanemab",
+      "Leqembi",
+      "donanemab",
+      "Kisunla"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Roche Plans New Phase 3 Trial for Elevidys After EU Setback",
+    "headline": "Roche announces plans to initiate a new Phase 3 trial for gene therapy Elevidys (delandistrogene moxeparvovec) for Duchenne muscular dystrophy following EU regulatory rejection.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "New Phase 3 planned following EU setback in 2025; Elevidys approved in U.S.",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Roche"
+    ],
+    "drugs": [
+      "Elevidys",
+      "delandistrogene moxeparvovec"
+    ],
+    "mentioned_companies": [
+      "Sarepta Therapeutics"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Kailera Therapeutics Prices IPO at $533M",
+    "headline": "Clinical-stage GLP-1/obesity biotech Kailera Therapeutics prices IPO aiming to raise up to $533 million for weekly injection and daily oral pill development.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$533 million IPO raise; developing weekly GLP-1 injection and daily oral pill; targeting billion-dollar-plus valuation",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Kailera Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Alamar Biosciences"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Daiichi Sankyo Sells Consumer Health Unit to Suntory for $1.5B",
+    "headline": "Daiichi Sankyo agrees to sell its consumer health business to Suntory for $1.5 billion as part of strategic focus on oncology and ADC pipeline.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$1.5 billion divestiture; strategic pivot to oncology/ADC focus",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Daiichi Sankyo"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Suntory",
+      "AstraZeneca"
+    ],
+    "mentioned_drugs": [
+      "Enhertu"
+    ]
+  },
+  {
+    "rank": 6,
+    "title": "Obsidian/Galera Reverse Merger Closes with $350M PIPE",
+    "headline": "Obsidian Therapeutics and Galera Therapeutics complete reverse merger to advance cell therapy platform with $350 million in committed PIPE proceeds.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$350 million PIPE gross proceeds; combined company trading on Nasdaq under ticker OBX",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Obsidian Therapeutics",
+      "Galera Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Lilly Acquires CrossBridge Bio for $300M ADC Technology",
+    "headline": "Eli Lilly acquires CrossBridge Bio for up to $300 million to strengthen its antibody-drug conjugate (ADC) portfolio with dual-payload technology.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Up to $300 million acquisition; dual-payload ADC technology",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "CrossBridge Bio"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Revolution Medicines Prices $2B Raise on Pancreatic Cancer Data",
+    "headline": "Revolution Medicines prices $2 billion raise as its Phase 3 pancreatic cancer drug nearly doubles survival, called a 'game changer' by analysts.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$2 billion raise; Phase 3 pancreatic cancer drug nearly doubles survival",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Revolution Medicines"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Regeneron Enters Radiopharmaceuticals with Telix $40M Deal",
+    "headline": "Regeneron enters radiopharmaceuticals market via $40 million upfront deal with Telix Pharmaceuticals.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$40 million upfront deal; radiopharmaceuticals partnership",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Regeneron"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Telix Pharmaceuticals"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Silo Pharma Surges 45% on PTSD Pipeline IP Update",
+    "headline": "Silo Pharma (NASDAQ: SILO) surges 45.31% following intellectual property update tied to PTSD treatment pipeline.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "Stock surge 45.31%; PTSD treatment pipeline IP update",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Silo Pharma"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "Terremoto Raises $108M for AKT-Targeting Therapies",
+    "headline": "Terremoto raises $108 million to develop AKT-targeting drugs with one therapy in Phase 1 development.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$108 million raise; one AKT-targeting therapy in Phase 1",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Terremoto"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "Beeline Medicines Emerges with Bristol Myers Immunology Assets",
+    "headline": "Beeline Medicines emerges as Bain-backed biotech with shelved Bristol Myers immunology drug programs.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "Bain Capital backed; acquired shelved Bristol Myers immunology programs",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Beeline Medicines"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Bain Capital",
+      "Bristol Myers Squibb"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "FDA Moves to Ease Restrictions on Unapproved Peptides",
+    "headline": "FDA advisory committee to discuss easing restrictions on certain unapproved peptides, signaling potential regulatory shift.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "FDA advisory committee discussion on unapproved peptide restrictions",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 14,
+    "title": "OpenAI Launches Life Sciences AI Model",
+    "headline": "OpenAI debuts life sciences-specific AI model as tech giants intensify competition for pharma market.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "OpenAI life sciences AI model launch; Novartis CEO Vas Narasimhan joins Anthropic board",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "OpenAI"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Anthropic",
+      "Novartis"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 15,
+    "title": "RFK Jr. Defends FDA Commissioner Makary",
+    "headline": "RFK Jr. defends FDA and Commissioner Makary following Republican questioning, signaling continued support for agency leadership.",
+    "tier": 4,
+    "segment": "Regulatory Watch",
+    "key_facts": "RFK Jr. defense of FDA Commissioner Makary; Republican questioning context",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 16,
+    "title": "Former FDA Cancer Chief Warns of Political 'Breach' at FDA",
+    "headline": "Former FDA cancer chief Richard Pazdur warns of political 'breach' at FDA, raising concerns about regulatory independence.",
+    "tier": 4,
+    "segment": "Regulatory Watch",
+    "key_facts": "Richard Pazdur political concerns regarding FDA independence",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 17,
+    "title": "Erica Schwartz Named Next CDC Director",
+    "headline": "Erica Schwartz, former deputy surgeon general, selected as next CDC director.",
+    "tier": 4,
+    "segment": "Regulatory Watch",
+    "key_facts": "Erica Schwartz appointment as CDC director; former deputy surgeon general",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 18,
+    "title": "UnitedHealth Stock Down 54% from 52-Week High",
+    "headline": "UnitedHealth stock down 54% from 52-week high with Q1 earnings due April 21 and membership contraction expected to 46.9–47.5 million.",
+    "tier": 4,
+    "segment": "What to Watch",
+    "key_facts": "Stock down 54% from 52-week high; membership contraction from 49.8 million to 46.9–47.5 million; Q1 earnings due April 21",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "UnitedHealth"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

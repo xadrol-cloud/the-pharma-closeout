@@ -1,0 +1,380 @@
+[
+  {
+    "rank": 1,
+    "title": "ASCO 2026 Preview — Major Cancer Data Starting May 29",
+    "headline": "ASCO 2026 abstracts dropped May 22 previewing practice-changing data from Lilly, Merck, BioNTech, and Moderna, with Lilly securing two rare plenary session slots for selpercatinib and abemaciclib.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "ASCO annual meeting begins May 29; abstracts published May 22; Lilly has 2 plenary slots: LIBRETTO-432 (selpercatinib adjuvant RET-mutant NSCLC) and SARC041 (abemaciclib liposarcoma); monarchE OS data also expected",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Retevmo",
+      "Verzenio"
+    ],
+    "mentioned_companies": [
+      "Merck",
+      "BioNTech",
+      "Moderna"
+    ],
+    "mentioned_drugs": [
+      "selpercatinib",
+      "abemaciclib"
+    ]
+  },
+  {
+    "rank": 2,
+    "title": "Regeneron Fianlimab/Libtayo Misses vs. Keytruda in Melanoma",
+    "headline": "Regeneron's fianlimab plus Libtayo combination failed to significantly outperform Merck's Keytruda in late-stage melanoma, wiping out billions in market value and raising doubts about the LAG-3+PD-1 combination strategy.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Fianlimab + cemiplimab did not significantly outperform pembrolizumab; billions in market cap erased; reported May 18, 2026",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Regeneron"
+    ],
+    "drugs": [
+      "fianlimab",
+      "Libtayo"
+    ],
+    "mentioned_companies": [
+      "Merck",
+      "Bristol Myers Squibb"
+    ],
+    "mentioned_drugs": [
+      "Keytruda",
+      "pembrolizumab",
+      "Opdualag"
+    ]
+  },
+  {
+    "rank": 3,
+    "title": "BioMarin Voxzogo Hits Phase 3 in Hypochondroplasia — sNDA Q3 2026",
+    "headline": "BioMarin's Voxzogo met its primary endpoint in the Phase 3 CANOPY-HCH-3 study in hypochondroplasia children with +2.33 cm/yr annualized growth velocity improvement vs. placebo (p<0.0001), with an sNDA filing planned for Q3 2026.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Primary endpoint: AGV +2.33 cm/yr vs. placebo at Week 52 (p<0.0001); standing height p<0.0001; height Z-score p<0.0001; arm span p=0.004; sNDA to FDA planned Q3 2026; announced May 20, 2026",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "BioMarin"
+    ],
+    "drugs": [
+      "Voxzogo",
+      "vosoritide"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Leqembi Iqlik PDUFA Extended 3 Months to August 24",
+    "headline": "The FDA extended its review of Biogen and Eisai's subcutaneous Leqembi Iqlik sBLA by three months from the original May 24, 2026 PDUFA date to August 24, 2026.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "key_facts": "Original PDUFA May 24, 2026; extension announced May 8, 2026; new PDUFA August 24, 2026; sBLA has Priority Review; indication: early Alzheimer's disease MCI and mild AD dementia",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Biogen",
+      "Eisai"
+    ],
+    "drugs": [
+      "Leqembi Iqlik",
+      "lecanemab-irmb"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Regenxbio RGX-202 Meets Phase 3 Primary Endpoint in Duchenne",
+    "headline": "Regenxbio's gene therapy RGX-202 met its primary endpoint in the pivotal AFFINITY DUCHENNE Phase 3 trial with 93% of patients achieving meaningful microdystrophin expression, positioning the company for potential accelerated approval in 2027.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "Primary endpoint met (p<0.0001); 93% of patients (n=30) achieved microdystrophin expression >10% at Week 12; functional correlation on NSAA (n=9); accelerated approval targeted 2027; announced May 14, 2026",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Regenxbio"
+    ],
+    "drugs": [
+      "RGX-202"
+    ],
+    "mentioned_companies": [
+      "Sarepta"
+    ],
+    "mentioned_drugs": [
+      "Elevidys"
+    ]
+  },
+  {
+    "rank": 6,
+    "title": "AZ/Daiichi Sankyo Datroway Approved in First-Line TNBC",
+    "headline": "AstraZeneca and Daiichi Sankyo's Datroway received FDA approval in first-line triple-negative breast cancer on May 22, 2026.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Approved May 22, 2026; indication: first-line TNBC",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "AstraZeneca",
+      "Daiichi Sankyo"
+    ],
+    "drugs": [
+      "Datroway"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Lilly Triple-G Obesity Drug Hits Goal in Phase 3",
+    "headline": "Eli Lilly's triple-acting GLP-1/GIP/glucagon obesity drug met its primary endpoint in a Phase 3 trial, adding to the company's growing weight-loss portfolio.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Triple-G agonist (GLP-1/GIP/glucagon); Phase 3 primary endpoint met",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "triple-G obesity drug"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Lilly Acquires Engage Therapeutics for Non-Viral Genetic Medicines",
+    "headline": "Eli Lilly acquired Engage Therapeutics to advance non-viral genetic medicine capabilities, expanding its pipeline beyond small molecules and biologics.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Acquisition of Engage Therapeutics; focus on non-viral genetic medicines; deal value not disclosed",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Engage Therapeutics"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Immunovant Shares Surge on Compelling Arthritis Trial Data",
+    "headline": "Immunovant shares surged after analysts called Phase data in tough-to-treat arthritis 'compelling' with blockbuster potential, per STAT News reporting on May 21, 2026.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Reported May 21, 2026; analyst characterized results as 'compelling' with 'blockbuster' potential; indication: tough-to-treat arthritis",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Immunovant"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "EU CHMP Recommends AstraZeneca Etcamah and Novo Oral Wegovy",
+    "headline": "The EU CHMP recommended approval of AstraZeneca's Etcamah and Novo Nordisk's oral Wegovy formulation on May 22, 2026.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "CHMP recommendations issued May 22, 2026; AstraZeneca's Etcamah; Novo Nordisk oral Wegovy",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "AstraZeneca",
+      "Novo Nordisk"
+    ],
+    "drugs": [
+      "Etcamah",
+      "Wegovy"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "AbbVie Cuts 85 Jobs at Allergan Aesthetics Unit in Irvine, CA",
+    "headline": "AbbVie filed a WARN notice for 85 layoffs at its Allergan aesthetics unit in Irvine, California, effective July 20, 2026, as post-acquisition integration continues.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "85 employees laid off; Irvine, CA Allergan unit; effective July 20, 2026; reported May 22, 2026; AbbVie total WARN-tracked layoffs 595 workers across 11 notices May 2012–Jan 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "AbbVie"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "Novartis Cuts 76 Jobs at East Hanover NJ Headquarters",
+    "headline": "Novartis filed a WARN notice for 76 layoffs at its East Hanover, New Jersey headquarters, continuing a broader pattern of US headcount reduction, reported May 22, 2026.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "76 employees; East Hanover, NJ headquarters; reported May 22, 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Novartis"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "Bristol Myers Squibb Signs AI Collaboration Deal with Anthropic",
+    "headline": "Bristol Myers Squibb deepened its AI investment by announcing a collaboration with Anthropic, applying large language model capabilities to drug discovery and development.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Collaboration with Anthropic (not acquisition); AI investment in drug discovery",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Bristol Myers Squibb"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Anthropic"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 14,
+    "title": "Biogen/Denali Parkinson's Drug Falls Short in Trial",
+    "headline": "A Parkinson's disease drug developed by Biogen and Denali Therapeutics came up short in a clinical study, per BioPharma Dive reporting.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Parkinson's indication; trial failed to meet goals; reported week of May 18–24, 2026",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Biogen",
+      "Denali Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 15,
+    "title": "FDA Places Clinical Hold on Aardvark ARD-101 for Prader-Willi",
+    "headline": "The FDA placed a full clinical hold on Aardvark Therapeutics' ARD-101 for Prader-Willi syndrome on May 14, 2026, citing cardiovascular safety concerns.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Full clinical hold; ARD-101; Prader-Willi syndrome indication; cardiovascular safety concern; announced May 14, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Aardvark Therapeutics"
+    ],
+    "drugs": [
+      "ARD-101"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 16,
+    "title": "Radiopharm Sector Raises $160M: Full-Life and Accro Bioscience",
+    "headline": "Full-Life Technologies and Accro Bioscience raised a combined $160 million in financings on May 19, 2026, signaling continued investor appetite for radiopharmaceutical companies.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "$160 million combined raised; Full-Life Technologies and Accro Bioscience; May 19, 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Full-Life Technologies",
+      "Accro Bioscience"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 17,
+    "title": "Upcoming PDUFAs: MannKind Afrezza May 29, Cingulate CTx-1301 May 31",
+    "headline": "Two upcoming PDUFA dates are on the calendar: MannKind's Afrezza on May 29, 2026, and Cingulate's CTx-1301 on May 31, 2026.",
+    "tier": 4,
+    "segment": "What to Watch",
+    "key_facts": "MannKind/Afrezza PDUFA May 29, 2026; Cingulate CTx-1301 PDUFA May 31, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "MannKind",
+      "Cingulate"
+    ],
+    "drugs": [
+      "Afrezza",
+      "CTx-1301"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 18,
+    "title": "Bristol Myers Exploring Tau-Targeting Alzheimer's Programs",
+    "headline": "Bristol Myers Squibb highlighted interest in tau-targeting approaches for Alzheimer's disease, seeing 'big promise beyond amyloid' in its neuroscience pipeline.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Tau-targeting program; Alzheimer's disease; beyond amyloid strategy",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Bristol Myers Squibb"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

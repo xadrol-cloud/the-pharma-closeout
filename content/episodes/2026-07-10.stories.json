@@ -1,0 +1,298 @@
+[
+  {
+    "rank": 1,
+    "title": "GSK Ends Alector Partnership",
+    "headline": "GSK terminated its partnership with Alector, clearing the lead selection for the day's major pharma news.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "$2.2B potential deal value",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "GSK",
+      "Alector"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "FDA Resumes Releasing Rejection Letters",
+    "headline": "The FDA returned to publicly posting drug rejection letters after a months-long pause, releasing 14 new Complete Response Letters on July 10, 2026.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "key_facts": "14 new CRLs posted July 10, 2026; pause began April 2026; CDER added 100+ employees in single quarter; recipients include Jiangsu Hengrui, Elevar Therapeutics, Ipsen",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "FDA",
+      "HHS"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Jiangsu Hengrui",
+      "Elevar Therapeutics",
+      "Ipsen"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Hengrui/Elevar PD-1 Combo Rejected Third Time",
+    "headline": "The FDA issued a third Complete Response Letter for camrelizumab/rivoceranib combination in first-line unresectable hepatocellular carcinoma due to manufacturing deficiencies.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "3rd CRL in two years; first-line unresectable HCC; manufacturing site deficiencies cited",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Jiangsu Hengrui",
+      "Elevar Therapeutics"
+    ],
+    "drugs": [
+      "camrelizumab",
+      "rivoceranib"
+    ],
+    "mentioned_companies": [
+      "HLB Group"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "FDA Expands Padcev-Keytruda to More MIBC",
+    "headline": "The FDA broadened the Padcev + Keytruda combination to additional muscle-invasive bladder cancer (MIBC) patient populations.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Label expansion for muscle-invasive bladder cancer (MIBC); July 10, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Pfizer",
+      "Astellas",
+      "Merck"
+    ],
+    "drugs": [
+      "Padcev",
+      "enfortumab vedotin",
+      "Keytruda",
+      "pembrolizumab"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Sanofi Wins Subcutaneous Sarclisa Approval",
+    "headline": "Sanofi secured FDA approval for a subcutaneous on-body injector version of Sarclisa following an earlier regulatory delay.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "On-body injector formulation approved July 10, 2026; prior FDA delay",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Sanofi"
+    ],
+    "drugs": [
+      "Sarclisa",
+      "isatuximab"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Apnimed Files IPO Amid FDA Review",
+    "headline": "Apnimed filed for an IPO while awaiting FDA decision on its sleep apnea drug candidate.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "IPO filing July 10, 2026; ticker APMD; sleep apnea indication; pending FDA review",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Apnimed"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Moderna Crashes 11-12% in Biotech Selloff",
+    "headline": "Moderna fell 11-12% on July 10, 2026 amid a sector-wide biotech rout driven by profit-taking, not company-specific catalysts; JPMorgan analyst named MRNA a short.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "MRNA down 11% to $68.50; YTD +160%; JPMorgan analyst Jessica Fye (top 8%, 58% success rate) reaffirmed Sell, avg price target $46.64 (31% downside); consensus 1 Buy, 13 Holds, 2 Sells; Q1 2026 revenue $389M (beat +65%); mRNA-1010 PDUFA Aug 5, 2026; ImmunityBio down 8% to $8.16, Q1 revenue $44.21M (+168% YoY); Sarepta down 8% to $18.84; XBI ETF down 4%",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Moderna",
+      "ImmunityBio",
+      "Sarepta",
+      "Eli Lilly",
+      "J&J"
+    ],
+    "drugs": [
+      "mRNA-1010",
+      "Anktiva"
+    ],
+    "mentioned_companies": [
+      "JPMorgan",
+      "Merck",
+      "Wolfe Research"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Corcept PDUFA Decision Upcoming",
+    "headline": "Corcept Therapeutics faces an FDA PDUFA decision on July 11, 2026 for a platinum-resistant ovarian cancer candidate.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "PDUFA July 11, 2026; platinum-resistant ovarian cancer indication",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Corcept Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Foundayo Launch Remains Muted",
+    "headline": "Eli Lilly's Foundayo (orforglipron), approved April 1, 2026, continues to show muted launch momentum.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Foundayo approved April 1, 2026; launch described as 'muted' as of July 10, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Foundayo",
+      "orforglipron"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "Roche Scraps Tominersen Development",
+    "headline": "Roche discontinued development of tominersen, an Ionis-partnered Huntington's disease drug.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Tominersen development halted; Ionis partnership affected; Huntington's disease indication",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Roche",
+      "Ionis Pharmaceuticals"
+    ],
+    "drugs": [
+      "tominersen"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "AstraZeneca/Ionis Heart Drug Fails",
+    "headline": "AstraZeneca and Ionis Pharmaceuticals' cardiovascular drug candidate failed in development.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Ionis partnership; cardiovascular indication; failure outcome",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "AstraZeneca",
+      "Ionis Pharmaceuticals"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "Vertex/Crinetics Large Partnership",
+    "headline": "Vertex and Crinetics announced a major partnership deal valued at $10B.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$10B deal value; Vertex and Crinetics partnership",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Vertex Pharmaceuticals",
+      "Crinetics Pharmaceuticals"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "Vera Therapeutics IgAN FDA Approval",
+    "headline": "Vera Therapeutics secured FDA approval for an IgA nephropathy (IgAN) therapy, competing against Otsuka's offering.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "IgA nephropathy (IgAN) indication; FDA approval; competitive with Otsuka",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Vera Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Otsuka"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 14,
+    "title": "Bayer/Apollo Strategic Equity Deal",
+    "headline": "Bayer completed a €3B equity infusion with Apollo in a strategic partnership.",
+    "tier": 4,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "€3B equity investment; Bayer and Apollo partnership",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Bayer",
+      "Apollo"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

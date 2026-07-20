@@ -1,0 +1,174 @@
+[
+  {
+    "rank": 1,
+    "title": "Federal Court Blocks Colorado's 70% Enbrel Price Cap",
+    "headline": "A federal judge halted Colorado's 70% price cap on Amgen's Enbrel, setting a first-of-its-kind precedent on state-level drug price regulation.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "70% price reduction mandate; first-of-its-kind case; AMGN +3.55% on July 2",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Amgen"
+    ],
+    "drugs": [
+      "Enbrel"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "Casgevy Approved for Children Ages 2+ with SCD/TDT",
+    "headline": "FDA approved Vertex/CRISPR Therapeutics' Casgevy (exagamglogene autotemcel) for children ages 2 years and older with sickle cell disease and transfusion-dependent beta thalassemia on July 1, 2026, expanding from prior age-12+ label.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "key_facts": "Approval date: July 1, 2026; prior approval: December 2023 (age 12+); new label: ages 2+; Orphan Drug, RMAT, Fast Track, Critical Need Pediatric Voucher granted; CRSP +8.09% July 2; Morgan Stanley doubled price target; 90-day return: 12.34%; 1-year return: 7.64%",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Vertex Pharmaceuticals",
+      "CRISPR Therapeutics"
+    ],
+    "drugs": [
+      "Casgevy",
+      "exagamglogene autotemcel"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Moderna mFLUSIVA Surges 70% on 9-0 VRBPAC Vote",
+    "headline": "Moderna's stock rallied more than 70% in one month following a unanimous 9-0 FDA advisory panel vote on June 18 supporting mFLUSIVA (mRNA-1010) flu vaccine, with PDUFA decision set for August 5, 2026.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "key_facts": "VRBPAC vote: 9-0 on June 18, 2026 (two votes: ages 50-64 and 65+); PDUFA date: August 5, 2026; MRNA +70% in past month, +10% on July 2-3; Wall Street avg price target implies 44% downside; would be first mRNA flu vaccine if approved",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Moderna"
+    ],
+    "drugs": [
+      "mFLUSIVA",
+      "mRNA-1010"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Orca Bio Sets Tregzi WAC at $428,000",
+    "headline": "Orca Bio announced a wholesale acquisition cost (WAC) of $428,000 for Tregzi, its novel regulatory T cell-based therapy for blood cancer patients requiring transplants, following FDA approval on July 1, 2026.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "WAC: $428,000; FDA approval: July 1, 2026; Tregzi is regulatory T cell-based therapy for blood cancer transplant patients",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Orca Bio"
+    ],
+    "drugs": [
+      "Tregzi"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Broad Pharma Rally Led by Large-Cap Stocks",
+    "headline": "Major pharmaceutical stocks rallied broadly on July 2, with JNJ (+3.57%), ABBV (+3.99%), MRK (+3.34%), GILD (+4.21%), and ISRG (+5.87%) leading gains as healthcare outperforms S&P 500 YTD by 310 basis points.",
+    "tier": 2,
+    "segment": "What to Watch",
+    "key_facts": "JNJ $263.04 +3.57%; ABBV $261.07 +3.99%; MRK $129.56 +3.34%; GILD $131.27 +4.21%; AMGN $374.15 +3.55%; ISRG $426.01 +5.87%; LLY $1,213.91 +1.86%; ABT $95.40 +3.49%; Healthcare sector YTD +11.61% vs S&P 500 +8.51%; Drug Manufacturers YTD +26.27%; Biotech YTD +21.70%",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Johnson & Johnson",
+      "AbbVie",
+      "Merck",
+      "Gilead Sciences",
+      "Amgen",
+      "Intuitive Surgical",
+      "Eli Lilly",
+      "Abbott Laboratories"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Celea Raises $180M as PureTech Spinout for IPF",
+    "headline": "Celea, a PureTech Health spinout focused on idiopathic pulmonary fibrosis (IPF), closed an $180 million funding round.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$180M funding; focus: idiopathic pulmonary fibrosis (IPF); PureTech spinout (prior spinouts: Karuna acquired by BMS for $14B; Seaport)",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Celea"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "PureTech Health",
+      "Karuna",
+      "Bristol Myers Squibb",
+      "Seaport"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Sarepta DMD Drugs PDUFA Set for February 2027",
+    "headline": "FDA set a February 28, 2027 PDUFA date for Sarepta's Amondys 45 and Vyondys 53 to convert from accelerated approval to full approval.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "PDUFA date: February 28, 2027; drugs: Amondys 45 and Vyondys 53; conversion: accelerated approval to full approval",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Sarepta Therapeutics"
+    ],
+    "drugs": [
+      "Amondys 45",
+      "Vyondys 53"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Sanofi Sarclisa SC Review Extended to July 23",
+    "headline": "FDA extended its review of Sanofi's subcutaneous formulation of Sarclisa to July 23, 2026, pushing back the original PDUFA date.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "New PDUFA date: July 23, 2026; subcutaneous Sarclisa formulation under review",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Sanofi"
+    ],
+    "drugs": [
+      "Sarclisa"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

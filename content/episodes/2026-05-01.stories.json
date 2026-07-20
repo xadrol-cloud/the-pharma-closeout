@@ -1,0 +1,366 @@
+[
+  {
+    "rank": 1,
+    "title": "FDA Approves Pfizer/Arvinas' First-in-Class PROTAC Breast Cancer Drug Veppanu",
+    "tier": 1,
+    "segment": "Top Story",
+    "companies": [
+      "Pfizer",
+      "Arvinas"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "Reuters Reports Big Pharma M&A Set for 'Mega Year' on Patent Losses",
+    "tier": 1,
+    "segment": "Top Story",
+    "companies": [],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Chiesi Acquires KalVista for $1.9B, Gaining Rare Disease Therapy",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "companies": [
+      "Chiesi",
+      "KalVista Pharmaceuticals"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Esperion to Go Private in ~$1.1B Buyout by ArchiMed",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "companies": [
+      "ArchiMed",
+      "Esperion Therapeutics"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Teva Acquires Emalex for $700M for Tourette Syndrome Drug",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "companies": [
+      "Teva Pharmaceutical",
+      "Emalex Biosciences"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Ligand Acquires XOMA for $739M in Royalty Aggregator Deal",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "companies": [
+      "Ligand Pharmaceuticals",
+      "XOMA"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Pfizer's Elrexfio Hits Late-Stage Primary Endpoint in Blood Cancer",
+    "tier": 2,
+    "segment": "What to Watch",
+    "companies": [
+      "Pfizer"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "Summit Therapeutics Shares Tumble on Ivonescimab Interim Trial Miss",
+    "tier": 2,
+    "segment": "What to Watch",
+    "companies": [
+      "Summit Therapeutics"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Axsome's Auvelity Wins FDA Expansion for Alzheimer's Agitation",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "companies": [
+      "Axsome Therapeutics"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "AstraZeneca's Truqap Clears FDA Expert Panel Vote",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "companies": [
+      "AstraZeneca"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "Moderna Q1 Earnings Driven by International COVID Vaccine Sales",
+    "tier": 2,
+    "segment": "What to Watch",
+    "companies": [
+      "Moderna"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "Avalyn Banks $300M in IPO for Inhaled Lung Disease Therapies",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "companies": [
+      "Avalyn Pharma"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "Lilly Posts 'Blowout' Q1 Quarter on Foundayo, Mounjaro",
+    "tier": 2,
+    "segment": "What to Watch",
+    "companies": [
+      "Eli Lilly"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 14,
+    "title": "ORIC Pharmaceuticals Drops 36% on Prostate Cancer Data Miss",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "companies": [
+      "ORIC Pharmaceuticals"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 15,
+    "title": "UniQure to Seek UK Approval for Huntington's Gene Therapy",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "companies": [
+      "UniQure"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 16,
+    "title": "Samsung Biologics Workers Begin Five-Day Wage Strike",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "companies": [
+      "Samsung Biologics"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 17,
+    "title": "Amgen Launches Late-Stage Obesity Trial in Patient Switchers",
+    "tier": 3,
+    "segment": "What to Watch",
+    "companies": [
+      "Amgen"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 18,
+    "title": "Cue Health Surges 77% as Acelyrin Founder Joins; China Licensing",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "companies": [
+      "Cue Health"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 19,
+    "title": "Merck/Terns Leukemia Drug Shows Less Differentiation in Updated Data",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "companies": [
+      "Merck",
+      "Terns Pharmaceuticals"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 20,
+    "title": "Amgen Files Tavneos Label Update as FDA Pushes Withdrawal",
+    "tier": 4,
+    "segment": "Regulatory Watch",
+    "companies": [
+      "Amgen"
+    ],
+    "headline": "",
+    "key_facts": "",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

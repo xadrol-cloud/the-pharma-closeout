@@ -1,0 +1,344 @@
+[
+  {
+    "rank": 1,
+    "title": "Moderna Flu Vaccine Wins Unanimous FDA Advisory Panel Support",
+    "headline": "FDA advisory committee unanimously endorses Moderna's mRNA flu vaccine after earlier refusing to review it, positioning the company for potential approval.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "key_facts": "Unanimous FDA advisory panel vote; earlier 2026 FDA refused to review; FDA staff had highlighted data shortcomings; Thursday June 18 panel meeting",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Moderna"
+    ],
+    "drugs": [
+      "mRNA flu vaccine"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "Pfizer CFO Dave Denton to Step Down in August",
+    "headline": "Pfizer CFO Dave Denton announces departure in August 2026 for a role outside the pharmaceutical industry.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "Departure planned for August 2026; leaving pharma industry; successor search underway",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Pfizer"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "Eli Lilly Cuts 340B Drug Discounts to Hospitals Over Data Dispute",
+    "headline": "Eli Lilly reduces 340B program drug discounts to hospitals that failed to provide required claims data.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "340B program discount cuts; data policy dispute; hospitals failed to provide claims data",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "Biogen Acquires RayThera for Up to $1 Billion",
+    "headline": "Biogen acquires secretive anti-inflammatory biotech RayThera in deal valued at up to $1 billion.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Deal value: up to $1 billion; RayThera anti-inflammatory/immune drug startup",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Biogen"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "RayThera"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 5,
+    "title": "Jazz Pharma Partners with AbCellera on T Cell Engagers",
+    "headline": "Jazz Pharmaceuticals and AbCellera collaborate on T cell engagers targeting GI cancers in potentially $4.1 billion deal.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Deal value: up to $4.1 billion; T cell engagers for GI cancers; broadening beyond blood cancers",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Jazz Pharmaceuticals"
+    ],
+    "drugs": [
+      "T cell engagers"
+    ],
+    "mentioned_companies": [
+      "AbCellera"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Kardigan IPO Raises $400 Million",
+    "headline": "Kardigan raises $400 million in IPO, extending biotech's strong capital markets momentum with five of six largest offerings since 2022.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "key_facts": "$400 million IPO; 2026 IPO class includes five of six largest biotech offerings since start of 2022",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Kardigan"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Novo Nordisk Hacked — $25M Ransom Demanded",
+    "headline": "Hackers claim access to Novo Nordisk drug formulations and AI models, demanding $25 million ransom that company reportedly did not pay.",
+    "tier": 2,
+    "segment": "Top Story",
+    "key_facts": "$25 million ransom demand; Novo did not pay; hackers claim drug recipes and AI models; data reportedly for sale",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Novo Nordisk"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "GSK and Spero Oral UTI Treatment Approved by FDA",
+    "headline": "FDA approves GSK and Spero's oral treatment for complicated urinary tract infections.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "FDA approval for complicated UTIs; oral treatment; June 17, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "GSK"
+    ],
+    "drugs": [
+      "oral UTI treatment"
+    ],
+    "mentioned_companies": [
+      "Spero"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Lilly Acquires 4E Therapeutics for Non-Opioid Pain",
+    "headline": "Eli Lilly acquires non-opioid pain drug developer 4E Therapeutics as part of $18+ billion acquisition spree.",
+    "tier": 3,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Acquisition of 4E Therapeutics; non-opioid pain focus; part of $18B+ acquisition spree over past few years",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "non-opioid pain therapies"
+    ],
+    "mentioned_companies": [
+      "4E Therapeutics"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "cAMPfield Launches with $180M for Gut Disease Drugs",
+    "headline": "cAMPfield launches with $180 million in funding to develop gut disease therapeutics.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "$180 million funding; gut disease drug focus",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "cAMPfield"
+    ],
+    "drugs": [
+      "gut disease drugs"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 11,
+    "title": "Vedana Therapeutics Emerges with $46M for Migraine",
+    "headline": "Vedana Therapeutics emerges from stealth with $46 million to develop anti-PACAP migraine therapies backed by Westlake.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "$46 million funding; anti-PACAP migraine therapies; Westlake backing",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Vedana Therapeutics"
+    ],
+    "drugs": [
+      "anti-PACAP migraine therapies"
+    ],
+    "mentioned_companies": [
+      "Westlake"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 12,
+    "title": "Aurobindo Must Divest 4 Drugs to Complete Lannett Buyout",
+    "headline": "FTC requires Aurobindo to divest 4 drugs to complete acquisition of Lannett.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "FTC-mandated divestiture of 4 drugs; Lannett acquisition condition; June 18, 2026",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": true,
+    "companies": [
+      "Aurobindo"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Lannett"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 13,
+    "title": "Merck's Capvaxive Receives FDA Label Expansion",
+    "headline": "FDA approves label expansion for Merck's pneumococcal vaccine Capvaxive.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "FDA label expansion approval; June 18, 2026",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Merck"
+    ],
+    "drugs": [
+      "Capvaxive"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 14,
+    "title": "UniQure to File Gene Therapy for FDA Approval",
+    "headline": "UniQure plans to file gene therapy for FDA approval, reflecting major shifts in regulatory strategy.",
+    "tier": 4,
+    "segment": "What to Watch",
+    "key_facts": "Gene therapy filing planned; reflecting major FDA shifts",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "UniQure"
+    ],
+    "drugs": [
+      "gene therapy"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 15,
+    "title": "Neumora Stops Depression Program",
+    "headline": "Neumora discontinues depression treatment program launched by ARCH.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Depression program discontinuation; ARCH-launched program",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Neumora"
+    ],
+    "drugs": [
+      "depression treatment"
+    ],
+    "mentioned_companies": [
+      "ARCH"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 16,
+    "title": "Edgewise Heart Drug Passes Key Trial Test",
+    "headline": "Edgewise heart disease drug passes key trial but results leave differentiation somewhat unclear.",
+    "tier": 4,
+    "segment": "Under the Radar",
+    "key_facts": "Key trial passed; differentiation unclear",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Edgewise"
+    ],
+    "drugs": [
+      "heart disease drug"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 17,
+    "title": "Cambrian's Longevity Drug Mimics Exercise",
+    "headline": "Cambrian's experimental longevity drug reportedly mimics exercise effects.",
+    "tier": 5,
+    "segment": "Under the Radar",
+    "key_facts": "Exercise-mimicking longevity drug",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Cambrian"
+    ],
+    "drugs": [
+      "longevity drug"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

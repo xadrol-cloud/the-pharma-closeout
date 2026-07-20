@@ -1,0 +1,214 @@
+[
+  {
+    "rank": 1,
+    "title": "GSK Acquires Nuvalent for $10.6B",
+    "headline": "GSK agrees to acquire oncology biotech Nuvalent for $10.6 billion ($124/share in cash), marking its largest-ever acquisition and bolstering its lung cancer pipeline.",
+    "tier": 1,
+    "segment": "Top Story",
+    "key_facts": "$10.6 billion deal value ($9.4 billion net), $124/share, 40% premium to last closing price, 26% premium to 30-calendar-day VWAP, Nuvalent stock surged ~39%, third GSK acquisition since January 2026, second-largest biotech deal of 2026, two lung cancer drugs under FDA review",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": true,
+    "companies": [
+      "GSK",
+      "Nuvalent"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 2,
+    "title": "Lilly Licenses AlzeCure's Alzheimer Drug",
+    "headline": "Eli Lilly licenses AlzeCure Pharma's gamma-secretase modulator Alzstatin ACD680 with global rights in a deal worth up to $1 billion in milestone payments.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "Up to $1 billion deal value, gamma-secretase modulator, global rights, small-molecule approach",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Eli Lilly",
+      "AlzeCure Pharma"
+    ],
+    "drugs": [
+      "Alzstatin ACD680"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 3,
+    "title": "WuXi AppTec Added to Pentagon Blacklist",
+    "headline": "WuXi AppTec is added to Pentagon's 1260H list, automatically triggering designation as a biotechnology company of concern under the Biosecure Act.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "key_facts": "Pentagon 1260H list, Biosecure Act, June 9 2026, supply chain disruption risk",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "WuXi AppTec"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 4,
+    "title": "ADA 2026: Lilly Dominates GLP-1 Race",
+    "headline": "At ADA 2026, Eli Lilly's Foundayo strengthens its case against Novo's semaglutide, with RBC analysts naming Lilly the clear winner as oral GLP-1 competition intensifies.",
+    "tier": 2,
+    "segment": "What to Watch",
+    "key_facts": "Oral Wegovy crossed 3 million prescriptions, Novo targeting 2030 triple-G obesity shot, AstraZeneca oral GLP-1 achieved Phase 2 wins, Lilly named clear ADA winner",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly",
+      "Novo Nordisk"
+    ],
+    "drugs": [
+      "Foundayo",
+      "orforglipron",
+      "oral Wegovy",
+      "semaglutide"
+    ],
+    "mentioned_companies": [
+      "Pfizer",
+      "Roche",
+      "AstraZeneca"
+    ],
+    "mentioned_drugs": [
+      "Wegovy"
+    ]
+  },
+  {
+    "rank": 5,
+    "title": "Gilead's Trodelvy Misses in First-Line NSCLC",
+    "headline": "Gilead's Trodelvy (sacituzumab govitecan) fails to meet its primary endpoint in first-line non-small cell lung cancer, though Merck-Gilead HIV combination pill succeeds in two trials.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "key_facts": "Trodelvy missed first-line NSCLC endpoint, Merck-Gilead HIV combo scored positive results in 2 trials, first-of-its-kind combination pill",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Gilead Sciences",
+      "Merck"
+    ],
+    "drugs": [
+      "Trodelvy",
+      "sacituzumab govitecan"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 6,
+    "title": "Tango's Pancreatic Cancer Data Boost",
+    "headline": "Tango Therapeutics' combination therapy demonstrates response rates exceeding historical benchmarks in a small pancreatic cancer clinical trial.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "key_facts": "Small clinical trial, boosted response rates beyond historical benchmarks, pancreatic cancer indication",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Tango Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 7,
+    "title": "Incyte Acquires Vega Therapeutics",
+    "headline": "Incyte acquires Vega Therapeutics (Star Therapeutics offshoot) for $1.25 billion upfront with potential $2 billion total value to advance late-stage bleeding disorder drug.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$1.25 billion upfront, potentially $2 billion total deal value, late-stage bleeding disorder drug, Star Therapeutics offshoot",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Incyte",
+      "Vega Therapeutics"
+    ],
+    "drugs": [],
+    "mentioned_companies": [
+      "Star Therapeutics"
+    ],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 8,
+    "title": "J&J Acquires Firefly Bio for $1B",
+    "headline": "Johnson & Johnson acquires Firefly Bio for $1 billion, gaining access to degrader antibody technology merging protein degraders with ADC platforms for KRAS-focused oncology programs.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$1 billion acquisition, degrader antibody technology, protein degraders + ADC, KRAS focus, founded by Nobel laureate Carolyn Bertozzi",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Johnson & Johnson",
+      "Firefly Bio"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 9,
+    "title": "Roche Stakes $700M on Nurix BTK Drug",
+    "headline": "Roche invests $700 million upfront in Nurix Pharmaceuticals' protein-degrading BTK inhibitor in a deal potentially valued up to $2.3 billion.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "key_facts": "$700 million upfront, up to $2.3 billion total deal value, BTK protein degradation, targeted protein degradation thesis",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Roche",
+      "Nurix Pharmaceuticals"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  },
+  {
+    "rank": 10,
+    "title": "FDA June 2026 Decisions Due",
+    "headline": "FDA decisions expected in June 2026 on Spero Therapeutics' antibiotic for cUTI, Kiniksa's Arcalyst manufacturing transfer, and Merck's WELIREG-KEYTRUDA combination.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "key_facts": "Spero antibiotic for complicated urinary tract infections, Kiniksa Arcalyst manufacturing technology transfer, Merck WELIREG + KEYTRUDA first approval, Pfizer pediatric hemophilia treatment approved",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Spero Therapeutics",
+      "Kiniksa Pharma",
+      "Merck",
+      "Pfizer"
+    ],
+    "drugs": [
+      "Arcalyst",
+      "WELIREG",
+      "KEYTRUDA"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": []
+  }
+]

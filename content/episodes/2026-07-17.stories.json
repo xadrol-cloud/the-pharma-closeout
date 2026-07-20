@@ -1,0 +1,290 @@
+[
+  {
+    "rank": 1,
+    "title": "GSK shelves camlipixant chronic cough drug",
+    "headline": "GSK discontinued Phase 3 chronic cough drug camlipixant after mixed data, marking the third failure in the P2X3 antagonist class and raising write-down risk on its ~$2B Bellus Health acquisition.",
+    "tier": 1,
+    "segment": "Top Story",
+    "event_date": "2026-07-17",
+    "is_context": false,
+    "key_facts": "$2B Bellus Health acquisition; third P2X3 antagonist class failure",
+    "has_numbers": true,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "GSK",
+      "Bellus Health"
+    ],
+    "drugs": [
+      "camlipixant"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [],
+    "prior_coverage": null,
+    "stale_restatement": false
+  },
+  {
+    "rank": 2,
+    "title": "Novartis Fabhalta wins full FDA approval in IgAN",
+    "headline": "FDA converted Fabhalta's accelerated approval to full traditional approval for immunoglobulin A nephropathy (IgAN), solidifying its commercial position in kidney disease treatment.",
+    "tier": 1,
+    "segment": "Regulatory Watch",
+    "event_date": "2026-07-17",
+    "is_context": false,
+    "key_facts": "Conversion from accelerated to full approval; eGFR kidney function decline endpoint confirmed",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Novartis"
+    ],
+    "drugs": [
+      "Fabhalta",
+      "iptacopan"
+    ],
+    "mentioned_companies": [
+      "Vera Therapeutics"
+    ],
+    "mentioned_drugs": [
+      "atacicept",
+      "Trutakna"
+    ],
+    "prior_coverage": {
+      "last_date": "2026-07-10",
+      "days_ago": 7,
+      "segment": "Regulatory Watch",
+      "headline": "Vera Therapeutics secured FDA approval for an IgA nephropathy (IgAN) therapy, competing against Otsuka's offering."
+    },
+    "stale_restatement": false
+  },
+  {
+    "rank": 3,
+    "title": "Boehringer Ingelheim's Jascayd wins EU approval",
+    "headline": "Jascayd received European regulatory approval from EMA on July 17, 2026.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "event_date": "2026-07-17",
+    "is_context": false,
+    "key_facts": "EMA approval timestamp Jul 17, 2026, 11:20am",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Boehringer Ingelheim"
+    ],
+    "drugs": [
+      "Jascayd"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [],
+    "prior_coverage": {
+      "last_date": "2026-06-08",
+      "days_ago": 39,
+      "segment": "Top Story",
+      "headline": "Zealand Pharma (ZLDPF) plunged ~23% on June 8 after Phase 3 SYNCHRONIZE-1 data showed 19% discontinuation rate due to GI side effects, with >40% reporting vomiting."
+    },
+    "stale_restatement": true
+  },
+  {
+    "rank": 4,
+    "title": "Jasper Therapeutics acquires Kira Pharmaceuticals",
+    "headline": "Jasper Therapeutics completed all-stock acquisition of Kira Pharmaceuticals with concurrent $132M private placement, securing runway into H2 2028 and out-licensing complement assets to Mirador Therapeutics.",
+    "tier": 2,
+    "segment": "Deal & Pipeline Roundup",
+    "event_date": "2026-07-16",
+    "is_context": false,
+    "key_facts": "$132M private placement; $12M upfront to Mirador Therapeutics; out-licensed KP-301 and KP-402; stock +20%; runway to H2 2028; retained KP-104, briquilimab, KP-701",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": true,
+    "companies": [
+      "Jasper Therapeutics",
+      "Kira Pharmaceuticals"
+    ],
+    "drugs": [
+      "KP-301",
+      "KP-402",
+      "KP-104",
+      "briquilimab",
+      "KP-701"
+    ],
+    "mentioned_companies": [
+      "Mirador Therapeutics",
+      "Affinity Asset Advisors",
+      "Ikarian Capital",
+      "Columbia Threadneedle",
+      "Sirenia Capital",
+      "Brahma Capital",
+      "Balyasny",
+      "SilverArc",
+      "Squadron",
+      "Nazare Partners"
+    ],
+    "mentioned_drugs": [
+      "Tavneos"
+    ],
+    "prior_coverage": {
+      "last_date": "2026-06-29",
+      "days_ago": 18,
+      "segment": "What to Watch",
+      "headline": "Four previously covered stories were monitored with no material updates found: Viridian's Lumvoa approval, Biogen/Apellis pipeline cuts, Merck KGaA's Bio-Techne deal, and Amgen's Tavneos CHMP recommendation."
+    },
+    "stale_restatement": false
+  },
+  {
+    "rank": 5,
+    "title": "Novo Nordisk & Alvotech FDA inspections",
+    "headline": "Novo Nordisk and Alvotech received written observations following FDA site inspections on July 17, 2026.",
+    "tier": 3,
+    "segment": "Regulatory Watch",
+    "event_date": "2026-07-17",
+    "is_context": false,
+    "key_facts": "FDA site inspection writeups timestamp Jul 17, 2026, 10:56am",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Novo Nordisk",
+      "Alvotech"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": [],
+    "prior_coverage": null,
+    "stale_restatement": false
+  },
+  {
+    "rank": 6,
+    "title": "Pfizer downgraded to Hold rating",
+    "headline": "Pfizer downgraded to Hold on delayed pipeline catalysts, management changes, and reduced near-term re-rating potential.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "NYSE: PFE; rating downgrade to Hold",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "Pfizer"
+    ],
+    "drugs": [],
+    "mentioned_companies": [],
+    "mentioned_drugs": [],
+    "prior_coverage": null,
+    "stale_restatement": false
+  },
+  {
+    "rank": 7,
+    "title": "ARS Pharmaceuticals stock drops on neffy coverage miss",
+    "headline": "ARS Pharmaceuticals (SPRY) shares sank after-hours following announcement of no new insurance coverage decisions for neffy in July formulary cycle.",
+    "tier": 3,
+    "segment": "What to Watch",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "SPRY ticker; neffy formulary coverage miss in July cycle",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "ARS Pharmaceuticals"
+    ],
+    "drugs": [
+      "neffy"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [],
+    "prior_coverage": null,
+    "stale_restatement": false
+  },
+  {
+    "rank": 8,
+    "title": "Celcuity FDA approval but shares fall ~20%",
+    "headline": "Celcuity won FDA approval for breast cancer drug Revtorpyk but shares fell nearly 20% following a launch delay and prescribing information surprises.",
+    "tier": 2,
+    "segment": "Regulatory Watch",
+    "event_date": "2026-07-15",
+    "is_context": false,
+    "key_facts": "~20% share drop; Revtorpyk launch delayed; prescribing info surprised analysts",
+    "has_numbers": true,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Celcuity"
+    ],
+    "drugs": [
+      "Revtorpyk"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [],
+    "prior_coverage": {
+      "last_date": "2026-07-16",
+      "days_ago": 1,
+      "segment": "Regulatory Watch",
+      "headline": "Celcuity receives FDA approval for breast cancer drug Revtorpyk but shares fall nearly 20% on disclosed launch delay."
+    },
+    "stale_restatement": false
+  },
+  {
+    "rank": 9,
+    "title": "GSK launches Alzheimer's prevention study with shingles vaccine",
+    "headline": "GSK is launching a large clinical study investigating whether its shingles vaccine can prevent or delay Alzheimer's disease onset.",
+    "tier": 3,
+    "segment": "Under the Radar",
+    "event_date": null,
+    "is_context": false,
+    "key_facts": "Large prevention study; shingles vaccine indication expansion to Alzheimer's",
+    "has_numbers": false,
+    "has_trial_data": true,
+    "has_regulatory": false,
+    "has_deal": false,
+    "companies": [
+      "GSK"
+    ],
+    "drugs": [
+      "shingles vaccine"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [],
+    "prior_coverage": null,
+    "stale_restatement": false
+  },
+  {
+    "rank": 10,
+    "title": "Eli Lilly Foundayo (orforglipron) scripts rising",
+    "headline": "Eli Lilly's oral GLP-1 agonist Foundayo (orforglipron) shows increasing prescription uptake according to FiercePharma tracking.",
+    "tier": 4,
+    "segment": "Deal & Pipeline Roundup",
+    "event_date": null,
+    "is_context": true,
+    "key_facts": "Foundayo approved; script uptake increasing; FiercePharma tracker 10:30am",
+    "has_numbers": false,
+    "has_trial_data": false,
+    "has_regulatory": true,
+    "has_deal": false,
+    "companies": [
+      "Eli Lilly"
+    ],
+    "drugs": [
+      "Foundayo",
+      "orforglipron"
+    ],
+    "mentioned_companies": [],
+    "mentioned_drugs": [],
+    "prior_coverage": {
+      "last_date": "2026-07-12",
+      "days_ago": 5,
+      "segment": "Under the Radar",
+      "headline": "Eli Lilly's oral GLP-1 orforglipron (Foundayo) approved April 1, 2026 for adults with obesity/overweight + comorbidities; launch described as muted vs Novo's Wegovy pill."
+    },
+    "stale_restatement": true
+  }
+]
