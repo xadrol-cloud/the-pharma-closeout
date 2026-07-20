@@ -186,7 +186,13 @@ function injectFirstMention(html, entity, href) {
 export function renderEpisode(episode, resolved) {
   const { slug, title, date, description, spotifyEpisodeUrl = '' } = episode;
   const segments = episode.segments ?? [];
-  const links = resolved?.links ?? [];
+  // Episode pages live one level deep (/episodes/), so deal links must be
+  // root-absolute ("/deals/..") — a bare "deals/.." would resolve to
+  // /episodes/deals/.. and 404.
+  const links = (resolved?.links ?? []).map((l) => ({
+    ...l,
+    href: /^(https?:|\/)/.test(l.href) ? l.href : `/${l.href}`,
+  }));
 
   const canonicalUrl = `${SITE_URL}/episodes/${slug}.html`;
 
@@ -294,16 +300,16 @@ ${STYLE_BLOCK}
     <div class="logo">The Pharma <b>Closeout</b></div>
     <nav class="nav-links">
       <a href="/deals.html">Deal Database</a>
-      <a href="/research.html">Research</a>
-      <a href="/episodes.html" class="active">Episodes</a>
+      <a href="/ai-research.html">Research</a>
+      <a href="/episodes/index.html" class="active">Episodes</a>
       <a href="/about.html">About</a>
-      <a href="/subscribe.html" class="sub">Subscribe</a>
+      <a href="https://thepharmacloseout.substack.com/subscribe" class="sub">Subscribe</a>
     </nav>
   </div>
 </header>
 
 <div class="wrap">
-  <div class="crumb"><a href="/">Home</a> <span>/</span> <a href="/episodes.html">Episodes</a> <span>/</span> ${esc(formatDatePill(date))}</div>
+  <div class="crumb"><a href="/">Home</a> <span>/</span> <a href="/episodes/index.html">Episodes</a> <span>/</span> ${esc(formatDatePill(date))}</div>
 </div>
 
 <div class="read">
@@ -329,14 +335,14 @@ ${railHtml}
     <div class="lm-tag">Close out your day</div>
     <h3>The whole read, every morning</h3>
     <p>The daily Closeout in under 15 minutes &mdash; trial readouts, FDA decisions, and the deal math behind them. Free.</p>
-    <a href="/subscribe.html" class="btn">Subscribe &rarr;</a>
+    <a href="https://thepharmacloseout.substack.com/subscribe" class="btn">Subscribe &rarr;</a>
   </div>
 </div>
 
 <footer>
   <div class="wrap">
     <span>The Pharma Closeout &middot; Daily pharma intelligence</span>
-    <span><a href="/deals.html">Deal Database</a> &nbsp;&middot;&nbsp; <a href="/episodes.html">Episodes</a> &nbsp;&middot;&nbsp; <a href="/research.html">Research</a> &nbsp;&middot;&nbsp; <a href="/about.html">About</a></span>
+    <span><a href="/deals.html">Deal Database</a> &nbsp;&middot;&nbsp; <a href="/episodes/index.html">Episodes</a> &nbsp;&middot;&nbsp; <a href="/ai-research.html">Research</a> &nbsp;&middot;&nbsp; <a href="/about.html">About</a></span>
   </div>
 </footer>
 

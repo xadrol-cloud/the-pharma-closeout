@@ -52,7 +52,7 @@ export function renderEpisodeIndex(list) {
   const itemsHtml = episodes
     .map(
       (ep) => `      <li class="ep-row">
-        <a href="episodes/${esc(ep.slug)}.html">
+        <a href="${esc(ep.slug)}.html">
           <span class="ep-title">${esc(ep.title)}</span>
           <span class="ep-date">${esc(formatDatePill(ep.date))}</span>
         </a>
@@ -77,7 +77,7 @@ export function renderEpisodeIndex(list) {
 ${JSON.stringify(jsonLd, null, 2)}
 </script>
 
-<link rel="canonical" href="${SITE_URL}/episodes.html">
+<link rel="canonical" href="${SITE_URL}/episodes/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -127,10 +127,10 @@ ${JSON.stringify(jsonLd, null, 2)}
     <div class="logo">The Pharma <b>Closeout</b></div>
     <nav class="nav-links">
       <a href="/deals.html">Deal Database</a>
-      <a href="/research.html">Research</a>
-      <a href="/episodes.html" class="active">Episodes</a>
+      <a href="/ai-research.html">Research</a>
+      <a href="/episodes/index.html" class="active">Episodes</a>
       <a href="/about.html">About</a>
-      <a href="/subscribe.html" class="sub">Subscribe</a>
+      <a href="https://thepharmacloseout.substack.com/subscribe" class="sub">Subscribe</a>
     </nav>
   </div>
 </header>
@@ -146,7 +146,7 @@ ${JSON.stringify(jsonLd, null, 2)}
 <footer>
   <div class="wrap">
     <span>The Pharma Closeout &middot; Daily pharma intelligence</span>
-    <span><a href="/deals.html">Deal Database</a> &nbsp;&middot;&nbsp; <a href="/episodes.html">Episodes</a> &nbsp;&middot;&nbsp; <a href="/research.html">Research</a> &nbsp;&middot;&nbsp; <a href="/about.html">About</a></span>
+    <span><a href="/deals.html">Deal Database</a> &nbsp;&middot;&nbsp; <a href="/episodes/index.html">Episodes</a> &nbsp;&middot;&nbsp; <a href="/ai-research.html">Research</a> &nbsp;&middot;&nbsp; <a href="/about.html">About</a></span>
   </div>
 </footer>
 

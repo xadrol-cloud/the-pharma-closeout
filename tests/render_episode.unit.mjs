@@ -53,7 +53,7 @@ test('renderEpisode: escapes title/description in head', () => {
 
 test('renderEpisode: injects a deal link at first mention in transcript', () => {
   const html = renderEpisode(BASE_EPISODE, RESOLVED);
-  assert.match(html, /<a class="deal" href="deals\/eli-lilly-and-ataibeckley-2026\.html">AtaiBeckley<\/a>/);
+  assert.match(html, /<a class="deal" href="\/deals\/eli-lilly-and-ataibeckley-2026\.html">AtaiBeckley<\/a>/);
 });
 
 test('renderEpisode: "Deals mentioned" rail lists a link even if entity is absent from all turn text (safety net)', () => {
@@ -67,7 +67,7 @@ test('renderEpisode: "Deals mentioned" rail lists a link even if entity is absen
   // Entity text never appears in any turn (BASE_EPISODE has no "Moderna" mention),
   // but the rail must still surface the href.
   assert.match(html, /Deals mentioned in this episode/);
-  assert.match(html, /href="deals\/some-moderna-deal-2026\.html"/);
+  assert.match(html, /href="\/deals\/some-moderna-deal-2026\.html"/);
   assert.match(html, /Moderna/);
 });
 
@@ -144,7 +144,7 @@ test('renderEpisode: deal link only injected once even if entity could match twi
     ],
   };
   const html = renderEpisode(episodeRepeated, RESOLVED);
-  const matches = html.match(/<a class="deal" href="deals\/eli-lilly-and-ataibeckley-2026\.html">AtaiBeckley<\/a>/g);
+  const matches = html.match(/<a class="deal" href="\/deals\/eli-lilly-and-ataibeckley-2026\.html">AtaiBeckley<\/a>/g);
   assert.equal(matches.length, 1);
   // second occurrence remains plain text
   assert.match(html, /again\./);
@@ -185,7 +185,7 @@ test('renderEpisodeIndex: links to each episode slug with title and date, newest
   const html = renderEpisodeIndex(list);
 
   for (const ep of list) {
-    assert.match(html, new RegExp(`href="episodes/${ep.slug}\\.html"`));
+    assert.match(html, new RegExp(`href="${ep.slug}\\.html"`));
     assert.match(html, new RegExp(ep.title));
   }
 
