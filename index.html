@@ -87,6 +87,14 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   .nav-links a:hover{opacity:1;color:var(--gold)}
   .nav-links a.sub{color:var(--gold);border:1px solid rgba(196,147,50,.42);padding:8px 17px;border-radius:2px;opacity:1}
   .nav-links a.sub:hover{background:var(--gold-dim)}
+  /* ── NAV DROPDOWN ── */
+  .nav-links .has-dropdown{position:relative}
+  .nav-links .caret{font-size:.62em;opacity:.55;margin-left:3px;vertical-align:middle}
+  .nav-links .dropdown{position:absolute;top:100%;left:-14px;min-width:172px;list-style:none;display:none;flex-direction:column;background:rgba(10,10,10,.97);backdrop-filter:blur(20px);border:1px solid var(--rule);border-radius:4px;padding:6px 0;box-shadow:0 12px 34px rgba(0,0,0,.5);z-index:50}
+  .nav-links .has-dropdown:hover .dropdown{display:flex}
+  .nav-links .dropdown li{width:100%}
+  .nav-links .dropdown a{display:block;padding:9px 18px;white-space:nowrap;opacity:.85}
+  .nav-links .dropdown a:hover{opacity:1;color:var(--gold);background:var(--gold-dim)}
 
   /* ── MOBILE NAV ── */
   .nav-toggle {
@@ -266,6 +274,10 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     .nav-links[data-collapsed='false'] { display: flex; }
     .nav-links a { padding: 0.75rem 0; font-size: 0.9rem; }
     .nav-links a.sub { margin-top: .5rem; }
+    /* dropdown becomes an indented static sublist in the mobile menu */
+    .nav-links .dropdown { position: static; display: flex; min-width: 0; margin: 0; padding: 0 0 0 16px; border: none; background: none; box-shadow: none; }
+    .nav-links .dropdown a { padding: 0.5rem 0; font-size: 0.85rem; opacity: 0.75; }
+    .nav-links .caret { display: none; }
     .hero h1{font-size:clamp(3rem,15vw,5rem)}
     .hero{padding:6rem 0 3rem}
     .hero-pulse{position:static;height:60px;margin-top:2rem;order:10}
@@ -284,8 +296,12 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     <div class="logo">The Pharma <b>Closeout</b></div>
     <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links"><span></span></button>
     <ul id="nav-links" class="nav-links" data-collapsed="true">
-      <li><a href="#day">Podcast</a></li>
-      <li><a href="episodes/index.html">Episodes</a></li>
+      <li class="has-dropdown"><a href="#day">Podcast <span class="caret">&#9662;</span></a>
+        <ul class="dropdown">
+          <li><a href="#day">Latest Episode</a></li>
+          <li><a href="episodes/index.html">Episodes</a></li>
+        </ul>
+      </li>
       <li><a href="deals.html">Deal Intelligence</a></li>
       <li><a href="#news">Newsletter</a></li>
       <li><a href="about.html">About</a></li>
