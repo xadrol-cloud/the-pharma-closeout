@@ -328,7 +328,7 @@ input, textarea, select {
 }
 .p-glow { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 38%, rgba(255,255,255,0.06) 0%, transparent 55%); }
 .p-vig  { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.35) 100%); }
-.p-edge { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(180,170,150,0.08); pointer-events: none; z-index: 2; }
+.p-edge { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(232,228,218,0.14); pointer-events: none; z-index: 2; }
 
 /* Poster content layout */
 .p-content {
@@ -375,7 +375,7 @@ input, textarea, select {
   padding: clamp(8px,1.5vw,18px);
   box-shadow:
     0 4px 12px rgba(0,0,0,0.25),
-    0 0 0 1px rgba(180,170,150,0.15),
+    0 0 0 1px rgba(232,228,218,0.16),
     inset 0 1px 2px rgba(255,255,255,0.3),
     inset 0 -1px 2px rgba(0,0,0,0.03);
   position: relative;
@@ -534,7 +534,7 @@ input, textarea, select {
   background-size: 120px;
 }
 .fp-vig  { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.35) 100%); }
-.fp-edge { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(180,170,150,0.08); pointer-events: none; z-index: 2; }
+.fp-edge { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(232,228,218,0.14); pointer-events: none; z-index: 2; }
 
 .fp-content {
   position: relative; z-index: 1;
@@ -571,7 +571,7 @@ input, textarea, select {
   background: rgba(252,250,245,0.94);
   display: flex; align-items: center; justify-content: center;
   padding: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25), 0 0 0 1px rgba(180,170,150,0.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25), 0 0 0 1px rgba(232,228,218,0.16);
   position: relative;
   transition: transform 0.4s, box-shadow 0.4s;
 }
@@ -631,7 +631,7 @@ input, textarea, select {
   background-size: 120px;
 }
 .c-vig  { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.35) 100%); }
-.c-edge { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(180,170,150,0.08); pointer-events: none; z-index: 2; }
+.c-edge { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(232,228,218,0.14); pointer-events: none; z-index: 2; }
 
 .c-content {
   position: relative; z-index: 1;
@@ -664,7 +664,7 @@ input, textarea, select {
   background: rgba(252,250,245,0.94);
   display: flex; align-items: center; justify-content: center;
   padding: 8px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.2), 0 0 0 1px rgba(180,170,150,0.15);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2), 0 0 0 1px rgba(232,228,218,0.16);
   position: relative;
   transition: transform 0.4s, box-shadow 0.4s;
 }
@@ -765,10 +765,10 @@ input, textarea, select {
    4. POSTER BACKGROUNDS — Per deal type
    ========================================================================== */
 
-.bg-ma    { background: linear-gradient(172deg, #070d1e 0%, #0c1530 30%, #11204a 60%, #162758 85%, #0c1530 100%); }
-.bg-lic   { background: linear-gradient(172deg, #100800 0%, #1c1005 30%, #2a1a0a 60%, #382210 85%, #1c1005 100%); }
-.bg-codev { background: linear-gradient(172deg, #000f08 0%, #001a0e 30%, #00281a 60%, #003522 85%, #001a0e 100%); }
-.bg-asset { background: linear-gradient(172deg, #0a0015 0%, #150028 30%, #1f003d 60%, #28004f 85%, #150028 100%); }
+.bg-ma    { background: linear-gradient(172deg, #0d1730 0%, #14224e 28%, #1d3169 52%, #16264f 76%, #101b3a 100%); }
+.bg-lic   { background: linear-gradient(172deg, #1c1206 0%, #2e1f0c 28%, #433014 52%, #2f210d 76%, #1e1408 100%); }
+.bg-codev { background: linear-gradient(172deg, #06181c 0%, #0c2f39 28%, #12414d 52%, #0d323c 76%, #071e24 100%); }
+.bg-asset { background: linear-gradient(172deg, #140a26 0%, #21123f 28%, #301a58 52%, #221340 76%, #160b28 100%); }
 
 
 /* ==========================================================================
@@ -2179,9 +2179,9 @@ input, textarea, select {
 }
 .vb-chip-abbr { font-size: 10px; opacity: 0.8; letter-spacing: 0.3px; }
 .vb-chip[data-tier='exceptional'] { background: #2d8a4f; }
-.vb-chip[data-tier='strong']      { background: #2a8a8a; }
+.vb-chip[data-tier='strong']      { background: #2f9fb3; }
 .vb-chip[data-tier='adequate']    { background: #c9a84c; color: #0a0a0a; }
-.vb-chip[data-tier='weak']        { background: #c47b3a; }
+.vb-chip[data-tier='weak']        { background: #9165c0; }
 .vb-chip[data-tier='failed']      { background: #c43a3a; }
 .vb-chip[data-tier='none']        { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.6); }
 .vb-status { flex: 0 0 auto; }
@@ -3367,9 +3367,9 @@ html, body { overflow-x: hidden; }
   letter-spacing: -0.5px;
 }
 .score-chip[data-tier='exceptional'] { background: #2d8a4f; }
-.score-chip[data-tier='strong']      { background: #2a8a8a; }
+.score-chip[data-tier='strong']      { background: #2f9fb3; }
 .score-chip[data-tier='adequate']    { background: #c9a84c; color: #0a0a0a; }
-.score-chip[data-tier='weak']        { background: #c47b3a; }
+.score-chip[data-tier='weak']        { background: #9165c0; }
 .score-chip[data-tier='failed']      { background: #c43a3a; }
 .score-chip[data-tier='none']        { background: var(--surface); color: var(--ink-muted); font-size: 28px; }
 .score-chip-mini {
@@ -3388,9 +3388,9 @@ html, body { overflow-x: hidden; }
   text-transform: uppercase;
 }
 .tier-label[data-tier='exceptional'] { color: #2d8a4f; }
-.tier-label[data-tier='strong']      { color: #2a8a8a; }
+.tier-label[data-tier='strong']      { color: #2f9fb3; }
 .tier-label[data-tier='adequate']    { color: #c9a84c; }
-.tier-label[data-tier='weak']        { color: #c47b3a; }
+.tier-label[data-tier='weak']        { color: #9165c0; }
 .tier-label[data-tier='failed']      { color: #c43a3a; }
 
 .score-meta {
@@ -3471,11 +3471,11 @@ html, body { overflow-x: hidden; }
   color: #fff;
   white-space: nowrap;
 }
-.deal-type-pill[data-type='ma']         { background: #7a4c8f; }
-.deal-type-pill[data-type='licensing']  { background: #3d5fa3; }
-.deal-type-pill[data-type='codev']      { background: #2a8a8a; }
-.deal-type-pill[data-type='asset']      { background: #c47b3a; }
-.deal-type-pill[data-type='other']      { background: #5c5c5c; }
+.deal-type-pill[data-type='ma']         { background: #4373c4; }
+.deal-type-pill[data-type='licensing']  { background: #a9703a; }
+.deal-type-pill[data-type='codev']      { background: #2f9fb3; }
+.deal-type-pill[data-type='asset']      { background: #9165c0; }
+.deal-type-pill[data-type='other']      { background: #6a6f78; }
 
 .status-pill {
   display: inline-block;
@@ -3561,10 +3561,10 @@ html, body { overflow-x: hidden; }
   border-color: transparent;
 }
 .dt-toggle.active[data-type=''] { background: var(--gold); }
-.dt-toggle.active[data-type='ma']         { background: #7a4c8f; }
-.dt-toggle.active[data-type='licensing']  { background: #3d5fa3; }
-.dt-toggle.active[data-type='codev']      { background: #2a8a8a; }
-.dt-toggle.active[data-type='asset']      { background: #c47b3a; }
+.dt-toggle.active[data-type='ma']         { background: #4373c4; }
+.dt-toggle.active[data-type='licensing']  { background: #a9703a; }
+.dt-toggle.active[data-type='codev']      { background: #2f9fb3; }
+.dt-toggle.active[data-type='asset']      { background: #9165c0; }
 .dt-select-hidden { display: none !important; }
 @media (max-width: 600px) {
   .deal-type-toggles { gap: 5px; margin: 12px auto 8px; padding: 0 12px; }
@@ -3616,8 +3616,8 @@ html, body { overflow-x: hidden; }
 .vc-segment:last-child { border-right: 0; }
 .vc-segment[data-kind='upfront']    { background: #2d8a4f; }
 .vc-segment[data-kind='milestones'] { background: #c9a84c; color: #0a0a0a; }
-.vc-segment[data-kind='royalties']  { background: #2a8a8a; }
-.vc-segment[data-kind='equity']     { background: #7a4c8f; }
+.vc-segment[data-kind='royalties']  { background: #2f9fb3; }
+.vc-segment[data-kind='equity']     { background: #4373c4; }
 .vc-amount {
   font-size: 16px;
   font-weight: 700;
