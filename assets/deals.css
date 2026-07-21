@@ -328,7 +328,7 @@ input, textarea, select {
 }
 .p-glow { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 38%, rgba(255,255,255,0.06) 0%, transparent 55%); }
 .p-vig  { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.35) 100%); }
-.p-edge { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(232,228,218,0.14); pointer-events: none; z-index: 2; }
+.p-edge { position: absolute; inset: 0; box-shadow: inset 0 0 0 2px rgba(232,228,218,0.35); pointer-events: none; z-index: 2; }
 
 /* Poster content layout */
 .p-content {
@@ -534,7 +534,7 @@ input, textarea, select {
   background-size: 120px;
 }
 .fp-vig  { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.35) 100%); }
-.fp-edge { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(232,228,218,0.14); pointer-events: none; z-index: 2; }
+.fp-edge { position: absolute; inset: 0; box-shadow: inset 0 0 0 2px rgba(232,228,218,0.35); pointer-events: none; z-index: 2; }
 
 .fp-content {
   position: relative; z-index: 1;
@@ -631,7 +631,7 @@ input, textarea, select {
   background-size: 120px;
 }
 .c-vig  { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.35) 100%); }
-.c-edge { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(232,228,218,0.14); pointer-events: none; z-index: 2; }
+.c-edge { position: absolute; inset: 0; box-shadow: inset 0 0 0 2px rgba(232,228,218,0.35); pointer-events: none; z-index: 2; }
 
 .c-content {
   position: relative; z-index: 1;
@@ -765,10 +765,10 @@ input, textarea, select {
    4. POSTER BACKGROUNDS — Per deal type
    ========================================================================== */
 
-.bg-ma    { background: linear-gradient(172deg, #0d1730 0%, #14224e 28%, #1d3169 52%, #16264f 76%, #101b3a 100%); }
-.bg-lic   { background: linear-gradient(172deg, #1c1206 0%, #2e1f0c 28%, #433014 52%, #2f210d 76%, #1e1408 100%); }
-.bg-codev { background: linear-gradient(172deg, #06181c 0%, #0c2f39 28%, #12414d 52%, #0d323c 76%, #071e24 100%); }
-.bg-asset { background: linear-gradient(172deg, #140a26 0%, #21123f 28%, #301a58 52%, #221340 76%, #160b28 100%); }
+.bg-ma    { background: linear-gradient(172deg, #142344 0%, #20386a 28%, #2c4a86 52%, #1e3560 76%, #16294c 100%); }
+.bg-lic   { background: linear-gradient(172deg, #2a1d0c 0%, #4a3418 28%, #6a4c22 52%, #48331a 76%, #2c1f0e 100%); }
+.bg-codev { background: linear-gradient(172deg, #0d2b33 0%, #164b57 28%, #1d6675 52%, #154853 76%, #0f2f38 100%); }
+.bg-asset { background: linear-gradient(172deg, #20153c 0%, #362160 28%, #492a80 52%, #33205c 76%, #221540 100%); }
 
 
 /* ==========================================================================
