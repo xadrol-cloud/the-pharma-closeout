@@ -297,7 +297,7 @@ ${STYLE_BLOCK}
 
 <header class="nav">
   <div class="wrap nav-inner">
-    <div class="logo">The Pharma <b>Closeout</b></div>
+    <div class="logo"><a href="/">The Pharma <b>Closeout</b></a></div>
     <nav class="nav-links">
       <a href="/deals.html">Deal Database</a>
       <a href="/ai-research.html">Research</a>
