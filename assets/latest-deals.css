@@ -1,0 +1,340 @@
+/* ============================================================================
+   Latest deals coverflow — homepage.  Poster styles below are a scoped copy of
+   the deal-app poster component (assets/deals.css); tokens live on .dl-latest so
+   nothing leaks to the rest of the homepage. If the deal-app poster look changes,
+   re-sync the block after the shell. Data: assets/latest-deals.json (auto-updated
+   nightly by the SSG). Renderer: assets/latest-deals.js.
+   ============================================================================ */
+.dl-latest{
+  --mat:#ece3d1; --frame-line:#17130f; --poster-shadow:34deg 25% 12%;
+  --critic:#d4960e; --critic-light:#f6c547; --outcome:#1a8a5c; --outcome-light:#3ddc84;
+  --amber-bg:#fdf6e8; --gold-text:#8a640f; --ink-faint:#a0a3ad; --rule-light:#f0efec;
+  --editorial:'Libre Baskerville',serif; --mono:'IBM Plex Mono',monospace;
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Outfit',system-ui,sans-serif;
+  background:#0a0a0a; padding:60px 0 72px; overflow:hidden;
+  border-bottom:1px solid rgba(244,241,234,.06);
+}
+.dl-in{max-width:1120px;margin:0 auto;padding:0 32px}
+.dl-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:30px}
+.dl-head h2{font-family:'Newsreader',Georgia,serif;font-weight:500;font-size:34px;line-height:1.1;color:#f4f1ea;margin:0}
+.dl-sub{color:#9a958c;font-size:14.5px;margin-top:6px;font-family:'DM Sans',system-ui,sans-serif}
+.dl-more{color:#c49332;font-family:'DM Sans',system-ui,sans-serif;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap}
+.dl-more:hover{text-decoration:underline}
+
+.dl-cf{position:relative;display:flex;align-items:center;justify-content:center;min-height:430px}
+.dl-stage{display:flex;align-items:center;justify-content:center;gap:38px;perspective:1600px;width:100%}
+.dl-slot{transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .5s,filter .5s;cursor:pointer}
+.dl-slot .c-poster{width:100%}                 /* fill the slot (override the app's fixed 200px) */
+.dl-slot.side{width:186px;opacity:.5;filter:saturate(.8) brightness(.82)}
+.dl-slot.side.pos-left{transform:rotateY(19deg) scale(.9)}
+.dl-slot.side.pos-right{transform:rotateY(-19deg) scale(.9)}
+.dl-slot.center{width:230px;opacity:1;z-index:3;transform:translateY(-6px) scale(1.06)}
+/* auto-play the app's logo-ring hover animation on the focused poster */
+.dl-slot.center .c-poster .c-logo::after{opacity:1 !important}
+.dl-slot.center .c-poster .c-logo:first-child::after{animation:ringCW 1s linear infinite}
+.dl-slot.center .c-poster .c-logo:last-child::after{animation:ringCCW 1s linear infinite}
+
+.dl-arrow{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;
+  border:1px solid rgba(244,241,234,.22);background:rgba(12,12,12,.85);color:#f4f1ea;font-size:20px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;z-index:6;transition:border-color .2s,background .2s}
+.dl-arrow:hover{border-color:#c49332;background:#151515}
+.dl-arrow.l{left:6px}.dl-arrow.r{right:6px}
+.dl-dots{display:flex;gap:8px;justify-content:center;margin-top:30px}
+.dl-dot{width:7px;height:7px;border-radius:50%;background:rgba(244,241,234,.25);border:none;cursor:pointer;padding:0;transition:background .2s,width .2s}
+.dl-dot.on{background:#c49332;width:20px;border-radius:4px}
+
+@media(max-width:600px){
+  .dl-latest{padding:44px 0 56px}
+  .dl-in{padding:0 20px}
+  .dl-head{flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:20px}
+  .dl-head h2{font-size:26px}
+  .dl-cf{min-height:360px}
+  .dl-stage{gap:0;perspective:1000px}
+  .dl-slot.center{width:min(66vw,250px);transform:scale(1)}
+  .dl-slot.side{width:26px;opacity:.42;filter:saturate(.7) brightness(.7)}
+  .dl-slot.side.pos-left{transform:rotateY(24deg) scale(.86);margin-right:8px}
+  .dl-slot.side.pos-right{transform:rotateY(-24deg) scale(.86);margin-left:8px}
+  .dl-arrow{width:38px;height:38px;font-size:17px}
+  .dl-arrow.l{left:-2px}.dl-arrow.r{right:-2px}
+}
+/* ==========================================================================
+   3. POSTER CARDS — Criterion Collection aesthetic
+
+   Three sizes:
+     .poster    — grid poster (poster_polished, detail hero sidebar)
+     .feat-poster — featured deal hero (240px wide)
+     .c-poster  — carousel card (200px wide)
+     .comp-poster — sidebar comparable mini (36x50)
+   ========================================================================== */
+
+/* ---------- 3a. Grid Poster (poster_polished) ---------- */
+
+.poster {
+  width: 100%;
+  aspect-ratio: 0.68;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(0.19,1,0.22,1), box-shadow 0.5s;
+  box-shadow:
+    0 0 0 5px var(--mat),                          /* cream mat */
+    0 0 0 6px var(--frame-line),                   /* warm-ink hairline frame */
+    0 12px 26px hsl(var(--poster-shadow) / 0.22);  /* the framed piece casts */
+  animation: posterReveal 0.65s cubic-bezier(0.19,1,0.22,1) both;
+}
+
+/* Per-deal-type ring colors */
+.poster .p-logo::after,
+.bg-ma ~ .p-content .p-logo::after {
+  border-top-color: rgba(180,200,255,0.7);
+  border-right-color: rgba(180,200,255,0.3);
+}
+
+/* Search results render carousel posters inside .grid — let them
+   fill the column width instead of staying at 200px fixed. */
+.grid .c-poster { width: 100%; max-width: none; }
+
+/* ---------- 3c. Carousel Poster (200px, snap scroll) ---------- */
+
+.c-poster {
+  flex-shrink: 0;
+  width: 200px;
+  aspect-ratio: 0.68;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(0.19,1,0.22,1), box-shadow 0.5s;
+  box-shadow:
+    0 0 0 4px var(--mat),
+    0 0 0 5px var(--frame-line),
+    0 10px 22px hsl(var(--poster-shadow) / 0.22);
+  scroll-snap-align: start;
+}
+
+.c-poster:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.18);
+}
+
+/* Carousel poster layers */
+.c-bg    { position: absolute; inset: 0; }
+
+.c-grain {
+  position: absolute; inset: 0;
+  opacity: 0.05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 120px;
+}
+
+.c-vig  { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.35) 100%); }
+
+.c-edge { position: absolute; inset: 0; box-shadow: none; pointer-events: none; z-index: 2; }
+
+.c-content {
+  position: relative; z-index: 1;
+  height: 100%;
+  display: flex; flex-direction: column;
+  padding: 12px;
+}
+
+.c-top { display: flex; justify-content: space-between; align-items: center; }
+
+.c-type {
+  font-family: var(--mono);
+  font-size: 7px; font-weight: 500;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 2px 6px; border-radius: 2px;
+  background: rgba(0,0,0,0.4);
+  color: rgba(222,205,170,0.8);
+  border: 1px solid rgba(222,205,170,0.15);
+}
+
+.c-year { font-family: var(--editorial); font-size: 10px; font-style: italic; color: rgba(222,205,170,0.5); }
+
+.c-center {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 6px;
+}
+
+.c-logos { display: flex; align-items: center; gap: 8px; }
+
+.c-logo {
+  width: 50px; height: 50px; aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(252,250,245,0.94);
+  display: flex; align-items: center; justify-content: center;
+  padding: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2), 0 0 0 1px rgba(180,170,150,0.15);
+  position: relative;
+  transition: transform 0.4s, box-shadow 0.4s;
+}
+
+.c-logo img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+
+.c-logo-text { font-family: var(--mono); font-weight: 500; color: #1a1a1a; font-size: 9px; text-align: center; }
+
+/* Carousel ring sweep */
+.c-logo::after {
+  content: '';
+  position: absolute; inset: -3px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: rgba(180,200,255,0.7);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.c-poster:hover .c-logo::after { opacity: 1; }
+
+.c-poster:hover .c-logo:first-child::after { animation: ringCW 1s linear infinite; }
+
+.c-poster:hover .c-logo:last-child::after  { animation: ringCCW 1s linear infinite; }
+
+.c-poster:hover .c-logo {
+  transform: scale(1.06);
+  box-shadow: 0 5px 18px rgba(0,0,0,0.25), 0 0 20px rgba(130,160,255,0.1);
+}
+
+/* Per-type ring override classes for carousel */
+.lic-ring .c-logo::after   { border-top-color: rgba(255,210,140,0.8) !important; }
+
+.codev-ring .c-logo::after  { border-top-color: rgba(140,255,200,0.8) !important; }
+
+.asset-ring .c-logo::after  { border-top-color: rgba(200,160,255,0.8) !important; }
+
+.c-times  { font-family: var(--serif); font-size: 14px; color: rgba(255,255,255,0.25); font-style: italic; }
+
+.c-buyer  { font-family: var(--sans); font-size: 7px; color: rgba(222,205,170,0.55); letter-spacing: 1.5px; text-transform: uppercase; text-align: center; }
+
+.c-target { font-family: var(--serif); font-size: 16px; font-weight: 600; color: rgba(255,252,245,0.95); text-align: center; line-height: 1.1; }
+
+.c-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+
+.c-ta     { font-family: var(--mono); font-size: 6px; color: rgba(222,205,170,0.5); letter-spacing: 1px; text-transform: uppercase; }
+
+.c-value  { font-family: var(--editorial); font-size: 11px; color: rgba(255,252,245,0.7); font-style: italic; }
+
+/* ==========================================================================
+   4. POSTER BACKGROUNDS — Per deal type
+   ========================================================================== */
+
+.bg-ma    { background: linear-gradient(172deg, #142344 0%, #20386a 28%, #2c4a86 52%, #1e3560 76%, #16294c 100%); }
+
+.bg-lic   { background: linear-gradient(172deg, #2a1d0c 0%, #4a3418 28%, #6a4c22 52%, #48331a 76%, #2c1f0e 100%); }
+
+.bg-codev { background: linear-gradient(172deg, #0d2b33 0%, #164b57 28%, #1d6675 52%, #154853 76%, #0f2f38 100%); }
+
+.bg-asset { background: linear-gradient(172deg, #20153c 0%, #362160 28%, #492a80 52%, #33205c 76%, #221540 100%); }
+
+/* ---------- 5c. Score Badges (carousel posters) ---------- */
+
+.c-scores {
+  display: flex; gap: 3px;
+  position: absolute;
+  bottom: 10px;
+  left: 50%; transform: translateX(-50%);
+  z-index: 3;
+}
+
+.c-sc {
+  height: 22px; border-radius: 4px;
+  display: flex; align-items: center; gap: 3px;
+  padding: 0 6px;
+  font-size: 11px; font-weight: 800; color: #000; line-height: 1;
+}
+
+.c-sc-label {
+  font-family: var(--mono);
+  font-size: 7px; font-weight: 600;
+  opacity: 0.6; text-transform: uppercase;
+}
+
+.c-sc.ct { background: linear-gradient(140deg, var(--critic-light), var(--critic)); }
+
+.c-sc.os { background: linear-gradient(140deg, var(--outcome-light), var(--outcome)); }
+
+.c-sc.lk { background: #e4e4e0; color: var(--ink-faint); font-size: 8px; font-weight: 600; }
+
+.c-sc.pending {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 22px; border-radius: 4px;
+  background: var(--amber-bg, #fbf3de);
+  color: var(--gold-text);
+  font-size: 8px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .03em;
+  padding: 0 6px;
+  white-space: nowrap;
+}
+
+/* UX overhaul R1/R2: neutral "no score yet" chip — replaces the old
+   two-dash-chip treatment whenever a deal has neither a critic nor an
+   (unlocked) outcome score. Sized to the .c-sc.pending chip family;
+   not interactive, so no tap-target minimum. */
+.chip-unscored {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 22px; border-radius: 4px;
+  background: var(--rule-light);
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 8px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .05em;
+  padding: 0 6px;
+  white-space: nowrap;
+}
+
+.feat-poster:hover .poster-select,
+.feat-poster:focus-within .poster-select,
+.c-poster:hover .poster-select,
+.c-poster:focus-within .poster-select,
+.result-row:hover .poster-select,
+.result-row:focus-within .poster-select,
+.poster-select:focus-visible,
+.poster-select.checked {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.feat-poster, .c-poster { position: relative; }
+
+@keyframes posterReveal {
+  from { opacity: 0; transform: translateY(28px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes ringCW {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes ringCCW {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+/* =====================================================================
+   Phase 17 — Screenshot design-review fixes (2026-06-11)
+   Layered last so these win over earlier phases at equal specificity.
+   ===================================================================== */
+
+/* P1 #6a — Carousel poster footer: the CS/OS badge strip is absolutely
+   positioned at bottom-center and was painting over the TA label + value
+   row. Reserve a bottom band for the badges and ellipsize the TA label. */
+.c-content { padding-bottom: 40px; }
+
+.c-bottom { gap: 8px; }
+
+.c-ta {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* P1 #6b — Keep the decorative year numeral clear of the select/bookmark
+   overlay injected at top-right (22px desktop, 44px touch). */
+.c-poster .c-top, .feat-poster .fp-top { padding-right: 26px; }
