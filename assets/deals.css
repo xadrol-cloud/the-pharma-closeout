@@ -3536,14 +3536,10 @@ html, body { overflow-x: hidden; }
   background: rgba(196, 147, 50, 0.1);
 }
 @media (max-width: 600px) {
-  .nav-cta {
-    padding: 6px 12px;
-    font-size: 11px;
-    margin-right: 8px;
-    /* R12: pill was 29px tall on phone — pad to a 44px effective tap target. */
-    min-height: 44px;
-    box-sizing: border-box;
-  }
+  /* Drop the header CTA on phones — a long label ("Get the Briefing") clips at
+     narrow widths; it's reachable via the footer + in-page CTAs. Must live here
+     (after the unconditional .nav-cta base rule) to win the source-order cascade. */
+  .nav-cta { display: none; }
   /* On phone, hide the search input to make room for the CTA */
   .nav-cta + .nav-search { display: none; }
 }
