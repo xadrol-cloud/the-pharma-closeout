@@ -46,6 +46,7 @@
   --amber: #b8860b;
   --amber-bg: #fdf6e8;
   --amber-light: #f6c547;
+  --amber-text: #8f6809; /* AA-legible amber for text on light (chips); --amber stays for fills/borders */
   --red: #c0392b;
   --red-bg: #fdf0ee;
   --blue: #2563eb;
@@ -1312,7 +1313,7 @@ input, textarea, select {
 
 .t-green  { background: var(--green-bg);  color: var(--green); }
 .t-blue   { background: var(--blue-bg);   color: var(--blue); }
-.t-amber  { background: var(--amber-bg);  color: var(--amber); }
+.t-amber  { background: var(--amber-bg);  color: var(--amber-text); }
 .t-purple { background: var(--purple-bg); color: var(--purple); }
 .t-muted  { background: var(--rule-light); color: var(--ink-muted); }
 .t-red    { background: var(--red-bg);    color: var(--red); }
@@ -1322,7 +1323,7 @@ input, textarea, select {
 .feat-tag  { padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; }
 .ft-green  { background: var(--green-bg); color: var(--green); }
 .ft-blue   { background: var(--blue-bg);  color: var(--blue); }
-.ft-amber  { background: var(--amber-bg); color: var(--amber); }
+.ft-amber  { background: var(--amber-bg); color: var(--amber-text); }
 
 /* Asset tags (disease cards) */
 .at-tag {
@@ -1332,7 +1333,7 @@ input, textarea, select {
   letter-spacing: 0.3px;
 }
 .at-tag.ok  { background: var(--green-bg); color: var(--green); }
-.at-tag.pip { background: var(--amber-bg); color: var(--amber); }
+.at-tag.pip { background: var(--amber-bg); color: var(--amber-text); }
 .at-tag.div { background: var(--red-bg);   color: var(--red); }
 
 
@@ -3403,10 +3404,12 @@ html, body { overflow-x: hidden; }
   letter-spacing: 1.4px;
   text-transform: uppercase;
 }
-.tier-label[data-tier='exceptional'] { color: #2d8a4f; }
-.tier-label[data-tier='strong']      { color: #2a8a8a; }
-.tier-label[data-tier='adequate']    { color: #c9a84c; }
-.tier-label[data-tier='weak']        { color: #c47b3a; }
+/* AA-tuned for 10px-bold on the light field (#f6f4ef, all >=4.6:1), hue order preserved.
+   'failed' #c43a3a already clears AA at 4.76:1 so it is unchanged. */
+.tier-label[data-tier='exceptional'] { color: #297d47; }
+.tier-label[data-tier='strong']      { color: #257a7a; }
+.tier-label[data-tier='adequate']    { color: #836a27; }
+.tier-label[data-tier='weak']        { color: #9b612e; }
 .tier-label[data-tier='failed']      { color: #c43a3a; }
 
 .score-meta {
