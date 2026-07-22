@@ -171,8 +171,10 @@ check('NAV-001', 'index.html has an extractable <nav>...</nav> block', () => {
 
 check('NAV-002', 'index.html nav contains Podcast link targeting #day', () => {
   if (!indexNav) return { ok: false, found: 'no nav block extracted' };
-  const ok = /<a\b[^>]*href="[^"]*#day"[^>]*>\s*Podcast\s*<\/a>/i.test(indexNav)
-    || (/>\s*Podcast\s*<\/a>/i.test(indexNav) && /href="[^"]*#day"/i.test(indexNav));
+  // Podcast is now a dropdown: the anchor still targets #day but carries a
+  // trailing <span class="caret">, so allow markup after the label (not \s*</a>).
+  const ok = /<a\b[^>]*href="[^"]*#day"[^>]*>\s*Podcast\b/i.test(indexNav)
+    || (/>\s*Podcast\b/i.test(indexNav) && /href="[^"]*#day"/i.test(indexNav));
   return { ok, found: ok ? undefined : 'no Podcast link targeting #day found in nav' };
 });
 
@@ -385,7 +387,9 @@ for (const page of ALL_STATIC_PAGES) {
         const anchors = nav.match(/<a\b[^>]*>[\s\S]*?<\/a>/gi) || [];
         ok = anchors.some((a) => /subscribe/i.test(a) && a.includes(SUBSTACK_SUBSCRIBE));
       } else {
-        const re = new RegExp(`<a\\b[^>]*>\\s*${label}\\s*<\\/a>`, 'i');
+        // Allow trailing markup after the label (e.g. a dropdown caret <span>),
+        // so `<a ...>Podcast <span class="caret">…</span></a>` still matches.
+        const re = new RegExp(`<a\\b[^>]*>\\s*${label}\\s*(?:<|\\s)`, 'i');
         ok = re.test(nav);
       }
       return { ok, found: ok ? undefined : `"${label}" nav item not found in ${page}'s nav block` };
