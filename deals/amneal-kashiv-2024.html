@@ -23,133 +23,113 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-K6XEWCK7W4');
 </script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Newsreader:wght@600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;max-width:100%;overflow-x:hidden}
-body{background:#0f1622;color:#e7e3d8;font-family:Georgia,'Times New Roman',serif;
-line-height:1.6;font-size:17px;-webkit-text-size-adjust:100%}
-.wrap{max-width:760px;margin:0 auto;padding:28px 18px 64px}
-a{color:#c9a84c;text-decoration:none}
-a:hover{text-decoration:underline}
-h1{font-family:Georgia,serif;font-size:30px;line-height:1.2;margin:8px 0 6px;color:#f3ead0;
-font-weight:700;word-wrap:break-word;overflow-wrap:break-word}
-h2{font-family:Georgia,serif;font-size:20px;color:#c9a84c;margin:34px 0 10px;
-border-bottom:1px solid #2a3344;padding-bottom:6px}
-.kicker{font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:.12em;
-text-transform:uppercase;color:#8a93a3}
-.meta{font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#9aa3b3;margin:0 0 18px}
-.meta b{color:#c9a84c;font-weight:600}
+:root{--pg:#faf9f6;--card:#ffffff;--ink:#1b1d21;--muted:#6e717d;--faint:#9a9da5;--gold:#8a640f;--gold-btn:#c49332;--green:#1a8a5c;--red:#c0392b;--rule:#e7e3db;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Outfit',system-ui,sans-serif}
+body{background:var(--pg);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:17px;-webkit-text-size-adjust:100%}
+/* nav (adds the missing header so the page isn't a dead-end; matches the deals-app dark bar) */
+.nav{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(196,147,50,.18);display:flex;align-items:center;gap:24px;height:60px;padding:0 24px}
+.nav-brand{font-family:'Newsreader',Georgia,serif;font-weight:600;font-size:1.05rem;color:#e8e4de;text-decoration:none;white-space:nowrap}
+.nav-brand b{color:#c49332;font-weight:600}
+.nav-links{display:flex;gap:22px}
+.nav-links a{font-family:var(--sans);font-size:.8rem;color:rgba(255,255,255,.6);text-decoration:none;white-space:nowrap}
+.nav-links a:hover{color:#c49332}
+.nav-cta{margin-left:auto;font-family:var(--sans);font-size:.8rem;color:#c49332;border:1px solid rgba(196,147,50,.42);padding:7px 15px;border-radius:2px;text-decoration:none;white-space:nowrap}
+.nav-cta:hover{background:rgba(196,147,50,.1)}
+@media(max-width:680px){.nav-links{display:none}}
+.wrap{max-width:760px;margin:0 auto;padding:34px 18px 64px}
+a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+h1{font-family:var(--serif);font-size:42px;line-height:1.06;margin:6px 0 8px;color:var(--ink);font-weight:600;letter-spacing:-.01em;word-wrap:break-word}
+h2{font-family:var(--serif);font-size:27px;color:var(--ink);margin:40px 0 12px;border-bottom:1px solid var(--rule);padding-bottom:8px;font-weight:600}
+.kicker{font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.meta{font-family:var(--sans);font-size:14px;color:var(--muted);margin:0 0 18px}
+.meta b{color:var(--ink);font-weight:600}
 p,li{font-size:17px}
-.body-sans{font-family:Arial,Helvetica,sans-serif}
-.scores{display:flex;flex-wrap:wrap;gap:14px;margin:18px 0 8px}
-.score{flex:1 1 150px;min-width:0;background:#16202f;border:1px solid #2a3344;
-border-radius:10px;padding:14px 16px}
-.score .lbl{font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.1em;
-text-transform:uppercase;color:#8a93a3;margin-bottom:4px}
-.score .num{font-family:Georgia,serif;font-size:34px;color:#c9a84c;font-weight:700;line-height:1}
-.score .verdict{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#cdd3dd;margin-top:6px}
-.score-note{font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:#8a93a3;margin:2px 0 18px;line-height:1.5}
-.facts{list-style:none;padding:0;margin:10px 0}
-.facts li{font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#cdd3dd;
-padding:8px 0;border-bottom:1px solid #1e2735}
-.facts li b{color:#9aa3b3;font-weight:600;display:inline-block;min-width:130px;
-font-size:12px;letter-spacing:.05em;text-transform:uppercase;vertical-align:top}
-.facts li span{display:inline-block;max-width:100%}
-.verdict-grid{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0}
-.vcard{flex:1 1 160px;min-width:0;background:#16202f;border:1px solid #2a3344;
-border-radius:8px;padding:12px 14px;font-family:Arial,Helvetica,sans-serif}
-.vcard .vl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8a93a3}
-.vcard .vv{font-size:16px;color:#f3ead0;margin-top:4px;font-weight:600}
-.cta{display:block;background:#c9a84c;color:#0f1622 !important;font-family:Arial,Helvetica,sans-serif;
-font-weight:700;font-size:16px;text-align:center;padding:16px 18px;border-radius:10px;
-margin:30px 0 8px;text-decoration:none !important;max-width:100%}
-.cta:hover{background:#d8b95c}
-.sublinks{font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#8a93a3;margin:6px 0 0}
-footer{margin-top:46px;padding-top:18px;border-top:1px solid #2a3344;
-font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#7a8392}
-footer a{color:#9aa3b3}
-.summary{font-size:18px;color:#e7e3d8}
-.projected-note{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
-margin:6px 0 0;font-style:italic}
-
-/* ---- VERDICT HERO (Task B3: gate-passed sample is the spec) ---- */
-.hero{margin:18px 0 8px}
+.body-sans{font-family:var(--sans)}
+.hero{margin:20px 0 8px}
 .verdict-panels{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0 0;align-items:stretch}
-.vpanel{flex:1 1 220px;min-width:0;background:#16202f;border:1px solid #2a3344;
-border-radius:12px;padding:18px 18px 16px;display:block;color:inherit;text-decoration:none;
-transition:border-color .15s ease}
-a.vpanel:hover{border-color:#c9a84c;text-decoration:none}
-.vpanel .plbl{font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.14em;
-text-transform:uppercase;color:#8a93a3;margin-bottom:8px}
-.vpanel .pnum{font-family:Georgia,serif;font-size:46px;color:#c9a84c;font-weight:700;line-height:1}
-.vpanel .pverdict{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#cdd3dd;margin-top:8px}
-.vpanel.street .pnum{color:#9aa3b3}
-.delta-row{display:flex;justify-content:center;margin:14px 0 2px}
-.delta-chip{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:13px;
-letter-spacing:.04em;border-radius:999px;padding:7px 18px;text-align:center}
-.delta-chip.under{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
-.delta-chip.over{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
-.delta-chip.aligned{color:#c9a84c;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4)}
-.verdict-line{font-family:Georgia,serif;font-size:19px;color:#f3ead0;text-align:center;
-margin:14px 0 4px;line-height:1.4}
-.hero-cta{display:block;background:#c9a84c;color:#0f1622 !important;font-family:Arial,Helvetica,sans-serif;
-font-weight:700;font-size:16px;text-align:center;padding:16px 18px;border-radius:10px;
-margin:20px 0 4px;text-decoration:none !important;max-width:100%}
-.hero-cta:hover{background:#d8b95c}
-
-/* ---- RANK BADGES ---- */
-.badges{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 2px}
-.badge{font-family:Arial,Helvetica,sans-serif;font-size:12.5px;font-weight:600;
-color:#f3ead0;background:#1c2942;border:1px solid #3a4a6b;border-radius:7px;
-padding:7px 12px;text-decoration:none !important;display:inline-block}
-.badge:hover{border-color:#c9a84c}
-.badge-note{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:#6d7688;margin:6px 0 0}
-
-/* ---- RECEIPTS / COVERAGE ARC ---- */
-.receipt{background:#16202f;border:1px solid #2a3344;border-radius:10px;
-padding:14px 16px;margin:0 0 12px}
-.receipt-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px}
-.receipt-date{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a93a3;
-letter-spacing:.03em}
-.receipt-source{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#f3ead0;
-font-weight:600}
-.chip{font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;
-letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;
-margin-left:auto}
-.chip-bullish{color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35)}
-.chip-bearish{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35)}
-.chip-neutral{color:#9aa3b3;background:rgba(154,163,179,.12);border:1px solid rgba(154,163,179,.3)}
-.receipt-excerpt{font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#cdd3dd;
-line-height:1.55;margin:0}
-.disclosure{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6d7688;
-margin:8px 0 4px;line-height:1.5}
-.arc-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:4px 0 0}
-
-/* ---- COMPARABLES TABLE ---- */
-.comp-table{width:100%;border-collapse:collapse;margin:10px 0;font-family:Arial,Helvetica,sans-serif}
-.comp-table th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
-color:#8a93a3;padding:8px 10px;border-bottom:1px solid #2a3344}
-.comp-table td{font-size:14px;color:#cdd3dd;padding:10px;border-bottom:1px solid #1e2735;
-vertical-align:top}
-.comp-table td.num{font-family:Georgia,serif;color:#c9a84c;font-weight:700;white-space:nowrap}
-.comp-table tr.self td{color:#f3ead0;font-weight:600}
+.vpanel{flex:1 1 220px;min-width:0;background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px;display:block;color:inherit;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:.15s}
+a.vpanel:hover{border-color:var(--gold);text-decoration:none;box-shadow:0 8px 22px rgba(0,0,0,.08)}
+.vpanel .plbl{font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:600}
+.vpanel .pnum{font-family:var(--serif);font-size:54px;color:var(--gold);font-weight:700;line-height:1}
+.vpanel.history .pnum{color:var(--green)}
+.vpanel.street .pnum{color:var(--gold)}
+.vpanel .pverdict{font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:8px}
+.delta-row{display:flex;justify-content:center;margin:16px 0 2px}
+.delta-chip{font-family:var(--sans);font-weight:700;font-size:13px;letter-spacing:.04em;border-radius:999px;padding:7px 18px;text-align:center}
+.delta-chip.under{color:var(--green);background:rgba(26,138,92,.1);border:1px solid rgba(26,138,92,.32)}
+.delta-chip.over{color:var(--red);background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.3)}
+.delta-chip.aligned{color:var(--gold);background:rgba(181,133,42,.1);border:1px solid rgba(181,133,42,.35)}
+.verdict-line{font-family:var(--serif);font-size:22px;color:var(--ink);text-align:center;margin:14px 0 4px;line-height:1.35}
+.hero-cta,.cta{display:block;background:var(--gold-btn);color:#1b1d21 !important;font-family:var(--sans);font-weight:600;font-size:16px;text-align:center;padding:15px 18px;border-radius:8px;margin:22px 0 4px;text-decoration:none !important;max-width:100%}
+.hero-cta:hover,.cta:hover{background:#9a7020}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 2px}
+.badge{font-family:var(--sans);font-size:12.5px;font-weight:600;color:var(--ink);background:var(--card);border:1px solid var(--rule);border-radius:7px;padding:7px 12px;text-decoration:none !important;display:inline-block}
+.badge:hover{border-color:var(--gold)}
+.badge-note{font-family:var(--sans);font-size:11.5px;color:var(--faint);margin:6px 0 0}
+.summary{font-family:var(--sans);font-size:17.5px;color:#2e3138;line-height:1.72}
+.facts{list-style:none;padding:0;margin:10px 0}
+.facts li{font-family:var(--sans);font-size:14.5px;color:#2e3138;padding:9px 0;border-bottom:1px solid var(--rule)}
+.facts li b{color:var(--muted);font-weight:600;display:inline-block;min-width:130px;font-size:12px;letter-spacing:.05em;text-transform:uppercase;vertical-align:top}
+.facts li span{display:inline-block;max-width:100%}
+.comp-table{width:100%;border-collapse:collapse;margin:10px 0;font-family:var(--sans)}
+.comp-table th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:9px 10px;border-bottom:1px solid var(--rule)}
+.comp-table td{font-size:14px;color:#2e3138;padding:11px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+.comp-table td.num{font-family:var(--serif);color:var(--gold);font-weight:700;white-space:nowrap;font-size:18px}
+.comp-table tr.self td{color:var(--ink);font-weight:600;background:rgba(181,133,42,.05)}
 .comp-table td.dealname a{display:block}
-.comp-closer{font-family:Arial,Helvetica,sans-serif;font-size:14px;margin:10px 0 0}
+.comp-closer{font-family:var(--sans);font-size:14px;margin:10px 0 0}
+.sublinks{font-family:var(--sans);font-size:14px;color:var(--muted);margin:8px 0 0}
+footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--rule);font-family:var(--sans);font-size:13px;color:var(--muted)}
+footer a{color:var(--muted)}footer a:hover{color:var(--gold)}
 
-/* ---- UNGRADED (T4) NOTE ---- */
-.ungraded-note{font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#8a93a3;
-background:#16202f;border:1px solid #2a3344;border-radius:10px;padding:14px 16px;
-margin:16px 0 4px;line-height:1.55}
-.ungraded-note b{color:#c9a84c}
+/* ---- carried-over template classes not in the light spec, re-skinned to the light palette ---- */
+/* legacy score cards (ungraded tier only) */
+.scores{display:flex;flex-wrap:wrap;gap:14px;margin:18px 0 8px}
+.score{flex:1 1 150px;min-width:0;background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.score .lbl{font-family:var(--sans);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;font-weight:600}
+.score .num{font-family:var(--serif);font-size:38px;color:var(--gold);font-weight:700;line-height:1}
+.score .verdict{font-family:var(--sans);font-size:13px;color:#2e3138;margin-top:6px}
+.score-note{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin:2px 0 18px;line-height:1.5}
+/* outcome-assessment verdict cards */
+.verdict-grid{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0}
+.vcard{flex:1 1 160px;min-width:0;background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;font-family:var(--sans);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.vcard .vl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.vcard .vv{font-size:16px;color:var(--ink);margin-top:4px;font-weight:600}
+/* projected-assessment disclosure */
+.projected-note{font-family:var(--sans);font-size:12px;color:var(--muted);margin:6px 0 0;font-style:italic}
+/* coverage-arc receipts */
+.receipt{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;margin:0 0 12px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.receipt-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px}
+.receipt-date{font-family:var(--sans);font-size:12px;color:var(--muted);letter-spacing:.03em}
+.receipt-source{font-family:var(--sans);font-size:13.5px;color:var(--ink);font-weight:600}
+.chip{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;margin-left:auto}
+.chip-bullish{color:var(--green);background:rgba(26,138,92,.1);border:1px solid rgba(26,138,92,.32)}
+.chip-bearish{color:var(--red);background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.3)}
+.chip-neutral{color:var(--muted);background:rgba(110,113,125,.08);border:1px solid rgba(110,113,125,.28)}
+.receipt-excerpt{font-family:var(--sans);font-size:14.5px;color:#2e3138;line-height:1.55;margin:0}
+.disclosure{font-family:var(--sans);font-size:12px;color:var(--faint);margin:8px 0 4px;line-height:1.5}
+.arc-closer{font-family:var(--sans);font-size:14px;margin:4px 0 0}
+/* ungraded (T4) note */
+.ungraded-note{font-family:var(--sans);font-size:13.5px;color:#2e3138;background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;margin:16px 0 4px;line-height:1.55;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.ungraded-note b{color:var(--gold)}
 
-@media (max-width:420px){
-  .vpanel .pnum{font-size:38px}
-  .comp-table{font-size:12.5px}
-  .comp-table th,.comp-table td{padding:7px 6px}
-}
+@media(max-width:420px){.vpanel .pnum{font-size:44px}.comp-table th,.comp-table td{padding:8px 6px}h1{font-size:33px}}
 </style>
 </head>
 <body>
+<nav class="nav">
+  <a class="nav-brand" href="https://thepharmacloseout.com/">The Pharma <b>Closeout</b></a>
+  <div class="nav-links">
+    <a href="https://thepharmacloseout.com/deals.html">Deal Intelligence</a>
+    <a href="https://thepharmacloseout.com/index.html#day">Podcast</a>
+    <a href="https://thepharmacloseout.com/index.html#news">Newsletter</a>
+    <a href="https://thepharmacloseout.com/about.html">About</a>
+  </div>
+  <a class="nav-cta" href="https://thepharmacloseout.substack.com/subscribe">Subscribe &rarr;</a>
+</nav>
 <div class="wrap">
 <p class="kicker">Pharma BD Deal Intelligence</p>
 <h1>Amneal Pharmaceuticals Inc. / Kashiv BioSciences LLC</h1>
@@ -216,7 +196,7 @@ margin:16px 0 4px;line-height:1.55}
 <table class="comp-table">
 <thead><tr><th>Deal</th><th>Year</th><th>Value</th><th>Outcome</th></tr></thead>
 <tbody>
-<tr class="self"><td class="dealname">Amneal Pharmaceuticals Inc. / Kashiv BioSciences LLC <span class="body-sans" style="font-size:11px;color:#8a93a3">(this deal)</span></td><td>2024</td><td class="num">—</td><td class="num">—</td></tr>
+<tr class="self"><td class="dealname">Amneal Pharmaceuticals Inc. / Kashiv BioSciences LLC <span class="body-sans" style="font-size:11px;color:var(--muted)">(this deal)</span></td><td>2024</td><td class="num">—</td><td class="num">—</td></tr>
 <tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/amgen-immunex-2002.html">Amgen Inc. / Immunex Corporation</a></td><td>2002</td><td class="num">$16.0B</td><td class="num">92</td></tr>
 <tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/perkinelmer-euroimmun-medizinische-labordiagnostika-2017.html">PerkinElmer, Inc. / EUROIMMUN Medizinische Labordiagnostika AG</a></td><td>2017</td><td class="num">$1.3B</td><td class="num">88</td></tr>
 <tr><td class="dealname"><a href="https://thepharmacloseout.com/deals/vertex-alpine-immune-sciences-2024.html">Vertex Pharmaceuticals Inc. / Alpine Immune Sciences</a></td><td>2024</td><td class="num">$4.9B</td><td class="num">78</td></tr>
@@ -233,7 +213,7 @@ margin:16px 0 4px;line-height:1.55}
 </p>
 <p class="sublinks">More: <a href="https://thepharmacloseout.com/deals/by-year/2024.html">2024 deals</a> &nbsp;·&nbsp; <a href="https://thepharmacloseout.com/deals/by-ta/immunology.html">Immunology deals</a></p>
 <footer>
-<b style="color:#c9a84c">The Pharma Closeout</b> — Deal Intelligence Database.
+<b style="color:var(--gold)">The Pharma Closeout</b> — Deal Intelligence Database.
 Critic Score and Outcome Score from sourced facts.<br>
 <a href="https://thepharmacloseout.com/">Home</a> ·
 <a href="https://thepharmacloseout.com/deals.html">Deal Intelligence</a> ·
