@@ -30,6 +30,8 @@
   --paper: #f6f4ef;
   --paper-tile: #fbfaf7;
   --poster-shadow: 34deg 25% 12%;
+  --mat: #ece3d1;        /* cream mat */
+  --frame-line: #17130f; /* warm-ink hairline */
   --rule: #e4e4e0;
   --rule-light: #f0efec;
 
@@ -311,21 +313,17 @@ input, textarea, select {
   cursor: pointer;
   transition: transform 0.5s cubic-bezier(0.19,1,0.22,1), box-shadow 0.5s;
   box-shadow:
-    0 1px 2px hsl(var(--poster-shadow) / 0.10),
-    0 2px 4px hsl(var(--poster-shadow) / 0.09),
-    0 6px 12px hsl(var(--poster-shadow) / 0.10),
-    0 14px 28px hsl(var(--poster-shadow) / 0.12),
-    inset 0 1px 0 hsl(40deg 60% 90% / 0.10);
+    0 0 0 5px var(--mat),                          /* cream mat */
+    0 0 0 6px var(--frame-line),                   /* warm-ink hairline frame */
+    0 12px 26px hsl(var(--poster-shadow) / 0.22);  /* the framed piece casts */
   animation: posterReveal 0.65s cubic-bezier(0.19,1,0.22,1) both;
 }
 .poster:hover {
   transform: translateY(-8px);
   box-shadow:
-    0 2px 4px hsl(var(--poster-shadow) / 0.10),
-    0 6px 12px hsl(var(--poster-shadow) / 0.10),
-    0 14px 28px hsl(var(--poster-shadow) / 0.12),
-    0 28px 56px hsl(var(--poster-shadow) / 0.16),
-    inset 0 1px 0 hsl(40deg 60% 90% / 0.12);
+    0 0 0 5px var(--mat),
+    0 0 0 6px var(--frame-line),
+    0 22px 46px hsl(var(--poster-shadow) / 0.30);
 }
 
 /* Poster layers: background, grain, glow, vignette, edge */
@@ -529,11 +527,9 @@ input, textarea, select {
   cursor: pointer;
   transition: transform 0.5s cubic-bezier(0.19,1,0.22,1), box-shadow 0.5s;
   box-shadow:
-    0 1px 2px hsl(var(--poster-shadow) / 0.10),
-    0 3px 6px hsl(var(--poster-shadow) / 0.09),
-    0 8px 16px hsl(var(--poster-shadow) / 0.10),
-    0 18px 36px hsl(var(--poster-shadow) / 0.13),
-    inset 0 1px 0 hsl(40deg 60% 90% / 0.10);
+    0 0 0 7px var(--mat),
+    0 0 0 8px var(--frame-line),
+    0 16px 34px hsl(var(--poster-shadow) / 0.24);
 }
 .feat-poster:hover {
   transform: translateY(-4px);
@@ -631,11 +627,9 @@ input, textarea, select {
   cursor: pointer;
   transition: transform 0.5s cubic-bezier(0.19,1,0.22,1), box-shadow 0.5s;
   box-shadow:
-    0 1px 2px hsl(var(--poster-shadow) / 0.10),
-    0 2px 4px hsl(var(--poster-shadow) / 0.09),
-    0 6px 12px hsl(var(--poster-shadow) / 0.10),
-    0 12px 24px hsl(var(--poster-shadow) / 0.12),
-    inset 0 1px 0 hsl(40deg 60% 90% / 0.10);
+    0 0 0 4px var(--mat),
+    0 0 0 5px var(--frame-line),
+    0 10px 22px hsl(var(--poster-shadow) / 0.22);
   scroll-snap-align: start;
 }
 .c-poster:hover {
