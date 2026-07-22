@@ -37,6 +37,7 @@
 
   /* Brand */
   --gold: #c49332;
+  --gold-text: #8a640f;
 
   /* Semantic Colors */
   --green: #1a8a5c;
@@ -896,7 +897,7 @@ input, textarea, select {
   display: inline-flex; align-items: center; justify-content: center;
   height: 22px; border-radius: 4px;
   background: var(--amber-bg, #fbf3de);
-  color: var(--gold);
+  color: var(--gold-text);
   font-size: 8px; font-weight: 700;
   text-transform: uppercase; letter-spacing: .03em;
   padding: 0 6px;
@@ -1099,7 +1100,7 @@ input, textarea, select {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.05em;
-  color: var(--gold);
+  color: var(--gold-text);
   padding: 10px 6px;
   border: 1px dashed var(--rule);
   border-radius: 3px;
@@ -1139,7 +1140,7 @@ input, textarea, select {
 .f-chev { width: 10px; height: 10px; color: var(--ink-faint); }
 .f-more {
   font-size: 12px; font-weight: 500;
-  color: var(--gold);
+  color: var(--gold-text);
   cursor: pointer;
   padding: 6px 10px;
   border: none; background: none;
@@ -1178,7 +1179,7 @@ input, textarea, select {
 }
 .filter-toggle-count[data-active]:not([data-active='0'])::before {
   content: '· ' attr(data-active) ' active';
-  color: var(--gold);
+  color: var(--gold-text);
   font-size: 12px;
   margin-left: 8px;
   font-weight: 500;
@@ -1860,7 +1861,7 @@ input, textarea, select {
   font-family: var(--sans);
   font-size: 12.5px;
   font-weight: 600;
-  color: var(--gold);
+  color: var(--gold-text);
   text-decoration: none;
   white-space: nowrap;
 }
@@ -1929,7 +1930,7 @@ input, textarea, select {
 .hero-label {
   font-family: var(--mono);
   font-size: 11px; font-weight: 500;
-  color: var(--gold);
+  color: var(--gold-text);
   letter-spacing: 2px; text-transform: uppercase;
   display: flex; align-items: center; gap: 8px;
 }
@@ -2074,7 +2075,7 @@ input, textarea, select {
   position: absolute;
   left: 18px; top: 50%; transform: translateY(-50%);
   width: 20px; height: 20px;
-  color: var(--gold);
+  color: var(--gold-text);
 }
 .search-filters {
   display: flex; gap: 8px;
@@ -2320,7 +2321,7 @@ input, textarea, select {
 .src-item:last-child { border-bottom: none; }
 .src-type {
   font-family: var(--mono);
-  font-size: 9px; color: var(--gold);
+  font-size: 9px; color: var(--gold-text);
   text-transform: uppercase; letter-spacing: 1px;
 }
 .src-headline { position: relative; font-size: 12px; font-weight: 600; margin-top: 2px; }
@@ -2450,7 +2451,7 @@ input, textarea, select {
   display: block; text-align: center;
   font-family: var(--mono); font-size: 9px; font-weight: 600;
   letter-spacing: 0.6px; text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold-text);
   padding: 4px 8px; margin-top: 4px;
   border: 1px solid rgba(196, 147, 50, 0.3);
   border-radius: 3px;
@@ -2685,7 +2686,7 @@ td.sc-select, th.sc-select-head { width: 32px; padding: 6px 4px 6px 10px !import
   font-weight: 700; font-size: 14px;
   color: var(--ink-faint);
 }
-.footer-brand em { font-style: normal; color: var(--gold); }
+.footer-brand em { font-style: normal; color: var(--gold-text); }
 .footer-links { display: flex; gap: 20px; font-size: 12px; color: var(--ink-faint); }
 .footer-links a { position: relative; color: var(--ink-faint); text-decoration: none; }
 .footer-links a:hover { color: var(--ink); }
@@ -2766,7 +2767,7 @@ td.sc-select, th.sc-select-head { width: 32px; padding: 6px 4px 6px 10px !import
   letter-spacing: 0.3px;
   transition: color 0.15s;
 }
-.breadcrumb-back:hover { color: var(--gold); }
+.breadcrumb-back:hover { color: var(--gold-text); }
 @media (max-width: 600px) {
   .breadcrumb-nav { padding: 12px 16px 0; }
   /* R12: 36px tall on phone — pad up to a 44px effective tap target. */
@@ -3073,7 +3074,7 @@ td.sc-select, th.sc-select-head { width: 32px; padding: 6px 4px 6px 10px !import
   padding: 6px;
   background: transparent;
   border: 1px dashed var(--rule);
-  color: var(--gold);
+  color: var(--gold-text);
   cursor: pointer;
   border-radius: 3px;
   letter-spacing: 0.05em;
@@ -3118,7 +3119,7 @@ td.sc-select, th.sc-select-head { width: 32px; padding: 6px 4px 6px 10px !import
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 .rev-export:hover {
-  color: var(--gold);
+  color: var(--gold-text);
   border-color: rgba(196, 147, 50, 0.4);
   background: rgba(196, 147, 50, 0.06);
 }
@@ -3199,7 +3200,7 @@ td.sc-select, th.sc-select-head { width: 32px; padding: 6px 4px 6px 10px !import
 .lin-more summary {
   font-family: var(--mono);
   font-size: 10px; font-weight: 600;
-  color: var(--gold);
+  color: var(--gold-text);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   cursor: pointer;
@@ -3486,10 +3487,10 @@ html, body { overflow-x: hidden; }
   color: #fff;
   white-space: nowrap;
 }
-.deal-type-pill[data-type='ma']         { background: #7a4c8f; }
-.deal-type-pill[data-type='licensing']  { background: #3d5fa3; }
-.deal-type-pill[data-type='codev']      { background: #2a8a8a; }
-.deal-type-pill[data-type='asset']      { background: #c47b3a; }
+.deal-type-pill[data-type='ma']         { background: #2c4a86; }
+.deal-type-pill[data-type='licensing']  { background: #6a4c22; }
+.deal-type-pill[data-type='codev']      { background: #1d6675; }
+.deal-type-pill[data-type='asset']      { background: #492a80; }
 .deal-type-pill[data-type='other']      { background: #5c5c5c; }
 
 .status-pill {
@@ -3576,10 +3577,10 @@ html, body { overflow-x: hidden; }
   border-color: transparent;
 }
 .dt-toggle.active[data-type=''] { background: var(--ink); }
-.dt-toggle.active[data-type='ma']         { background: #7a4c8f; }
-.dt-toggle.active[data-type='licensing']  { background: #3d5fa3; }
-.dt-toggle.active[data-type='codev']      { background: #2a8a8a; }
-.dt-toggle.active[data-type='asset']      { background: #c47b3a; }
+.dt-toggle.active[data-type='ma']         { background: #2c4a86; }
+.dt-toggle.active[data-type='licensing']  { background: #6a4c22; }
+.dt-toggle.active[data-type='codev']      { background: #1d6675; }
+.dt-toggle.active[data-type='asset']      { background: #492a80; }
 .dt-select-hidden { display: none !important; }
 @media (max-width: 600px) {
   .deal-type-toggles { gap: 5px; margin: 12px auto 8px; padding: 0 12px; }
@@ -4023,7 +4024,7 @@ html, body { overflow-x: hidden; }
   border: 1px dashed var(--gold); border-radius: 8px; background: var(--amber-bg);
   padding: 14px 16px; margin: 16px 0; font-size: 13.5px; color: var(--ink-light); line-height: 1.5;
 }
-.sub-nudge a { color: var(--gold); font-weight: 600; text-decoration: none; }
+.sub-nudge a { color: var(--gold-text); font-weight: 600; text-decoration: none; }
 .sub-nudge a:hover { text-decoration: underline; }
 
 /* Provenance stamp (Move 2c) */
@@ -4035,7 +4036,7 @@ html, body { overflow-x: hidden; }
 .provenance .pv-k { color: var(--ink-faint); font-family: var(--mono, 'IBM Plex Mono', monospace); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; min-width: 84px; }
 .provenance .pv-v { color: var(--ink-light); }
 .provenance .pv-badge { display: inline-block; padding: 1px 7px; border-radius: 9px; font-size: 10.5px; background: var(--surface); border: 1px solid var(--rule); }
-.provenance a { position: relative; color: var(--gold); text-decoration: none; }
+.provenance a { position: relative; color: var(--gold-text); text-decoration: none; }
 /* R12: "How scores & sources work" is a single ~15px text line — expand
    the tap target to 44px tall without changing the visible row. */
 .provenance a::after {
