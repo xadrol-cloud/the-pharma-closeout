@@ -121,6 +121,13 @@ footer a{color:var(--muted)}footer a:hover{color:var(--gold)}
 
 @media(max-width:420px){.vpanel .pnum{font-size:44px}.comp-table th,.comp-table td{padding:8px 6px}h1{font-size:33px}}
 
+/* This study page shares the light {CSS} template, but its .hg-* styling (and the
+   shared nav/footer tokens) are built for a DARK page. Re-point the design tokens
+   and body back to the dark study base here. HYPE_CSS follows {CSS} in the same
+   <style> block, so these win the cascade. Static deal pages use {CSS} alone and
+   stay light. Restores the pre-2026-07-21 dark study (#0f1622 / #e7e3d8). */
+:root{--pg:#0f1622;--card:#16202f;--ink:#e7e3d8;--muted:#9aa3b3;--faint:#6d7688;--rule:#2a3344;--gold:#c9a84c;--gold-btn:#c9a84c}
+body{background:#0f1622;color:#e7e3d8}
 .hg-page{max-width:1000px;margin:0 auto;padding:0 20px 60px}
 .hg-hero{padding:40px 0 22px;border-bottom:1px solid #2a3344;margin-bottom:8px}
 .hg-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;
