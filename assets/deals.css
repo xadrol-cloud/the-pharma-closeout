@@ -42,6 +42,7 @@
   /* Semantic Colors */
   --green: #1a8a5c;
   --green-bg: #ecf8f2;
+  --green-text: #187d53; /* AA-legible green for text on light (badges/values); --green stays for fills/borders. --red #c0392b already passes AA so no --red-text needed. */
   --green-light: #3ddc84;
   --amber: #b8860b;
   --amber-bg: #fdf6e8;
@@ -1311,7 +1312,7 @@ input, textarea, select {
 .tags { display: flex; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
 .tag  { padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; }
 
-.t-green  { background: var(--green-bg);  color: var(--green); }
+.t-green  { background: var(--green-bg);  color: var(--green-text); }
 .t-blue   { background: var(--blue-bg);   color: var(--blue); }
 .t-amber  { background: var(--amber-bg);  color: var(--amber-text); }
 .t-purple { background: var(--purple-bg); color: var(--purple); }
@@ -1321,7 +1322,7 @@ input, textarea, select {
 /* Featured deal tags (home page) */
 .feat-tags { display: flex; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
 .feat-tag  { padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; }
-.ft-green  { background: var(--green-bg); color: var(--green); }
+.ft-green  { background: var(--green-bg); color: var(--green-text); }
 .ft-blue   { background: var(--blue-bg);  color: var(--blue); }
 .ft-amber  { background: var(--amber-bg); color: var(--amber-text); }
 
@@ -1332,7 +1333,7 @@ input, textarea, select {
   padding: 2px 7px; border-radius: 3px;
   letter-spacing: 0.3px;
 }
-.at-tag.ok  { background: var(--green-bg); color: var(--green); }
+.at-tag.ok  { background: var(--green-bg); color: var(--green-text); }
 .at-tag.pip { background: var(--amber-bg); color: var(--amber-text); }
 .at-tag.div { background: var(--red-bg);   color: var(--red); }
 
@@ -1564,7 +1565,7 @@ input, textarea, select {
   font-size: 10px; font-weight: 600;
   margin-left: 6px;
 }
-.b-bull { background: var(--green-bg); color: var(--green); }
+.b-bull { background: var(--green-bg); color: var(--green-text); }
 .b-bear { background: var(--red-bg);   color: var(--red); }
 .b-neut { background: var(--rule-light); color: var(--ink-muted); }
 
@@ -1594,7 +1595,7 @@ input, textarea, select {
 }
 .fin-val { font-size: 20px; font-weight: 700; margin-top: 3px; }
 .fin-val.sm    { font-size: 14px; font-weight: 600; }
-.fin-val.green { color: var(--green); }
+.fin-val.green { color: var(--green-text); }
 .fin-val.amber { color: var(--amber); }
 .fin-val.red   { color: var(--red); }
 .fin-note { font-size: 11px; color: var(--ink-faint); margin-top: 2px; }
@@ -1730,7 +1731,7 @@ input, textarea, select {
   padding: 2px 7px; border-radius: 3px;
   font-size: 10px;
 }
-.am-status.ok  { background: var(--green-bg); color: var(--green); }
+.am-status.ok  { background: var(--green-bg); color: var(--green-text); }
 .am-status.pip { background: var(--amber-bg); color: var(--amber); }
 .am-status.div { background: var(--red-bg);   color: var(--red); }
 .am-rev {
@@ -1776,7 +1777,7 @@ input, textarea, select {
 }
 .rev-stat { flex: 1; text-align: center; padding: 10px; }
 .rev-stat-val { font-size: 22px; font-weight: 700; }
-.rev-stat-val.green { color: var(--green); }
+.rev-stat-val.green { color: var(--green-text); }
 .rev-stat-val.amber { color: var(--amber); }
 .rev-stat-val.red   { color: var(--red); }
 .rev-stat-label {
@@ -3008,7 +3009,7 @@ td.sc-select, th.sc-select-head { width: 32px; padding: 6px 4px 6px 10px !import
 /* Key Assets group labels */
 .am-group-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 6px 0 3px; margin-top: 8px; }
 .am-group-label:first-child { margin-top: 0; }
-.am-group-label.ok { color: var(--green); }
+.am-group-label.ok { color: var(--green-text); }
 .am-group-label.pip { color: var(--amber); }
 .am-group-label.div { color: var(--red); }
 
@@ -3935,7 +3936,7 @@ html, body { overflow-x: hidden; }
   font-size: 20px; font-weight: 600; color: var(--ink);
 }
 .hype-gap[data-dir="over"]  .hg-num { color: var(--red); }
-.hype-gap[data-dir="under"] .hg-num { color: var(--green); }
+.hype-gap[data-dir="under"] .hg-num { color: var(--green-text); }
 
 /* ==========================================================================
    FUNNEL — capture footer band + Substack embed + price strip (Move 1)
@@ -4014,7 +4015,7 @@ html, body { overflow-x: hidden; }
 }
 .price-strip .ps-item { white-space: nowrap; }
 .price-strip .ps-them { text-decoration: line-through; opacity: .7; }
-.price-strip .ps-us { color: var(--green); font-weight: 700; }
+.price-strip .ps-us { color: var(--green-text); font-weight: 700; }
 .price-strip .ps-us strong { font-size: 15px; }
 .price-strip .ps-sep { color: var(--ink-faint); }
 
